@@ -1,4 +1,4 @@
-// The Transcript tab (I calls §3.5, §11.4; evidence/I/call-page-transcript*.png): speaker blocks (one block per run of a
+// The Transcript tab (I calls): speaker blocks (one block per run of a
 // speaker, paragraphs on pauses), `m:ss` timestamp buttons, a text selection popover (Copy link to section · Copy selection
 // · Ask AI), and range links `…/transcript?start=<s>&end=<s>` that scroll to the range and dim the rest. Without a
 // player a timestamp highlights its block (a shareable section link) and speaker focus dims the other speakers.

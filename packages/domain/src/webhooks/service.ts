@@ -1,4 +1,4 @@
-// webhooks.* (BACKLOG 6.07; J workspace-admin §6; Attio docs rest-api/guides/webhooks): target URL (https only) +
+// webhooks.*: target URL (https only) +
 // subscriptions (event type and optional filter), status Active / Degraded / Inactive, signing secret, delivery log
 // and "Test subscription". Administration is for admins and workspace-level API tokens (the /v2 webhook endpoints are
 // "workspace-level only"); each (target URL, event type, filter) is unique within the workspace (409).
@@ -264,7 +264,7 @@ export const webhookOps = {
     return { id: row.id };
   },
 
-  /** The signing secret (admins; Attio's GET /webhooks/{id}/secret). */
+  /** The signing secret (admins only). */
   async secret(tx: Tx, webhookId: string): Promise<{ secret: string }> {
     await requireDeveloperAccess(tx);
     return { secret: (await requireWebhook(tx, webhookId)).secret };

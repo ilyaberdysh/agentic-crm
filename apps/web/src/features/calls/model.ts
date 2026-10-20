@@ -1,4 +1,4 @@
-// Calls view logic (I calls §2–§4, §11): transcript timestamps, speaker blocks as the page renders them, range links
+// Calls view logic (I calls): transcript timestamps, speaker blocks as the page renders them, range links
 // (`?start=&end=` dims everything outside), speaker focus, the selection → link / copy text mapping, talk share
 // formatting and the 4 px timeline layout, the Calls list date groups, durations, and the insight-template helpers
 // (titles, preset filtering, picker lists). Pure and unit-tested; no React, no network.
@@ -15,7 +15,7 @@ import type {
 
 // ---- time ---------------------------------------------------------------------------------------------------------------
 
-/** `m:ss`, or `h:mm:ss` from one hour (transcript timestamps, I calls §3.5). */
+/** `m:ss`, or `h:mm:ss` from one hour (transcript timestamps, I calls). */
 export function formatTimestamp(seconds: number): string {
   const s = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
   const h = Math.floor(s / 3600);
@@ -24,7 +24,7 @@ export function formatTimestamp(seconds: number): string {
   return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`;
 }
 
-/** The duration label of a Calls row (I calls §2.4): "30min", "1h 5min", "42 sec" under a minute. */
+/** The duration label of a Calls row (I calls): "30min", "1h 5min", "42 sec" under a minute. */
 export function formatCallDuration(seconds: number): string {
   const s = Math.max(0, Math.round(Number.isFinite(seconds) ? seconds : 0));
   if (s < 60) return `${s} sec`;
@@ -35,7 +35,7 @@ export function formatCallDuration(seconds: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}min`;
 }
 
-/** Talk time of the Speakers tab (I calls §3.7): "Ns" under a minute, else whole minutes ("1m"). */
+/** Talk time of the Speakers tab (I calls): "Ns" under a minute, else whole minutes ("1m"). */
 export function formatTalkTime(seconds: number): string {
   const s = Math.max(0, Math.round(seconds));
   return s < 60 ? `${s}s` : `${Math.round(s / 60)}m`;
@@ -59,7 +59,7 @@ function seconds(value: unknown): number | null {
   return typeof n === 'number' && Number.isFinite(n) && n >= 0 ? n : null;
 }
 
-/** The highlight range of `?start=&end=`: both valid seconds with `start < end`, else none (I calls §1). */
+/** The highlight range of `?start=&end=`: both valid seconds with `start < end`, else none (I calls). */
 export function parseRange(start: unknown, end: unknown): TimeRange | null {
   const s = seconds(start);
   const e = seconds(end);
@@ -169,7 +169,7 @@ export function selectionRange(selected: ReadonlyArray<Pick<CallUtterance, 'star
 }
 
 /**
- * The transcript copy format restricted to the selected utterances (I calls §3.5): `[m:ss] Speaker: text` per block,
+ * The transcript copy format restricted to the selected utterances (I calls): `[m:ss] Speaker: text` per block,
  * further paragraphs on their own lines; a selection that starts in the middle of a block omits the first prefix.
  */
 export function selectionText(blocks: readonly BlockView[], selected: ReadonlySet<number>): string {
@@ -211,13 +211,13 @@ export function formatTimeRange(startAt: string, endAt: string, timeZone: string
   return `${zoned(new Date(startAt), timeZone, TIME_OPTIONS)} - ${zoned(new Date(endAt), timeZone, TIME_OPTIONS)}`;
 }
 
-/** The date chip of a Calls card: "Friday, October 9 5:00 PM - 5:30 PM" (record Calls tab, I calls §11.6). */
+/** The date chip of a Calls card: "Friday, October 9 5:00 PM - 5:30 PM" (record Calls tab, I calls). */
 export function formatCardDate(call: { startAt: string; endAt: string; isAllDay: boolean }, timeZone: string): string {
   const day = zoned(new Date(call.startAt), timeZone, { weekday: 'long', month: 'long', day: 'numeric' });
   return call.isAllDay ? day : `${day} ${formatTimeRange(call.startAt, call.endAt, timeZone)}`;
 }
 
-/** The meeting card of the Activity feed: "Yesterday, 5:00 PM - 5:30 PM" (relative day, I calls §11.6). */
+/** The meeting card of the Activity feed: "Yesterday, 5:00 PM - 5:30 PM" (relative day, I calls). */
 export function formatActivityDate(
   call: { startAt: string; endAt: string; isAllDay: boolean },
   timeZone: string,
@@ -302,7 +302,7 @@ export function timelineEnd(utterances: ReadonlyArray<Pick<CallUtterance, 'end'>
 
 // ---- Calls list ------------------------------------------------------------------------------------------------------------------
 
-/** Group labels of the Calls list (B.24 buckets as Attio names them for calls: "This month", "Over a year ago"). */
+/** Group labels for Calls list buckets, such as "This month" and "Over a year ago". */
 export const CALL_GROUP_LABEL: Record<CreatedBucket, string> = {
   today: 'Today',
   'this-week': 'This week',
@@ -343,7 +343,7 @@ export function groupCalls<T extends { dateGroup: CreatedBucket | null }>(
     .filter((g) => g.items.length > 0);
 }
 
-/** A filter of the Calls list as the browser keeps it (I calls §2.2: record, participant, participant › teams). */
+/** A filter of the Calls list as the browser keeps it (I calls: record, participant, participant › teams). */
 export type StoredFilter =
   | {
       id: string;
@@ -478,7 +478,7 @@ export function filterPresets(
   );
 }
 
-/** The gallery lists presets alphabetically by title (as Attio's does). */
+/** The gallery lists presets alphabetically by title. */
 export function sortPresets(presets: readonly InsightPreset[]): InsightPreset[] {
   return [...presets].sort((a, b) => a.title.localeCompare(b.title, 'en', { sensitivity: 'base' }));
 }

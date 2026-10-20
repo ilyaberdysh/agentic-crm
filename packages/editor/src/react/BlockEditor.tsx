@@ -1,9 +1,9 @@
-// Email editors (slice 7; F composer §2.5–2.6, settings §2.3): a TipTap editor over the shared note schema without
+// Email editors use a TipTap editor over the shared note schema without
 // collaboration. Content goes in and out as flat blocks (the same model the server stores for drafts, templates and
 // signatures), with placeholder variables (B.11) rendered as chips. Two flavours:
-//   <BlockEditor>  multi-line body: paragraphs, bulleted / numbered lists, bold / italic / strikethrough / link /
-//                  text colour, the selection toolbar, variables via `{`
-//   <LineEditor>   the single-line subject: text and variable chips only
+// <BlockEditor>  multi-line body: paragraphs, bulleted / numbered lists, bold / italic / strikethrough / link /
+// text colour, the selection toolbar, variables via `{`
+// <LineEditor> the single-line subject: text and variable chips only
 // The variable menu and the "Variable settings" popover belong to the host (they need the recipient object's
 // attributes); the editors report the caret position / the clicked chip and expose commands to change variables.
 import { type AnyExtension, type Editor, getMarkRange } from '@tiptap/core';

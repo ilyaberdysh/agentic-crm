@@ -1,10 +1,10 @@
-// Dashboard Share popover (BACKLOG 9.09; H README §2.6; evidence H/dashboard-share-popover-dark.png): the header's
+// Dashboard Share popover: the header's
 // "Share" button (a text button: the avatar in front of it in the capture is the viewer's presence avatar, which the
 // dashboard header draws) opens a 420 px popover below it: "Workspace access" with its level, the
 // add row ("Search..." + level + Add), "Teams" and "Individual members" with a level dropdown each, and "Learn more
 // about permissions". A level change is saved at once (permissions.put), there is no Save button. Members without
 // Full access see it read-only. The pieces (PermissionLevelSelect, GrantRow, the grants hooks) are exported from
-// ./index for Settings → Dashboards → Permissions.
+//./index for Settings → Dashboards → Permissions.
 import { Avatar, Button, Icon, Popover, Skeleton } from '@agentic-crm/ui';
 import { useState } from 'react';
 import { brand } from '../../../lib/brand';

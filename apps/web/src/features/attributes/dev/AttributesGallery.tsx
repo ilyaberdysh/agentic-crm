@@ -1,5 +1,5 @@
 // `/__dev/attributes` (dev builds only): every attribute type in its densities and editors on fixture data, for
-// visual checks; `?frame=<id>` renders one fixed-geometry parity frame (dev/frames.tsx) for the Playwright parity run.
+// visual checks; `?frame=<id>` renders one fixed-geometry parity frame (dev/frames.tsx) for the Playwright visual review run.
 import { Button, cx, useThemeSettings } from '@agentic-crm/ui';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';

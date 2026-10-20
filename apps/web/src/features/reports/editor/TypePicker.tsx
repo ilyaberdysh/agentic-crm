@@ -1,4 +1,4 @@
-// Step 1 of a new report (H README §2.3; evidence editor-type-picker.png): "What do you want to report on?" with the
+// Step 1 of a new report: "What do you want to report on?" with the
 // five types in two groups and the documentation card at the bottom.
 
 import type { ReportType } from '@agentic-crm/contracts';

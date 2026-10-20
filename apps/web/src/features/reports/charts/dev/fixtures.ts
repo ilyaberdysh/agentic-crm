@@ -1,4 +1,4 @@
-// Fixtures of the chart gallery and of the chart tests: the "[seed] Projects" data of the curated Attio screenshots
+// Fixtures of the chart gallery and of the chart tests: the "[seed] Projects" data of the curated visual examples
 // (budget by phase, phase × priority, 12 → 9 → 4 → 2 funnel, durations of 3–7 hours) as `ChartContext` + `DatasetOutput`.
 import type {
   DatasetGroupInfo,
@@ -144,7 +144,7 @@ const budgetByPhase = [
 
 const phaseMeta = { groups: { primary: stageInfos, secondary: null } };
 
-/** Phase × priority (the tooltip screenshot: Discovery = 15k + 45k + 80k + 60k = 200k). */
+/** Phase × priority (the tooltip visual examples: Discovery = 15k + 45k + 80k + 60k = 200k). */
 const budgetByPhasePriority = [
   row(STAGES.discovery, 15_000, PRIORITIES.low),
   row(STAGES.discovery, 45_000, PRIORITIES.medium),

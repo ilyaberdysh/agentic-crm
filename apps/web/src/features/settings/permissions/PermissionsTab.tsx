@@ -1,4 +1,4 @@
-// Permissions tab of an object or list (J permissions §4–5; evidence/J/object-permissions-grants.png, raw s57–s59):
+// Permissions tab of an object or list:
 // Members → "Workspace access" row; Teams, Individual members and Automations with "+ Add" pickers and one level
 // dropdown per grant (Full access · Read and write · Read only · No access, "Remove" for overrides). A row whose own
 // level is below what it inherits shows the inherited level with an amber ⚠ and the tooltip 'Inheriting "…" from …'.

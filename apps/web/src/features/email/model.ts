@@ -1,4 +1,4 @@
-// Email view logic (F README §2.2–2.3; BACKLOG 7.03; acceptance 3): what a thread row and the email modal show at each
+// Email view logic: what a thread row and the email modal show at each
 // access level, "via N mailboxes", dates, participants, reply / forward recipients and the sandboxed HTML document of
 // a message body. Pure and unit-tested.
 import type { EmailAccess, EmailParticipant } from '@agentic-crm/contracts';
@@ -70,7 +70,7 @@ function dayDiff(a: string, b: string): number {
 }
 
 /**
- * The date at the right of a thread row (F §2.2): time for today ("5:07 PM"), "Yesterday, 5:07 PM", then the day
+ * The date at the right of a thread row is the time for today ("5:07 PM"), "Yesterday, 5:07 PM", then the day
  * and month within the year ("8 Oct") and with the year for older mail ("10 Jul 2025").
  */
 export function formatThreadDate(iso: string, now: Date | number, timeZone: string): string {
@@ -89,7 +89,7 @@ export function formatMessageTimestamp(iso: string, timeZone: string): string {
   return `${ordinalDay(w.day)} ${MONTHS[w.month - 1]} ${w.year} ${formatClock(w)}`;
 }
 
-/** Tab counts cap at "99+" (D §2.5a). */
+/** Tab counts cap at "99+" (Da). */
 export function formatCount(n: number): string {
   return n > 99 ? '99+' : String(n);
 }
@@ -117,7 +117,7 @@ export const ACCESS_LEVEL_LABEL: Record<EmailAccess, string> = {
   'full-access': 'Full access',
 };
 
-/** Levels of the "Workspace Access" select, least to most (F §2.2). */
+/** "Workspace Access" levels, from least to most access. */
 export const ACCESS_SELECT_LEVELS = ['none', 'metadata-only', 'subject-line', 'full-access'] as const;
 export type AccessSelectLevel = (typeof ACCESS_SELECT_LEVELS)[number];
 
@@ -152,7 +152,7 @@ export function threadDisplay(thread: {
 
 // ---- participants ------------------------------------------------------------------------------------------------
 
-/** "via <owner name>" / "via N mailboxes" (the same message synced by several members, F §2.2). */
+/** "via <owner name>" / "via N mailboxes" (the same message synced by several members, F). */
 export function viaLabel(mailboxCount: number, ownerNames: readonly string[]): string | null {
   if (mailboxCount > 1) return `via ${mailboxCount} mailboxes`;
   const name = ownerNames[0];

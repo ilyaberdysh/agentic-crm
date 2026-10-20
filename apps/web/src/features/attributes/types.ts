@@ -1,5 +1,5 @@
-// Shared types of the attribute registry (slice-2 contract C1).
-// Values are the wire rows of `values.list` / `values.put` (read forms, A §4.7); writes use the write forms of
+// Shared types of the attribute registry (contract).
+// Values are the wire rows of `values.list` / `values.put` (read forms, A); writes use the write forms of
 // packages/contracts `valueInputSchemas`.
 import type {
   AttributeDefinition,
@@ -24,7 +24,7 @@ export interface RecordRef {
 }
 
 /**
- * Where a value is drawn: a 36 px table cell (C1 cells.md), a record-page / form field row (D §3.2, 32 px Editable),
+ * Where a value is drawn: a 36 px table cell, a record-page / form field row (D, 32 px Editable),
  * or a compact inline chip (kanban cards, activity lines).
  */
 export type Density = 'cell' | 'field' | 'chip';
@@ -53,14 +53,14 @@ export type CommitVia = 'enter' | 'tab' | 'shift-tab' | 'blur' | 'pick' | 'escap
 export interface CommitMeta {
   via?: CommitVia;
   /**
-   * Multi-value editors write every toggle immediately (C1 cells.md §2) and stay open: they pass
+   * Multi-value editors write every toggle immediately  and stay open: they pass
    * `keepOpen: true`. The host closes the editor on any other commit and on `onCancel`.
    */
   keepOpen?: boolean;
 }
 
 /**
- * Column / view formatting overrides (C1 README §3.2 "Formatting", attribute-types §3.2/§3.4, B.25), stored by the
+ * Column / view formatting overrides ("Formatting", attribute-types/, B.25), stored by the
  * table in the view column's `displayConfiguration`. Unset keys fall back to the attribute configuration.
  */
 export interface DisplayConfiguration {
@@ -85,15 +85,15 @@ export interface ViewProps {
   values: AttributeValue[];
   density: Density;
   recordRef?: RecordRef;
-  /** Sub-field column (C1 README §3.2). */
+  /** Sub-field column. */
   field?: ValueField;
   /** View-column formatting overrides. */
   format?: DisplayConfiguration;
-  /** Cell density: the selected cell shows every value stacked (C1 cells.md §1, `data-expanded`). */
+  /** Cell density: the selected cell shows every value stacked (C1, `data-expanded`). */
   expanded?: boolean;
   /**
-   * Makes the in-place interactions live: checkbox toggles on click, rating sets the clicked star (C1 cells.md §1,
-   * README §3.3). Without it these Views are static.
+   * Makes the in-place interactions live: checkbox toggles on click, rating sets the clicked star (C1,
+   *). Without it these Views are static.
    */
   onCommit?: (next: CommitInput, meta?: CommitMeta) => void;
   /** Field density: placeholder text when empty (record page "Set {title}"). */
@@ -121,7 +121,7 @@ export interface EditorProps {
    */
   onDraftChange?: (draft: ValueInput[] | null) => void;
   /**
-   * Multi-value editors write each toggle at once with `onCommit(ops, {keepOpen: true})` (Attio's behaviour) when the
+   * Multi-value editors write each toggle at once with `onCommit(ops, {keepOpen: true})` (the behaviour) when the
    * host keeps the editor open on `keepOpen`. Without it (default) they collect the toggles and commit the final set
    * once when closed, which works with any host.
    */
@@ -139,7 +139,7 @@ export interface AttributeUi {
   copyText(values: AttributeValue[], attribute: AttributeDefinition, options?: { field?: ValueField }): string;
   /** Single-cell paste: write forms, or null when the text is not a valid value of the attribute. */
   pasteValue?(text: string, attribute: AttributeDefinition): ValueInput[] | null;
-  /** Default column width (C1 README §2.4). */
+  /** Default column width. */
   defaultWidth: number;
   align: 'start' | 'end';
 }

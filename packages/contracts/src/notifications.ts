@@ -1,9 +1,9 @@
 // Notifications (BACKLOG 5.05–5.06; B-shell/notifications.md; CROSS-DOMAIN B.27; slice5-contracts "Notifications").
-// The v2 data model: typed entries grouped into inbox rows (groups) per recipient; 24 Attio types in 11 topics, plus
+// The v2 data model: typed entries grouped into inbox rows per recipient; 24 types in 11 topics, plus
 // our `list-shared` (lists are the shareable resource we have; topic shared-with-you). Each type names its topic,
 // preference group, channels, grouping key (a payload field) and max gap: consecutive entries with the same key within
 // the gap merge into one row (multi-actor phrasing). Preferences are per preference group × channel; our channels are
-// `in-app` (the inbox; Attio's "App" column is mobile push, which we do not build — web only) and `email` (stored now,
+// `in-app` (the inbox) and `email` (stored now,
 // delivered by the worker from slice 7). Row titles are the spec's UI copy; `{…}` placeholders are filled by the UI.
 import { z } from 'zod';
 import { actorSchema, timestampSchema, uuidSchema } from './common.ts';
@@ -39,7 +39,7 @@ export const NOTIFICATION_TOPIC_LABELS: Record<NotificationTopic, string> = {
   'workflow-requests': 'Workflow requests',
 };
 
-/** Preference groups (Attio `notification_group` of GET /notification-preferences, plus `workflows`). */
+/** Preference groups from GET /notification-preferences, plus `workflows`. */
 export const notificationPreferenceGroups = [
   'mentions',
   'replies',
@@ -64,7 +64,7 @@ export interface NotificationPreferenceGroupInfo {
   /** Settings row copy (notifications §5). */
   title: string;
   description: string;
-  /** Shown as a row in Settings → Notifications (Attio hides app-updates; workflows arrive with slice 8). */
+  /** Shown as a row in Settings → Notifications. */
   visible: boolean;
   /** Channels the group can be delivered on. */
   channels: readonly NotificationChannel[];
@@ -191,7 +191,7 @@ export const notificationTypes = [
 export const notificationTypeSchema = z.enum(notificationTypes);
 export type NotificationType = z.infer<typeof notificationTypeSchema>;
 
-/** Channels of Attio's registry (`mobile-push` is recorded for parity; we deliver in-app and email only). */
+/** Channels (`mobile-push` is recorded for compatibility; we deliver in-app and email only). */
 export type RegistryChannel = 'app' | 'email' | 'mobile-push';
 
 export interface NotificationTypeInfo {
@@ -205,7 +205,7 @@ export interface NotificationTypeInfo {
   maxGapMs: number;
   /** Request types: the row needs an action (Action needed tab) until resolved. */
   actionable: boolean;
-  /** Payload fields (camelCase forms of Attio's payload keys). */
+  /** Payload fields in camelCase. */
   payload: readonly string[];
   /** Row title (UI copy from notifications §4; `{record}` etc. filled by the UI). */
   title: string;
@@ -460,7 +460,7 @@ export const NOTIFICATION_TYPES: Record<NotificationType, NotificationTypeInfo> 
     'systemToolsSharingRequestId',
     8 * HOUR,
     ['systemToolsSharingRequestId'],
-    'Requested permission to use Attio tools on your behalf in the {workflow} workflow',
+    'Requested permission to use tools on your behalf in the {workflow} workflow',
     true,
   ),
   'workflow-block-action-request': t(
@@ -591,7 +591,7 @@ export const notificationEntrySchema = z.object({
 });
 export type NotificationEntry = z.infer<typeof notificationEntrySchema>;
 
-/** One inbox row (Attio notification group). */
+/** One inbox row. */
 export const notificationGroupSchema = z.object({
   id: uuidSchema,
   /** Type of the newest entry. */

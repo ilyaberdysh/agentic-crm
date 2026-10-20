@@ -176,7 +176,7 @@ Ideas that are useful but not ready belong in [`docs/agentic-core/backlog.yaml`]
 
 ## Open-source status
 
-Agentic CRM declares the [Apache License 2.0](LICENSE) and is an early preview candidate, not a production-ready CRM. An automated technical provenance audit is recorded in [PROVENANCE.md](PROVENANCE.md); it found unresolved rights questions for inherited API contracts and UI tokens. Independent rights clearance and an author attestation remain required, so the repository must stay private until that gate is complete. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
+Agentic CRM declares the [Apache License 2.0](LICENSE) and is an early preview candidate, not a production-ready CRM. [PROVENANCE.md](PROVENANCE.md) records both the automated technical audit and the maintainer's authorship and source-use disposition. The historical generated API snapshot is being replaced by a product-owned contract; the repository remains private until that work and the final public-ref privacy scan are complete. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
 
 Source-level dependency attribution is summarized in [NOTICE](NOTICE). A complete license audit is still required before publishing binary or container distributions that bundle third-party code.
 

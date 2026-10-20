@@ -1,5 +1,5 @@
-// Step 1 — Upload file (C2 import.md §I2; evidence import-1-upload-empty / -file): a dashed drop zone with
-// "Drop your .CSV file onto this area to upload", "or", "Choose a .CSV file"; the file is parsed in the browser and
+// Step 1 — Upload file (C2; evidence import-1-upload-empty / -file): a dashed drop zone with
+// "Drop your.CSV file onto this area to upload", "or", "Choose a.CSV file"; the file is parsed in the browser and
 // shown as a card (name, ".CSV file - {size}", Columns found / Rows found). "Next" creates the draft with the
 // client-side auto-mapping and starts the background upload.
 import { AlertDialog, Button, Icon, IconButton, toast } from '@agentic-crm/ui';
@@ -14,7 +14,7 @@ import type { WizardContext } from './ImportWizard';
 import { useImportSchema } from './schema';
 import * as s from './wizard.css';
 
-/** Help articles (our help center does not exist yet: the cards only say so). */
+/** Help articles (the help center does not exist yet: the cards only say so). */
 const LEARN_MORE = ['Importing', 'Import data via CSV'];
 
 export function UploadStep({ ctx }: { ctx: WizardContext }) {

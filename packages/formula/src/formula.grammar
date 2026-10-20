@@ -26,7 +26,7 @@ expression[@isGroup=Expression] {
   String |
   Bool |
   Null |
-  AttioReference |
+  RecordReference |
   LLMReference |
   Identifier |
   Parenthesized |
@@ -94,7 +94,7 @@ commaSep<content> { (content (Comma content)*)? }
 
   String { '"' (![\\\n"] | "\\" ![\n])* '"' }
 
-  AttioReference { "_{" $[a-zA-Z0-9]+ ("-" $[a-zA-Z0-9]+)+ "}" }
+  RecordReference { "_{" $[a-zA-Z0-9]+ ("-" $[a-zA-Z0-9]+)+ "}" }
 
   LLMReference { "$" @digit+ }
 
@@ -109,7 +109,7 @@ commaSep<content> { (content (Comma content)*)? }
 
   @precedence { LineComment, "/" }
   @precedence { Decimal, Integer, Dot }
-  @precedence { AttioReference, Identifier }
+  @precedence { RecordReference, Identifier }
 }
 
 @detectDelim

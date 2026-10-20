@@ -7,8 +7,7 @@
 //   collection:<workspaceId>:<listId>                 presence on a list page (header avatars): the list must be
 //                                                     readable (list access levels, J permissions §2). Entry presence
 //                                                     uses record:<ws>:<listId>:<entryId> (same list check).
-//   reporting-dashboard:<workspaceId>:<dashboardId>   presence on a dashboard (header avatars, H api §4.6 Attio
-//                                                     presence-reporting-dashboard): the dashboard must be readable.
+//   reporting-dashboard:<workspaceId>:<dashboardId>   presence on a dashboard: the dashboard must be readable.
 //   thread:<workspaceId>:<threadId>                   an Ask Agentic chat (slice 10): streamed answer parts for other
 //                                                     tabs; only the chat's creator (threads are private).
 // Other namespaces need workspace membership only (checked by the gateway before this hook).
@@ -52,7 +51,7 @@ export function domainRoomAuthorizer(
       }
     }
     if (namespace === 'collection') {
-      // List presence (C2 README §2.2, Attio presence-collection:<ws>:<listId>): the member must be able to open it.
+      // The member must have read access before joining a list's presence room.
       const [listId, ...rest] = params;
       if (!listId || rest.length > 0 || !UUID.test(listId)) return false;
       const { policies } = await domain.policies.resolve(ctx, { entityDefinitionIds: [listId] });

@@ -1,4 +1,4 @@
-// Sidebar header: workspace switcher trigger + menu (sidebar.md §2.1–2.2) and the collapse button (§2.3).
+// Sidebar header: workspace switcher trigger + menu  and the collapse button.
 import {
   Avatar,
   CheckCircleFilled,

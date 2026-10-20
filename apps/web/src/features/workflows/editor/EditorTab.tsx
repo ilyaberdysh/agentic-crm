@@ -1,4 +1,4 @@
-// Editor tab `/automations/workflows/$id/editor` (BACKLOG 8.02–8.05; README §2.2–2.3, §3, §3.3, §3.5): the canvas,
+// Editor tab `/automations/workflows/$id/editor` (BACKLOG 8.02–8.05): the canvas,
 // the unpublished-changes banner (Discard / Publish changes; publishing a live workflow asks first), the old-version
 // banner (Back to current / Restore this version), the bottom toolbar, the side panel (overview + version history,
 // block configuration, palette) and the canvas shortcuts: B add block, H / V tools, Delete, ⌘C / ⌘V, ⌘0, ⇧1, Esc.
@@ -57,7 +57,7 @@ function Editor() {
   const draft = page.detail.version;
   const version = useMemo(() => {
     if (viewing) return old.data?.version ?? draft;
-    // Issues show once a block is touched (configured or connected) or after a refused publish (README §3.3).
+    // Issues show once a block is touched (configured or connected) or after a refused publish.
     if (failure) return draft;
     const linked = new Set(draft.paths.flatMap((p) => [p.sourceBlockId, p.targetBlockId]));
     return {
@@ -172,7 +172,7 @@ function Editor() {
     if (blocks.length === 0) return;
     const set = new Set(blocks.map((b) => b.id));
     clipboard = { blocks, paths: draft.paths.filter((p) => set.has(p.sourceBlockId) && set.has(p.targetBlockId)) };
-    void navigator.clipboard?.writeText(JSON.stringify({ attioReWorkflowBlocks: clipboard })).catch(() => {});
+    void navigator.clipboard?.writeText(JSON.stringify({ agenticCrmWorkflowBlocks: clipboard })).catch(() => {});
     toast.success(`${blocks.length} ${blocks.length === 1 ? 'block' : 'blocks'} copied to clipboard`);
   };
 

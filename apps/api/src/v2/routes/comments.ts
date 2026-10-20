@@ -13,7 +13,7 @@ import { newId } from '@agentic-crm/domain';
 import { type CommentContextLookups, commentToPublic } from '../collab-mappers';
 import type { V2Context } from '../context';
 import { publicErrors, toPublicError, withHints } from '../errors';
-import { attioTimestamp } from '../mappers';
+import { publicTimestamp } from '../mappers';
 import { params, parseInput, type RouteSpec } from '../route';
 
 const DEFAULT_THREADS = 10;
@@ -74,6 +74,7 @@ export const commentRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/threads',
+    operationId: 'listThreads',
     scopes: v2Operations.listThreads.scopes,
     async handler(v2, request) {
       const query = parseInput(listThreadsQuery, request.query, 'query parameters');
@@ -96,10 +97,10 @@ export const commentRoutes: RouteSpec[] = [
       const all = full.flatMap((t) => [t.root, ...t.replies]);
       const look = await lookups(v2, all);
       return {
-        // Oldest thread first (Attio orders threads by creation).
+        // Oldest thread first (the public API orders threads by creation).
         data: full.reverse().map((t) => ({
           id: { workspace_id: v2.workspaceId, thread_id: t.threadId },
-          created_at: attioTimestamp(t.root.createdAt),
+          created_at: publicTimestamp(t.root.createdAt),
           comments: [t.root, ...t.replies.slice(0, LIST_REPLIES)].map((c) => commentToPublic(c, look)),
           has_more_comments: t.replies.length > LIST_REPLIES,
         })),
@@ -109,6 +110,7 @@ export const commentRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/threads/:thread_id',
+    operationId: 'getThread',
     scopes: v2Operations.getThread.scopes,
     async handler(v2, request) {
       const parsed = getThreadPathParams.safeParse(params(request));
@@ -138,7 +140,7 @@ export const commentRoutes: RouteSpec[] = [
       return {
         data: {
           id: { workspace_id: v2.workspaceId, thread_id: thread.threadId },
-          created_at: attioTimestamp(thread.root.createdAt),
+          created_at: publicTimestamp(thread.root.createdAt),
           comments: page.map((c) => commentToPublic(c, look)),
         },
         pagination: {
@@ -151,6 +153,7 @@ export const commentRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/comments',
+    operationId: 'createComment',
     scopes: v2Operations.createComment.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createCommentBody, request.body, 'request body');
@@ -204,6 +207,7 @@ export const commentRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/comments/:comment_id',
+    operationId: 'getComment',
     scopes: v2Operations.getComment.scopes,
     async handler(v2, request) {
       const parsed = getCommentPathParams.safeParse(params(request));
@@ -215,6 +219,7 @@ export const commentRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/comments/:comment_id',
+    operationId: 'deleteComment',
     scopes: v2Operations.deleteComment.scopes,
     async handler(v2, request) {
       const parsed = getCommentPathParams.safeParse(params(request));

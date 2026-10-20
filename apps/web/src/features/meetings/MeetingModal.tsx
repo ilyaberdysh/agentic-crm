@@ -1,4 +1,4 @@
-// The "Meeting" modal (BACKLOG 7.04; F README §2.4), opened at `?modal=meeting&id=<meetingId>` (a timeline card, the
+// The "Meeting" modal (BACKLOG 7.04), opened at `?modal=meeting&id=<meetingId>` (a timeline card, the
 // Home widget or a link): the date tile, title and the viewer's RSVP pill, the time and description rows, "Call
 // intelligence", participants (first three, "Show all"), linked records with "+" and a dashed "Link records" button,
 // and the footer "Ask Agentic" / "Create note". Synced meetings are read-only apart from their linked records; manual
@@ -390,7 +390,7 @@ export function Participants({
   );
 }
 
-/** The linked records section ( "+" adds through a record picker, × removes). */
+/** The linked records section ("+" adds through a record picker, × removes). */
 export function LinkedRecords({
   meeting,
   onChange,

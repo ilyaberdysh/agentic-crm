@@ -1,4 +1,4 @@
-// BACKLOG §1 acceptance 3, 8, 9: workspace creation/picker/switching, the shell, sidebar collapse (⌘.), resize
+//  acceptance 3, 8, 9: workspace creation/picker/switching, the shell, sidebar collapse (⌘.), resize
 // limits and double-click reset, the floating variant at ≤ 864 px, unknown paths, the Appearance setting.
 import { expect, type Page, test } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';
@@ -28,7 +28,7 @@ test('the shell: workspace header, search row, main nav, records from the API, l
   for (const object of ['Companies', 'People', 'Deals']) {
     await expect(records.getByRole('link', { name: object })).toBeVisible();
   }
-  // Lists (slice 4): "+ New list" while the workspace has none, else its lists (lists.spec runs first).
+  // Lists: "+ New list" while the workspace has none, else its lists (lists.spec runs first).
   const lists = side.getByRole('region', { name: 'Lists' });
   await expect(
     lists.getByText('New list').or(lists.getByTestId('sidebar-lists').getByRole('link').first()),
@@ -38,7 +38,7 @@ test('the shell: workspace header, search row, main nav, records from the API, l
   await expect(page).toHaveTitle('Home - Agentic CRM');
 
   await records.getByRole('link', { name: 'Companies' }).click();
-  // The bare object URL opens the object's first view (C1 README §1).
+  // The bare object URL opens the object's first view.
   await expect(page).toHaveURL(new RegExp(`/${WORKSPACE_SLUG}/companies/view/[0-9a-f-]{36}$`));
   await expect(page.getByTestId('page-header')).toContainText('Companies');
   await expect(records.getByRole('link', { name: 'Companies' })).toHaveAttribute('aria-current', 'page');
@@ -54,7 +54,7 @@ test('keyboard navigation: G then T opens tasks, G then C companies', async ({ p
   await expect(page).toHaveURL(new RegExp(`/${WORKSPACE_SLUG}/tasks$`));
   await page.keyboard.press('g');
   await page.keyboard.press('c');
-  // The bare object URL opens the object's first view (C1 README §1).
+  // The bare object URL opens the object's first view.
   await expect(page).toHaveURL(new RegExp(`/${WORKSPACE_SLUG}/companies/view/[0-9a-f-]{36}$`));
 });
 

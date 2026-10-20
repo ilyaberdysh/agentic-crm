@@ -1,6 +1,6 @@
-// Record tab bar (D README §2.4; components.md Tabs): Overview, a divider, then the layout's tabs with count badges
+// Record tab bar: Overview, a divider, then the layout's tabs with count badges
 // (Notes, open Tasks, related records; Emails "-" without sources). Tabs that do not fit collapse into "+N more ⌄".
-// ⌥← / ⌥→ move through the tabs, wrapping around (D §3.11).
+// ⌥← / ⌥→ move through the tabs, wrapping around (D).
 import { Icon, type IconName, Menu, MenuItem, MenuTrigger } from '@agentic-crm/ui';
 import { type MouseEvent, useLayoutEffect, useRef, useState } from 'react';
 import { Button as AriaButton } from 'react-aria-components';
@@ -178,7 +178,7 @@ function CallsCount() {
   return <span className={s.tabCount}>{formatCount(count)}</span>;
 }
 
-/** Threads the viewer can see on the record, "99+" when more, "-" for a tab without sources (D §2.5a). */
+/** Threads the viewer can see on the record, "99+" when more, "-" for a tab without sources (Da). */
 function EmailsCount({ hasSources }: { hasSources: boolean }) {
   const { recordRef } = useRecordPage();
   const threads = useRecordThreadPreview(recordRef, 1, hasSources);
@@ -217,7 +217,7 @@ function RelationshipCountOf({
   return <span className={s.tabCount}>{formatCount(values.length)}</span>;
 }
 
-/** Tab counts cap at "99+" (D §2.5a). */
+/** Tab counts cap at "99+" (Da). */
 export function formatCount(n: number): string {
   return n > 99 ? '99+' : String(n);
 }

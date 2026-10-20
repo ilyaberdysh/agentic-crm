@@ -1,4 +1,4 @@
-// C3 — the record table (slice2-contracts.md; BACKLOG 2.02, 2.08 UI, 2.09, 2.10, 2.15 UI; ARCHITECTURE D-18, §5).
+// Record table: virtualised rows, selection, column operations and keyboard navigation.
 // Renders an object's rows for a view draft: `snapshots.query` (first 1000 ids, total) + `snapshots.chunk` while
 // scrolling (SnapshotController), rows virtualised with TanStack Virtual (36 px), columns virtualised by offset
 // (+2 overscan), cells hydrated per visible column through the batching loaders and drawn by the C1 registry,
@@ -92,7 +92,7 @@ export interface RecordTableProps {
   onCreateAttribute?: () => void;
   ref?: Ref<RecordTableHandle>;
 
-  // ---- list tables (features/lists, slice 4): rows are entries of a list ----------------------------------------
+  // ---- list tables (features/lists): rows are entries of a list ----------------------------------------
   /** The record column shows something else than `object`'s title (each entry's parent record). */
   recordColumn?: RecordColumnSlot;
   /** Path columns through this attribute (the entry's `parent_record`) are editable on the referenced record. */
@@ -312,7 +312,7 @@ export function RecordTable({
   const totalWidth = Math.max(columnsEnd + ADD_COLUMN_MIN_WIDTH, viewport.width);
   const fillerLeft = columnsEnd;
   const fillerWidth = totalWidth - columnsEnd;
-  // A view without columns: rows and footer end at the record column (C1 README §2.3).
+  // A view without columns: rows and footer end at the record column.
   const rowFillerWidth = columns.length === 0 ? 0 : fillerWidth;
   const placed = useMemo<PlacedColumn[]>(() => {
     const out: PlacedColumn[] = [];
@@ -424,7 +424,7 @@ export function RecordTable({
     );
   }, [presence, activeRecordId, activeColumnKey]);
   useEffect(() => () => presence?.setActiveCell(null), [presence]);
-  // Palette: the focused row's record actions (⌘K); list tables show entries, whose parents have their own pages.
+  // Palette: the focused row's record actions (⌘); list tables show entries, whose parents have their own pages.
   useFocusedRecordContext(recordColumn ? null : object, recordColumn ? null : activeRecordId);
 
   // ---- actions for rows/cells (stable through a ref) ---------------------------------------------------------------------
@@ -508,7 +508,7 @@ export function RecordTable({
         dispatchSelection(event.shiftKey ? { type: 'range', index: row } : { type: 'toggle', index: row });
       },
       openRecord(recordId: string) {
-        // The record opens in the record overlay (features/overlays, D README §2.7) with the view's order for
+        // The record opens in the record overlay (features/overlays) with the view's order for
         // J / K and "1 of N in {view}".
         const ids = (controller.current?.ids ?? []).filter((id): id is string => typeof id === 'string');
         if (live.current.onOpenRow) {
@@ -555,7 +555,7 @@ export function RecordTable({
         setEditing(null);
         focusGrid();
         if (how !== 'commit' || !at) return;
-        // Enter → next row, Tab / Shift+Tab → next / previous column (shortcuts.md "Edit cell/go to next cell").
+        // Enter → next row, Tab / Shift+Tab → next / previous column ("Edit cell/go to next cell").
         if (via === 'enter') {
           if (at.row < l.total - 1) setActive({ row: at.row + 1, col: at.col });
         } else if (via === 'tab') {
@@ -847,7 +847,7 @@ export function RecordTable({
   const showNoResults = shown !== null && total === 0 && isFiltered;
   const showEmpty = shown !== null && total === 0 && !isFiltered;
   const rangeBounds = active && rangeEnd ? rangeOf(active, rangeEnd) : null;
-  // "Recalculate with AI" (C1 cells §1 context menu; ai-attributes §5): the AI column under the menu's cells.
+  // "Recalculate with AI" (C1 cells context menu; ai-attributes): the AI column under the menu's cells.
   const aiColumn = (() => {
     if (!menu || !active || active.col < 0) return null;
     const [c0, c1] = menu.range && rangeBounds ? [rangeBounds.c0, rangeBounds.c1] : [active.col, active.col];
@@ -1134,7 +1134,7 @@ function TableState({
   );
 }
 
-/** A view with no columns: "Add your first attribute column" panel right of the record column (C1 README §2.3). */
+/** A view with no columns: "Add your first attribute column" panel right of the record column. */
 function NoColumns({
   left,
   draft,

@@ -1,7 +1,7 @@
-// Calls on the client (slice 10; BACKLOG 10.11–10.15): the Calls list (infinite, grouped by the server), one call
+// Calls on the client: the Calls list (infinite, grouped by the server), one call
 // (detail, transcript, speakers, insights), the Calls of a record and of meetings, insight templates (list, detail,
 // presets, previews, sections) and the member's default template. Reads are TanStack queries under the realtime
-// resources of ./keys; writes answer the canonical state plus a change seq, write it into the cache and refresh the
+// resources in the query keys module; writes answer with canonical state and a change sequence, update the cache and refresh the
 // lists they affect (X-27: a call imported through /v2 shows up without a reload because the server invalidates
 // `call-recording-list`).
 import type { ListCallsInput } from '@agentic-crm/contracts';

@@ -1,4 +1,4 @@
-// Members table, invite dialog and member detail (J workspace-admin §3; evidence/B/modal-invite-members.png, raw s70–s72).
+// Members table, invite dialog and member detail.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 import { dialogBody } from '../admin/admin.css';
@@ -84,7 +84,7 @@ export const fieldLabel = style({
   marginBottom: 4,
 });
 
-/** Invite dialog body: 12 px between fields (Attio's invite modal is tighter than the settings dialogs). */
+/** Invite dialog body: 12 px between fields (the invite modal is tighter than the settings dialogs). */
 export const inviteBody = style([dialogBody, { gap: 12, padding: '14px 16px 24px' }]);
 
 export const optionalHint = style({ color: c.content.tertiary, marginLeft: 4 });

@@ -1,4 +1,4 @@
-// Card geometry and placement (README §2.3 measured styles, §2.3 "Placement"): cards are 200 px wide, 70 px tall with one
+// Card geometry and placement (measured styles, "Placement"): cards are 200 px wide, 70 px tall with one
 // outcome; multi-outcome cards list their outcomes in 22 px rows (If = 116 px). Next blocks go one 270 px column to the
 // right of their source (rows 150 px apart per outcome, moved down past occupied slots); palette blocks without a
 // selection go +70 / +70 from the last block. Pure.

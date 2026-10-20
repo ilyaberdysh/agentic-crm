@@ -1,5 +1,5 @@
-// The overlay store (E4): one per tab, outside React so any feature (a table row, a sidebar favorite, a toast
-// action) can open a note or a record overlay. <OverlayHost> mounts once in the app shell: it reconciles the store
+// The overlay store: one per tab, outside React so any feature (a table row, a sidebar favorite, a toast
+// action) can open a note or a record overlay. <OverlayHost> mounts once in the UI shell: it reconciles the store
 // with the URL on every location change and lends the store a navigator so that the URL follows the top layer.
 // Detached windows (dock bubbles, the floating panel) are kept in sessionStorage so they survive a reload of the tab.
 import { useSyncExternalStore } from 'react';
@@ -118,7 +118,7 @@ export function useOverlayState(): OverlayState {
   return useSyncExternalStore(overlayStore.subscribe, overlayStore.getState, overlayStore.getState);
 }
 
-// ---- public API (re-exported from ./index) ----------------------------------------------------------------------
+// ---- public API (re-exported from./index) ----------------------------------------------------------------------
 
 export interface OpenWindowOptions {
   /** `modal` (default, URL `?modal=…&id=…`), `floating` (pinned panel) or `minimized` (dock bubble). */
@@ -141,7 +141,7 @@ export function openWindow(kind: WindowKind, id: string, { mode = 'modal' }: Ope
 }
 
 /**
- * Opens a record as a full-viewport overlay above the current page (D README §2.7; `?modal=record&id=…&object=…`).
+ * Opens a record as a full-viewport overlay above the current page, with its state reflected in the URL.
  * `list` is the ordered records of the originating view: the overlay shows "n of N in ‹label›" and K / J step
  * through it.
  */

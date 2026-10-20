@@ -1,4 +1,4 @@
-// The import wizard frame (C2 import.md §I1): header (overlay: × + "Import" + destination chip / file name, Help or ⋮;
+// The import wizard frame: header (overlay: × + "Import" + destination chip / file name, Help or ⋮;
 // page: breadcrumbs "<Object> / Import / <file>" + ⋮), the stepper "1 Upload file › 2 Map columns › 3 Review values ›
 // 4 Preview import" (previous steps clickable), then the step. A job that has been confirmed only shows its overview.
 import {

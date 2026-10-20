@@ -1,4 +1,4 @@
-// The create-record dialog content (layout.md §8), used by the gallery and the modal parity frame.
+// The create-record dialog content, used by the gallery and the modal parity frame.
 import {
   Button,
   DialogBody,

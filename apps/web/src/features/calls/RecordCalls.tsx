@@ -1,4 +1,4 @@
-// The Calls tab of record pages (BACKLOG 10.15; D README §2.9, I calls §11.6; evidence/I/record-company-calls-tab.png): a
+// The Calls tab of record pages:
 // "Calls" header and a grid of cards (call tile, title, concise summary, date, participants, duration). A company's calls
 // are the meetings linked to it or with its people; a person's, the meetings they attend (`record` filter of the Calls
 // list). New calls appear without a reload (the server invalidates `call-recording-list` for the touched records).

@@ -1,4 +1,4 @@
-// AI autofill attributes (BACKLOG 10.05; I-ai-calls/ai-attributes.md): create a Summarize record attribute from the
+// AI autofill attributes (BACKLOG 10.05): create a Summarize record attribute from the
 // type picker's "AI Autofill" group, see the "AI Autofill" badge in settings, run it over a view's column with the
 // "Recalculate values" confirmation (records × credits), watch the cells go "AI is thinking..." → generated value
 // (realtime, no reload — X-24), and run one value from the record page. Runs with AGENTIC_CRM_LLM=fake (fixture

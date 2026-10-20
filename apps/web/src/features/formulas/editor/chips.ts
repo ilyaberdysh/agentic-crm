@@ -1,4 +1,4 @@
-// Reference chips (formulas.md §4.4): every `_{id}` token of the editor text renders as an atomic pill
+// Reference chips: every `_{id}` token of the editor text renders as an atomic pill
 // `{ Parent › Child }` (one "character" for cursor movement and deletion). States: default, selected (inside the
 // selection), error (covered by a diagnostic; the message shows on hover); an id missing from the token map reads
 // "{Unknown variable}". The token map, the diagnostics and the AI-result highlight live in state fields here.
@@ -71,7 +71,7 @@ export const errorField = StateField.define<ErrorRange[]>({
     ),
 });
 
-/** Dark tooltip under an error range with its message (§4.4 "Error hover"). */
+/** Dark tooltip under an error range with its message ( "Error hover"). */
 export const errorTooltip = hoverTooltip(
   (view, pos) => {
     const hit = messageAt(view.state.field(errorField), pos);

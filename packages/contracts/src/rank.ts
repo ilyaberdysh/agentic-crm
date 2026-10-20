@@ -41,7 +41,7 @@ function randomSuffix(length: number): string {
 }
 
 export interface RankOptions {
-  /** Append 4 random digits (as Attio does) so concurrent inserts at the same position do not collide. */
+  /** Append 4 random digits so concurrent inserts at the same position do not collide. */
   jitter?: boolean;
 }
 
@@ -70,7 +70,7 @@ export function rankSequence(count: number, before: string | null = null, after:
 }
 
 /**
- * Converts a decimal rank ("0.8471…", used by Attio for collections) into a base-36 rank with the same order,
+ * Converts a decimal rank ("0.8471…") into a base-36 rank with the same order,
  * for imports. Precision: 10 base-36 digits.
  */
 export function rankFromDecimal(decimal: string): string {

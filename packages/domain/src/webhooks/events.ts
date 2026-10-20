@@ -4,7 +4,7 @@
 // fans it out to the matching subscriptions.
 import type { Tx } from '../tx.ts';
 
-/** An event as recorded in change_log: Attio's payload without workspace_id and actor (added at fan-out). */
+/** An event as recorded in change_log, without workspace_id and actor (added at fan-out). */
 export interface DomainEvent {
   event_type: string;
   id: Record<string, string | null>;
@@ -109,7 +109,7 @@ export function workspaceMemberCreatedEvent(tx: Tx, memberId: string): void {
 const keyOf = (e: DomainEvent) => JSON.stringify([e.event_type, e.id, e.duplicate_record_id ?? null]);
 
 /**
- * One transaction's events as Attio sends them: duplicates dropped; a record or entry created (or produced by a merge)
+ * One transaction's events: duplicates dropped; a record or entry created (or produced by a merge)
  * in the transaction does not also report `updated`; notes created in it do not report content updates.
  */
 export function normalizeEvents(events: DomainEvent[]): DomainEvent[] {

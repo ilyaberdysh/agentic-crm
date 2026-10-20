@@ -1,4 +1,4 @@
-// Card "Edit" (pencil, C2 kanban.md K9): on a list board "Edit entry" — breadcrumb "<record> / Edit list entry", one
+// Card "Edit" (pencil, C2): on a list board "Edit entry" — breadcrumb "<record> / Edit list entry", one
 // labelled field per list attribute, "Finished editing ⌘↵"; on an object board "Edit <singular>" with the record's
 // editable attributes. Fields are the record page's form rows (features/record AttributeRow, variant "form"). The list
 // page may pass its own dialog through KanbanBoard's `onEditCard`.

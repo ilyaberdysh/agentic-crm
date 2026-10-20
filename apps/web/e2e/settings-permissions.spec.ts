@@ -1,4 +1,4 @@
-// Permissions, rules and developers (BACKLOG §6 acceptance 2–5): a member with Read only cannot open cell editors and
+// Permissions, rules and developers (acceptance 2–5): a member with Read only cannot open cell editors and
 // the API answers 403; No access hides the object and shows the no-access page; a team grant plus the workspace grant
 // resolve to the more permissive level (with the ⚠ inheritance hint); a rule violation holds the write and shows the
 // rule message, the ninth rule is refused with the limit message; webhooks, tokens, test deliveries and /v2.
@@ -101,7 +101,7 @@ test('Read only: the workspace level is set in the Permissions tab; members cann
   await p.waitForTimeout(300);
   await expect(p.getByRole('textbox', { name: 'Headcount' })).toHaveCount(0);
 
-  // The API refuses writes with Attio's 403 and the same message.
+  // The API refuses writes with the 403 and the same message.
   await expect(
     trpc(p, 'records.put', { entityDefinitionId: obj.id, entityInstanceId: uuid(), values: {} }),
   ).rejects.toThrow(/403/);

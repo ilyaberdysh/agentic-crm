@@ -1,7 +1,7 @@
-// Object page frame (BACKLOG 2.01; C1 README §2.1, §3.8): page header (object icon + plural name; presence avatars,
+// Object page frame (BACKLOG 2.01): page header (object icon + plural name; presence avatars,
 // Share, Comments, Help, ⋮ menu, Ask AI), view bar (view switcher, View settings | Import / Export, + New {singular}),
-// sort/filter bar, then the record table — or, for kanban views, the board (features/kanban) — for the view draft. Views and their drafts come from features/views (C2),
-// the table from features/table (C3).
+// sort/filter bar, then the record table — or, for kanban views, the board (features/kanban) — for the view draft. Views and their drafts come from features/views,
+// the table from features/table.
 
 import type { AttributeDefinition, EntityDefinition } from '@agentic-crm/contracts';
 import {

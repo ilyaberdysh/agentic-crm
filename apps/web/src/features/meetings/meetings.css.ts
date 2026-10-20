@@ -1,4 +1,4 @@
-// Meetings UI (F README §2.4–2.5; D README §3.8; B-shell/home.md §2.3; evidence D/D-add-meeting-dialog.png): the
+// Meeting dialog styles:
 // meeting modal (808 × 584 outer), the "New meeting" dialog, the RSVP pill, and the Home Meetings widget.
 import { scales, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
@@ -419,7 +419,7 @@ export const newFooter = style({
 
 export const pickerBox = style({ width: 320, display: 'flex', flexDirection: 'column' });
 
-// ---- Home widget (B-shell/home.md §2.3) ---------------------------------------------------------------------------------
+// ---- Home widget  ---------------------------------------------------------------------------------
 
 export const homeBlock = style({ display: 'flex', flexDirection: 'column', gap: 4 });
 export const homeHeader = style({

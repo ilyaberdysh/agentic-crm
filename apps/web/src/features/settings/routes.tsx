@@ -1,14 +1,14 @@
-// Routes below `/$workspaceSlug/settings` owned by slice 6 (J README §1): Profile, Workspace general, Members and teams
+// Routes below `/$workspaceSlug/settings` owned by: Profile, Workspace general, Members and teams
 // (members, member detail, teams, team page), the read-only members page, Developers and Security. The `_admin` route
 // group redirects non-admins (to Profile; Members and teams to the read-only page); `_non-admin` redirects admins.
 //
-//   account                                       Profile
-//   workspace                                     Workspace › General (admin)
-//   members-and-teams[/members[/$memberId]]       Members and teams (admin; `/` → members)
-//   members-and-teams/teams[/$teamId[/$tab]]      Teams, team page (configuration · members · usage)
-//   members-read-only                             read-only members (non-admins)
-//   developers[/access-tokens|/webhooks]          Developers (admin)
-//   security                                      Security (admin)
+// account Profile
+// workspace Workspace › General (admin)
+// members-and-teams[/members[/$memberId]] Members and teams (admin; `/` → members)
+// members-and-teams/teams[/$teamId[/$tab]] Teams, team page (configuration · members · usage)
+// members-read-only read-only members (non-admins)
+// developers[/access-tokens|/webhooks] Developers (admin)
+// security Security (admin)
 import { type AnyRoute, createRoute, redirect } from '@tanstack/react-router';
 import { DevelopersPage, type DevelopersTabId } from './developers/DevelopersPage';
 import { MemberDetailPage } from './members/MemberDetailPage';

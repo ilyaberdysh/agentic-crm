@@ -1,4 +1,4 @@
-// Query keys of slice 7 (email and calendar; features/{email,mailboxes,meetings,composer}). Every key lives under
+// Query keys for email and calendar resources. Every key lives under
 // ['ws', workspaceId, <resource>, …] where <resource> is the realtime invalidation vocabulary
 // (packages/realtime InvalidationResource; data/realtime/invalidation.ts maps a message onto a key prefix), so a
 // server invalidation refetches exactly the queries that show the changed data.

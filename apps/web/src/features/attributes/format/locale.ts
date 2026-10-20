@@ -1,15 +1,13 @@
 // The one locale rule for value formatting (BACKLOG 2.x acceptance 8, CROSS-DOMAIN X-11, B.25).
 //
-//   Every number, currency amount and percentage the app draws — table cells, record fields, chips, editors and the
-//   table's footer calculations — is formatted by `Intl` with ONE locale: the user's locale. Until users have a
-//   locale preference that is the browser's `navigator.language`. Attio mixes en-US and the browser locale in one
-//   footer row (filters-sorts-calcs §8); we deliberately do not.
+// Every number, currency amount and percentage is formatted by `Intl` with one locale: the user's locale.
+// Until users have a locale preference, that is the browser's `navigator.language`.
 //
-//   Dates and times use Attio's fixed English patterns ("Mar 1, 2026", "Mar 1st 2026, 12:30pm", "4 days ago") because
-//   the UI language is English, rendered in the user's time zone. Calendars start on the user's week-start day (X-10),
-//   derived from the locale until a user preference exists.
+// Dates and times use the fixed English patterns ("Mar 1, 2026", "Mar 1st 2026, 12:30pm", "4 days ago") because
+// the app language is English, rendered in the user's time zone. Calendars start on the user's week-start day (X-10),
+// derived from the locale until a user preference exists.
 //
-// Tests and the e2e parity run pin the settings with `setFormatSettings` (the curated Attio screenshots were taken in
+// Tests and the e2e visual review run pin the settings with `setFormatSettings` (the curated visual examples were taken in
 // a ru-RU / Europe/Moscow browser).
 import { useSyncExternalStore } from 'react';
 

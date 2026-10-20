@@ -1,4 +1,4 @@
-// Kanban board icons (slice 4, C2 kanban.md K2–K8): stage menu, board toggles and card footer → Lucide glyphs.
+// Kanban board icons for the stage menu, board toggles and card footer → Lucide glyphs.
 // Kept in their own map (spread into iconMap) so parallel slices add icons without touching the same lines.
 import {
   AlignJustify,

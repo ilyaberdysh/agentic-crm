@@ -158,7 +158,7 @@ export interface TrpcErrorShape {
   data: { code: string; httpStatus: number; path: string };
 }
 
-/** Error thrown by trpcCall for non-2xx answers, carrying the Attio envelope fields. */
+/** Error thrown by trpcCall for non-2xx answers, carrying the public API envelope fields. */
 export class TrpcCallError extends Error {
   constructor(
     readonly status: number,

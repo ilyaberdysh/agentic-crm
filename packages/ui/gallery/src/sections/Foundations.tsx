@@ -188,7 +188,7 @@ export function Foundations() {
       <Section
         id="icons"
         title="Icons"
-        note="Lucide via <Icon>; stroke per optical size (12 → 2, 16 → 1.5, 18 → 1.33) keeps Attio's 1 px weight."
+        note="Lucide via <Icon>; stroke per optical size (12 → 2, 16 → 1.5, 18 → 1.33) keeps a consistent 1 px weight."
       >
         <Panels>
           {() => (

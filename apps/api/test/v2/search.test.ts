@@ -1,7 +1,7 @@
 // /v2 contract tests (BACKLOG 5.01): POST /v2/objects/records/search over the shared search index — people,
-// companies and custom-object hits in Attio's three response shapes, ranking across objects, the empty-query default
+// companies and custom-object hits in the public API's three response shapes, ranking across objects, the empty-query default
 // set, limits, request_as (workspace / member by id or email, the member's permissions), scopes and errors. Every
-// 200 is validated against Attio's OpenAPI response schema and the generated Zod schema.
+// 200 is validated against the public API's OpenAPI response schema and the generated Zod schema.
 import { memberContext, newId } from '@agentic-crm/domain';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { addMember, type Harness, signUp, startHarness } from '../support/harness';
@@ -116,15 +116,13 @@ describe('POST /v2/objects/records/search', () => {
     const one = expectOk('searchRecords', await search({ query: 'acme', objects: [companies.id], limit: 1 }));
     expect(one.data).toHaveLength(1);
     expect(one.data[0].object_slug).toBe('companies');
-    // Body validation answers Attio's generic validation_type (the operation only declares value_not_found).
-    const invalid = { deviation: 'searchRecords declares only value_not_found for 400' };
     for (const body of [
       { query: 'acme', objects: ['companies'], limit: 26 },
       { query: 'x'.repeat(257), objects: ['companies'] },
       { query: 'acme', objects: [] },
       { query: 'acme' },
     ]) {
-      expectError('searchRecords', await search(body), 400, 'validation_type', invalid);
+      expectError('searchRecords', await search(body), 400, 'validation_type');
     }
     const unknown = expectError(
       'searchRecords',
@@ -191,9 +189,6 @@ describe('POST /v2/objects/records/search', () => {
       await search({ query: 'acme', objects: ['companies'] }, token),
       403,
       'unauthorized',
-      {
-        deviation: '403 is not declared for this operation',
-      },
     );
     expect(denied.message).toContain('object_configuration:read');
     const ok = await f.mint(['record_permission:read', 'object_configuration:read']);

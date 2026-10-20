@@ -1,6 +1,6 @@
-// Cell value hydration (D-03; C1 README §5 "Column values"): each visible cell reads its normalised values key; the
-// slice-1 batching loader merges the reads of one frame into one `values.list` per attribute (≤ 1337 ids), like
-// Attio's per-column batches while scrolling. Pending writes from the mutation queue overlay the server values.
+// Cell value hydration (D-03;  "Column values"): each visible cell reads its normalised values key; the
+//  batching loader merges the reads of one frame into one `values.list` per attribute (≤ 1337 ids), like
+// the per-column batches while scrolling. Pending writes from the mutation queue overlay the server values.
 // Path columns ("Company › Domain") resolve hop by hop through record-reference values.
 import type { AttributeDefinition, AttributeValue, Path } from '@agentic-crm/contracts';
 import { useQueries, useQuery } from '@tanstack/react-query';
@@ -105,7 +105,7 @@ function useHop(workspace: WorkspaceRef, path: Path, hop: number, recordIds: str
 
 // ---- record titles -------------------------------------------------------------------------------------------------
 
-/** The record label attribute: the object's display path (epithet), else a `name` attribute (A §4.3). */
+/** The record label attribute: the object's display path, or a `name` attribute. */
 export function titleAttributeOf(
   object: { epithetPath?: Path | null },
   attributes: AttributeDefinition[],

@@ -3,7 +3,14 @@
 // (302 to a signed URL). Connected storage providers are not supported (no third-party storage).
 import type { StorageEntry } from '@agentic-crm/contracts';
 import { MAX_FILE_BYTES } from '@agentic-crm/contracts';
-import { createFileEntryBody, getFilePathParams, listFilesQuery, v2Operations } from '@agentic-crm/contracts/v2';
+import {
+  BUILTIN_STORAGE_PROVIDER,
+  createFileEntryBody,
+  getFilePathParams,
+  LEGACY_STORAGE_PROVIDER,
+  listFilesQuery,
+  v2Operations,
+} from '@agentic-crm/contracts/v2';
 import { newId } from '@agentic-crm/domain';
 import { fileToPublic } from '../collab-mappers';
 import type { V2Context } from '../context';
@@ -40,11 +47,16 @@ export const fileRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/files',
+    operationId: 'listFiles',
     scopes: v2Operations.listFiles.scopes,
     async handler(v2, request) {
       const query = parseInput(listFilesQuery, request.query, 'query parameters');
       const def = await v2.object(query.object);
-      if (query.storage_provider && query.storage_provider !== 'attio')
+      if (
+        query.storage_provider &&
+        query.storage_provider !== BUILTIN_STORAGE_PROVIDER &&
+        query.storage_provider !== LEGACY_STORAGE_PROVIDER
+      )
         return { data: [], pagination: { next_cursor: null } };
       const { entries } = await withHints({ object: query.object, recordId: query.record_id }, () =>
         v2.domain.files.list(v2.ctx, {
@@ -70,6 +82,7 @@ export const fileRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/files',
+    operationId: 'createFileEntry',
     scopes: v2Operations.createFileEntry.scopes,
     async handler(v2, request) {
       const body = parseInput(createFileEntryBody, request.body, 'request body');
@@ -94,6 +107,7 @@ export const fileRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/files/upload',
+    operationId: 'uploadFile',
     scopes: v2Operations.uploadFile.scopes,
     async handler(v2, request, reply) {
       const body = request.body;
@@ -126,6 +140,7 @@ export const fileRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/files/:file_id',
+    operationId: 'getFile',
     scopes: v2Operations.getFile.scopes,
     async handler(v2, request) {
       const entry = await getEntry(v2, fileId(params(request)));
@@ -135,6 +150,7 @@ export const fileRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/files/:file_id',
+    operationId: 'deleteFile',
     scopes: v2Operations.deleteFile.scopes,
     async handler(v2, request) {
       const id = fileId(params(request));
@@ -146,6 +162,7 @@ export const fileRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/files/:file_id/download',
+    operationId: 'downloadFile',
     scopes: v2Operations.downloadFile.scopes,
     async handler(v2, request, reply) {
       const id = fileId(params(request));

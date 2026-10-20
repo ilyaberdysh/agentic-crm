@@ -1,4 +1,4 @@
-// Webhook fan-out and delivery (worker; B.28, Attio docs "Authenticating", "Idempotency", "Delivery attempts").
+// Webhook fan-out and delivery.
 //
 // Fan-out reads the 'domain-events' rows of change_log whose transaction ids lie between the previous cursor and the
 // current snapshot's xmin (transactions of other databases ignored): every transaction of this database below it has
@@ -8,7 +8,8 @@
 // transaction as the inserts. A transaction of this database still running holds later events back until it ends.
 //
 // Delivery claims due rows with a short lease (no locks are held during HTTP), POSTs `{webhook_id, events:[event]}`
-// with `Attio-Signature` / `X-Attio-Signature` = hex HMAC-SHA256 of the body under the webhook's secret and
+// with `agentic-crm-signature` and legacy `attio-signature` / `x-attio-signature` compatibility headers, all carrying
+// the hex HMAC-SHA256 of the body under the webhook's secret, and
 // `Idempotency-Key` = the delivery id, and records the outcome: 2xx succeeds; anything else (or a 5 s timeout) is
 // retried with exponential back-off up to 10 attempts, after which the delivery fails and the webhook is marked
 // degraded. A later success marks it active again. Test deliveries are attempted once.
@@ -25,7 +26,7 @@ import { newId } from '../ids.ts';
 import { runAsOwner } from '../tx.ts';
 import type { DomainEvent } from './events.ts';
 
-/** Sends one request; the default uses fetch with Attio's 5 s timeout. Tests inject their own. */
+/** Sends one request; the default uses fetch with a 5 s timeout. Tests inject their own. */
 export type WebhookSender = (request: {
   url: string;
   headers: Record<string, string>;
@@ -48,7 +49,7 @@ export function signWebhookBody(secret: string, body: string): string {
   return createHmac('sha256', secret).update(body, 'utf8').digest('hex');
 }
 
-/** Attio's filter semantics: `$and` / `$or` of equals / not_equals on dot paths of the event payload. */
+/** Filter semantics: `$and` / `$or` of equals / not_equals on dot paths of the event payload. */
 export function filterMatches(filter: WebhookFilter, event: Record<string, unknown>): boolean {
   if (!filter) return true;
   const ops = '$and' in filter ? filter.$and : filter.$or;
@@ -105,7 +106,7 @@ async function noteParents(trx: Trx, workspaceId: string, noteIds: string[]) {
   return out;
 }
 
-/** Completes recorded events into Attio payloads (workspace id, actor, parent ids). */
+/** Completes recorded events into webhook payloads (workspace id, actor, parent ids). */
 async function completeEvents(
   trx: Trx,
   workspaceId: string,
@@ -352,6 +353,7 @@ async function attempt(database: Database, d: Claimed, send: WebhookSender): Pro
       body,
       headers: {
         'content-type': 'application/json',
+        'agentic-crm-signature': signature,
         'attio-signature': signature,
         'x-attio-signature': signature,
         'idempotency-key': d.id,

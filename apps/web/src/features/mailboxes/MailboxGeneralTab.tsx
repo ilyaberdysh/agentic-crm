@@ -1,4 +1,4 @@
-// Mailbox → General (F settings §2.1; evidence/F/mailbox-general-email-visibility.png): "Email visibility" with the
+// Mailbox → General (F settings): "Email visibility" with the
 // three radio cards, and "Individuals with full access" (Add person, the people who have it, the info alert).
 import { Avatar, Banner, Button, IconButton, toast } from '@agentic-crm/ui';
 import { useState } from 'react';

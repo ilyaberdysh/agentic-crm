@@ -1,4 +1,4 @@
-// Clicking a link in the editor opens a small popover: Open, Edit, Unlink (E editor.md §4 "Link interactions").
+// Clicking a link in the editor opens a small popover: Open, Edit, Unlink ("Link interactions").
 // There is no URL unfurl / preview card.
 import { useThemeClassName } from '@agentic-crm/ui';
 import { autoUpdate, FloatingPortal, flip, offset, shift, useFloating } from '@floating-ui/react';

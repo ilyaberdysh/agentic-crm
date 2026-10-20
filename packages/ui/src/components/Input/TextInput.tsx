@@ -10,7 +10,7 @@ import * as s from '../Field/Field.css';
 export type InputSize = 28 | 32 | 34;
 
 export interface TextInputProps extends Omit<TextFieldProps, 'children' | 'className' | 'style'>, FieldChromeProps {
-  /** 28 | 32 | 34 (default, as in Attio's kit; settings and dialogs use 32). */
+  /** 28 | 32 | 34 (default, as in the kit; settings and dialogs use 32). */
   size?: InputSize;
   placeholder?: string;
   /** Leading 16 px icon in content.secondary. */

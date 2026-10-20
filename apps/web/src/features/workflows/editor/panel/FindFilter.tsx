@@ -1,5 +1,5 @@
-// Find records / Find list entries filters (README §3.2 "Find* filters"; contracts: the view predicate AST). The views
-// filter bar (features/views, C2) edits it through a draft bound to this block instead of a saved view: same attribute
+// Find records / Find list entries filters ("Find* filters"; contracts: the view predicate AST). The views
+// filter bar (features/views) edits it through a draft bound to this block instead of a saved view: same attribute
 // picker, operators and value editors as table filters. Each complete change is written to the block's config.
 import type { ConfigExpr, Predicate, Sort, View } from '@agentic-crm/contracts';
 import { useEffect, useMemo, useRef, useSyncExternalStore } from 'react';

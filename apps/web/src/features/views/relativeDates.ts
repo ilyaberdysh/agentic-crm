@@ -1,4 +1,4 @@
-// Relative-date filter values (C1 filters-sorts-calcs §4; CROSS-DOMAIN X-05) on top of the shared presets in
+// Relative-date filter values (C1 filters-sorts-calcs; CROSS-DOMAIN X-05) on top of the shared presets in
 // packages/contracts (filter-sentences.ts): ISO-8601 durations with `valueType: 'dynamic'`, resolved by the server in
 // the viewer's time zone (snapshots.query `timeZone`; dates → the local day, timestamps → floored to the local hour).
 // Exact dates are static `YYYY-MM-DD` values (on timestamps they compare by local day).
@@ -16,7 +16,7 @@ export type DateValue = { kind: 'relative'; duration: string } | { kind: 'exact'
 export interface RelativePreset {
   id: RelativeDatePresetId;
   label: string;
-  /** Label for timestamps ("Now" instead of "Today", C1 §4). */
+  /** Label for timestamps ("Now" instead of "Today", C1). */
   timestampLabel: string;
   duration: string;
 }
@@ -39,7 +39,7 @@ export function daysDuration(days: number, direction: 'ago' | 'from-now'): strin
   return direction === 'ago' ? daysAgo(days) : daysFromNow(days);
 }
 
-/** The preset a stored duration encodes (also Attio's long form '-P0Y0M7DT0H0M0S'), if any. */
+/** The preset a stored duration encodes (also the long form '-P0Y0M7DT0H0M0S'), if any. */
 export function presetOf(duration: string): RelativePreset | undefined {
   const parsed = parseRelativeDate(duration);
   return parsed && 'preset' in parsed ? RELATIVE_PRESETS.find((p) => p.id === parsed.preset) : undefined;
@@ -91,7 +91,7 @@ export function viewerTimeZone(): string | undefined {
 }
 
 /**
- * Hour bucket for re-resolving relative filters (C1 §4: "Relative filters re-evaluate hourly"). Part of the snapshot
+ * Hour bucket for re-resolving relative filters (C1: "Relative filters re-evaluate hourly"). Part of the snapshot
  * query key when the filter has dynamic values, so the table re-queries at the top of every hour.
  */
 export function hourEpoch(now: number = Date.now()): number {

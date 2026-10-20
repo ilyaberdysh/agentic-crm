@@ -1,4 +1,4 @@
-// "Start with a view" (C1 README §2.2, evidence C1/01): shown when an object has no views. Two cards open the
+// "Start with a view" (evidence C1/01): shown when an object has no views. Two cards open the
 // "Create view" dialog with the type preselected; no toolbar or table is rendered in this state.
 import type { EntityDefinition, View } from '@agentic-crm/contracts';
 import { Icon } from '@agentic-crm/ui';
@@ -13,9 +13,9 @@ export interface StartWithAViewProps {
   /** No `create_entity_view` permission. */
   canCreate?: boolean;
   onCreateStatusAttribute?: () => void;
-  /** Below the cards (lists: "or" + "Delete list", C2 README §2.3). */
+  /** Below the cards (lists: "or" + "Delete list"). */
   extra?: ReactNode;
-  /** "Learn more" right below the content instead of at the bottom (lists, evidence/C2/list-no-views.png). */
+  /** "Learn more" right below the content instead of at the bottom (lists). */
   learnMoreInline?: boolean;
 }
 

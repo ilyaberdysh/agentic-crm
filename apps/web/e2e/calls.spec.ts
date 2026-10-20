@@ -1,4 +1,4 @@
-// Slice 10 calls UI (BACKLOG 10.11–10.15): the Calls list, the call page (transcript with speaker blocks, range links
+//  calls UI (BACKLOG 10.11–10.15): the Calls list, the call page (transcript with speaker blocks, range links
 // and the selection popover; speakers with focus; meeting; summary and insights), insight templates (list, editor,
 // presets, preview, publish / discard), calls on record pages, live updates (X-27) and Settings → Call intelligence.
 // Calls are imported through the public /v2 path (the mymeet integration) on a stack running AGENTIC_CRM_LLM=fake.

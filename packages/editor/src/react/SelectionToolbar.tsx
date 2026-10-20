@@ -1,4 +1,4 @@
-// Floating selection toolbar (E editor.md §4): appears above a mouse selection (not for keyboard-only selections),
+// Floating selection toolbar: appears above a mouse selection (not for keyboard-only selections),
 // starting at the selection's left edge (the curated crops show it start-aligned). Groups: block type | text colour, highlight | link | bold, italic, strikethrough (no underline).
 // Sub-pickers replace the toolbar content in place with a ‹ back button.
 import { useThemeClassName } from '@agentic-crm/ui';
@@ -30,7 +30,7 @@ type Mode = 'main' | 'block' | 'color' | 'highlight' | 'link';
 
 export type BlockKind = 'body' | 'h1' | 'h2' | 'h3' | 'ul' | 'ol';
 
-/** What a toolbar offers; the note editor shows everything, email editors a subset (F composer §2.5). */
+/** What a toolbar offers; the note editor shows everything, email editors a subset (F composer). */
 export interface ToolbarOptions {
   /** Block types of the "Body ▾" picker (default: all six). */
   blocks?: readonly BlockKind[];
@@ -134,7 +134,7 @@ function Back({ onPress }: { onPress: () => void }) {
 export interface SelectionToolbarProps {
   editor: Editor;
   options?: ToolbarOptions;
-  /** Set by the editor when a selection was made with the pointer (Attio shows no toolbar for keyboard selections). */
+  /** Set when the selection was made with the pointer; keyboard selections do not show the toolbar. */
   pointerSelection: boolean;
   onDismiss: () => void;
   /** Opens directly in link mode (from the link popover's Edit). */

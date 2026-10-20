@@ -1,4 +1,4 @@
-// Notes and note templates on the client (BACKLOG 3.12, 3.14; E README §3.1–3.2). Queries live under the realtime
+// Notes and note templates on the client (BACKLOG 3.12, 3.14). Queries live under the realtime
 // resources ['ws', ws, 'note' | 'note-list' | 'note-template' | 'note-template-list', …] (data/realtime/invalidation:
 // one prefix per resource). Mutations answer the canonical item plus a change seq: the item is written into its own
 // key and the seq becomes the accept-after watermark of the next reads.
@@ -120,7 +120,7 @@ export async function deleteNote(client: QueryClient, ws: WorkspaceRef, noteId: 
   const { seq } = await api.notes.delete.mutate({ noteId }, inWorkspace(ws));
   noteAcceptAfter(ws.id, seq);
   client.removeQueries({ queryKey: noteKeys.note(ws.id, noteId) });
-  // Drop the note from every cached list right away (no undo; E README §3.1).
+  // Drop the note from every cached list right away (no undo).
   client.setQueriesData<{ notes: Note[]; total: number }>({ queryKey: keys.resource(ws.id, 'note-list') }, (prev) =>
     prev?.notes.some((n) => n.id === noteId)
       ? { notes: prev.notes.filter((n) => n.id !== noteId), total: Math.max(0, prev.total - 1) }

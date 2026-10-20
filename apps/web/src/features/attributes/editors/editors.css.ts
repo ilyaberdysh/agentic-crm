@@ -1,4 +1,4 @@
-// Editor chrome (C1 cells.md §2, layout.md §4 "Cell editor", components.md §3/§7; measured on evidence/C1/25–33, 51,
+// Editor chrome (C1,  "Cell editor", /; measured on, 51,
 // D-project-text-editor, D-project-tags-editor).
 import { alpha, insetRing, scales, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
@@ -80,7 +80,7 @@ export const panelInline = style({
 
 export const dialog = style({ outline: 'none', display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1 });
 
-/** Search row: 36 px, icon at 12, text at 36, hairline below (evidence/C1/28). */
+/** Search row: 36 px, icon at 12, text at 36, hairline below. */
 export const searchRow = style({
   boxSizing: 'border-box',
   display: 'flex',
@@ -143,7 +143,7 @@ export const optionMain = style({ display: 'flex', alignItems: 'center', gap: 6,
 export const optionTrailing = style({ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', flex: 'none' });
 export const optionCheck = style({ color: c.content.accent, flex: 'none' });
 
-/** Status rows in the picker: 10 px between dot and title (cells use 8; evidence/C1/28). */
+/** Status rows in the picker: 10 px between dot and title (cells use 8). */
 export const statusOption = style({ selectors: { '&&': { gap: 10 } } });
 export const optionDescription = style({ ...text.text12.standard, color: c.content.secondary, minWidth: 0 });
 export const optionTexts = style({ display: 'flex', flexDirection: 'column', minWidth: 0 });
@@ -184,7 +184,7 @@ export const optionCheckbox = style({
 });
 export const optionCheckboxOn = style({ backgroundColor: c.surface.accent, borderColor: c.stroke.accent });
 
-// ---- calendar (components.md Dates; evidence/C1/25, 27) --------------------------------------------------------------
+// ---- Calendar ------------------------------------------------------------------------
 
 export const calendar = style({ display: 'flex', flexDirection: 'column', padding: '17px 16px 0' });
 
@@ -295,10 +295,10 @@ export const calDayOutside = style({ visibility: 'hidden' });
 
 export const timeInputs = style({ display: 'flex', gap: 8, marginBottom: 10 });
 
-/** Below the grid: 10 px to the fields / quick actions, 16 px bottom padding (evidence/C1/25, 27). */
+/** Below the grid: 10 px to the fields / quick actions, 16 px bottom padding (27). */
 export const calendarFooter = style({ padding: '10px 16px 16px' });
 
-/** Field shells: radius 10, inset stroke.primary, accent on focus (components.md Dates). */
+/** Field shells: radius 10, inset stroke.primary, accent on focus (Dates). */
 export const timeInput = style({
   boxSizing: 'border-box',
   height: 32,
@@ -342,11 +342,11 @@ export const quickAction = style({
   },
 });
 
-// ---- value lists (emails, domains, phones; evidence/C1/32, 33) ------------------------------------------------------
+// ---- Value lists (emails, domains, phones) ------------------------------------------------------
 
 export const valueList = style({ display: 'flex', flexDirection: 'column', padding: 4 });
 
-/** Value row: 12 px handle centred at x 20, text at x 36 (evidence/C1/32). */
+/** Value row: 12 px handle centred at x 20, text at x 36. */
 export const valueRow = style({
   display: 'flex',
   alignItems: 'center',
@@ -385,7 +385,7 @@ export const addRow = style({
   flex: 'none',
 });
 
-/** Hairline between the values and the add row, inset 4 px (evidence/C1/32). */
+/** Hairline between the values and the add row, inset 4 px. */
 export const listSeparator = style({ height: 1, margin: '0 4px', backgroundColor: c.stroke.primary, flex: 'none' });
 
 export const phoneRow = style({ display: 'flex', alignItems: 'center', gap: 3, height: 38, padding: '0 12px 0 10px' });
@@ -411,7 +411,7 @@ export const countryButton = style({
 
 export const countryChevron = style({ color: c.content.secondary });
 
-// ---- location form (D §3.2) ------------------------------------------------------------------------------------------
+// ---- location form (D) ------------------------------------------------------------------------------------------
 
 export const form = style({ display: 'flex', flexDirection: 'column', gap: 12, padding: 12 });
 export const formRow = style({ display: 'flex', gap: 8 });

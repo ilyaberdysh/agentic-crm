@@ -1,4 +1,4 @@
-// Formula attributes (BACKLOG 10.06; I-ai-calls/formulas.md): create a formula attribute from Settings → Objects →
+// Formula attributes (BACKLOG 10.06): create a formula attribute from Settings → Objects →
 // Projects with the editor sheet (chips from `{`, diagnostics with the error hover and Fix, preview against a record,
 // output type), save it, see the values in the table and on the record page, and change a dependency so the value
 // recomputes (< 2 s, acceptance 5). Runs with AGENTIC_CRM_LLM=fake (the AI composer answers from fixtures).

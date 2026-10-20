@@ -20,9 +20,9 @@ contain the full notices; do not relicense bundled icons or fonts as Apache-2.0.
 CODE_OF_CONDUCT.md is adapted from Contributor Covenant 2.1 and retains its
 upstream attribution and source link.
 
-The generated API contracts and UI token snapshots have unresolved provenance
-and redistribution questions documented in PROVENANCE.md. This NOTICE does not
-grant rights to those inputs or represent their clearance for publication.
+The maintainer's source-use disposition for the UI implementation and the
+replacement of the historical generated API snapshot are documented in
+PROVENANCE.md. This NOTICE does not alter third-party license obligations.
 
 Before publishing a binary, container image, hosted distribution, or other
 artifact that bundles third-party code, release maintainers must generate and

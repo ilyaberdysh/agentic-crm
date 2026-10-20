@@ -1,4 +1,4 @@
-// "Output" selector (formulas.md §4.7): ghost 28 px button "Output: Auto" / "Output: <Type>"; menu (min 300 px) with
+// "Output" selector: ghost 28 px button "Output: Auto" / "Output: <Type>"; menu (min 300 px) with
 // "Auto" followed by the inferred type in secondary text, a separator, then the 8 overrides with their type icons.
 import type { OutputKind, OutputOverride } from '@agentic-crm/formula';
 import { Button, CheckCircleFilled, Menu, MenuItem, MenuSeparator, MenuTrigger } from '@agentic-crm/ui';

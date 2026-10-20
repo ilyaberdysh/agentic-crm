@@ -1,4 +1,4 @@
-// Workflows index `/$ws/automations/workflows` (BACKLOG 8.01; README §2.1; evidence G/G-list-rows.png,
+// Workflows index `/$ws/automations/workflows`:
 // G-list-empty.png): header (Help, Ask AI); toolbar "Sorted by Last published" | Filter (Created by) … search, View
 // settings (Group by, Show favorites, Show archived), "+ New workflow"; the Favorites strip; the table grouped by
 // date buckets (default "Last published"; paused and never-published workflows fall into "Unpublished"). Rows link

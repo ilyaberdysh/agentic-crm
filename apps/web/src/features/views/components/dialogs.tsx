@@ -1,5 +1,5 @@
-// View dialogs (C1 README §3.1–3.2): "Create view" (type cards + title (+ kanban status attribute)), "Edit {title}"
-// (rename), "Save as new view", "Column label". Standalone modals at 14vh (components.md §7 Dialog).
+// View dialogs: "Create view" (type cards + title (+ kanban status attribute)), "Edit {title}"
+// (rename), "Save as new view", "Column label". Standalone modals at 14vh (Dialog).
 import type { AttributeDefinition, Path, View } from '@agentic-crm/contracts';
 import { Button, DialogFooter, DialogHeader, Icon, Modal, PopoverPanel, TextInput } from '@agentic-crm/ui';
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react';
@@ -392,7 +392,7 @@ export interface ColumnLabelDialogProps {
   onSave: (label: string | null) => void;
 }
 
-/** "Edit column label" (C1 §3.2): heading = view title, placeholder = attribute title, Clear label when set. */
+/** "Edit column label" (C1): heading = view title, placeholder = attribute title, Clear label when set. */
 export function ColumnLabelDialog({
   isOpen,
   onOpenChange,

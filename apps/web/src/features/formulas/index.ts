@@ -1,4 +1,4 @@
-// Public surface of formula attributes (BACKLOG 10.06; formulas.md): the dialog's "Formula" field and editor sheet,
+// Public surface of formula attributes (BACKLOG 10.06): the dialog's "Formula" field and editor sheet,
 // the draft ⇄ attribute conversions, snapshot loading for the edit dialog, annotations for cells.
 export { isAnnotated, useAnnotation, useFormulaSnapshot } from './data';
 export { FormulaField } from './FormulaField';

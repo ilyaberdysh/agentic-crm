@@ -1,4 +1,4 @@
-// Tasks (E README §2.6–2.7b; evidence E/tasks-page.png, task-create-dialog.png, task-edit-dialog.png,
+// Tasks (b; evidence E/tasks-page.png, task-create-dialog.png, task-edit-dialog.png,
 // task-deadline-picker.png, tasks-bulk-select-dark.png): 32 px header and group rows, 52 px task rows with a 16 px round
 // checkbox, the 808 px create / edit dialog with chips in its footer, the deadline popover and the bulk toolbar.
 import { alpha, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';

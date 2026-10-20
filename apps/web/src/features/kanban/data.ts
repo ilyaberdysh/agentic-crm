@@ -1,12 +1,12 @@
-// The kanban data module (slice4-contracts.md "Kanban"; C2 kanban.md K2 data loading, K3 stage edits, K7, K8 moves).
+// Data loading and mutations for the kanban board.
 // Every server call of the board goes through here, on the `kanban.*` procedures:
-//   kanban.columns      one snapshot per visible column (the view's filter AND the column's stage — "No stage" = no
-//                       current value), its total, first ids and the board calculation per column (X-23);
-//   kanban.columnChunk  more ids of a long column;
-//   kanban.move         writes the stage value — on the card, or on its parent record for `[parent_record, stage]`
-//                       boards (history and Activity, retire + insert);
-//   kanban.timeInStage  the "0d" chip (now − active_from of the current grouping value, overdue vs target time);
-//   views.update        the view's kanban settings (`{kanban: {...partial}}`).
+// kanban.columns one snapshot per visible column (the view's filter AND the column's stage — "No stage" = no
+// current value), its total, first ids and the board calculation per column (X-23);
+// kanban.columnChunk  more ids of a long column;
+// kanban.move writes the stage value — on the card, or on its parent record for `[parent_record, stage]`
+// boards (history and Activity, retire + insert);
+// kanban.timeInStage  the "0d" chip (now − active_from of the current grouping value, overdue vs target time);
+// views.update the view's kanban settings (`{kanban: {...partial}}`).
 import type {
   AttributeDefinition,
   Path,
@@ -138,7 +138,7 @@ export async function fetchColumnChunk(params: BoardParams, page: ColumnPage, st
   return chunk.ids;
 }
 
-// ---- moves (K8) -------------------------------------------------------------------------------------------------------
+// ---- moves  -------------------------------------------------------------------------------------------------------
 
 export interface MoveInput {
   workspace: WorkspaceRef;
@@ -252,7 +252,7 @@ export function optimisticStage(ws: WorkspaceRef, leaf: LeafRef, input: MoveInpu
 }
 
 /**
- * Writes the card's new stage with `kanban.move` (client-minted value id: a retried move writes once, I3) and puts the
+ * Writes the card's new stage with `kanban.move` (client-minted value id: a retried move writes once) and puts the
  * target's current values into the cache. The caller has already moved the card optimistically; errors propagate for
  * its rollback. Returns whether the destination stage celebrates (Confetti).
  */
@@ -275,7 +275,7 @@ export async function moveCard(input: MoveInput): Promise<{ celebrate: boolean; 
   return { celebrate: res.celebrate, changed: res.changed };
 }
 
-// ---- time in stage (K2 footer chip, C2 README §4) ----------------------------------------------------------------------
+// ---- time in stage (K2 footer chip) ----------------------------------------------------------------------
 
 export type TimeInStage = RouterOutputs['kanban']['timeInStage']['items'][string];
 
@@ -328,7 +328,7 @@ export const timeInStageQuery = (key: TimeKey & { valueId: string }) =>
     staleTime: 60 * 60_000,
   });
 
-// ---- view settings (K4) ---------------------------------------------------------------------------------------------------
+// ---- view settings  ---------------------------------------------------------------------------------------------------
 
 /** Saves a change of the view's kanban settings: optimistic on the cached view, then `views.update({kanban})`. */
 export async function updateKanbanView(ws: WorkspaceRef, view: View, patch: ConfigPatch): Promise<void> {
@@ -346,7 +346,7 @@ export async function updateKanbanView(ws: WorkspaceRef, view: View, patch: Conf
   }
 }
 
-// ---- stages and options (K3) -----------------------------------------------------------------------------------------
+// ---- stages and options  -----------------------------------------------------------------------------------------
 
 type OptionLike = PipelineStage | SelectOption;
 
@@ -537,12 +537,12 @@ export async function addListEntry(
       ? { [first.attributeDefinitionId]: [{ value: stageValueInput(stage.kind, stage.stageId) }] }
       : undefined;
   const result = await api.entries.add.mutate(
-    // Client-minted entry id: a retried add creates one entry (I3).
+    // Client-minted entry id: a retried add creates one entry.
     { listId, parentRecords: [record], entryIds: [newId()], ...(values ? { values } : {}), onDuplicate: 'keep' },
     inWorkspace(ws),
   );
   noteAcceptAfter(ws.id, result.seq);
-  // A new entry entering a stage with Confetti on celebrates too (C2 §2.5).
+  // A new entry entering a stage with Confetti on celebrates too (C2).
   if (result.celebrate) fireConfetti();
   if (stage.stageId && second) {
     const leaf = {

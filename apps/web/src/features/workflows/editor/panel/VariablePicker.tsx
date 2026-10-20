@@ -1,4 +1,4 @@
-// The variable picker (README §3.1): level 1 "Accessible blocks" (nearest first; outcomes without outputs greyed with
+// The variable picker: level 1 "Accessible blocks" (nearest first; outcomes without outputs greyed with
 // "no data"), level 2 a block's outputs, level 3+ attributes of a record / sub-fields of composite values with a
 // breadcrumb and back chevron. Items incompatible with the input are disabled, or flagged ⚠ when they can be drilled
 // into (isAssignable). Hovering a row outlines its block on the canvas.

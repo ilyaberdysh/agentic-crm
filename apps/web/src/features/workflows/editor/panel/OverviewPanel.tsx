@@ -1,4 +1,4 @@
-// Workflow overview (no block selected; README §3.3; evidence G/G-publish-confirm.png, G-version-history.png): tile +
+// Workflow overview when no block is selected: tile +
 // editable title (placeholder: the AI title or "Untitled Workflow"), description, the publish Checklist when the last
 // publish was refused, "Helpful resources"; the clock button toggles the version history timeline ("Current draft",
 // then published versions newest first with Live / Paused and the publisher). Picking a version opens it read-only.

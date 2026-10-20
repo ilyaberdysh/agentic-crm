@@ -1,6 +1,6 @@
 // Server-Sent Events over fetch (the stream needs the session cookie and the `x-workspace-slug` header, which
 // EventSource cannot send): GET /api/ai/threads/:threadId/stream?turnId=… → frames `id:` / `event:` / `data:` separated
-// by blank lines, `: ping` comments every 15 s. Each `data:` is one JSON `AiStreamEvent` (slice10-ask-server).
+// by blank lines, `: ping` comments every 15 s. Each `data:` is one JSON `AiStreamEvent`.
 import { type AiStreamEvent, aiStreamPath } from '@agentic-crm/contracts';
 import { HttpError } from '../../../data/trpc';
 

@@ -1,6 +1,6 @@
-// "Send email" on selected records (F composer §1; table bulk bar): a mass-send draft addressed to the people among
+// "Send email" on selected records (F composer; table bulk bar): a mass-send draft addressed to the people among
 // them — each person's primary email address and the record, so variables merge from it. Records without an email
-// address (and companies: Attio asks for related people first) are skipped with a note.
+// address (and companies: asks for related people first) are skipped with a note.
 import { toast } from '@agentic-crm/ui';
 import { api, inWorkspace, type WorkspaceRef } from '../../data/trpc';
 import { MASS_SEND_MAX, type RecipientLike } from './model';

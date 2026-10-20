@@ -1,4 +1,4 @@
-// Merge modal (D README §3.10; evidence D-merge-modal): ~800 px; info alert; [dashed slot | ⇄ | priority card] in a
+// Merge modal: ~800 px; info alert; [dashed slot | ⇄ | priority card] in a
 // framed group, "=" and the result preview; record cards (40 px avatar, name, primary identifier, counters footer).
 import { scales, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

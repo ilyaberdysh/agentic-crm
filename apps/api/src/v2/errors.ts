@@ -1,6 +1,6 @@
-// Public API errors in Attio's documented shape (api.json error responses, data-model-documented §3.6, §8.1):
+// Public REST error envelope:
 //   {"status_code": 404, "type": "invalid_request_error", "code": "not_found", "message": "…"}
-// Domain errors (packages/domain DomainError with an internal code) are translated here, with Attio's messages where
+// Domain errors (packages/domain DomainError with an internal code) are translated here, with endpoint-specific messages where
 // the spec documents one.
 import { DomainError } from '@agentic-crm/domain';
 
@@ -85,7 +85,7 @@ export function describeZodError(err: { issues: { path: PropertyKey[]; message: 
   return path ? `${path}: ${issue.message}` : issue.message;
 }
 
-/** What the failing call was about, so 404s and conflicts can use Attio's messages. */
+/** What the failing call was about, so 404s and conflicts can use the public API's messages. */
 export interface ErrorHints {
   object?: string;
   attribute?: string;
@@ -168,7 +168,7 @@ function fromDomainError(err: DomainError, hints: ErrorHints): PublicApiError {
   }
 }
 
-/** What a denied action was about, in Attio's 403 wording per endpoint (api.json 403 examples). */
+/** What a denied action was about, in the public API's 403 wording per endpoint (api.json 403 examples). */
 const DENIED: Record<string, { object: string; list: string }> = {
   create_entity_instance: { object: 'create this record', list: 'create entries in this list' },
   update_entity_instance: { object: 'update this record', list: 'update entries in this list' },

@@ -1,4 +1,4 @@
-// Record page layout editor (D README §2.8; evidence D-layout-*): a WYSIWYG skeleton of the record page — header
+// Record page layout editor: a WYSIWYG skeleton of the record page — header
 // with "Record name", the actions row (hover outline + "✎ Edit"), dashed editable section cards, a locked Lists card,
 // "+ Add section"; on the right tab pills with ⋮ menus and "+ Add tab", Highlights with "+ Add widget (n/6)" and
 // widget cards; the dirty bar at the bottom.

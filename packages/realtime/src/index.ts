@@ -28,7 +28,7 @@ export type Actor =
   | { type: 'system'; id: string | null }
   | { type: 'workflow'; id: string };
 
-/** Resources that can be invalidated. Mirrors Attio's `<resource>-invalidated` / `-master-list-invalidated` events. */
+/** Resources that can be invalidated. */
 export type InvalidationResource =
   | 'workspace'
   | 'workspace-member'
@@ -62,13 +62,12 @@ export type InvalidationResource =
   | 'member-preferences' // the member's calendar preferences (audience: that member only)
   /** A rich-text document's projections changed (blocks/markdown; scope.docType, scope.parentRef, scope.version). */
   | 'document'
-  // Slice 4 (CSV import, view export; Attio loaders import_job*, import_job_plan*, import_job_property*).
   | 'import-job' // one import (resourceId = job id): status, progress, plan, mapping, overrides (scope.importId)
   | 'import-job-list' // import history of the workspace / of an object or list (scope.entityDefinitionId)
   | 'entity-definition-export' // one view export (resourceId = export id; audience: its creator)
   // Slice 5 (notifications; audience: the recipient only). resourceId = the inbox row (group) id, or null when many
   // rows changed (read / unread / archive); scope.memberId, scope.groupIds, scope.topics. Clients refetch the inbox
-  // list and the unread count (Attio notification-group(-mrl)-invalidated, …-acknowledgement-invalidated).
+  // Notifications track group changes and acknowledgement changes separately.
   | 'notification'
   | 'notification-preferences' // the member's notification preferences (audience: that member)
   // Slice 6 (settings). Grant changes invalidate 'entity-definition' (clients refetch resolved policies); team
@@ -79,7 +78,6 @@ export type InvalidationResource =
   | 'api-token-list' // developer access tokens (admins)
   | 'webhook' // one webhook (resourceId = webhook id): settings, status, deliveries
   | 'webhook-list'
-  // Slice 9 (reports and dashboards; Attio reporting-dashboard-*-invalidated, H api §4.6).
   | 'reporting-dashboard' // one dashboard header (resourceId = dashboard id): title, description, grants
   | 'reporting-dashboard-list' // the dashboards index (create, delete, rename)
   /** Cells, layout and reports of one dashboard (resourceId = dashboard id; scope.cellIds, scope.reportIds). */
@@ -138,7 +136,7 @@ export type InvalidationResource =
    * fan-out in the worker, never forwarded to clients.
    */
   | 'workflow-events'
-  // Slice 10 (AI layer; Attio merlin-*-invalidated, ask-agentic-internals §10). Threads are private: audience = owner.
+  // Threads are private: audience = owner.
   | 'ai-thread' // one thread header (resourceId = thread id): title, AI title, favourite, web search permission
   | 'ai-thread-list' // the member's threads (sidebar Chats, history)
   /** One turn (resourceId = turn id; scope.threadId): status, steps, parts, credit cost, feedback, suggestions. */
@@ -149,7 +147,6 @@ export type InvalidationResource =
   | 'ai-settings' // Ask Agentic settings: workspace (custom context, limit) or the member's (scope.memberId)
   | 'credit-usage' // credits spent (scope.source, scope.memberId): usage counters, ledger
   | 'record-ai-summary' // AI summary of a record (resourceId = entity definition id, scope.entityInstanceIds)
-  // Slice 10 (formula and AI attributes; Attio entity-annotation-invalidated[-batch], formula-generation-request-…).
   /**
    * Per-record formula / AI autofill state of one attribute (resourceId = attribute id; scope.entityDefinitionId,
    * scope.attributeDefinitionId, scope.entityInstanceIds): "Calculating...", "AI is thinking...", errors.
@@ -190,7 +187,7 @@ export interface PresenceMember {
 }
 
 /**
- * Room names are `<namespace>:<workspaceId>[:<param>...]` (mirrors Attio's channel naming, realtime.md §3);
+ * Room names are `<namespace>:<workspaceId>[:<param>...]`;
  * joining requires membership of that workspace.
  */
 export type ClientToServer =

@@ -1,4 +1,4 @@
-// Attributes tab and the create/edit attribute dialog (J attribute-dialogs; measured on evidence/J/object-attributes-
+// Attributes tab and the create/edit attribute dialog (J attribute-dialogs; measured on
 // tab.png and raw J s11/s12/s15–s25 dialog shots): table columns at x 27 / 50 / 295 / 407 / 553 / 741 inside the card;
 // dialog body padding 16, fields 16 apart, 34 px controls, 32 px constraint rows, separators inset 12 px.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
@@ -17,7 +17,7 @@ export const indent = style({ paddingLeft: 11 });
 
 export const headerRow = style({ minHeight: 40 });
 
-// While the page scrolls, the search row and the table header stay pinned (evidence/J/object-attributes-archived.png:
+// The search row and table header stay pinned while the page scrolls.
 // search at 16 px below the page header, the column header right under it). The toolbar's padding paints over rows
 // passing beneath; negative margins keep the static layout unchanged.
 export const stickyToolbar = style({

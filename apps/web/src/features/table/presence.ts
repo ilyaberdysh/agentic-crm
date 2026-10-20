@@ -1,5 +1,5 @@
-// View presence (BACKLOG 2.15; C1 README §5 realtime; ARCHITECTURE I4b): every tab on a view joins the room
-// `view:<workspaceId>:<viewId>`. Room *state* carries who is here and their active cell (Attio `__set_status`
+// View presence (BACKLOG 2.15;  realtime; ARCHITECTURE I4b): every tab on a view joins the room
+// `view:<workspaceId>:<viewId>`. Room *state* carries who is here and their active cell (the UI `__set_status`
 // location); *ephemeral* messages carry the live draft while a peer edits (`payload.draft.values`). Nothing here is
 // the source of truth: the committed value arrives through the normal write path + invalidation.
 import type { PresenceMember } from '@agentic-crm/realtime';
@@ -239,7 +239,7 @@ export function useViewPresence(
     if (!client) return;
     const room = client.joinRoom(`view:${workspaceId}:${viewId}`, { name: self.name, cell: null });
     return presence.attach(room, client.clientId);
-    // `connected` re-attaches so our own clientId (from the server's `ready`) is known.
+    // `connected` re-attaches so custom clientId (from the server's `ready`) is known.
   }, [client, connected, presence, workspaceId, viewId, self.name]);
   return presence;
 }

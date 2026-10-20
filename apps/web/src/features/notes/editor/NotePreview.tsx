@@ -1,4 +1,4 @@
-// Read-only render of a note / template body (E editor.md §2 "Note card preview": links not clickable, clipped by the
+// Read-only render of a note / template body ("Note card preview": links not clickable, clipped by the
 // caller). Stored flat `blocks` go through E1's <RichTextPreview>; bodies that only have a markdown projection (set
 // through /v2 before the collab server rebuilt them) are rendered from markdown.
 import type { DocumentContent } from '@agentic-crm/contracts';

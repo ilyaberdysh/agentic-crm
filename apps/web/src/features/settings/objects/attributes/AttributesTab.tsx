@@ -1,4 +1,4 @@
-// Attributes tab (J attribute-dialogs §1; evidence/J/object-attributes-tab.png, object-attributes-archived.png):
+// Attributes tab:
 // "Attributes / Modify and add object attributes" + "+ Create attribute"; search + Filter (one checkbox per data
 // type present, Hide archived, Hide system, Reset filters); table ⋮⋮ · Name (type icon, ⓘ, related object) · Data
 // type · Constraints · Properties ("System") · ⋮; system attributes first; collapsible "Archived" band. Rows reorder

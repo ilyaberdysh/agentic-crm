@@ -1,4 +1,4 @@
-// Slice 6 procedures over HTTP (BACKLOG §6 acceptance 2–5): Read only answers Attio's 403 envelope on writes, No
+// Slice 6 procedures over HTTP (BACKLOG §6 acceptance 2–5): Read only answers the public API's 403 envelope on writes, No
 // access hides the object from schema.objects.list and policies, a team grant beats a lower workspace grant, a rule
 // violation answers 422 PARTICLE_GATE_VIOLATION and the ninth rule the limit message, admin-only settings procedures,
 // and a webhook subscribed to record creation receives a signed delivery after a UI (tRPC) and a /v2 create.

@@ -1,4 +1,4 @@
-// Sidebar "Tasks" count (E README §2.6 "Sidebar badge"; components.md Badge 16 px primary): my incomplete tasks due by
+// Sidebar "Tasks" count ("Sidebar badge";  Badge 16 px primary): my incomplete tasks due by
 // the end of today in my time zone.
 import { Badge } from '@agentic-crm/ui';
 import { useCalendar } from './calendar';

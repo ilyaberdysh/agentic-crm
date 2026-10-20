@@ -1,4 +1,4 @@
-// The Insight Templates tab `/$ws/calls/templates` (BACKLOG 10.13; I calls §4.1; evidence/I/calls-templates-empty.png): a
+// The Insight Templates tab `/$ws/calls/templates` (BACKLOG 10.13; I calls): a
 // table of templates (title, sections, status, creator, last published) with a row menu (Archive / Restore, Delete) and
 // "New template" (a transient template is created and its editor opens).
 import {

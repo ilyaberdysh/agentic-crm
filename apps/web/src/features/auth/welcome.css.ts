@@ -1,4 +1,4 @@
-// Two-column onboarding card (K legacy-welcome §2, §6.2; evidence/K/welcome-sign-in*.png): 1130 × 692, two 564 px
+// Two-column onboarding card (K legacy-welcome): 1130 × 692, two 564 px
 // halves, 1px stroke.primary border, radius 20; the right half hides below `lg`; at phone width the border goes.
 import { breakpoints, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

@@ -1,9 +1,9 @@
 // /v2 contract tests: authentication, scopes, rate limits, GET /v2/self and workspace members.
-import { getSelfResponse } from '@agentic-crm/contracts/v2';
+import { getSelfResponse, PUBLIC_API_ISSUER } from '@agentic-crm/contracts/v2';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { parseScopes } from '../../src/cli/token-create';
 import { type Harness, startHarness } from '../support/harness';
-import { expectError, expectOk, slice, type V2Fixture, v2Fixture } from './support';
+import { expectError, expectOk, operationResponse, type V2Fixture, v2Fixture } from './support';
 
 let h: Harness;
 let f: V2Fixture;
@@ -17,7 +17,7 @@ afterAll(async () => {
 });
 
 describe('authentication', () => {
-  it('401 without a token, in Attio error shape', async () => {
+  it('401 without a token, in the public API error shape', async () => {
     const response = await f.call('GET', '/objects', { token: null });
     expectError('listObjects', response, 401, 'unauthorized');
     expect(response.body.type).toBe('auth_error');
@@ -72,7 +72,7 @@ describe('authentication', () => {
     );
   });
 
-  it('unknown /v2 routes answer 404 in Attio shape', async () => {
+  it('unknown /v2 routes answer 404 in the public API shape', async () => {
     const response = await f.call('GET', '/nope');
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({ status_code: 404, type: 'invalid_request_error', code: 'not_found' });
@@ -85,9 +85,7 @@ describe('authentication', () => {
       body: '{"data":',
     });
     const body = await response.json();
-    expectError('createObject', { status: response.status, headers: response.headers, body }, 400, 'validation_type', {
-      deviation: 'createObject declares only quota_exceeded for 400',
-    });
+    expectError('createObject', { status: response.status, headers: response.headers, body }, 400, 'validation_type');
   });
 });
 
@@ -126,7 +124,7 @@ describe('GET /v2/self', () => {
       token_type: 'Bearer',
       exp: null,
       sub: f.workspaceId,
-      iss: 'attio.com',
+      iss: PUBLIC_API_ISSUER,
       token_level: 'workspace',
       authorized_by_workspace_member_id: f.memberId,
       workspace_id: f.workspaceId,
@@ -150,10 +148,9 @@ describe('GET /v2/self', () => {
   });
 
   it('the documented examples match the generated schema', () => {
-    const examples = (slice.operations.getSelf as unknown as { examples: { response: Record<string, unknown> } })
-      .examples.response;
-    expect(Object.keys(examples).length).toBeGreaterThanOrEqual(4);
-    for (const example of Object.values(examples)) expect(getSelfResponse.safeParse(example).success).toBe(true);
+    const examples = operationResponse('getSelf', 200)?.content?.['application/json']?.examples ?? {};
+    expect(Object.keys(examples).length).toBeGreaterThanOrEqual(2);
+    for (const example of Object.values(examples)) expect(getSelfResponse.safeParse(example.value).success).toBe(true);
   });
 });
 
@@ -209,7 +206,7 @@ describe('contract validators', () => {
         values: { name: [{ value: 'x', attribute_type: 'text' }] },
       },
     };
-    // A value without its envelope (active_from, active_until, created_by_actor) is not an Attio value.
+    // Value responses must include their active interval and actor envelope.
     expect(() => expectOk('getRecord', { status: 200, headers, body: record })).toThrow(/OpenAPI schema/);
     expect(() =>
       expectError(
@@ -219,12 +216,17 @@ describe('contract validators', () => {
         'not_found',
       ),
     ).toThrow(/error shape/);
-    const unknownCode = { status_code: 404, type: 'invalid_request_error', code: 'nope', message: 'x' };
-    expect(() => expectError('getObject', { status: 404, headers, body: unknownCode }, 404, 'nope')).toThrow();
-    // A code outside the operation's declared enum needs a named deviation.
-    const undeclared = { status_code: 404, type: 'invalid_request_error', code: 'value_not_found', message: 'x' };
-    expect(() => expectError('getObject', { status: 404, headers, body: undeclared }, 404, 'value_not_found')).toThrow(
-      /OpenAPI schema/,
-    );
+    const emptyCode = { status_code: 404, type: 'invalid_request_error', code: '', message: 'x' };
+    expect(() => expectError('getObject', { status: 404, headers, body: emptyCode }, 404, '')).toThrow(/error shape/);
+    // Documented error codes share the same envelope across operations.
+    const lookup = { status_code: 404, type: 'invalid_request_error', code: 'value_not_found', message: 'x' };
+    expect(expectError('getObject', { status: 404, headers, body: lookup }, 404, 'value_not_found')).toEqual(lookup);
+    const internal = {
+      status_code: 500,
+      type: 'api_error',
+      code: 'internal_error',
+      message: 'An unexpected error occurred.',
+    };
+    expect(expectError('getObject', { status: 500, headers, body: internal }, 500, 'internal_error')).toEqual(internal);
   });
 });

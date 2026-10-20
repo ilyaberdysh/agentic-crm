@@ -1,5 +1,5 @@
 // Floating editor chrome: slash / insert menus, mention typeahead, selection toolbar, link popover
-// (E editor.md §4, §5, §8; components.md §7 menu chrome; motion.md: 80 ms side-aware scale/fade).
+// Menu chrome uses an 80 ms side-aware scale and fade.
 import { alpha, insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { keyframes, style } from '@vanilla-extract/css';
 
@@ -320,7 +320,7 @@ export const linkHref = style({
   whiteSpace: 'nowrap',
 });
 
-// ---- presence avatars (PresenceAvatarStack, components.md §5) ---------------------------------------------------
+// ---- presence avatars (PresenceAvatarStack) ---------------------------------------------------
 export const presenceStack = style({ display: 'inline-flex', alignItems: 'center', flexDirection: 'row' });
 export const presenceItem = style({
   display: 'inline-flex',

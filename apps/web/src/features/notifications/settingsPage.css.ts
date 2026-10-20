@@ -1,4 +1,4 @@
-// Settings → Notifications (evidence/B/settings-notifications.png): bordered radius-10 blocks; the table's channel
+// Settings → Notifications: bordered radius-10 blocks; the table's channel
 // columns are 84 px wide with the checkboxes centred.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

@@ -1,5 +1,5 @@
 // Helpers for the views e2e specs: tRPC calls from the signed-in page and a "[seed] All projects" view that mirrors
-// the column set of Attio's study view (C1 README §10), so screenshots line up with evidence/C1.
+// the column set of the study view for consistent visual examples.
 import { expect, type Page } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';
 import { submitSignIn } from './support.ts';
@@ -49,7 +49,7 @@ function uuidv7(): string {
   return `${ms.slice(0, 8)}-${ms.slice(8, 12)}-7${rand.slice(0, 3)}-${((Number.parseInt(rand.slice(3, 4), 16) & 0x3) | 0x8).toString(16)}${rand.slice(4, 7)}-${rand.slice(7, 19)}`;
 }
 
-/** Creates "[seed] All projects" on Projects with Attio's study column set; returns its id. */
+/** Creates "[seed] All projects" on Projects with the study column set; returns its id. */
 export async function createSeedView(page: Page, title = '[seed] All projects'): Promise<SeedView> {
   const objects = await trpc<{ id: string; apiSlug: string; entityType: string }[]>(page, 'schema.objects.list', {
     includeArchived: true,

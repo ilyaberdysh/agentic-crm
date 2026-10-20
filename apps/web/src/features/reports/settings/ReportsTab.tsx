@@ -1,4 +1,4 @@
-// Reports tab of a dashboard's settings (H README §3.11): table Report | Created at ("about 15 hours ago"), rows link to
+// Reports tab of a dashboard's settings: table Report | Created at ("about 15 hours ago"), rows link to
 // the report's full-screen view, ⋮ "Options" → "Delete report" (confirm "Report deletion" / "Deleting a report deletes
 // its data permanently and cannot be undone."). Empty: "There are no reports in this dashboard".
 import type { DashboardDetail } from '@agentic-crm/contracts';

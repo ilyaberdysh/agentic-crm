@@ -1,8 +1,8 @@
 // Creates a workspace API token for the public REST API (/v2) and prints its secret once.
 //   pnpm --filter @agentic-crm/api token:create <workspace-slug> <name> <scope…>
-// Scopes are Attio's `<resource>:<read|read-write>` strings (e.g. record_permission:read-write object_configuration:read),
+// Scopes use `<resource>:<read|read-write>` strings (e.g. record_permission:read-write object_configuration:read),
 // comma- or space-separated; `all` grants every scope read-write. The token is attributed to the workspace's first
-// admin (Attio's `authorized_by_workspace_member_id`).
+// admin (`authorized_by_workspace_member_id`).
 import { pathToFileURL } from 'node:url';
 import { type ApiScope, apiScopeResources, apiScopeSchema, type CreatedApiToken } from '@agentic-crm/contracts';
 import { createDb, type Database } from '@agentic-crm/db';

@@ -1,5 +1,5 @@
-// Small controls of the editor panel (builder §2): the popover select button, switch rows, the dashed "add" chips and
-// the included-stages / included-values multi-select popover (builder §3.2 "Included stages", §8).
+// Small controls of the editor panel (builder): the popover select button, switch rows, the dashed "add" chips and
+// the included-stages / included-values multi-select popover (builder "Included stages").
 import { Icon, type IconName, Popover, StatusDot, Switch } from '@agentic-crm/ui';
 import { type ReactNode, useMemo, useState } from 'react';
 import { Button as AriaButton } from 'react-aria-components';
@@ -148,8 +148,8 @@ export interface StageSelectProps {
 }
 
 /**
- * "All", `All excluding "Done"`, "Discovery, Build, Review, Done" or "All records, Discovery, Build, +2" (builder §3.2,
- * §8). `explicit` lists (funnels) never say "All".
+ * "All", `All excluding "Done"`, "Discovery, Build, Review, Done" or "All records, Discovery, Build, +2" (builder,
+ *). `explicit` lists (funnels) never say "All".
  */
 export function summariseSelection(
   options: StageOption[],
@@ -171,7 +171,7 @@ export function summariseSelection(
     ...(noneApplicable && noneChecked && excluded.length > 0 ? [extra?.noneLabel as string] : []),
   ];
   if (parts.length === 0) return 'None';
-  // Attio lists what fits the select ("Discovery, Build, Review, Done"; "All records, Discovery, Build, +2").
+  // the UI lists what fits the select ("Discovery, Build, Review, Done"; "All records, Discovery, Build, +2").
   const shown: string[] = [];
   for (const part of parts) {
     if (shown.length > 0 && [...shown, part].join(', ').length > LIST_BUDGET) break;

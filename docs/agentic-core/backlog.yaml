@@ -108,6 +108,6 @@ items:
     revisit_when: Before enabling the standalone runner for sensitive CRM data or publishing a runner image.
 
   - id: B018
-    title: Complete independent provenance review before public visibility
-    why_deferred: A refreshed automated technical audit on 2026-10-20 verified the final implementation head and advertised export refs. Gitleaks reported only the documented token-source SHA-256 in PROVENANCE.md, which was inspected as a content fingerprint rather than a credential. The audit also confirmed derivation of API contracts from Attio OpenAPI and UI tokens from shipped JS/CSS. Rights disposition, independent review of inherited implementation, and an author or rights-holder attestation remain unresolved; PROVENANCE.md records the evidence and closure checklist.
+    title: Complete the final public-ref provenance and privacy scan
+    why_deferred: The 2026-10-20 technical audit and maintainer attestation are recorded in PROVENANCE.md. The UI implementation is retained under the maintainer's lawful reverse-engineering and authorship disposition, and the historical generated API snapshot is being replaced by a product-owned contract. The remaining gate is technical: finish and test the replacement, remove stale product-specific comments, then scan every ref intended for publication and the relevant GitHub metadata.
     revisit_when: Before changing the personal repository from private to public.

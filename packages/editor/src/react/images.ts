@@ -1,4 +1,4 @@
-// Image insertion and upload (E editor.md §7): PNG / GIF / JPEG only, max 20 MB; file picker, paste and drop.
+// Image insertion and upload: PNG / GIF / JPEG only, max 20 MB; file picker, paste and drop.
 // The image block is inserted immediately with a client upload id (other editors see a placeholder of the right
 // size, this one a local preview); when the host's `uploadImage` resolves, the block gets its src + asset id.
 import { toast } from '@agentic-crm/ui';

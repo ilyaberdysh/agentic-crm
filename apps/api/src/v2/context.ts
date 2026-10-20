@@ -78,7 +78,7 @@ export class V2Context {
     return (await this.allDefinitions()).find((d) => d.id === id);
   }
 
-  /** Resolves `{object}` (slug or id) to a public object; 404 with Attio's message otherwise. */
+  /** Resolves `{object}` (slug or id) to a public object; 404 with the public API's message otherwise. */
   async object(slugOrId: string): Promise<EntityDefinition> {
     const key = slugOrId.toLowerCase();
     const def = (await this.allDefinitions()).find(
@@ -88,7 +88,7 @@ export class V2Context {
     return def;
   }
 
-  /** Resolves `{list}` (api slug or id) to a live list's collection-entry definition; Attio's 404 otherwise. */
+  /** Resolves `{list}` (api slug or id) to a live list's collection-entry definition; the public API's 404 otherwise. */
   async list(slugOrId: string): Promise<EntityDefinition> {
     const key = slugOrId.toLowerCase();
     const def = (await this.allDefinitions()).find(

@@ -1,4 +1,4 @@
-// Empty editor (README §2.2; evidence G/G-new-workflow-prompt.png): a ≈716 × 116 prompt box (radius 12), four
+// Empty editor: a ≈716 × 116 prompt box (radius 12), four
 // ≈172 × 46 suggestion chips, "or", the dashed ≈240 × 48 "Start from scratch" button and the trigger picker popover.
 import { alpha, insetRing, text, transitionColors, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

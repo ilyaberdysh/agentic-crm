@@ -1,4 +1,4 @@
-// Email modal ("View email", F README §2.3): 808 × ≈670 dialog (the overlay frame adds 3 px each side), header,
+// Email modal ("View email"): 808 × ≈670 dialog (the overlay frame adds 3 px each side), header,
 // subject block (18/600 + Share), message blocks (28 px avatar, name, "to …", actions, timestamp), the body in a
 // sandboxed iframe on white, attachment chips, and the restricted / unavailable cards.
 import { text, vars } from '@agentic-crm/ui/styles';

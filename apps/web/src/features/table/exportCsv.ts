@@ -1,6 +1,6 @@
-// CSV export of rows (C1 README §3.8 "Export view as CSV"; bulk "Export"): record title + the view's columns, cell
+// CSV export of rows ("Export view as CSV"; bulk "Export"): record title + the view's columns, cell
 // text from the registry's `copyText` (same formatting as the clipboard), values loaded in batches through the
-// slice-1 loaders. Runs in the browser (the server-side export job of Attio is not built yet).
+//  loaders. Runs in the browser.
 import type { AttributeDefinition, AttributeValue } from '@agentic-crm/contracts';
 import { toast } from '@agentic-crm/ui';
 import type { WorkspaceRef } from '../../data/trpc';

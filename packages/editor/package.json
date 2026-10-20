@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Rich-text editor (TipTap + Yjs) restricted to Attio's note model, plus the shared block/markdown projection",
+  "description": "Agentic CRM rich-text editor built with TipTap and Yjs, plus the shared block/markdown projection",
   "sideEffects": [
     "**/*.css",
     "**/*.css.ts"

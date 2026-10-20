@@ -1,4 +1,4 @@
-// Presence avatar stack for a note window header (E editor.md §10.5, components.md §5 PresenceAvatarStack): one
+// Presence avatar stack for a note window header (PresenceAvatarStack): one
 // avatar per distinct viewing user (current user included), 2 px surface ring, overlapping, max 10 then "+N".
 import { Avatar, type AvatarSize, Tooltip } from '@agentic-crm/ui';
 import { presenceHue } from '../model/colors.ts';

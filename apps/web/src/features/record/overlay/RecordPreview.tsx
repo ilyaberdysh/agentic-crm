@@ -1,4 +1,4 @@
-// Record preview drawer (BACKLOG 3.09; D README §2.7, C1 README §2.9; evidence D-view-preview-panel): a floating
+// Record preview drawer: a floating
 // ~496 px panel 8 px from the viewport edges, opened from a table row's "Open preview" without changing the URL.
 // Header: × · ↑ / ↓ · "{n} of {total} in {view}" · expand ("Open record"); body: avatar + title, Highlights (two
 // columns), Activity (3 events, "View all"), Tasks.

@@ -148,7 +148,7 @@ describe('agent execution reconciliation', () => {
 });
 
 describe('me', () => {
-  it('requires a session: 401 with the Attio envelope', async () => {
+  it('requires a session: 401 with the public API envelope', async () => {
     const response = await query('me');
     expect(response.status).toBe(401);
     const body = (await response.json()) as TrpcErrorBody;

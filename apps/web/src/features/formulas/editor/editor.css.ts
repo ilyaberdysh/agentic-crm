@@ -1,4 +1,4 @@
-// CodeMirror theme of the formula editor (formulas.md §4.4): mono 13 / 26 px lines, 12 px vertical padding, line
+// CodeMirror theme of the formula editor: mono 13 / 26 px lines, 12 px vertical padding, line
 // padding 0 12 px, a tertiary line-number gutter (min 39 px), selection = accent 20 %, `cm-formula-error` = red-subtle
 // background with a dotted critical underline, `cm-highlighted` = blue-subtle (AI result), chips as grey pills.
 import { alpha, fontFamily, text, vars } from '@agentic-crm/ui/styles';
@@ -113,7 +113,7 @@ globalStyle('.cm-formula-chip-brace, .cm-formula-chip-sep, .cm-formula-chip-fiel
   color: c.content.tertiary,
 });
 
-// ---- tooltips and popups (portalled inside .cm-editor) ------------------------------------------------------------
+// ---- tooltips and popups (portalled inside.cm-editor) ------------------------------------------------------------
 
 globalStyle(`${root} .cm-tooltip`, { border: 'none', backgroundColor: 'transparent' });
 globalStyle(`${root} .cm-formula-tooltip`, {

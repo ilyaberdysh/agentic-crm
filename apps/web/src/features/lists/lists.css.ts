@@ -1,5 +1,5 @@
-// Styles of the lists feature (C2 README §2; evidence/C2/*, J/list-configuration-parent-object.png; layout.md,
-// components.md). Picker dialogs ("Choose record", "Choose list", Duplicates) share one command-palette frame:
+// Styles of the lists feature:
+//). Picker dialogs ("Choose record", "Choose list", Duplicates) share one command-palette frame:
 // 808 px outer frame, 45 px header, 52 px search row (16 px text), 36 px rows with 1 px gaps, 45 px footer with the
 // "↑ ↓ Navigate" hint and the primary action.
 import { text, vars } from '@agentic-crm/ui/styles';
@@ -299,7 +299,7 @@ export const dupCheck = style({ display: 'flex', alignItems: 'center', height: 4
 
 globalStyle(`${dupCheck} label`, { color: c.content.secondary });
 
-// ---- list page header (C2 §2.2: emoji button + name button, inline rename) ------------------------------------
+// ---- list page header (C2: emoji button + name button, inline rename) ------------------------------------
 
 export const titleGroup = style({ display: 'flex', alignItems: 'center', gap: 2, minWidth: 0 });
 
@@ -362,7 +362,7 @@ export const nameInput = style({
   fontWeight: 500,
 });
 
-// ---- empty list table (evidence/C2/list-empty-table.png) -------------------------------------------------------
+// ---- empty list table  -------------------------------------------------------
 
 export const emptyList = style({
   pointerEvents: 'auto',
@@ -387,7 +387,7 @@ export const emptyText = style({
 
 export const emptyActions = style({ display: 'flex', gap: 8, marginTop: 14 });
 
-// Our own drawing of an empty list: a dotted 128 px tile with corner marks around a framed "card" glyph.
+// custom drawing of an empty list: a dotted 128 px tile with corner marks around a framed "card" glyph.
 export const illustration = style({ position: 'relative', width: 128, height: 128, flex: 'none' });
 
 export const illustrationDots = style({
@@ -471,7 +471,7 @@ export const learnTile = style({
   color: c.content.secondary,
 });
 
-// ---- no views: "or" + Delete list (evidence/C2/list-no-views.png) ---------------------------------------------
+// ---- no views: "or" + Delete list  ---------------------------------------------
 
 export const orRow = style({
   display: 'flex',

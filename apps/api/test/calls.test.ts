@@ -6,7 +6,7 @@
 import { fakeCallsLlm, RecordingJobQueue } from '@agentic-crm/domain';
 import type { inferRouterOutputs } from '@trpc/server';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { fitSegments, importMymeetCall, loadSample, toAttioPayloads } from '../src/cli/import-mymeet-sample';
+import { fitSegments, importMymeetCall, loadSample, toApiPayloads } from '../src/cli/import-mymeet-sample';
 import type { AppRouter } from '../src/trpc/router';
 import { type Harness, startHarness, trpcCall, WsClient } from './support/harness';
 import { expectOk, type V2Fixture, v2Fixture } from './v2/support';
@@ -144,7 +144,7 @@ describe('acceptance 2: mymeet import through /v2', () => {
 describe('import script', () => {
   it('maps a mymeet export to the two /v2 bodies and fits long transcripts into 4,000 segments', () => {
     const sample = loadSample();
-    const { meeting, recording } = toAttioPayloads(sample, { organizerEmail: 'me@ourco.io' });
+    const { meeting, recording } = toApiPayloads(sample, { organizerEmail: 'me@ourco.io' });
     expect(meeting.data.participants[0]).toEqual({
       email_address: 'me@ourco.io',
       is_organizer: true,

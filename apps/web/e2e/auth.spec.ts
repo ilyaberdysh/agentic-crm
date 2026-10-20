@@ -1,4 +1,4 @@
-// BACKLOG §1 acceptance 2: the logged-out routing matrix (K README §2.1), return-to after sign-in, sign-in errors,
+//  acceptance 2: the logged-out routing matrix, return-to after sign-in, sign-in errors,
 // sign-out.
 import { expect, test } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';

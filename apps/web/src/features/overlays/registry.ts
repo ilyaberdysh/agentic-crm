@@ -1,5 +1,5 @@
 // Content the overlay host renders but does not own. The record page (features/record, S3-RECORD) registers the body
-// of the record overlay; email windows will register later (slice 7). Registration happens at module load of the
+// of the record overlay; email windows will register later. Registration happens at module load of the
 // owning feature; the host re-renders when a renderer arrives.
 import type { IconGlyph, IconName } from '@agentic-crm/ui';
 import type { ComponentType, ReactNode } from 'react';
@@ -8,8 +8,8 @@ import type { RecordRef } from './model';
 export interface RecordOverlayContentProps {
   record: RecordRef;
   /**
-   * The overlay's left top-bar controls: close ×, previous ↑ (K), next ↓ (J) and "n of N in ‹view›". The record page
-   * renders it where its breadcrumb would be, followed by its own right-side controls (D README §2.7).
+   * The overlay's left top-bar controls: close ×, previous ↑, next ↓  and "n of N in ‹view›". The record page
+   * renders it where its breadcrumb would be, followed by its own right-side controls.
    */
   navigation: ReactNode;
   close: () => void;

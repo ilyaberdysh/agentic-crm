@@ -1,5 +1,5 @@
 // Ports and database of the e2e stack: its own API and web dev server on non-default ports and its own database
-// (CLAUDE.md: test suites never use the dev DB `agentic_crm`). Parallel workstreams override them per worktree with
+// Test suites never use the dev DB `agentic_crm`. Parallel workstreams override these values per worktree with
 // E2E_DATABASE / E2E_API_PORT / E2E_WEB_PORT.
 export const E2E_DATABASE = process.env.E2E_DATABASE ?? 'agentic_crm_test_web_e2e';
 export const API_PORT = Number(process.env.E2E_API_PORT ?? 4110);

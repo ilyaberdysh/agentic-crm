@@ -1,5 +1,5 @@
-// Server state of the reports feature (BACKLOG 9.01–9.03, 9.10; slice9-server.md): the dashboards index, one dashboard
-// with its cells and reports, grants, the writes (optimistic where Attio's are) and the dataset queries behind every
+// Server state of the reports feature (BACKLOG 9.01–9.03, 9.10): the dashboards index, one dashboard
+// with its cells and reports, grants, the writes (optimistic where the are) and the dataset queries behind every
 // chart. Keys live under ['ws', ws, 'reporting-dashboard', <dashboardId>, …] / 'reporting-dashboard-list' so realtime
 // invalidations (data/realtime/invalidation.ts) reach them; datasets sit under 'report-dataset' and are never
 // refetched by an invalidation — `report-stale` marks them ("New data", staleStore.ts).
@@ -179,7 +179,7 @@ export interface LayoutCell {
   width: number;
 }
 
-/** Optimistic layout save: every cell's rank and width in one call (H api §3 "Move / resize"). */
+/** Optimistic layout save: every cell's rank and width in one call (H api "Move / resize"). */
 export async function saveLayout(ws: WorkspaceRef, dashboardId: string, layout: LayoutCell[]): Promise<void> {
   const before = queryClient.getQueryData<DashboardDetail>(dashboardKey(ws.id, dashboardId));
   const apply = (d: DashboardDetail, source: LayoutCell[]): DashboardDetail => {
@@ -235,7 +235,7 @@ export interface CreateReportParams {
   cellId?: string;
 }
 
-/** Report + cell in one call; the cell goes full width after the last one (H README §3.3). */
+/** Report + cell in one call; the cell goes full width after the last one. */
 export async function createReport(
   ws: WorkspaceRef,
   p: CreateReportParams,
@@ -336,7 +336,7 @@ export async function deleteReport(ws: WorkspaceRef, dashboardId: string, report
   }
 }
 
-/** Duplicate: a copy right after the source, same width; the app opens the copy's editor (H README §3.6). */
+/** Duplicate: a copy right after the source, same width; the UI opens the copy's editor. */
 export async function duplicateReport(
   ws: WorkspaceRef,
   dashboardId: string,
@@ -408,7 +408,7 @@ export function incompleteReason(report: {
   visualisationType: Report['visualisationType'] | null;
   settings: ReportSettings;
 }): string | null {
-  // A funnel needs at least two statuses (builder §8, `Y5coDI`); the shared compiler only rejects an empty list.
+  // A funnel needs at least two statuses (builder, `Y5coDI`); the shared compiler only rejects an empty list.
   if (report.reportType === 'funnel') {
     const s = report.settings as { funnelAttributePath: unknown; funnelSelectedPipelineStageIds: string[] };
     if (s.funnelAttributePath && s.funnelSelectedPipelineStageIds.length === 1) return 'Select stages';
@@ -471,7 +471,7 @@ export const draftDatasetQuery = (ws: WorkspaceRef, draft: ReportDraft, env: Dat
   });
 };
 
-/** "New data" / "Refresh data": refetch with `acceptAfter` = the newest stale seq (H README §3.7). */
+/** "New data" / "Refresh data": refetch with `acceptAfter` = the newest stale seq. */
 export function refreshDataset(
   client: QueryClient,
   queryKey: readonly unknown[],

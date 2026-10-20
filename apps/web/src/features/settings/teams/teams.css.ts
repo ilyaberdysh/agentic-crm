@@ -1,4 +1,4 @@
-// Teams list, team page and pickers (J permissions §6; evidence/J/teams-list.png, raw s53–s55).
+// Teams list, team page and pickers.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

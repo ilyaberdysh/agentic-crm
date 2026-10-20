@@ -1,4 +1,4 @@
-// Runs tab and run viewer (BACKLOG 8.07; runs.md §3–4; evidence G/G-runs-empty.png, G-run-viewer-false-path.png,
+// Runs tab and run viewer:
 // G-run-block-detail.png, G-run-failed-retry-menu.png). `/runs` opens the latest run; `/runs/$versionId/$runId` shows
 // the version that ran, read-only, with status tags and green taken paths; the toolbar chip has Run #N, Rerun (completed)
 // or Retry ⌄ (failed: from start / from failed / with the live workflow), Attempt #N ⌄ and "Retried from #N". The side
@@ -53,7 +53,7 @@ function Runs() {
   const list = runs.data?.runs ?? [];
   const runId = params.runId ?? null;
 
-  // `/runs` → the latest run (README §2.4).
+  // `/runs` → the latest run.
   useEffect(() => {
     if (!runId && list[0]) {
       void navigate({

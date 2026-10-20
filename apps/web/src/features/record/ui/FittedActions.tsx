@@ -1,5 +1,5 @@
 // A row of 28 px secondary buttons that keeps as many labels as fit and collapses the rest, from the end, to
-// icon-only buttons with tooltips (D README §2.2, §2.5b: "Compose email" + 4 icons at 358 px, three labels at 454 px).
+// icon-only buttons with tooltips (b: "Compose email" + 4 icons at 358 px, three labels at 454 px).
 import { Button, type IconName, Tooltip } from '@agentic-crm/ui';
 import { useLayoutEffect, useRef, useState } from 'react';
 import * as s from '../details/details.css';

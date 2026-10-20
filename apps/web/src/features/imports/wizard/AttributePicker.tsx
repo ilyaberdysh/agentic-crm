@@ -1,4 +1,4 @@
-// Import attribute picker (C2 import.md §I3, §I9; evidence import-2-attribute-picker.png): "Search <object> attributes…",
+// Import attribute picker (C2, §I9; evidence import-2-attribute-picker.png): "Search <object> attributes…",
 // the writable attributes (Record ID first), relationships with the number of reachable attributes and a chevron that
 // drills into the related object ("Client 18 ›"), names into First / Last / Full name; lists group "<Parent>
 // attributes" (through Parent Record) and "List attributes". Footer "+ Create new attribute ›" opens the type list.

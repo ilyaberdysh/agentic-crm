@@ -188,7 +188,7 @@ export const createNoteTemplateInputSchema = z.object({
 });
 export type CreateNoteTemplateInput = z.input<typeof createNoteTemplateInputSchema>;
 
-/** Attio sets title and header title together; an omitted headerTitle follows the title. */
+/** An omitted headerTitle follows the title. */
 export const updateNoteTemplateInputSchema = z.object({
   templateId: uuidSchema,
   title: z.string().max(1000).optional(),

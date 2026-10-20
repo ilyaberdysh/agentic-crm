@@ -1,4 +1,4 @@
-// Merge records (BACKLOG 3.07; D README §3.10): companies and people only. The current record starts in the right
+// Merge records (BACKLOG 3.07): companies and people only. The current record starts in the right
 // card (priority: its single values win, its emails / domains come first); "+" picks the second record; ⇄ swaps;
 // the preview shows the merged name, the union of identifiers and summed counters. "Merge records ↵" merges into a
 // new record (client-minted id) and opens it; both sources then show the merged-away state with "Go to record".
@@ -110,7 +110,7 @@ export function MergeModal({ onClose }: { onClose: () => void }) {
       const out = await api.records.merge.mutate(
         {
           entityDefinitionId: object.id,
-          // The right card holds priority: in our API that is the merge *target* (its single values win).
+          // The right card holds priority: in the API that is the merge *target* (its single values win).
           baseEntityInstanceId: left.entityInstanceId,
           targetEntityInstanceId: right.entityInstanceId,
           mergedEntityInstanceId: newId(),

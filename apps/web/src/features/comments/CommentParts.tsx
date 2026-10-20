@@ -1,4 +1,4 @@
-// One comment as cards and the thread view show it (E README §2.8, §3.5): author avatar (16) + bold name, relative
+// One comment as cards and the thread view show it: author avatar (16) + bold name, relative
 // time ("(via API)"), body with mentions, B / I / links and auto-linked URLs, reaction chips (own reaction pressed;
 // tooltip "‹Name› reacted with 👍"; clicking your own removes it) and the hover action pill: Reply in thread · Pick
 // emoji · Resolve / Re-open (thread roots) · ⋮ Copy link to comment / Delete comment | Delete thread (author only).

@@ -42,7 +42,7 @@ describe('filter sentences', () => {
     }
   });
 
-  it('encodes Attio’s special sentences', () => {
+  it('encodes special filter sentences', () => {
     const [rating] = filterFieldsByType.rating;
     const empty = rating?.sentences.find((s) => s.id === 'empty');
     expect(sentenceToLeaf({ path, field: rating as never, sentence: empty as never })).toEqual({
@@ -71,7 +71,7 @@ describe('filter sentences', () => {
       mode: 'must-not',
       constraints: [{ operator: 'eq', value: true }],
     });
-    // Attio's stored leaves (field 'value', implicit active_until) read back too.
+    // Stored leaves (field 'value', implicit active_until) read back too.
     expect(
       leafToSentence(
         { type: 'select', isMultiselect: true },

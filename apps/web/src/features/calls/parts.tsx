@@ -9,7 +9,7 @@ import { MemberAvatar } from '../attributes/ui/primitives';
 import { useWorkspace } from '../shell/workspaceContext';
 import * as s from './parts.css';
 
-/** A rounded square in a hue hashed from the recording id (I calls §2.4) with the camera glyph. */
+/** A rounded square in a hue hashed from the recording id (I calls) with the camera glyph. */
 export function CallIcon({ id, size = 24 }: { id?: string; size?: number }) {
   const hue = id ? hueForSeed(id) : null;
   return (
@@ -83,8 +83,8 @@ function PersonCard({ speaker, href }: { speaker: CallSpeaker; href: string | nu
 }
 
 /**
- * One speaker (I calls §3.5, X-28): a member shows the member's name and avatar (never the raw address, unlike Attio), a
- * person is a record chip with a hover card, anyone else keeps the name the importer sent.
+ * One speaker: members show their name and avatar, people show a record chip with a hover card, and other speakers
+ * keep the name provided by the importer.
  */
 export function SpeakerChip({ speaker, interactive = true }: { speaker: CallSpeaker | null; interactive?: boolean }) {
   const { workspace } = useWorkspace();

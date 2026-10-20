@@ -6,9 +6,9 @@
 //                     found"; no value → create; list entries match on the parent record ("Update existing")
 //   create            every row with data creates a record (list entries: "Add again")
 // The plan evaluates rows against existing records only (duplicate rows in the file both plan "create" and merge at
-// run time, as in Attio); it prefetches matches per page of rows. Execution re-decides each row against the
+// run time); it prefetches matches per page of rows. Execution re-decides each row against the
 // database and writes through the record write path (createRecordInTx / ValueEngine) under a savepoint per
-// strategy, so one failing row never undoes another. Multi-value attributes are appended to on update (Attio
+// strategy, so one failing row never undoes another. Multi-value attributes are appended to on update
 // documents imports as additive), single values are replaced. Statuses and progress commit with the data.
 import {
   type ImportFailureReason,

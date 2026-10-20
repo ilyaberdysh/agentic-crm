@@ -1,4 +1,4 @@
-// Dev gallery chrome (not product UI): a plain page listing every attribute type, plus fixed-geometry parity frames.
+// Dev gallery chrome (not product UI): a plain page listing every attribute type, plus fixed-geometry visual review frames.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
 
@@ -33,7 +33,7 @@ globalStyle(`${table} td`, { padding: '6px 8px', verticalAlign: 'top' });
 
 export const typeName = style({ ...text.body.standard, color: c.content.secondary, whiteSpace: 'nowrap' });
 
-/** A table cell box: 36 px (35 + bottom border), right border, like layout.md §4. */
+/** A table cell box: 36 px (35 + bottom border), right border, like  */
 export const cellBox = style({
   position: 'relative',
   boxSizing: 'border-box',
@@ -63,7 +63,7 @@ export const fieldBox = style({
 
 export const fieldOpen = style({ boxShadow: insetRing(c.stroke.accent) });
 
-// ---- parity frames ----------------------------------------------------------------------------------------------------
+// ---- visual review frames ----------------------------------------------------------------------------------------------------
 
 export const frame = style({
   position: 'fixed',

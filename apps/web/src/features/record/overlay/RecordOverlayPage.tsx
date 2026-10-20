@@ -1,4 +1,4 @@
-// Body of the record overlay (BACKLOG 3.09; D README §2.7): features/overlays (E4) owns the full-viewport dialog,
+// Body of the record overlay (BACKLOG 3.09): features/overlays  owns the full-viewport dialog,
 // the URL (`?modal=record&id=…&object=…`) and J / K through the view's records; the record page registers what is
 // inside — the record view with the overlay's ×, ↑ / ↓ and "n of N in {view}" in place of the breadcrumb. Tabs switch
 // in component state (the URL belongs to the originating page); "Go to record" of a merged record opens its page.
@@ -16,7 +16,7 @@ export function RecordOverlayPage({ record, navigation, close }: RecordOverlayCo
   const navigate = useNavigate();
   const objects = useObjects(workspace);
   const object = objects.data?.find((o) => o.id === record.entityDefinitionId);
-  // The tab stays while J / K step through the view (as Attio's replace-navigation keeps `$activeTab`).
+  // The tab stays while J / K step through the view (as the replace-navigation keeps `$activeTab`).
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
   if (objects.isPending) return null;
   if (!object) return <RecordStatePage kind="not-found" onGoBack={close} />;

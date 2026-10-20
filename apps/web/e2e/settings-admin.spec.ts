@@ -1,4 +1,4 @@
-// Settings administration (BACKLOG §6: 6.01–6.03, 6.09, 6.10; acceptance 1): profile (names on blur, avatar upload and
+// Settings administration: profile (names on blur, avatar upload and
 // removal, time preferences), workspace general (name, slug availability, slug change), members (invite dialog
 // validation, pending invites, copy link, revoke), teams (create, members, usage, delete), security (export formula
 // switch), the settings navigation search and the read-only members page for non-admins.
@@ -193,7 +193,7 @@ test('members: invite dialog validation, pending invites, copy link and revoke',
 
 test('teams: create, members, usage, delete; the empty state', async ({ page }) => {
   await signIn(page, settings('members-and-teams/teams'));
-  // The empty state needs a workspace without teams: drop the ones earlier specs left (parity-slice6 re-creates its
+  // The empty state needs a workspace without teams: drop the ones earlier specs left (parity- re-creates its
   // [seed] team when it runs again).
   const existing = await trpc<{ id: string }[]>(page, 'teams.list', {});
   if (existing.length > 0) {

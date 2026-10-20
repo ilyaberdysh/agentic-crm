@@ -11,7 +11,7 @@ const { duration, zIndex } = scales;
 export const overlay = style({
   position: 'fixed',
   inset: 0,
-  // Standalone dialog layer (tokens.md §8: overlay 9998 / dialog 9999).
+  // Standalone dialog layer: overlay 9998, dialog 9999.
   zIndex: 9999,
   display: 'flex',
   justifyContent: 'center',
@@ -27,7 +27,7 @@ export const overlay = style({
 export const overlayCenter = style({ alignItems: 'center', paddingTop: 16 });
 export const overlayDim = style({ backgroundColor: c.surface.overlay });
 
-// Frame: radius 16, padding 3, translucent surface + 15 px blur, e3; 160 ms scale .97 + fade.
+// Frame: radius 16, padding 3, translucent surface + 15 px blur, e3; 160 ms scale.97 + fade.
 export const frame = style({
   boxSizing: 'border-box',
   position: 'relative',
@@ -118,7 +118,7 @@ export const footer = style({
 
 export const footerStart = style({ display: 'flex', alignItems: 'center', gap: 8, marginRight: 'auto' });
 
-// Alert dialog (components.md §7): centred, 440 / 320, radius 12, e2, elevated surface,
+// Alert dialog: centred, 440 / 320, radius 12, e2, elevated surface,
 // overlay black 25 % / 55 % fading over 140 ms, content scale-fade 140 ms.
 export const alertOverlay = style({
   position: 'fixed',

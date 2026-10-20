@@ -1,6 +1,6 @@
 // tRPC client (D-04). One HTTP batch link (queries POSTed: batched value reads exceed URL limits) carries:
-//   - `x-workspace-slug`: the workspace of the current route (workspace procedures, I2), overridable per call;
-//   - `x-accept-after`: the newest change seq seen for that workspace (realtime I4a: "don't serve older data").
+// - `x-workspace-slug`: the workspace of the current route (workspace procedures), overridable per call;
+// - `x-accept-after`: the newest change seq seen for that workspace (realtime I4a: "don't serve older data").
 import type { AppRouter } from '@agentic-crm/api';
 import { ACCEPT_AFTER_HEADER } from '@agentic-crm/realtime';
 import { compareSeq } from '@agentic-crm/realtime/client';
@@ -124,7 +124,7 @@ export function httpStatusOf(error: unknown): number {
   return 0;
 }
 
-/** Attio's error envelope fields when the server sent one (`additional_information.code`, e.g. SLUG_IN_USE). */
+/** the error envelope fields when the server sent one (`additional_information.code`, e.g. SLUG_IN_USE). */
 export function errorEnvelopeOf(error: unknown): { message?: string; code?: string } {
   if (error instanceof TRPCClientError) {
     const shape = error.shape as EnvelopeShape | undefined;

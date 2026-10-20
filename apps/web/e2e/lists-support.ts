@@ -1,4 +1,4 @@
-// Slice-4 lists e2e helpers: lists, list attributes and entries created through the tRPC procedures (lists.*,
+//  lists e2e helpers: lists, list attributes and entries created through the tRPC procedures (lists.*,
 // entries.*, schema.*), and lookups of the seeded demo records ("[seed] Northwind Robotics", …).
 import type { Page } from '@playwright/test';
 import { trpc, uuid } from './slice3-support.ts';

@@ -7,7 +7,7 @@ import { withSeq } from '../trpc/mutation';
 import { WORKSPACE_SLUG_HEADER } from '../trpc/trpc';
 import type { WorkspaceResolver } from '../workspaces/resolver';
 
-/** Cookie-authenticated product REST, separate from the Attio-compatible /v2 contract. */
+/** Cookie-authenticated product REST, separate from the product-owned /v2 contract. */
 export async function registerAgenticRoutes(
   app: FastifyInstance,
   deps: { auth: Auth; workspaces: WorkspaceResolver; domain: Domain },

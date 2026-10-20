@@ -1,4 +1,4 @@
-// A few glyphs Lucide lacks, drawn for this project on a 16 px grid (not derived from Attio).
+// A few glyphs Lucide lacks, drawn for this project on a 16 px grid.
 import type { SVGProps } from 'react';
 
 type GlyphProps = Omit<SVGProps<SVGSVGElement>, 'ref'> & { size?: number | string; strokeWidth?: number | string };

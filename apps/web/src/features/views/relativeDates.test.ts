@@ -30,7 +30,7 @@ describe('relative date presets (C1 filters-sorts-calcs §4)', () => {
     expect(daysDuration(3, 'from-now')).toBe('P3D');
   });
 
-  it("parses stored durations back, including Attio's long form", () => {
+  it('parses stored durations, including the long form', () => {
     expect(presetOf('-P7D')?.id).toBe('one-week-ago');
     expect(presetOf('-P0Y0M7DT0H0M0S')?.id).toBe('one-week-ago');
     expect(presetOf('PT1H')).toBeUndefined();

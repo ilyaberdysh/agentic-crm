@@ -1,4 +1,4 @@
-// The formula a dialog holds (formulas.md §4.1, §5.1): what the sheet's Save hands back, how an existing attribute's
+// The formula a dialog holds: what the sheet's Save hands back, how an existing attribute's
 // active snapshot becomes one, and the write shape (`formulaConfiguration` with a new snapshot id per save).
 import type { AttributeDefinition, FormulaConfigurationInput, FormulaSnapshot } from '@agentic-crm/contracts';
 import {

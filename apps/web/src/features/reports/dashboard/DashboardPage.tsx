@@ -1,4 +1,4 @@
-// Dashboard page (BACKLOG 9.02; H README §2.2, §3.2, §3.10; evidence dashboard-empty.png, dashboard-grid-4-4-4.png):
+// Dashboard page:
 // page header (breadcrumb, favourite, presence, Share, help, ⋮ menu), the title row (inline-editable title and
 // description, + New report), the grid of report cells (or the empty state) and an <Outlet/> for the editor and viewer
 // overlays, which keep the grid mounted behind them.

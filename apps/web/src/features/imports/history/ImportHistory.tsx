@@ -1,4 +1,4 @@
-// Import history (C2 import.md §I8; J objects-lists §3.5, §6): the workspace page `/settings/data/import-history` and
+// Import history (C2; J objects-lists): the workspace page `/settings/data/import-history` and
 // the per-object / per-list Imports tabs. Search "Filter import jobs", toggle "Only imports by me", status pills, row ⋮
 // (Delete draft / Cancel import / Delete import — disabled once run), row click resumes a draft or opens its overview.
 import type { EntityDefinition } from '@agentic-crm/contracts';

@@ -698,7 +698,7 @@ export interface BlockDefinition {
   available: boolean;
   /** Why an unavailable block cannot be used yet. */
   unavailableReason?: string;
-  /** Plan or flag gate as Attio shows it ("Enterprise" badge, flag-gated). */
+  /** Plan or flag gate ("Enterprise" badge, flag-gated). */
   gate?: { kind: 'enterprise' | 'feature-flag' | 'internal'; label: string };
   /** Shown in the trigger picker / palette (hidden: flag-gated and internal blocks). */
   inPalette: boolean;

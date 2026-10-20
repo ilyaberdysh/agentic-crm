@@ -25,7 +25,7 @@ import { newId, speakerLabel } from '@agentic-crm/domain';
 import { slugOf } from '../collab-mappers';
 import type { V2Context } from '../context';
 import { publicErrors, withHints } from '../errors';
-import { attioTimestamp, publicActor } from '../mappers';
+import { publicActor, publicTimestamp } from '../mappers';
 import { params, parseInput, type RouteSpec } from '../route';
 
 const DEFAULT_LIMIT = 50;
@@ -50,7 +50,7 @@ function recordingIds(raw: Record<string, string>): { meetingId: string; recordi
   return { meetingId: parsed.data.meeting_id.toLowerCase(), recordingId: parsed.data.call_recording_id.toLowerCase() };
 }
 
-/** Domain 404s of a meeting call → Attio's messages. */
+/** Domain 404s of a meeting call → the public API's messages. */
 async function onMeeting<T>(id: string, fn: () => Promise<T>, recordingId?: string): Promise<T> {
   try {
     return await withHints({}, fn);
@@ -87,7 +87,7 @@ function zoneOffsetMinutes(timeZone: string, at: number): number {
 
 /**
  * A public start / end → the domain's time. Datetimes without an offset are read in the given IANA timezone
- * (invalid timezones as UTC), as Attio documents.
+ * (invalid timezones as UTC), as the public API documents.
  */
 function toTime(
   value: { datetime: string; timezone?: string | null | undefined } | { date: string },
@@ -133,7 +133,7 @@ export async function meetingToPublic(v2: V2Context, m: Meeting) {
       name: p.name,
     })),
     linked_records: linked,
-    created_at: attioTimestamp(m.createdAt),
+    created_at: publicTimestamp(m.createdAt),
     created_by_actor: publicActor(m.createdBy),
   };
 }
@@ -148,7 +148,7 @@ function recordingToPublic(v2: V2Context, r: CallRecording) {
     status: r.status,
     web_url: webUrl(v2, r.meetingId, r.id),
     created_by_actor: publicActor(r.createdBy),
-    created_at: attioTimestamp(r.createdAt),
+    created_at: publicTimestamp(r.createdAt),
   };
 }
 
@@ -185,6 +185,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/meetings',
+    operationId: 'listMeetings',
     scopes: v2Operations.listMeetings.scopes,
     async handler(v2, request) {
       const query = parseInput(listMeetingsQuery, request.query, 'query parameters');
@@ -232,6 +233,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/meetings',
+    operationId: 'createMeeting',
     scopes: v2Operations.createMeeting.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createMeetingBody, request.body, 'request body');
@@ -278,6 +280,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/meetings/:meeting_id',
+    operationId: 'getMeeting',
     scopes: v2Operations.getMeeting.scopes,
     async handler(v2, request) {
       const id = meetingId(params(request));
@@ -289,6 +292,7 @@ export const meetingRoutes: RouteSpec[] = [
     (method): RouteSpec => ({
       method,
       url: '/meetings/:meeting_id',
+      operationId: method === 'PATCH' ? 'updateMeeting' : 'replaceMeeting',
       scopes: method === 'PATCH' ? v2Operations.updateMeeting.scopes : v2Operations.replaceMeeting.scopes,
       async handler(v2, request) {
         const id = meetingId(params(request));
@@ -313,6 +317,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/meetings/:meeting_id',
+    operationId: 'deleteMeeting',
     scopes: v2Operations.deleteMeeting.scopes,
     async handler(v2, request) {
       const id = meetingId(params(request));
@@ -323,6 +328,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/meetings/:meeting_id/call_recordings',
+    operationId: 'listCallRecordings',
     scopes: v2Operations.listCallRecordings.scopes,
     async handler(v2, request) {
       const raw = params(request);
@@ -341,6 +347,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/meetings/:meeting_id/call_recordings',
+    operationId: 'createCallRecording',
     scopes: v2Operations.createCallRecording.scopes,
     // 4,000 segments of long speech exceed the default 1 MiB.
     bodyLimit: CALL_RECORDING_BODY_LIMIT,
@@ -386,6 +393,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/meetings/:meeting_id/call_recordings/:call_recording_id',
+    operationId: 'getCallRecording',
     scopes: v2Operations.getCallRecording.scopes,
     async handler(v2, request) {
       const ids = recordingIds(params(request));
@@ -414,6 +422,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/meetings/:meeting_id/call_recordings/:call_recording_id',
+    operationId: 'deleteCallRecording',
     scopes: v2Operations.deleteCallRecording.scopes,
     async handler(v2, request, reply) {
       const raw = params(request);
@@ -430,6 +439,7 @@ export const meetingRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/meetings/:meeting_id/call_recordings/:call_recording_id/transcript',
+    operationId: 'getCallRecordingTranscript',
     scopes: v2Operations.getCallRecordingTranscript.scopes,
     async handler(v2, request) {
       const raw = params(request);

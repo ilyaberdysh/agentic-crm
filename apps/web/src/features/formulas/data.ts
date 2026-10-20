@@ -1,7 +1,7 @@
-// Formula editor and annotation reads (formulas.md §4.5–4.6, §5.3–5.5): attribute lists of every object the editor
+// Formula editor and annotation reads: attribute lists of every object the editor
 // needs (type check, picker), the preview of an unsaved formula against a record, AI composer requests (refetched on
 // `formula-generation-request` invalidations), and per-record entity annotations ("Calculating...", errors, "AI is
-// thinking...") batched per attribute like Attio (50 ms window, ≤ 1000 ids), refetched on `entity-annotation`.
+// thinking...") batched per attribute by design (50 ms window, ≤ 1000 ids), refetched on `entity-annotation`.
 import type {
   AttributeDefinition,
   CreateFormulaGenerationInput,

@@ -1,5 +1,5 @@
-// Code-based route tree mirroring Attio's URL structure (ARCHITECTURE D-02, 00-inventory/routes.md). Pathless
-// layouts (`_main`) are route ids, not URL segments. Logged-out routing follows K README §2.1.
+// Code-based route tree mirroring the URL structure. Pathless
+// layouts (`_main`) are route ids, not URL segments. Logged-out routing follows
 import {
   type AnyRoute,
   createRootRouteWithContext,
@@ -10,7 +10,7 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { queryClient } from '../data/queryClient';
-// Window bodies of slice 7 (email modal, meeting modal, composer) register with the overlay host when loaded.
+// Email, meeting and composer windows register with the overlay host when loaded.
 import '../features/composer';
 import '../features/email';
 import '../features/meetings';
@@ -250,7 +250,7 @@ const mainRoute = createRoute({ getParentRoute: () => workspaceRoute, id: 'main'
 
 const homeRoute = createRoute({ getParentRoute: () => mainRoute, path: 'home', component: HomePage });
 
-// ---- slice 3: notes, templates, tasks, deep links (E README §1) ----------------------------------------------------
+// Notes, templates, tasks and deep links.
 
 const notesRoute = createRoute({ getParentRoute: () => mainRoute, path: 'notes', component: NotesPage });
 const noteTemplatesRoute = createRoute({
@@ -258,7 +258,7 @@ const noteTemplatesRoute = createRoute({
   path: 'notes/templates',
   component: TemplatesPage,
 });
-/** `/notes/$` has no distinct UI in Attio: it shows the notes page. */
+/** `/notes/$` renders the notes page for nested note paths. */
 const notesSplatRoute = createRoute({ getParentRoute: () => mainRoute, path: 'notes/$', component: NotesPage });
 const tasksRoute = createRoute({ getParentRoute: () => mainRoute, path: 'tasks', component: TasksPage });
 /** `/note/$noteId` → the note modal over Home (`/home?modal=note&id=…`). */
@@ -270,7 +270,7 @@ const noteDeepLinkRoute = createRoute({
     throw redirect({ href: `/${p.workspaceSlug}/home?modal=note&id=${encodeURIComponent(p.noteId)}`, replace: true });
   },
 });
-/** `/comment/$commentHeaderId` → the commented record's object view with the thread open (B README §2.7). */
+/** `/comment/$commentHeaderId` → the commented record's object view with the thread open. */
 const commentDeepLinkRoute = createRoute({
   getParentRoute: () => mainRoute,
   path: 'comment/$commentHeaderId',
@@ -286,7 +286,7 @@ const recordTabsDevRoute = createRoute({
   component: lazyRouteComponent(() => import('../features/overlays/dev/RecordTabsDev'), 'RecordTabsDev'),
 });
 
-/** `/search?q=…` → Home with the Search records modal open and prefilled (command-palette.md §1). */
+/** `/search?q=…` → Home with the Search records modal open and prefilled. */
 const searchRoute = createRoute({
   getParentRoute: () => mainRoute,
   path: 'search',
@@ -318,7 +318,7 @@ const objectRoutes: AnyRoute[] = standardObjectSlugs.flatMap((slug) => {
   ];
 });
 
-/** Record pages (slice 3): /company/<id>, /person/<id>, /<std>/record/<id>, /custom/<slug>/record/<id>, page layouts. */
+/** Record pages: /company/<id>, /person/<id>, /<std>/record/<id>, /custom/<slug>/record/<id>, page layouts. */
 const recordPageRoutes = recordRoutes(() => mainRoute);
 
 const customObjectRoute = createRoute({
@@ -336,30 +336,30 @@ const customObjectViewRoute = createRoute({
   },
 });
 
-/** Calls (slice 10): the Calls list, Insight Templates, the template editor and the call page. */
+/** Calls: the Calls list, Insight Templates, the template editor and the call page. */
 const callPageRoutes = callsRoutes(() => mainRoute);
 
-/** Lists (slice 4): list pages, entry redirects and entry comments (features/lists). */
+/** Lists: list pages, entry redirects and entry comments (features/lists). */
 const collectionRoutes = listRoutes(() => mainRoute);
 
-/** Ask AI chats: `/chats/new`, `/chats/<id>` (slice 10, features/ask). */
+/** Ask AI chats: `/chats/new`, `/chats/<id>` (features/ask). */
 const chatRoutes = askRoutes(() => mainRoute);
 
-/** The Emails page: Drafts, Outbox, Templates (slice 7, F composer §3, §5, §6). */
+/** The Emails page: Drafts, Outbox, Templates (F composer). */
 const emailsPageRoutes = emailsRoutes(() => mainRoute);
-/** Dashboards, reports, the editor and the viewer (slice 9, features/reports). */
+/** Dashboards, reports, the editor and the viewer (features/reports). */
 const dashboardRoutes = reportRoutes(() => mainRoute);
 
-/** CSV import wizard (slice 4, C2 import.md §I1) for objects and lists. */
+/** CSV import wizard  for objects and lists. */
 const importWizardRoutes = importRoutes(() => mainRoute);
 
 /** Views UI against seeded objects, for visual checks and e2e (dev builds only). */
 const viewsDevRoute = createViewsDevRoute(() => mainRoute);
 
-/** Workflows (slice 8): index, editor, runs, settings tab (features/workflows). */
+/** Workflows: index, editor, runs, settings tab (features/workflows). */
 const workflowPageRoutes = workflowRoutes(() => mainRoute);
 
-/** No in-workspace 404: unknown paths redirect to the workspace root (B README §2.6). */
+/** No in-workspace 404: unknown paths redirect to the workspace root. */
 const mainSplatRoute = createRoute({
   getParentRoute: () => mainRoute,
   path: '$',
@@ -401,13 +401,13 @@ const notificationSettingsRoute = createRoute({
   component: NotificationSettingsPage,
 });
 
-/** Settings → Objects and object settings (slice 2, J objects-lists §1–3). */
+/** Settings → Objects and object settings (J objects-lists). */
 const objectsSettingsRoutes = objectSettingsRoutes(() => settingsRoute);
 
-/** Settings → Objects → record page layout editor (slice 3, D §2.8). */
+/** Settings → Objects → record page layout editor (D). */
 const recordLayoutRoutes = recordSettingsRoutes(() => settingsRoute);
 
-/** Settings → Import history and the settings variants of the import wizard (slice 4, C2 import.md §I8). */
+/** Settings → Import history and the settings variants of the import wizard. */
 const importHistoryRoute = createRoute({
   getParentRoute: () => settingsRoute,
   path: 'data/import-history',
@@ -415,19 +415,19 @@ const importHistoryRoute = createRoute({
 });
 const settingsImportRoutes = importSettingsRoutes(() => settingsRoute);
 
-/** Settings → Lists and list settings (slice 4, J objects-lists §4). */
+/** Settings → Lists and list settings (J objects-lists). */
 const listsSettingsRoutes = listSettingsRoutes(() => settingsRoute);
 
-/** Settings → Profile, Workspace general, Members and teams, Developers, Security (slice 6, J workspace-admin). */
+/** Settings → Profile, Workspace general, Members and teams, Developers, Security (J workspace-admin). */
 const adminRoutes = adminSettingsRoutes(() => settingsRoute);
-/** Settings → Email and calendar accounts, mailbox settings, workspace email and calendar (slice 7, F settings). */
+/** Settings → Email and calendar accounts, mailbox settings, workspace email and calendar (F settings). */
 const mailboxRoutes = mailboxSettingsRoutes(() => settingsRoute);
-/** Settings → Call intelligence (slice 10, I calls §5.1). */
+/** Settings → Call intelligence (I calls). */
 const callIntelligenceRoutes = callSettingsRoutes(() => settingsRoute);
-/** Settings → Dashboards and the legacy `data/reports` alias (slice 9, H README §3.11). */
+/** Settings → Dashboards and the legacy `data/reports` alias. */
 const dashboardsSettingsRoutes = reportSettingsRoutes(() => settingsRoute);
 
-/** Settings → Ask AI: personal (General, Prompts) and workspace (Usage, Custom context) (slice 10, J §10). */
+/** Settings → Ask AI: personal (General, Prompts) and workspace (Usage, Custom context). */
 const askSettings = askSettingsRoutes(() => settingsRoute);
 
 const settingsPlaceholderRoutes: AnyRoute[] = settingsEntries
@@ -453,7 +453,7 @@ const settingsPlaceholderRoutes: AnyRoute[] = settingsEntries
     }),
   );
 
-/** Settings → Workflows (admin list, permissions) and Billing → Credits usage (slice 8). */
+/** Settings → Workflows (admin list, permissions) and Billing → Credits usage. */
 const workflowAdminRoutes = workflowSettingsRoutes(() => settingsRoute);
 
 const settingsSplatRoute = createRoute({

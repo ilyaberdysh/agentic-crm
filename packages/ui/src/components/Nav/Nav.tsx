@@ -44,7 +44,7 @@ export function NavSectionLabel({ children, className }: { children?: ReactNode;
   return <div className={cx(s.sectionLabel, className)}>{children}</div>;
 }
 
-/** Vertical stack of nav items with Attio's 1 px gap. */
+/** Vertical stack of nav items with the 1 px gap. */
 export function NavList({
   children,
   className,
@@ -80,7 +80,7 @@ export interface AccentPickerProps {
   className?: string;
 }
 
-/** The Appearance accent setting: 7 round swatches in Attio's order (blue, cyan, yellow, orange, pink, purple, green). */
+/** The Appearance accent setting: 7 round swatches in the order (blue, cyan, yellow, orange, pink, purple, green). */
 export function AccentPicker({
   value,
   defaultValue,

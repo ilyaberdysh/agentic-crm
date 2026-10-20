@@ -1,4 +1,4 @@
-// The time toolbar's model (builder §3.6; H api §1.3 `time_config`): range presets (7D … All, Period to date),
+// The time toolbar's model (builder; H api `time_config`): range presets (7D … All, Period to date),
 // comparison options and their availability, and the readable window labels. Pure and unit-tested.
 import {
   addDurationToDate,
@@ -18,7 +18,7 @@ export interface RangeOption {
 
 const rel = (value: string): TimeDuration => ({ type: 'relative', value });
 
-/** 7D, 1M, 3M, 6M, 12M, All (default All); stored as Attio does: negative ISO durations with explicit fields. */
+/** 7D, 1M, 3M, 6M, 12M, All (default All); stored by design: negative ISO durations with explicit fields. */
 export const RANGES: readonly RangeOption[] = [
   { id: '7D', label: '7D', duration: rel('-P0Y0M7DT0H0M0S') },
   { id: '1M', label: '1M', duration: rel('-P0Y1M0DT0H0M0S') },
@@ -85,7 +85,7 @@ const OFFSETS = {
 
 const PTD_ONLY = 'Only available for "Period to date" reports';
 
-/** Compare menu entries for a time config (builder §3.6), with the windows they compare to in the labels. */
+/** Compare menu entries for a time config (builder), with the windows they compare to in the labels. */
 export function comparisonOptions(config: ReportTimeConfig, env: ReportWindowEnv): ComparisonOption[] {
   const duration = config.duration;
   const toDate = duration?.type === 'x_to_date' ? duration.value : null;
@@ -137,7 +137,7 @@ export function formatDay(date: string): string {
   return `${d} ${MONTHS[m - 1]} ${y}`;
 }
 
-/** Reasons the Compare button is disabled (builder §3.6), else null. */
+/** Reasons the Compare button is disabled (builder), else null. */
 export function compareDisabledReason(config: ReportTimeConfig, visualisation: string | null): string | null {
   if (!config.duration) return "Comparisons are not supported for the 'All' time period";
   if (visualisation !== 'bar' && visualisation !== 'line') return 'Only line and bar charts support time comparisons';

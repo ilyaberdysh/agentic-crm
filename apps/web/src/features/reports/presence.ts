@@ -1,4 +1,4 @@
-// Dashboard presence (H README §2.2; Attio `presence-reporting-dashboard:<ws>:<id>`): every tab on a dashboard, its
+// Dashboard presence uses `presence-reporting-dashboard:<ws>:<id>`: every tab on a dashboard, its
 // report viewer or its editor joins the room `reporting-dashboard:<workspaceId>:<dashboardId>`; headers show one avatar
 // per member in it. Ephemeral only (I4b); joining needs read access to the dashboard.
 import { createContext, useEffect, useState } from 'react';

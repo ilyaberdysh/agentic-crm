@@ -1,4 +1,4 @@
-// Row selection over the shown snapshot as zebra edges (C1 README §3.5, internal-api-shapes §3): checkbox toggles,
+// Row selection over the shown snapshot as zebra edges (internal-api-shapes): checkbox toggles,
 // shift-click ranges from the anchor, shift+↑/↓ group selection from the active row, select to top/bottom, select
 // all ([0, total] — every matching record, loaded or not). Pure reducers; the table keeps the state.
 import { zebraContains, zebraSize, zebraToggle, zebraUnion } from '@agentic-crm/contracts';

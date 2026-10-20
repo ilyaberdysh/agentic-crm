@@ -1,4 +1,4 @@
-// Date and timestamp pickers (C1 cells.md §2, components.md "Dates"; evidence/C1/25, 27): month calendar with
+// Date and timestamp pickers: month calendar with
 // ‹ › month navigation and an editable year, week start from the user's settings, today in accent with a dot,
 // quick actions "Today", "Tomorrow", "Next week", "No date"; the timestamp picker adds date and time fields.
 import { cx } from '@agentic-crm/ui';
@@ -35,7 +35,7 @@ export interface CalendarProps {
   onKeyCommit?: (via: CommitVia) => void;
 }
 
-/** 7 × 6 grid of 32 px days, 2 px apart (always six rows, like Attio's). */
+/** Seven-column calendar grid with six rows of 32 px days, spaced 2 px apart. */
 export function Calendar({ value, onPick, autoFocus }: CalendarProps) {
   const settings = useFormatSettings();
   const today = todayIso(new Date(), settings);

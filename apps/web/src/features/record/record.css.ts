@@ -1,4 +1,4 @@
-// Record page frame (D README §2.1, §2.4; layout.md §5): top bar 48 + 1, then the body row — details panel
+// Record page frame: top bar 48 + 1, then the body row — details panel
 // (persisted %, 320 px … min(60 %, body − 350 px)), a 10 px resize hit area on the 1 px divider, the tab area
 // (flex 1, min 350 px) — and the optional 320 px comments panel at the right.
 import { scales, text, vars } from '@agentic-crm/ui/styles';
@@ -150,7 +150,7 @@ export const overlayPosition = style({
   marginLeft: 6,
 });
 
-// ---- tab bar (D §2.4; components.md Tabs) ---------------------------------------------------------------------
+// ---- Tab bar ---------------------------------------------------------------------
 
 export const tabBar = style({
   position: 'relative',
@@ -244,7 +244,7 @@ export const tabMeasure = style({
   gap: 4,
 });
 
-// ---- tab page header (D §2.9: 52 px, padding 12 20) ----------------------------------------------------------
+// ---- tab page header (D: 52 px, padding 12 20) ----------------------------------------------------------
 
 export const tabHeader = style({
   boxSizing: 'border-box',

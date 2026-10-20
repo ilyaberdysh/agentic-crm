@@ -1,4 +1,4 @@
-// Record preview drawer (D README §2.7; evidence D-view-preview-panel): fixed, 8 px from the top / right / bottom,
+// Record preview drawer: fixed, 8 px from the top / right / bottom,
 // ~496 px wide, rounded and elevated; header 48 px; body padding 0 12 with Overview sections 24 apart.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

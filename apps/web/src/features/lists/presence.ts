@@ -1,4 +1,4 @@
-// List presence (BACKLOG 4.09; C2 README §2.2 "avatars of members present", Attio channel
+// List presence (BACKLOG 4.09;  "avatars of members present", the UI channel
 // `presence-collection:<ws>:<listId>`): every tab on any view of a list joins the room
 // `collection:<workspaceId>:<listId>`; the header shows one avatar per member in it (self included, like the object
 // page's view facepile). Cell-level presence stays on the view room (features/table). Ephemeral only (I4b).
@@ -13,7 +13,7 @@ export interface ListPresenceUser {
 
 export const listRoom = (workspaceId: string, listId: string) => `collection:${workspaceId}:${listId}`;
 
-/** One entry per user in join order; our own name comes from `self` (the room echoes it anyway). */
+/** One entry per user in join order; custom name comes from `self` (the room echoes it anyway). */
 export function presentUsers(
   members: readonly PresenceMember[],
   self: { userId: string; name: string },

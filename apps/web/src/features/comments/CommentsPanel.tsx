@@ -1,6 +1,6 @@
-// "All comments" panels (BACKLOG 3.16; E README §2.8; B README §2.7):
-//   RecordCommentsPanel({recordRef})  E3 — a record's (or list entry's) threads, 320 px, with the top-level composer
-//   ObjectCommentsPanel(...)          the view-level panel ("‹ All comments ×"): every thread of the object
+// "All comments" panels (BACKLOG 3.16):
+// RecordCommentsPanel({recordRef})  E3 — a record's (or list entry's) threads, 320 px, with the top-level composer
+// ObjectCommentsPanel(...) the view-level panel ("‹ All comments ×"): every thread of the object
 // Header filter: "Show resolved comments" / "Only my threads" (blue dot while active). Cards open the thread view
 // ("‹ Comments": root with actions, "N replies" divider, replies, "Reply..." composer). A focused thread (comment deep
 // link) opens directly and is highlighted.
@@ -191,7 +191,7 @@ interface PanelProps {
   title?: string;
   /** Record panels open with the composer focused (record-comments-panel.png shows its accent border). */
   autoFocusComposer?: boolean;
-  /** List pages: "‹ All comments" back to the list-level panel (entry-scoped mode, C2 README §2.4). */
+  /** List pages: "‹ All comments" back to the list-level panel (entry-scoped mode). */
   onBack?: () => void;
   /** Line under the header ("Add comment on <record>"). */
   subject?: ReactNode;
@@ -349,7 +349,7 @@ export function RecordCommentsPanel({
   );
 }
 
-/** The view-level "All comments" panel of an object page (E README §2.8 "Other comment surfaces"). */
+/** The view-level "All comments" panel of an object page ("Other comment surfaces"). */
 export function ObjectCommentsPanel({
   entityDefinitionId,
   snapshotId,
@@ -361,12 +361,12 @@ export function ObjectCommentsPanel({
   subjectOf,
 }: {
   entityDefinitionId: string;
-  /** List pages: only threads on the rows of the view's snapshot (C2 README §2.4). */
+  /** List pages: only threads on the rows of the view's snapshot. */
   snapshotId?: string | null;
   focusThreadId?: string | null;
   focusCommentId?: string | null;
   onClose: () => void;
-  /** List pages say "Comments" with no ‹ (C2 README §2.4). */
+  /** List pages say "Comments" with no ‹. */
   title?: string;
   showBack?: boolean;
   subjectOf?: (target: CommentTarget) => ReactNode;

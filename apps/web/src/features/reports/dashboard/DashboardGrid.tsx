@@ -1,4 +1,4 @@
-// The dashboard grid (H README §3.3): rows of 12 columns packed from the cells in rank order, drag-and-drop reorder
+// The dashboard grid: rows of 12 columns packed from the cells in rank order, drag-and-drop reorder
 // from the cell header (dnd-kit, 5 px to start; drop beside a cell or between rows, 3 px accent bar), resize handles on
 // the left edge of every non-first cell, one `cells/shuffle` call per layout change, one column below 940 px.
 
@@ -24,7 +24,7 @@ import * as d from './dashboard.css';
 import { canDrop, type DropTarget, type LayoutEntry, moveCell, resizeCell, rowsOf } from './gridLayout';
 import { ReportCell } from './ReportCell';
 
-/** Below this container width the grid is one column (H README §3.3). */
+/** Below this container width the grid is one column. */
 export const SINGLE_COLUMN_BELOW = 940;
 
 const GRID_PADDING = 14;

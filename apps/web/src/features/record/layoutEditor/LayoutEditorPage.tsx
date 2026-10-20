@@ -1,4 +1,4 @@
-// Record page layout editor (BACKLOG 3.10; D README §2.8, §4.1): `/settings/data/objects/{apiSlug}/record-page/{id}`
+// Record page layout editor (BACKLOG 3.10): `/settings/data/objects/{apiSlug}/record-page/{id}`
 // inside the Settings shell. A WYSIWYG skeleton of the record page edits a working copy of the layout's element list
 // with the store rules of layout/model.ts; any change shows the dirty bar ("Changes will be visible to all" · Cancel ·
 // Save changes); "Save changes" sends the full element list (full replace, optimistic concurrency by version).

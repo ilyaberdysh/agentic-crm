@@ -1,6 +1,6 @@
-// Session: who is signed in, sign-in / sign-up / sign-out, expiry handling (D-15; K sessions.md §1.3, §1.5, §3).
+// Session: who is signed in, sign-in / sign-up / sign-out, expiry handling (D-15).
 // Email + password through Better Auth (/api/auth/*); the session cookie is HttpOnly. Sign-out in one tab signs out
-// every tab (BroadcastChannel + storage event, like Attio's "agentic-crm:sign-out").
+// every tab (BroadcastChannel + storage event, like the "agentic-crm:sign-out").
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { writeRaw } from '../lib/storage';
 import { keys } from './keys';
@@ -92,11 +92,11 @@ function broadcastSignOut(): void {
 export function signOut(): void {
   broadcastSignOut();
   clearLocalSession();
-  // Server clears the cookie and redirects to /auth/sign-in (Attio: GET /auth/logout).
+  // Server clears the cookie and redirects to /auth/sign-in (GET /auth/logout).
   window.location.assign('/api/auth/logout');
 }
 
-// ---- expiry (K sessions.md §1.5) --------------------------------------------------------------------------------
+// ---- expiry  --------------------------------------------------------------------------------
 
 /** Re-checks the session after a 401: 3 attempts, 100 ms × 2 backoff; network errors count as signed in. */
 export async function verifySession(): Promise<'signed-in' | 'signed-out'> {

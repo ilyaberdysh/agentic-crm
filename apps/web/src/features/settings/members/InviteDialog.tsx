@@ -1,4 +1,4 @@
-// "Invite members" dialog (J workspace-admin §3.2; evidence/B/modal-invite-members.png): "Send Invite to ..." email
+// "Invite members" dialog (J workspace-admin): "Send Invite to..." email
 // chips, "Invite as" (Member — can edit / Admin — full access), "Add to team (optional)", "Send Invites ⌘↵". Client
 // checks: at least one and at most 10 addresses, valid, unique; the server rejects members and pending invites.
 import { Button, DialogFooter, DialogHeader, Icon, Modal, Select, SelectItem, toast } from '@agentic-crm/ui';

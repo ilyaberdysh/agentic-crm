@@ -1,4 +1,4 @@
-// The variable menu and "Variable settings" popover (F composer §2.6, evidence/F/composer-variable-menu.png and
+// The variable menu and "Variable settings" popover (F composer,  and
 // composer-variable-fallback.png): one item per attribute of the recipient object with its type icon, a grey count and
 // a chevron when it drills in place ("‹ Back" + attribute name), and the chip popover with the fallback input,
 // "Change variable" and the trash button.

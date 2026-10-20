@@ -1,4 +1,4 @@
-// Details panel (D README §2.2–2.3; layout.md §5; components.md §10): header 97 px (padding 12, gap 12, 1 px rule),
+// Details panel: header 97 px (padding 12, gap 12, 1 px rule),
 // sections with a 20 px toggle (12/16 secondary), rows 32 px on a 126 px label column (16 px icon + 6 gap + 12/16
 // label) and an Editable value cell (radius 9, hover black 2 %), "View all values" ghost link.
 import { scales, text, vars } from '@agentic-crm/ui/styles';
@@ -70,7 +70,7 @@ export const renameNames = style({ flex: 1, minWidth: 0, display: 'flex', gap: 6
 
 export const actionsRow = style({ position: 'relative', display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 });
 
-/** Labelled actions share the free width of the row (Attio stretches "Compose email" when icons follow). */
+/** Labelled actions share the free width of the row (the UI stretches "Compose email" when icons follow). */
 export const actionGrow = style({ flex: '1 1 auto' });
 
 export const actionsMeasure = style({

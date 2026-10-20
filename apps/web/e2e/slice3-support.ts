@@ -1,4 +1,4 @@
-// Slice-3 e2e helpers (notes, tasks, comments, favorites, overlays): the seeded data (seed-slice3.ts, once per run),
+//  e2e helpers (notes, tasks, comments, favorites, overlays): the seeded data (seed-, once per run),
 // signed-in contexts at the reference viewport and zone, and tRPC calls for setup.
 import { spawnSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
@@ -9,7 +9,7 @@ import { submitSignIn } from './support.ts';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
-/** The Attio captures were taken in Europe/Moscow; en-US keeps Sunday weeks ("This week" ends Saturday). */
+/** The reference layout was captured in Europe/Moscow; en-US keeps Sunday weeks ("This week" ends Saturday). */
 export const TIME_ZONE = 'Europe/Moscow';
 
 export interface Slice3Seed {
@@ -109,7 +109,7 @@ export function uuid(): string {
   return crypto.randomUUID();
 }
 
-/** Removes the member's favourites and folders (the parity run leaves some behind). */
+/** Removes the member's favourites and folders (the visual review run leaves some behind). */
 export async function clearFavorites(page: Page): Promise<void> {
   const list = await trpc<{ favorites: { id: string }[]; directories: { id: string }[] }>(
     page,

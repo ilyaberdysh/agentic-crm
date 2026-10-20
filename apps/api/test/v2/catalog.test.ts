@@ -51,9 +51,6 @@ describe('objects', () => {
       await f.call('POST', '/objects', { body: { data: { api_slug: 'x' } } }),
       400,
       'validation_type',
-      {
-        deviation: 'createObject declares only quota_exceeded for 400',
-      },
     );
   });
 
@@ -91,7 +88,7 @@ describe('objects', () => {
 });
 
 describe('attributes', () => {
-  it('lists attributes in UI order with Attio fields; hidden system attributes are not listed', async () => {
+  it('lists attributes in UI order with the public API fields; hidden system attributes are not listed', async () => {
     const body = expectOk('listAttributes', await f.call('GET', '/objects/people/attributes'));
     const slugs = body.data.map((a: { api_slug: string }) => a.api_slug);
     expect(slugs.slice(0, 3)).toEqual(['record_id', 'name', 'email_addresses']);

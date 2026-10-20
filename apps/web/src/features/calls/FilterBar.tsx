@@ -1,6 +1,6 @@
-// Filters of the Calls list (I calls §2.2): "Filter" opens a popover with Record, Participant and Participant › Teams;
+// Filters of the Calls list (I calls): "Filter" opens a popover with Record, Participant and Participant › Teams;
 // each filter is a chip ("Record is [chip] ×") whose operator toggles between "is" and "is not". No status filter (the
-// Filter menu of Attio exposes none, §11.3).
+// Filter menu; no filter controls are exposed in this build.
 import { Icon, IconButton, Popover, Tooltip } from '@agentic-crm/ui';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';

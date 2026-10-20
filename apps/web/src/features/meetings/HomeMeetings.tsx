@@ -1,4 +1,4 @@
-// The Meetings widget of Home (BACKLOG 7.04; B-shell/home.md §2.3): header with the date button (date picker),
+// The Meetings widget of Home (BACKLOG 7.04): header with the date button (date picker),
 // previous / next day and "Meeting filters"; the viewer's meetings of the selected day (at most five visible, "{n} past
 // events" / "{n} more events" collapse the rest); one meeting expanded at a time (today: the current or next one) with
 // details, participants, linked records and "Open meeting". Data: `meetings.list({mine, from, to})`.

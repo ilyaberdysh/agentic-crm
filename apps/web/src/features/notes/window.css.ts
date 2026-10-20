@@ -1,4 +1,4 @@
-// Note and template windows (E README §2.2, §2.5; evidence E/note-empty-template-launcher.png, note-floating-panel.png,
+// Note and template windows:
 // template-editor.png): document column 704 px at 132 px (modal), title 32/600/36 −0.64, meta chips, body, launcher.
 import { alpha, text, transitionColors, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
@@ -177,7 +177,7 @@ export const state = style({
 export const stateTitle = style({ ...text.heading.small, color: c.content.primary });
 export const stateText = style({ ...text.body.standard, color: c.content.secondary });
 
-// ---- template banner (E README §2.5: peach "You are editing a template") ------------------------------------------
+// ---- Template banner: peach "You are editing a template" ------------------------------------------
 
 export const banner = style({
   boxSizing: 'border-box',

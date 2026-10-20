@@ -1,7 +1,7 @@
-// Kanban view configuration (slice4-contracts.md "Kanban"; C2 kanban.md K1, K3–K7). Shared settings live on the view
+// Kanban view configuration. Shared settings live on the view
 // (`view.kanban`: groupBy, hiddenStageIds, cardAttributePaths = the view's columns, showLabels, showNoStage,
 // showTimeInStage, calculation) and are saved with `views.update({viewId, kanban: {...partial}})`. Per-browser settings
-// (K3, K4, K6) stay local and never reach the server: collapsed columns, card display mode, "Hide empty attributes".
+// (K3, K4) stay local and never reach the server: collapsed columns, card display mode, "Hide empty attributes".
 import type { KanbanConfigInput, Path, View } from '@agentic-crm/contracts';
 import type { KanbanCalculation } from './model';
 
@@ -10,7 +10,7 @@ export interface KanbanConfig {
   noStatusVisible: boolean;
   hiddenStageIds: string[];
   showLabels: boolean;
-  /** The time-in-stage chip on cards (`kanban.showTimeInStage`, no UI toggle in Attio — U-C2-3). */
+  /** Whether cards show the time-in-stage chip (`kanban.showTimeInStage`). */
   showTimeInStage: boolean;
   calculation: KanbanCalculation | null;
 }
@@ -28,7 +28,7 @@ const toCalculation = (c: ServerCalculation | null | undefined): KanbanCalculati
 const toServerCalculation = (c: KanbanCalculation | null): ServerCalculation | null =>
   c ? { path: c.path, field: c.field, aggregation: c.kind } : null;
 
-/** The view's kanban settings; defaults on create (K1): label display "icon", "No stage" and the chip visible. */
+/** The view's kanban settings; defaults on create: label display "icon", "No stage" and the chip visible. */
 export function readKanbanConfig(view: View): KanbanConfig {
   const k = view.kanban;
   return {
@@ -72,13 +72,13 @@ export function patchedView(view: View, patch: ConfigPatch): View {
   };
 }
 
-// ---- per-browser preferences (K3, K4, K6) ---------------------------------------------------------------------------
+// ---- per-browser preferences (K3, K4) ---------------------------------------------------------------------------
 
-/** Collapsed columns: `"no-stage"` + stage ids (K3, K6). */
+/** Collapsed columns: `"no-stage"` + stage ids (K3). */
 export const collapsedColumnsKey = (viewId: string) => `kanban-collapsed-columns:${viewId}`;
-/** `"collapsed"` | `"expanded"` (K6). */
+/** `"collapsed"` | `"expanded"`. */
 export const cardDisplayModeKey = (workspaceId: string, viewId: string) =>
   `${workspaceId}:${viewId}:kanban-card-display-mode`;
-/** `true` hides empty attribute rows on cards (K4). */
+/** `true` hides empty attribute rows on cards. */
 export const hideEmptyFieldsKey = (workspaceId: string, viewId: string) =>
   `${workspaceId}:${viewId}:kanban-card-hide-empty-fields`;

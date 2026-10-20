@@ -1,4 +1,4 @@
-// Record page (BACKLOG §3: 3.01–3.11; acceptance 4 and 5): routes and tabs, inline editing with activity (actor and
+// Record page: routes and tabs, inline editing with activity (actor and
 // new value), activity filters, the resizable details panel, rename, favorites, relationship tabs, files, merge with
 // the merged-away state, delete, the overlay from a view with J/K, the layout editor (full-replace save) and the
 // record shortcuts.

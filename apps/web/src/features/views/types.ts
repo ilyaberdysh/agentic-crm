@@ -1,4 +1,4 @@
-// Shared types of the views feature (C2).
+// Shared types of the views feature.
 import type { Path, Predicate, Sort, View, ViewColumn } from '@agentic-crm/contracts';
 
 /** The predicate AST of a view (contracts `Predicate`, X-20); `null` = no filter. */
@@ -17,7 +17,7 @@ export interface AddColumnInput {
   position?: ColumnPosition;
 }
 
-/** Everything about a column that is saved immediately (C1 README §3.2). */
+/** Everything about a column that is saved immediately. */
 export interface ColumnPatch {
   title?: string | null;
   tableColumnWidth?: number | null;

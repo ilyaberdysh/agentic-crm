@@ -1,4 +1,4 @@
-// Client-side fuzzy matching for the palette's Jump To and quick-action sources (command-palette.md §3.1: Attio uses
+// Client-side fuzzy matching for the palette's Jump To and quick-action sources.
 // Fuse at threshold 0.4; we score exact > prefix > word prefix > substring > all words > ordered letters, and
 // reject the rest).
 

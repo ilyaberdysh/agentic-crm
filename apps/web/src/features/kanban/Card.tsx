@@ -1,4 +1,4 @@
-// A kanban card (C2 kanban.md K2 card anatomy, K5 attributes, K9 actions; BACKLOG 4.06 time-in-stage chip):
+// A kanban card:
 // title row (16 px record avatar — a selection checkbox on hover — record name linking to the record page, hover
 // "Edit" and "Open preview"), one row per view attribute (type icon + value, or the 12 px label above it with
 // "Show attribute labels"; values editable in place, path values read-only), footer counters (notes, open tasks,
@@ -239,7 +239,7 @@ export const Card = memo(function Card({ board, cardId, column, overlay, collaps
   );
 });
 
-// ---- attribute rows (K5) ------------------------------------------------------------------------------------------------
+// ---- attribute rows  ------------------------------------------------------------------------------------------------
 
 function CardFields({
   board,
@@ -449,7 +449,7 @@ function PathField({ board, column, attribute, cardId, hideEmpty }: FieldProps) 
   );
 }
 
-// ---- footer (K2) -------------------------------------------------------------------------------------------------------
+// ---- footer  -------------------------------------------------------------------------------------------------------
 
 function CardFooter({
   board,
@@ -474,7 +474,7 @@ function CardFooter({
     }),
     enabled: Boolean(record),
   });
-  // Comments of an entry are the entry's own (K2); notes and tasks belong to the parent record.
+  // Comments of an entry are the entry's own; notes and tasks belong to the parent record.
   const entryCounts = useQuery({
     ...countsQuery({ workspace: board.workspace, entityDefinitionId: board.definition.id, entityInstanceId: cardId }),
     enabled: Boolean(board.parentAttribute),
@@ -524,7 +524,7 @@ function Counter({
 }
 
 /**
- * "0d" since the current stage value became active; red once over the stage's target time (C2 README §4). Days and
+ * "0d" since the current stage value became active; red once over the stage's target time. Days and
  * overdue come from `kanban.timeInStage` (value history); a just-moved card (optimistic value) shows its own value's
  * start until the server answers.
  */

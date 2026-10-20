@@ -1,5 +1,5 @@
-// Main navigation (B sidebar.md §4) and the in-workspace pages that slice 1 renders as placeholders inside the shell
-// (route paths mirror Attio's route tree, 00-inventory/routes.md).
+// Main navigation  and the in-workspace pages that  renders as placeholders inside the shell
+// (route paths mirror the route tree).
 import type { IconName } from '@agentic-crm/ui';
 
 export interface NavEntry {
@@ -8,7 +8,7 @@ export interface NavEntry {
   icon: IconName;
   /** Path below `/<workspaceSlug>/`. */
   path: string;
-  /** Tooltip description and its shortcut (shortcuts.md §2). */
+  /** Tooltip description and its shortcut. */
   tooltip?: string;
   shortcut?: string;
 }
@@ -58,5 +58,5 @@ export const placeholderPages: PlaceholderPage[] = [
   },
 ];
 
-/** Standard objects live at `/<api_slug>` (sidebar.md §7). */
+/** Standard objects live at `/<api_slug>`. */
 export const standardObjectSlugs = ['companies', 'people', 'deals', 'users', 'workspaces'] as const;

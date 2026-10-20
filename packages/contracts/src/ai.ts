@@ -1,6 +1,6 @@
 // AI layer (slice 10, S10-ASK): Ask Agentic threads and turns, tool parts and approvals, the SSE stream, models,
 // settings, prompts library, credits and the AI record summary (BACKLOG 10.01–10.04, 10.07, 10.16; I ask-agentic.md,
-// ask-agentic-internals.md; slice10-contracts.md). Camel-case renderings of Attio's merlin_* shapes.
+// Camel-case representations of AI attribute values.
 //
 // Procedures:
 //   ai.threads.list/get/create/delete/rename        ai.turns.send/approve/deny/retry/cancel/feedback/suggestions

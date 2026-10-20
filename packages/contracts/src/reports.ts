@@ -1,6 +1,6 @@
 // Reports and dashboards (BACKLOG §9; H api §1–4, builder §1–11, README §3; CROSS-DOMAIN B.3, B.6, B.7, B.12, B.24,
 // X-10, X-12). Shared by apps/api (procedures), packages/domain (services, dataset engine) and apps/web (editor,
-// grid). Field names follow Attio's report fields in camelCase (primary_metric → primaryMetric, …).
+// grid). Field names use camelCase (primary_metric → primaryMetric, …).
 //
 // Procedures (slice8-9-contracts.md):
 //   dashboards.list/get/create/update/delete/duplicate/setLayout
@@ -54,7 +54,7 @@ export const timeResolutions = ['day', 'week', 'month', 'quarter', 'year'] as co
 export const timeResolutionSchema = z.enum(timeResolutions);
 export type TimeResolution = z.infer<typeof timeResolutionSchema>;
 
-/** Attio's numeric codes in the returned plan (H api §4.5): 0 = day … 4 = year; aggregations 1 = count … 5 = max. */
+/** Numeric codes in the returned plan: 0 = day … 4 = year; aggregations 1 = count … 5 = max. */
 export const timeResolutionCodes: Record<TimeResolution, number> = { day: 0, week: 1, month: 2, quarter: 3, year: 4 };
 export const aggregationCodes: Record<ReportAggregation, number> = {
   count: 1,
@@ -728,7 +728,7 @@ export const datasetMetaSchema = z.object({
   totalRecords: z.number().int(),
   /** More than 1,000 groups (× 20 segments): only the largest are returned. */
   truncated: z.boolean(),
-  /** Query plan (Attio-style operators) for debugging. */
+  /** Query plan for debugging. */
   plan: z.array(datasetPlanStepSchema),
   sql: z.array(z.string()).optional(),
   durationMs: z.number(),
@@ -959,7 +959,7 @@ export class IncompleteReportError extends Error {
 
 /**
  * Compiles a saved or draft report into its dataset query (H api §4.1–4.3). Insights fetch every time bucket (the
- * range and comparison of a date grouping apply on the client, as Attio does); historical values and stage changed
+ * range and comparison of a date grouping apply on the client); historical values and stage changed
  * send the resolved window and comparison.
  */
 export function datasetQueryForReport(

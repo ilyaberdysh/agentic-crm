@@ -1,4 +1,4 @@
-// Record title (D README §2.2): the display-name attribute's value; "Unnamed Company" / "Unnamed Person" /
+// Record title: the display-name attribute's value; "Unnamed Company" / "Unnamed Person" /
 // "Unnamed {Singular}" when it is empty; the record id for objects without a name-like attribute.
 import type { AttributeDefinition, EntityDefinition } from '@agentic-crm/contracts';
 import { useAttributeValues } from '../attributes';

@@ -1,6 +1,6 @@
-// The Calls page `/$ws/calls` (BACKLOG 10.11; I calls §2, §11.3): header tabs, toolbar (Sorted by Date · Filter chips ·
+// The Calls page `/$ws/calls` (BACKLOG 10.11; I calls): header tabs, toolbar (Sorted by Date · Filter chips ·
 // search with `?query=` · View settings), the favourites strip, date groups and 52 px rows, with the empty states.
-// Sort, filters, grouping and "Show favorites" are per browser (workspace-scoped where Attio scopes them).
+// Sort, filters, grouping and "Show favorites" are per browser (workspace-scoped where workspace-scoped).
 import {
   Button,
   Icon,

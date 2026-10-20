@@ -1,4 +1,4 @@
-// The add row of the Share popover (H README §2.6): a "Search..." combobox over the members and teams that have no
+// The add row of the Share popover: a "Search..." combobox over the members and teams that have no
 // grant yet, the level for the new grant (default Full access) inside the same box, and "Add" (disabled until a
 // target is picked). Adding creates the grant at once. The list is a plain ARIA combobox (↑ ↓ Enter Esc) rather than
 // a react-aria collection: it sits inside a popover and stays out of the collection machinery.

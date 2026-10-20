@@ -1,4 +1,4 @@
-// Settings → Email and calendar accounts (F settings §1): a bordered list of accounts (provider tile, address +
+// Settings → Email and calendar accounts (F settings): a bordered list of accounts (provider tile, address +
 // Default, what syncs, status chip, ⋮ Options) with the connect buttons below.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
@@ -39,7 +39,7 @@ export const rowText = style({ flex: 1, minWidth: 0, display: 'flex', flexDirect
 
 export const rowTitle = style({ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 });
 
-/** The address is the row's link; its ::after stretches the hit area over the whole row. */
+/** The address is the row's link; its::after stretches the hit area over the whole row. */
 export const rowLink = style({
   ...text.body.standard,
   color: c.content.primary,

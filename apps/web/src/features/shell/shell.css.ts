@@ -1,4 +1,4 @@
-// App shell metrics (B README §2.1–2.2, sidebar.md §1–5, §12–13; layout.md §1–3).
+// App shell metrics.
 import { scales, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
 
@@ -54,7 +54,7 @@ export const sidebar = style({
 });
 
 export const sidebarVariant = styleVariants({
-  // A real 1 px border (not an inset shadow): rows are 258 px wide at 275, as measured on Attio.
+  // A real 1 px border (not an inset shadow): rows are 258 px wide at 275, as measured on the UI.
   docked: { width: '100%', borderRight: `1px solid ${c.stroke.primary}` },
   hover: {
     position: 'absolute',
@@ -225,7 +225,7 @@ export const searchLabel = style({ flex: 1, textAlign: 'left', color: c.content.
 // ---- scroll area, groups, sections --------------------------------------------------------------------------
 
 export const scroll = style({
-  // Overlay-style scrollbar: invisible until the area is hovered (Attio fades its scrollbars in).
+  // Overlay-style scrollbar: invisible until the area is hovered (the UI fades its scrollbars in).
   scrollbarWidth: 'thin',
   scrollbarColor: 'transparent transparent',
   flex: 1,
@@ -314,7 +314,7 @@ export const sectionAction = style({
 
 export const sectionBody = style({ display: 'flex', flexDirection: 'column', gap: 1, paddingTop: 1 });
 
-/** Collapsible section body: height 0 ↔ content, scale .98 ↔ 1, opacity (sidebar.md §5). */
+/** Collapsible section body: height 0 ↔ content, scale.98 ↔ 1, opacity. */
 export const collapsible = style({
   display: 'grid',
   gridTemplateRows: '1fr',

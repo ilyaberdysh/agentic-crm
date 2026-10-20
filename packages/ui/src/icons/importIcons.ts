@@ -1,4 +1,4 @@
-// CSV import / export icons (slice 4, C2 import.md / export.md): skip value, learn-more cards, the CSV file badge of
+// CSV import / export icons: skip value, learn-more cards, the CSV file badge of
 // the review rail, sort direction. Kept in their own map (spread into iconMap) so parallel slices add icons without
 // touching the same lines.
 import {

@@ -1,4 +1,4 @@
-// Attio's public filter and sort JSON (rest-api/guides/filtering-and-sorting; data-model-documented §8.3–8.4) → the
+// Public filter and sort JSON is parsed into domain predicates and ordering.
 // internal predicate AST and sorts (contracts/views.ts, decision X-20; A public-api-mapping §4).
 //   shorthand {attr: value} and several keys → $and · verbose {attr: {$op: v}} / {attr: {field: v | {$op: v}}}
 //   $and / $or / $not (negation pushed to the leaves: must ↔ must-not, De Morgan on groups)

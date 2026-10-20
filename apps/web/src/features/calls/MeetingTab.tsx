@@ -1,4 +1,4 @@
-// The Meeting tab (I calls §3.8; evidence/I/call-page-meeting.png): Details (time range, conference link), Participants
+// The Meeting tab (I calls): Details (time range, conference link), Participants
 // (members with their name, "Host", the address and an Attended pill) and Linked records (add with "+", remove on hover).
 // Participants and linked records are the meeting modal's own sections.
 

@@ -1,4 +1,4 @@
-// Dev-gallery fixtures: the research seed (the data behind the curated evidence/C1 screenshots) as attribute
+// Dev-gallery fixtures: the fixture data (the data behind the curated  visual examples) as attribute
 // definitions, options, members, records and value rows, seeded into an isolated QueryClient so every View and
 // Editor renders without a server.
 import type { EntityDefinition } from '@agentic-crm/contracts';
@@ -126,7 +126,7 @@ export const A = {
     config: { entityReferenceConfiguration: { allowedEntityDefinitionIds: [OBJ.people] } },
   }),
   companyCategories: attribute(OBJ.companies, 'categories', 'Categories', 'select', { isMultiselect: true }),
-  // projects (the research seed's custom object)
+  // projects (the fixture data's custom object)
   code: attribute(OBJ.projects, 'code', 'Code', 'text', { isUnique: true }),
   summary: attribute(OBJ.projects, 'summary', 'Summary', 'text'),
   budget: attribute(OBJ.projects, 'budget', 'Budget', 'currency', { config: eur, isHistoric: true }),
@@ -298,7 +298,7 @@ export interface ProjectRow {
   city: string;
 }
 
-// The research seed's projects with the record ids of the evidence (00-* lists them in id order).
+// The fixture data's projects with the record ids of the evidence (00-* lists them in id order).
 // biome-ignore format: table
 export const PROJECTS: ProjectRow[] = ([
   ['de3d1863-6d4f-4eb6-8d92-0ac6b45f0b52', 'SEED-001', 'Warehouse picking automation', 'northwind', [0, 1], 'Build', 'High', ['AI', 'Infra'], 120000, 12, true, 4, '2026-07-01', 'London'],
@@ -407,7 +407,7 @@ export interface PersonRow {
   job: string;
 }
 
-/** The people of evidence/C1/32–33 (incl. the merge test record with two addresses), in that screenshot's order. */
+/** People fixtures, including the merge test record with two addresses, in the order used by visual examples. */
 export const PEOPLE_ROWS: PersonRow[] = (() => {
   const base = PEOPLE.map(([first, last, company, job], i) => ({
     id: personId(i),
@@ -482,7 +482,7 @@ DEAL.values = {
   [A.dealCreatedBy.id]: [value(A.dealCreatedBy, DEAL.id, API_TOKEN)],
 };
 
-/** The edit history of evidence/C1/36 (Summary of SEED-012). */
+/** Edit history fixture for the Summary attribute of SEED-012. */
 export function summaryHistory(recordId: string): AttributeValue[] {
   const ilya = { type: 'workspace-member' as const, id: MEMBERS[0]?.id ?? null };
   return [

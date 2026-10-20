@@ -14,6 +14,7 @@ export const searchRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/objects/records/search',
+    operationId: 'searchRecords',
     scopes: v2Operations.searchRecords.scopes,
     kind: 'read',
     async handler(v2, request) {

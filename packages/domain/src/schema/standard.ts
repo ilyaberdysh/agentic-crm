@@ -509,7 +509,7 @@ export async function bootstrapWorkspaceSchema(tx: Tx): Promise<void> {
   await ensureDefaultLayout(tx, await loadDefinition(tx, 'people'));
 }
 
-/** Inserts relationship seeds right after `afterSlug` so attribute order matches Attio's. */
+/** Inserts relationship seeds right after `afterSlug` to preserve attribute order. */
 function withPairs(seeds: Seed[], pairs: Seed[], afterSlug: string): Seed[] {
   const i = seeds.findIndex((s) => s.apiSlug === afterSlug);
   return [...seeds.slice(0, i + 1), ...pairs, ...seeds.slice(i + 1)];

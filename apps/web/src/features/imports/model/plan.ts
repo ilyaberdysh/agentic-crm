@@ -1,4 +1,4 @@
-// Import plan (C2 import.md §I5, §I9): one strategy per object the import writes — the destination, each linked object
+// Import plan (C2, §): one strategy per object the import writes — the destination, each linked object
 // reached through a relationship column (Client › Domains), or for lists the entries plus the parent object — with the
 // unique attribute rows are matched by, and per row the outcome (create / update / skip) and the values to write.
 // Pure; the fake backend runs the existing-record lookups and hands the results in.

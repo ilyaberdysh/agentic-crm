@@ -1,4 +1,4 @@
-// What an inbox row says and where it leads (notifications.md §2–4): the eyebrow with the actors, the title from the
+// What an inbox row says and where it leads: the eyebrow with the actors, the title from the
 // type registry with its `{record}` / `{list}` placeholders filled (bold), a snippet of the subject, fallback copy
 // for deleted or unreadable subjects, and the target a click opens. Pure: unit-tested without React.
 import { NOTIFICATION_TYPES, type NotificationGroup, type NotificationType } from '@agentic-crm/contracts';
@@ -9,7 +9,7 @@ export interface TitlePart {
   strong?: boolean;
 }
 
-/** "Grace", "Grace and Alan", "Grace and 3 more" (notifications §3 row). */
+/** "Grace", "Grace and Alan", "Grace and 3 more" (notifications row). */
 export function actorsEyebrow(names: readonly string[], total: number): string {
   const first = names[0] ?? 'Someone';
   if (total <= 1 || names.length <= 1) return total > 1 ? `${first} and ${total - 1} more` : first;
@@ -17,7 +17,7 @@ export function actorsEyebrow(names: readonly string[], total: number): string {
   return `${first} and ${total - 1} more`;
 }
 
-/** Payload of the newest entry (workflow notifications carry their subject there; slice 8). */
+/** Payload of the newest entry (workflow notifications carry their subject there). */
 function payloadOf(group: NotificationGroup): Record<string, unknown> {
   return group.entries[0]?.payload ?? {};
 }
@@ -111,7 +111,7 @@ export function targetOf(group: NotificationGroup): NotificationTarget {
   }
 }
 
-/** The 18 px colour badge on the avatar (notifications §2: event badge per type). */
+/** The 18 px colour badge on the avatar (notifications: event badge per type). */
 export function badgeIconOf(type: NotificationType): IconName {
   switch (type) {
     case 'comment-mentioned':

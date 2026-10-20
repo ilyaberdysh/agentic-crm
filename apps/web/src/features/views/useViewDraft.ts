@@ -1,6 +1,6 @@
 // useViewDraft — contract C2, consumed by the record table.
 //
-// Filter and sort edits are drafts (C1 README §3.1): kept per view for the session (they survive in-app navigation),
+// Filter and sort edits are drafts: kept per view for the session (they survive in-app navigation),
 // re-queried immediately by the table, cleared by "Discard changes"; "Save for everyone" replaces the whole filter and
 // sort arrays; "Save as new view" duplicates the view with the drafts and leaves the source as it was saved. Column
 // edits are not drafts: each one is saved at once, shown optimistically until the server answers.
@@ -67,7 +67,7 @@ export interface ViewDraft {
   removeColumn(columnId: string): Promise<void>;
   moveColumn(columnId: string, target: ColumnMoveTarget): Promise<void>;
 
-  // ---- additive (beyond C2) ----
+  // ---- additive (beyond) ----
   /** Schema of the view's object and of the definitions its paths reach (null while loading). */
   schema: SchemaIndex | null;
   /** The filter bar's editing model (incomplete conditions included); null until the schema has loaded. */
@@ -75,7 +75,7 @@ export interface ViewDraft {
   setFilterModel(model: FilterModel): void;
   /** View rename (optimistic). */
   rename(title: string): Promise<void>;
-  /** Record (first) column width, stored on the view (C1 §3.2 Resize); null resets to the default. */
+  /** Record (first) column width, stored on the view (C1 Resize); null resets to the default. */
   setRecordColumnWidth(width: number | null): Promise<void>;
   /**
    * `snapshots.query` input for the current drafts (relative dates resolve in the viewer's time zone) and a key that
@@ -93,7 +93,7 @@ function useDraftState(viewId: string) {
   );
 }
 
-/** Re-renders at the top of every hour while `enabled` (relative filters re-resolve hourly, C1 §4). */
+/** Re-renders at the top of every hour while `enabled` (relative filters re-resolve hourly, C1). */
 export function useHourEpoch(enabled: boolean): number | null {
   const [epoch, setEpoch] = useState(() => hourEpoch());
   useEffect(() => {

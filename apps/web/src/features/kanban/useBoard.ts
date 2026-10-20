@@ -1,4 +1,4 @@
-// The board state behind <KanbanBoard> (C2 kanban.md K2–K8): view config (shared + local), the grouping attribute
+// The board state behind <KanbanBoard>: view config (shared + local), the grouping attribute
 // and its stages, the visible columns, one board read for every column (count + first ids), column chunks for long
 // columns, the optimistic move overlay with rollback, selection, and the realtime safety net (a card whose stage
 // value no longer matches its column triggers a refetch — covers 2-hop boards whose parent records change).

@@ -1,4 +1,4 @@
-// Settings → Dashboards (H README §3.11; evidence H/settings-dashboard-reports.png and settings-dashboard-permissions.png,
+// Settings → Dashboards:
 // 1237 × 600 crops of the main region at 1x): 768 px column, "‹ Back", title and description, tabs Reports | Permissions,
 // then a 40 px-pitch table card or the Permissions sections. The page frame, back link, tabs and heading styles are
 // the settings ones (features/settings/objects/objects.css); this file adds the table grids and the permission cards.

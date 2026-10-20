@@ -1,4 +1,4 @@
-// Email sharing popovers (F README §2.2 "Manage access", §2.3 "Share"): a "Workspace Access" row with a level select,
+// Email sharing popovers ("Manage access", "Share"): a "Workspace Access" row with a level select,
 // "Search and add users" + "Grant access", and the people who have access. The record Emails tab shares *the viewer's*
 // emails on a record ("Person email access"); the email modal shares one thread ("Email Access", plus the thread link).
 import type { EmailAccess, GrantResource, VisibilityLevel } from '@agentic-crm/contracts';

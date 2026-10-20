@@ -1,4 +1,4 @@
-// Read rendering per attribute type (C1 cells.md §2; D §2.3 field rows). Every View draws into a ValueFrame for its
+// Read rendering per attribute type (C1; D field rows). Every View draws into a ValueFrame for its
 // density; cells clip multi-values, fields count overflow ("+N"), selected cells stack all values.
 import { cx, Spinner } from '@agentic-crm/ui';
 import type { FC } from 'react';
@@ -234,7 +234,7 @@ function LinkListView({ props, kind }: { props: ViewProps; kind: LinkKind }) {
     )
     .filter((t): t is string => Boolean(t));
   const shrink = props.density === 'cell' && !props.expanded && texts.length > 1;
-  // Table cells draw phone numbers as plain text (C1 cells.md §2); record fields as links (D overview).
+  // Table cells draw phone numbers as plain text; record fields as links (D overview).
   const plain = kind === 'phone' && props.density === 'cell';
   const chips = texts.map((t) =>
     plain ? (
@@ -298,7 +298,7 @@ export const InteractionView: FC<ViewProps> = (props) => {
   );
 };
 
-/** Small pending indicator for field rows ("Validating change", D §2.3). */
+/** Small pending indicator for field rows ("Validating change", D). */
 export function PendingIndicator({ isPending }: { isPending: boolean }) {
   if (!isPending) return null;
   return (

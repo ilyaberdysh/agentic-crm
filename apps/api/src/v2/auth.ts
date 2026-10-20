@@ -1,4 +1,4 @@
-// /v2 authentication (Attio docs rest-api/guides/authentication): `Authorization: Bearer <token>`, or HTTP Basic with
+// /v2 authentication: `Authorization: Bearer <token>`, or HTTP Basic with
 // the token as the username and an empty password. Scopes are checked per operation; `read-write` includes `read`.
 // Rate limits (rest-api/guides/rate-limiting): 100 reads/s and 25 writes/s per token, 429 with a Retry-After date.
 import { missingScopes } from '@agentic-crm/contracts';

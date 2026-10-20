@@ -43,10 +43,10 @@ import { assertTeams, teamOps } from '../teams/service.ts';
 import { enterWorkspace, runAsOwner, type Tx } from '../tx.ts';
 import { workspaceMemberCreatedEvent } from '../webhooks/events.ts';
 
-/** Handles that collide with app routes or services (K legacy-welcome §6.5 lists ~175; these are ours + Attio's core). */
+/** Handles that collide with app routes or services. */
 // biome-ignore format: compact table
 export const RESERVED_SLUGS = new Set([
-  '404', '_', 'admin', 'api', 'app', 'app-invites', 'assets', 'attio', 'auth', 'authorize', 'billing', 'blog', 'collab',
+  '404', '_', 'admin', 'api', 'app', 'app-invites', 'assets', 'auth', 'authorize', 'billing', 'blog', 'collab',
   'docs', 'health', 'help', 'integrations', 'invite', 'invites', 'join', 'login', 'logout', 'oauth', 'oauth2', 'onboarding',
   'openid', 'public', 'realtime', 'saml', 'settings', 'sign-in', 'sign-out', 'sign-up', 'signin', 'signup', 'static',
   'status', 'support', 'trpc', 'v1', 'v2', 'welcome', 'workspaces', 'www',

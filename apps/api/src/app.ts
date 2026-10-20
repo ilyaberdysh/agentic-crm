@@ -121,8 +121,7 @@ export async function buildApp(options: BuildAppOptions = {}): Promise<ApiApp> {
     reply.header('x-frame-options', 'DENY');
     reply.header('x-content-type-options', 'nosniff');
     reply.header('referrer-policy', 'strict-origin-when-cross-origin');
-    // Cookie-authenticated writes from a foreign page are refused (Attio relies on SameSite=Lax + JSON + custom
-    // headers, K sessions.md §1.1; we also check Origin). Better Auth checks its own routes.
+    // Check Origin on cookie-authenticated writes in addition to SameSite cookies. Better Auth checks its own routes.
     if (
       !SAFE_METHODS.has(request.method) &&
       (request.url.startsWith('/trpc') || request.url.startsWith('/api/agentic/'))

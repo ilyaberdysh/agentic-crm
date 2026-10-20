@@ -1,5 +1,5 @@
-// Sidebar layout state (B sidebar.md §13, layout.md §2): docked vs floating "hover" variant, collapse (⌘.),
-// width 200–350 (default 275, persisted ÷10 like Attio's `sidebar_width`), auto-float at ≤ 864 px app width,
+// Sidebar layout state: docked vs floating "hover" variant, collapse (⌘.),
+// width 200–350 (default 275, persisted ÷10 like the `sidebar_width`), auto-float at ≤ 864 px app width,
 // hover reveal from a 14 px strip at the left edge or the header's Expand button. Shared by the main shell and the
 // settings shell so switching between them keeps the layout.
 import { useRouterState } from '@tanstack/react-router';

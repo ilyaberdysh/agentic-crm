@@ -167,7 +167,7 @@ class Builder {
         return { ...span, type: 'bool', value: this.slice(n).toLowerCase() === 'true' };
       case 'Null':
         return { ...span, type: 'null' };
-      case 'AttioReference': {
+      case 'RecordReference': {
         const raw = this.slice(n);
         return { ...span, type: 'reference', tokenId: raw.slice(2, -1) };
       }

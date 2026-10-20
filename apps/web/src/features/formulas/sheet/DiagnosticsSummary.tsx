@@ -1,4 +1,4 @@
-// Diagnostics summary of the helper header (formulas.md §4.4): warning triangle + the single message, or
+// Diagnostics summary of the helper header: warning triangle + the single message, or
 // "Multiple errors (n)"; hovering opens a dark tooltip listing every diagnostic with "Line n" / "Lines a-b".
 import type { Diagnostic } from '@agentic-crm/formula';
 import { summarizeDiagnostics } from '@agentic-crm/formula';

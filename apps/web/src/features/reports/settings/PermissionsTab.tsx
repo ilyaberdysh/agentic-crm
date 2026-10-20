@@ -1,5 +1,5 @@
-// Permissions tab of a dashboard's settings (H README §3.11; evidence H/settings-dashboard-permissions.png; J
-// permissions §4–5): "Members — Set access rules for people in your workspace.", the "Workspace access" card with its
+// Permissions tab of a dashboard's settings:
+// permissions): "Members — Set access rules for people in your workspace.", the "Workspace access" card with its
 // level, "Teams" and "Individual members" with "+ Add" (a search popover over those without a grant; adding creates the
 // grant with the current workspace level) and one row per grant (avatar, name, email, level dropdown, Remove). Every
 // change is saved at once through permissions.put / remove; admins can always manage grants (OQ-067).

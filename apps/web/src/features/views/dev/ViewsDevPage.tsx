@@ -1,5 +1,5 @@
 // Dev route `/<workspace>/__dev/views?object=<api slug>&view=<id>` (dev builds only): mounts the views UI against a
-// seeded object with the object page chrome and a stand-in grid, for visual checks against evidence/C1 and for e2e.
+// seeded object with the object page chrome and a stand-in grid, for visual checks against  and for e2e.
 // The production object page (features/objects + features/table) composes the same components.
 import type { AttributeDefinition, ViewColumn } from '@agentic-crm/contracts';
 import { Button, Icon, IconTile, Spinner } from '@agentic-crm/ui';

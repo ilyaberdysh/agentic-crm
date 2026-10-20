@@ -121,7 +121,7 @@ function deadline(value: string | null | undefined) {
   return { kind: 'datetime' as const, at: new Date(t).toISOString() };
 }
 
-/** Linking something that is not a record (e.g. a task or member) is Attio's 400 limit_reached. */
+/** Linking something that is not a record (e.g. a task or member) is the public API's 400 limit_reached. */
 async function assertRecordObjects(v2: V2Context, refs: RecordRef[]): Promise<void> {
   for (const ref of refs) {
     const def = await v2.definitionById(ref.entityDefinitionId);
@@ -140,6 +140,7 @@ export const taskRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/tasks',
+    operationId: 'listTasks',
     scopes: v2Operations.listTasks.scopes,
     async handler(v2, request) {
       const query = parseInput(listTasksQuery, request.query, 'query parameters');
@@ -202,6 +203,7 @@ export const taskRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/tasks',
+    operationId: 'createTask',
     scopes: v2Operations.createTask.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createTaskBody, request.body, 'request body');
@@ -225,6 +227,7 @@ export const taskRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/tasks/:task_id',
+    operationId: 'getTask',
     scopes: v2Operations.getTask.scopes,
     async handler(v2, request) {
       return { data: taskToPublic(await getTask(v2, taskId(params(request)))) };
@@ -233,6 +236,7 @@ export const taskRoutes: RouteSpec[] = [
   {
     method: 'PATCH',
     url: '/tasks/:task_id',
+    operationId: 'updateTask',
     scopes: v2Operations.updateTask.scopes,
     async handler(v2, request) {
       const id = taskId(params(request));
@@ -258,6 +262,7 @@ export const taskRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/tasks/:task_id',
+    operationId: 'deleteTask',
     scopes: v2Operations.deleteTask.scopes,
     async handler(v2, request) {
       const id = taskId(params(request));

@@ -1,4 +1,4 @@
-// Attribute editors against the real API, through the record table (BACKLOG 2.03; contract C1): every commit is an
+// Attribute editors against the real API, through the record table (BACKLOG 2.03; contract): every commit is an
 // optimistic `values.set` write (values.put / retire / reorder with client value ids) that survives a reload.
 // Data: the seeded "Projects" object (apps/api src/seed/demo.ts), view "All Projects".
 import { expect, type Page, type Response, test } from '@playwright/test';
@@ -87,7 +87,7 @@ test('multi-select: each toggle is written at once and the picker stays open', a
   await expect(picker).toBeVisible();
   // Selected options first, then the rest.
   await expect(picker.getByRole('option').first()).toHaveText('Mobile');
-  // Attio writes each click immediately (C1 cells.md §2): the table runs the editor with liveCommit.
+  // Writes each click immediately: the table runs the editor with liveCommit.
   const write = page.waitForResponse(isCall('values.put'));
   await picker.getByRole('option', { name: 'CRM' }).click();
   expect((await write).ok()).toBe(true);

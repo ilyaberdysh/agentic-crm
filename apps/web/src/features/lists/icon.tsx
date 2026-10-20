@@ -1,4 +1,4 @@
-// List icons (C2 §2.2 "Change list icon"): Attio stores `emoji:<shortname>` (default `emoji:clipboard`) and renders
+// List icons use the stored `emoji:<shortname>` format (default `emoji:clipboard`) and render
 // the emoji at 16–20 px. We keep that format; a raw emoji or an unknown name falls back sensibly (📋).
 import { EMOJI_CATEGORIES } from '../comments/emoji/data';
 import * as s from './lists.css';

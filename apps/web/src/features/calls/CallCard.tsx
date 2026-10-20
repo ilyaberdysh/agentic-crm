@@ -1,5 +1,5 @@
-// Call cards: the card of a record's Calls tab and of the favourites strip (I calls §11.6, §2.6) and the meeting card of
-// the Activity feed (evidence/I/record-company-activity-call.png).
+// Call cards: the card of a record's Calls tab and of the favourites strip (I calls) and the meeting card of
+// the Activity feed.
 import { Icon } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';
 import type { KeyboardEvent, MouseEvent } from 'react';

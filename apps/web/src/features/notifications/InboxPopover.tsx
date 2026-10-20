@@ -1,4 +1,4 @@
-// The inbox (BACKLOG 5.05; notifications.md §1–3): the sidebar Inbox button with its realtime unread badge and the
+// The inbox (BACKLOG 5.05): the sidebar Inbox button with its realtime unread badge and the
 // popover it opens — legacy frame (heading, "Notifications (n)" / "Requests (n)" tabs, bell empty state) with the v2
 // rows. Opening a row marks it read and goes to its target; "Mark all as read" in the header; row options: mark as
 // read / unread, archive. 25 rows per page, more on scroll.

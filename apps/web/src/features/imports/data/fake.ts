@@ -1,4 +1,4 @@
-// In-memory import backend for the unit tests of the wizard model (the app uses server.ts). It implements the same
+// In-memory import backend for the unit tests of the wizard model (the UI uses server.ts). It implements the same
 // contract as the server: jobs, raw rows, mapping, per-column resolution (model/resolve.ts), overrides by raw-value
 // hash, plans (model/plan.ts) and the run, which writes through a `FakeSource` (test fixtures).
 import type {
@@ -49,7 +49,7 @@ export interface FakeSource {
     parent: { entityDefinitionId: string; entityInstanceId: string },
     values: Record<string, unknown[]>,
   ): Promise<string>;
-  /** Maps a write error to Attio's failure reasons. */
+  /** Maps a write error to the failure reasons. */
   failureOf(error: unknown): FailureReason;
   /** Called after a run touched these definitions (cache invalidation). */
   afterRun?(entityDefinitionIds: string[]): void;

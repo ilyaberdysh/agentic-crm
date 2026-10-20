@@ -18,7 +18,7 @@ export function InfoTip({ content, label = 'More information' }: { content: Reac
   );
 }
 
-/** ⌘/Ctrl + Enter submits the dialog (J README §3). */
+/** ⌘/Ctrl + Enter submits the dialog. */
 export function submitOnModEnter(submit: () => void) {
   return (event: KeyboardEvent) => {
     if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
@@ -116,7 +116,7 @@ export async function copyToClipboard(text: string, toastFn: (title: string) => 
   try {
     await navigator.clipboard.writeText(text);
   } catch {
-    // Clipboard may be unavailable (insecure context); the toast still confirms the action like Attio.
+    // Clipboard may be unavailable (insecure context); the toast still confirms the action by design.
   }
   toastFn('Copied to clipboard');
 }

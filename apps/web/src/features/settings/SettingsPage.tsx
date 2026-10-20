@@ -1,4 +1,4 @@
-// Settings page template (B README §2.8): header crumb (icon + title) + Help; 768 px column, 72 px top padding;
+// Settings page template: header crumb (icon + title) + Help; 768 px column, 72 px top padding;
 // H1 + description with "Learn more ↗"; rule; sections 40 px apart (16 px between a section header and its body).
 import { EmptyState, Icon } from '@agentic-crm/ui';
 import type { ReactNode } from 'react';

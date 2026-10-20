@@ -1,8 +1,8 @@
-// CSV parsing in the browser (C2 import.md §I2): the chosen file is decoded and parsed client-side, no network until
+// CSV parsing in the browser: the chosen file is decoded and parsed client-side, no network until
 // "Next". Encoding: BOM (UTF-8 / UTF-16 LE / BE), else strict UTF-8, else Windows-1252 (Excel's default "CSV" on
-// Western locales). Delimiter: Papa Parse's guess among , ; tab | (European Excel writes ';'). The first row holds the
+// Western locales). Papa Parse guesses among comma, semicolon, tab, and pipe delimiters. The first row holds the
 // column titles; trailing blank lines are dropped and every row is padded / cut to the header width. Limits and
-// messages are Attio's documented ones (100 columns, 100,000 rows, 100 MB).
+// messages are the documented ones (100 columns, 100,000 rows, 100 MB).
 import Papa from 'papaparse';
 
 export const CSV_LIMITS = { columns: 100, rows: 100_000, bytes: 100 * 1024 * 1024 } as const;

@@ -1,4 +1,4 @@
-// Command-palette dialog frame of the add-to-list flows (C2 §2.5; evidence/C2/add-to-list-choose-record.png,
+// Command-palette dialog frame of the add-to-list flows:
 // add-to-list-duplicates.png, D/choose-list): header (title or breadcrumb with ‹ back) + ×, optional search row,
 // sections of keyboard-navigable rows (↑ / ↓ move, ↵ picks; hover moves the highlight), footer "↑ ↓ Navigate" and
 // the primary action acting on the highlighted row.

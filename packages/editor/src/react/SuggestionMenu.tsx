@@ -76,7 +76,7 @@ function MentionRow({
       {item.kind === 'member' || item.avatarUrl ? (
         <Avatar name={item.label} src={item.avatarUrl ?? null} kind={shape} size={16} seed={item.id} />
       ) : (
-        // Records without an image get a grey placeholder glyph (Attio's EntityPlaceholderAvatar).
+        // Records without an image get a grey placeholder glyph (the EntityPlaceholderAvatar).
         <span className={s.recordGlyph} data-shape={shape === 'person' ? 'round' : 'box'} aria-hidden>
           {shape === 'person' ? <User size={10} strokeWidth={2} /> : <Building2 size={10} strokeWidth={2} />}
         </span>

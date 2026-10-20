@@ -94,7 +94,7 @@ export function ToastCard({
   );
 }
 
-// CSS `ease`, used by Attio's toast transitions.
+// CSS `ease`, used by the toast transitions.
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 const STACK_OFFSET = 8;
 const GAP = 8;
@@ -208,7 +208,7 @@ export interface ToasterProps {
 /**
  * Renders the toast stack top-right. Collapsed: newest in front, older ones 8 px lower per level,
  * scaled 1 − 0.05·level and clipped to the front toast; hovering expands to a list with 8 px gaps.
- * F8 focuses the region. Mount once near the app root.
+ * F8 focuses the region. Mount once near the UI root.
  */
 export function Toaster({ store = toastStore, visibleCount = 3 }: ToasterProps) {
   const toasts = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);

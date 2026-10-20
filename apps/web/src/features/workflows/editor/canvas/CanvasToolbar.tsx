@@ -1,5 +1,5 @@
-// Bottom toolbar (README §2.3, §3; evidence G/G-trigger-config.png): zoom menu ("100% ⌄": Zoom in, Zoom out, Zoom to 100%,
-// Fit to view), hand tool (H), pointer (V, default, pressed), "Add block B" and "Organize blocks". The run viewer shows
+// Bottom toolbar: zoom menu ("100% ⌄": Zoom in, Zoom out, Zoom to 100%,
+// Fit to view), hand tool, pointer (V, default, pressed), "Add block B" and "Organize blocks". The run viewer shows
 // the zoom and the two tools only.
 import { Button, IconButton, Kbd, Menu, MenuItem, MenuSeparator, MenuTrigger, Tooltip } from '@agentic-crm/ui';
 import { useReactFlow, useViewport } from '@xyflow/react';

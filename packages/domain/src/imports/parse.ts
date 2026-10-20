@@ -1,4 +1,4 @@
-// Raw CSV cell → attribute values, per type (import.md I3/I4; Attio's CSV import formatting guide). Pure functions:
+// Raw CSV cell → attribute values, per type. Pure functions:
 // no database access; option, member and currency lookups come in through `ParseContext`.
 //
 //   text            as is (trimmed); Record ID / Entry ID must be a UUID
@@ -31,7 +31,7 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 const GROUP_CHARS = /[\s   '’_]/g;
 
-/** "1 200,50" (comma) → 1200.5; "12500,50" (point) → 1250050, as Attio does. Null when not a finite number. */
+/** "1 200,50" (comma) → 1200.5; "12500,50" (point) → 1250050. Null when not a finite number. */
 export function parseNumber(raw: string, separator: DecimalSeparator = 'point'): number | null {
   let s = raw.trim().replace(GROUP_CHARS, '');
   if (s === '') return null;
@@ -63,7 +63,7 @@ const COMMA_DECIMAL_GROUPED = /^[+-]?\d{1,3}(?:[.\s  ]\d{3})+,\d+$/;
 const POINT_DECIMAL_GROUPED = /^[+-]?\d{1,3}(?:[,\s  ]\d{3})+\.\d+$/;
 
 /**
- * The column's decimal separator. Point is Attio's default and wins every ambiguous sample: with Point a comma is a
+ * The column's decimal separator. Point is the default and wins every ambiguous sample: with Point a comma is a
  * thousands separator, so "12500,50" reads as 1,250,050 (import.md I4, live run — the Budget column stayed on Point).
  * Comma is chosen only on unambiguous evidence: a decimal comma after dot / space thousands groups ("1.234,56",
  * "250 000,00 €", the ru-RU form our exports write), or values only the comma reading accepts ("1.234.567").
@@ -358,7 +358,7 @@ export function parseTimestamp(raw: string, format: DateFormat, timeZone = 'UTC'
 // ---------------------------------------------------------------------------------------------------------------
 // Multi-value splitting, names, locations
 
-/** "a, b,,c" → ['a', 'b', 'c'] (Attio: multiple values are comma-separated). */
+/** "a, b,,c" → ['a', 'b', 'c'] (multiple values are comma-separated). */
 export function splitValues(raw: string): string[] {
   return raw
     .split(',')
@@ -460,7 +460,7 @@ export interface ParsedLocation {
 const POSTCODE = /^(?=.*\d)[A-Z0-9][A-Z0-9 -]{1,9}$/i;
 
 /**
- * One-line address → components (Attio: street, city, region/state, postcode and country may all sit in one
+ * One-line address → components (street, city, region/state, postcode and country may all sit in one
  * column): the country is recognised from the last part, a postcode (with digits) before it, then the remaining
  * parts read from the end as region, locality and street lines. "London, United Kingdom" → locality London;
  * "Germany" → country only.
@@ -720,7 +720,7 @@ export function resolveCell(ctx: ParseContext, raw: string): Resolution {
   return { values, errors: [...errors], missing, empty: false };
 }
 
-/** Attio's particle resolution type of a property (import.md I3). */
+/** Particle resolution type of a property. */
 export function resolutionTypeOf(
   type: ParseContext['type'],
   opts: { isId: boolean; field: NameField | null; systemAttributeType: string | null },

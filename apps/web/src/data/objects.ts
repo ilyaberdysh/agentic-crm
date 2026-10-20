@@ -1,4 +1,4 @@
-// Objects of a workspace for the sidebar Records section and object routes (B sidebar.md §7; A §4.3).
+// Workspace objects used by the sidebar Records section and object routes.
 // Entity definitions are cached once per id (normalised) and the list holds them in order.
 import type { EntityDefinition } from '@agentic-crm/contracts';
 import { queryOptions, useQuery } from '@tanstack/react-query';
@@ -58,7 +58,7 @@ export function sortObjects(objects: ObjectSummary[], sort: RecordsSort): Object
   );
 }
 
-/** App route of an object's index page below `/<workspaceSlug>/` (sidebar.md §7). */
+/** App route of an object's index page below `/<workspaceSlug>/`. */
 export function objectPath(object: Pick<ObjectSummary, 'apiSlug' | 'entityType'>): string {
   return object.entityType === 'custom-record' ? `custom/${object.apiSlug}` : object.apiSlug;
 }

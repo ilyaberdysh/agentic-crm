@@ -1,4 +1,4 @@
-// Mailbox → Signatures (F settings §2.3; evidence/F/mailbox-signatures-empty.png, mailbox-signature-editor.png):
+// Mailbox → Signatures:
 // empty state "No email signatures", or two columns: the signature pills (Default badge, ⋮ Set as default / Clear
 // default / Delete, "+ New signature") and the editor (title input + rich-text box with the "+" Insert menu). The
 // first signature created becomes the default (the server does it). Title and body autosave (600 ms, flushed when

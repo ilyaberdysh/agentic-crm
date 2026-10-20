@@ -1,4 +1,4 @@
-// Public types of the editor package (contract E1, slice3-contracts.md).
+// Public types of the editor package (contract).
 import type { HocuspocusProvider } from '@hocuspocus/provider';
 import type { Editor } from '@tiptap/core';
 import type { Block } from '../model/blocks.ts';
@@ -23,7 +23,7 @@ export type MentionItem =
       /** Workspace member id. */
       id: string;
       label: string;
-      /** Shown greyed after the name: Attio shows the email domain for members. */
+      /** Show the member's email domain in muted text after the name. */
       secondary?: string | null;
       avatarUrl?: string | null;
     }
@@ -55,7 +55,7 @@ export interface UploadedImage {
 /** Uploads an image (PNG, GIF or JPEG ≤ 20 MB, already validated) and returns where it lives. */
 export type UploadImage = (file: File) => Promise<UploadedImage>;
 
-/** One distinct viewing user (Attio shows one avatar per user, the current user included). */
+/** One avatar per distinct viewer, including the current user. */
 export interface PresenceUser {
   id: string;
   memberId: string;

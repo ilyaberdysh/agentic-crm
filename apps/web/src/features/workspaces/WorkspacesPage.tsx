@@ -1,4 +1,4 @@
-// `/workspaces` — workspace picker (K README §2.6, legacy-welcome §10): member workspaces, then invited ones
+// `/workspaces` — workspace picker (legacy-welcome): member workspaces, then invited ones
 // ("Invited" badge → join link); search only above 5 entries (⌘F focuses it, ↓ moves to the first row);
 // ↑/↓/Home/End move between rows. Signed out (or failing) → the error state with Sign out.
 import { Avatar, Badge, Icon, SearchField } from '@agentic-crm/ui';

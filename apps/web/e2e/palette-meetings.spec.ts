@@ -1,4 +1,4 @@
-// The command palette's "Upcoming meetings" page (command-palette.md §2): today's and tomorrow's meetings of the member;
+// The command palette's "Upcoming meetings" page: today's and tomorrow's meetings of the member;
 // selecting one opens the meeting modal.
 import { expect, test } from '@playwright/test';
 import { ws } from './slice3-support.ts';

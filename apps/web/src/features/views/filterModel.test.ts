@@ -200,7 +200,7 @@ describe('parsing the AST back (round trips)', () => {
     expect(sameFilter(buildFilter(parsed, resolve), ast)).toBe(true);
   });
 
-  it('accepts Attio\'s stored forms: active_until noise, checkbox "true" strings, long durations', () => {
+  it('accepts stored filter forms: active_until noise, checkbox "true" strings, long durations', () => {
     const leaf: PredicateLeaf = {
       path: p(a.client),
       mode: 'must',

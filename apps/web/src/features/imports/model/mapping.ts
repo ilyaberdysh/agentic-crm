@@ -1,4 +1,4 @@
-// Map columns (C2 import.md §I3, §I9): which attributes a column can map to, the client-side auto-mapping saved with
+// Map columns (C2, §): which attributes a column can map to, the client-side auto-mapping saved with
 // the draft (exact title match; dates get a detected format), chip labels, and the validation that blocks Continue.
 // Destinations: an object (its writable attributes, Record ID as a match key, relationship drill-downs to the related
 // object's attributes) or a list (list attributes incl. Entry ID, and the parent object's attributes through

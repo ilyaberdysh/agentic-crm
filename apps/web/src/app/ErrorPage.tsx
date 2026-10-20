@@ -1,5 +1,5 @@
-// Generic error placeholder (system-ui §6): centred red "Something went wrong" with a retry that re-runs the
-// route's loaders (data errors retry by invalidating, like Attio's error boundaries).
+// Generic error placeholder (system-ui): centred red "Something went wrong" with a retry that re-runs the
+// route's loaders (data errors retry by invalidating, like the error boundaries).
 import { Button, ErrorState } from '@agentic-crm/ui';
 import { type ErrorComponentProps, useRouter } from '@tanstack/react-router';
 import * as s from '../features/shell/shell.css';

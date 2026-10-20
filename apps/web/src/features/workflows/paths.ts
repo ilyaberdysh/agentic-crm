@@ -1,4 +1,4 @@
-// Workflow routes below `/<workspaceSlug>/` (README §1 route table).
+// Workflow routes below `/<workspaceSlug>/` (route table).
 export const workflowsPath = () => 'automations/workflows';
 export const editorPath = (workflowId: string) => `automations/workflows/${workflowId}/editor`;
 export const runsPath = (workflowId: string, run?: { versionId: string; runId: string }) =>

@@ -1,7 +1,7 @@
-// Confetti "ceiling drop" (C2 kanban.md K3 Confetti preview, K8 drop into a celebration stage; evidence
+// Confetti "ceiling drop" when a card moves into a celebration stage.
 // kanban-stage-color-confetti.png): small paper pieces fall from above the viewport across its whole width, flutter
 // and fade out after ~3 s. A single fixed canvas (pointer-events none) driven by requestAnimationFrame; a second burst
-// while one runs adds pieces to it. Nothing runs under `prefers-reduced-motion: reduce` (motion.md §5).
+// while one runs adds pieces to it. Nothing runs under `prefers-reduced-motion: reduce`.
 
 export interface Particle {
   x: number;

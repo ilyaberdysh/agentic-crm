@@ -1,4 +1,4 @@
-// Home page model (B-shell/home.md §2.1, §2.4): the greeting by local time of day and the Tasks block's due labels.
+// Home page model: the greeting by local time of day and the Tasks block's due labels.
 // Pure and unit-tested.
 import type { PartOfDay } from '@agentic-crm/contracts';
 import { localDateOf } from '@agentic-crm/contracts';

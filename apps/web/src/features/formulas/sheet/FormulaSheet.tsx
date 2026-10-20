@@ -1,4 +1,4 @@
-// The formula editor screen (formulas.md §4.1–4.7): replaces the attribute dialog's content in the same frame.
+// The formula editor screen: replaces the attribute dialog's content in the same frame.
 // Header (back, "Formula", help, close) · CodeMirror editor with chips, highlighting, diagnostics (600 ms after the
 // last change) and error hovers · AI composer (generate / refine; Fix from the header) · helper header (Output menu ·
 // diagnostics summary + Fix, or the record preview · helper toggle, persisted) · helper body (list + detail) ·

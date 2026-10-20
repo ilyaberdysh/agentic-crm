@@ -1,4 +1,4 @@
-// Committed design-token snapshot. Source provenance must be resolved before public release.
+// Committed design-token snapshot retained under the maintainer disposition in PROVENANCE.md.
 // Theme axes, accent and elevated-surface overrides, elevation shadows.
 
 export const identities = [
@@ -21,7 +21,7 @@ export const surfaceModes = [
 ] as const;
 export const defaultAccent = "blue" as const;
 
-/** Applied for every accent other than blue (tokens.md §2). */
+/** Applied for every accent other than blue. */
 export const accentOverrides = {
   "cyan": {
     "light": {

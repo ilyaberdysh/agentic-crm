@@ -1,4 +1,4 @@
-// Our own logo mark + wordmark (Attio's logo is not reused). Occupies Attio's 96 × 24 logo slot.
+// custom logo mark + wordmark (the logo is not reused). Occupies the 96 × 24 logo slot.
 import { Link } from '@tanstack/react-router';
 import { brand } from '../../lib/brand';
 import * as s from './auth.css';

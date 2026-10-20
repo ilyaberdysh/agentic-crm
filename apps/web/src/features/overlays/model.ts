@@ -1,14 +1,14 @@
-// Window manager and overlay router state (contract E4, CROSS-DOMAIN B.16; B system-ui §4; E README §2.2; D README
-// §2.7). Pure functions over plain data so they are unit-tested without React or a router.
+// Window manager and overlay router state:
+//). Pure functions over plain data so they are unit-tested without React or a router.
 //
 // Two kinds of surfaces:
-//   - URL overlays, stacked: a record overlay (`?modal=record&id=<record>&object=<object>`), a note / template /
-//     email window in modal mode (`?modal=note|note-template|email&id=<id>`) and the edit-task dialog
-//     (`?command-menu-page=task&id=<task>`). The URL mirrors the top of the stack; lower layers stay mounted
-//     underneath (a note opened from a record overlay closes back to the overlay). Back / forward reconcile the
-//     stack with the URL.
-//   - Detached windows: notes minimised to the dock (32 px bubble) or floating as the 456 × 556 panel pinned to the
-//     bottom right ("Pin to screen"). They survive navigation and carry no URL params.
+// - URL overlays, stacked: a record overlay (`?modal=record&id=<record>&object=<object>`), a note / template /
+// email window in modal mode (`?modal=note|note-template|email&id=<id>`) and the edit-task dialog
+// (`?command-menu-page=task&id=<task>`). The URL mirrors the top of the stack; lower layers stay mounted
+// underneath (a note opened from a record overlay closes back to the overlay). Back / forward reconcile the
+// stack with the URL.
+// - Detached windows: notes minimised to the dock (32 px bubble) or floating as the 456 × 556 panel pinned to the
+// bottom right ("Pin to screen"). They survive navigation and carry no URL params.
 
 export interface RecordRef {
   entityDefinitionId: string;
@@ -175,7 +175,7 @@ export function forgetWindow(state: OverlayState, kind: WindowKind, id: string):
   return closeEntry(state, { type: 'window', kind, id });
 }
 
-// ---- record overlay navigation (K / J) ------------------------------------------------------------------------
+// ---- record overlay navigation (K /) ------------------------------------------------------------------------
 
 export interface SequencePosition {
   index: number;

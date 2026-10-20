@@ -1,5 +1,5 @@
 // <RichTextPreview blocks> — read-only render of the flat `blocks` projection (note cards, record tabs, favourites,
-// template previews). Same typography and classes as the editor; links are not clickable (as in Attio's previews).
+// template previews). Same typography and classes as the editor; links are not clickable (as in the previews).
 import { Fragment, type ReactNode } from 'react';
 import type { Block } from '../model/blocks.ts';
 import { listNumbers } from '../model/numbering.ts';

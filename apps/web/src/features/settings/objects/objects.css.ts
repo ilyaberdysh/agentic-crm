@@ -1,4 +1,4 @@
-// Settings → Objects screens (J objects-lists §1–3; measured on evidence/J/objects-list.png,
+// Settings → Objects screens (J objects-lists; measured on,
 // object-attributes-tab.png, object-configuration-custom.png at 1512 × 945): 768 px column, 72 px top padding,
 // table cards with a 1 px stroke.primary border and radius 12, 41 px row pitch.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';

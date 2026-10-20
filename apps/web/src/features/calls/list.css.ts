@@ -1,4 +1,4 @@
-// Calls index (I calls §2; evidence/I/calls-list-populated.png, calls-list-empty.png): the header tabs "Calls n" /
+// Calls index: the header tabs "Calls n" /
 // "Insight Templates n", the toolbar (sort, filter chips, search, view settings), the favourites strip, date groups and
 // the table with 52 px rows (call · record · participant · date).
 import { alpha, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';
@@ -106,7 +106,7 @@ export const toolbarButton = style({
   },
 });
 
-/** The "Filter" button is quieter than the others (ghost with a dashed ring, as the screenshots show). */
+/** The "Filter" button is quieter than the others (ghost with a dashed ring, as the visual examples show). */
 export const filterButton = style([
   toolbarButton,
   {

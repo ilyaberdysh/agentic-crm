@@ -1,4 +1,4 @@
-// Sidebar container (B sidebar.md §13): docked (in the layout, resizable) or floating (hover variant: inset 8,
+// Sidebar container: docked (in the layout, resizable) or floating (hover variant: inset 8,
 // radius 10, e2; revealed from a 14 px strip at the left edge or the header's Expand button; hides when the pointer
 // leaves unless a menu inside is open). The content (main nav or settings nav) is passed in.
 
@@ -28,7 +28,7 @@ export function SidebarFrame({ children, label }: { children: ReactNode; label: 
           data-open={hoverOpen || undefined}
           data-variant="hover"
           onPointerEnter={() => sidebar.panelPointer(true)}
-          // Menus opened from the panel (portalled) hold it open; see holdOpen().
+          // Menus opened from the panel (portalled) hold it open; see holdOpen.
           onPointerLeave={() => sidebar.panelPointer(false)}
           inert={!hoverOpen}
         >

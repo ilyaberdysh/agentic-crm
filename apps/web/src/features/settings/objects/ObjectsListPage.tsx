@@ -1,4 +1,4 @@
-// Settings → Objects (J objects-lists §1; evidence/J/objects-list.png): header with "+ New custom object", search and
+// Settings → Objects (J objects-lists): header with "+ New custom object", search and
 // Filter (Only show standard / Only show custom), and the objects table — Object (usage badge) · Type · Records ·
 // Attributes · ⋮ (Edit, Copy ID). Standard objects that are not activated yet show "Activate". Custom objects first,
 // then standard ones alphabetically.

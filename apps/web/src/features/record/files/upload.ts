@@ -1,4 +1,4 @@
-// Three-step record file upload (D README §4.4; contract E5; CROSS-DOMAIN B.23): createUploadSession (client-minted
+// Three-step record file upload: createUploadSession (client-minted
 // session id, idempotent) → PUT the bytes to the presigned URL → complete (the server verifies the object and creates
 // the file entry). Sizes and names are checked before anything is sent.
 import { MAX_FILE_BYTES } from '@agentic-crm/contracts';
@@ -13,7 +13,7 @@ export interface UploadTarget {
 
 export class UploadError extends Error {}
 
-/** "28 bytes", "1.2 KB", "3.4 MB" (Files tab rows, D §3.9). */
+/** "28 bytes", "1.2 KB", "3.4 MB" (Files tab rows, D). */
 export function formatBytes(bytes: number | null | undefined): string {
   if (bytes === null || bytes === undefined) return '';
   if (bytes < 1024) return `${bytes} ${bytes === 1 ? 'byte' : 'bytes'}`;

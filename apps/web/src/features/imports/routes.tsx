@@ -1,7 +1,7 @@
-// Import wizard routes (C2 README §1, import.md §I1), one family per destination prefix:
-//   /$ws/{companies|people|deals|users|workspaces}/import[/…]   /$ws/custom/$entityApiSlug/import[/…]
-//   /$ws/collection/$collectionId/import[/…]
-//   /$ws/settings/data/objects/$apiSlug/imports/import[/…]       /$ws/settings/data/lists/$listId/imports/import[/…]
+// Import wizard routes, one family per destination prefix:
+// /$ws/{companies|people|deals|users|workspaces}/import[/…] /$ws/custom/$entityApiSlug/import[/…]
+// /$ws/collection/$collectionId/import[/…]
+// /$ws/settings/data/objects/$apiSlug/imports/import[/…] /$ws/settings/data/lists/$listId/imports/import[/…]
 // `…/import` redirects to `…/import/new`; the rest (`new`, `{mapping}/job/{job}/{step}[/{param}]`) is parsed by the wizard.
 import { type AnyRoute, createRoute, redirect } from '@tanstack/react-router';
 import { standardObjectSlugs } from '../shell/navigation';

@@ -1,7 +1,7 @@
-// Webhooks (BACKLOG 6.07; J workspace-admin §6; Attio docs rest-api/guides/webhooks and the webhooks OpenAPI). A
+// Webhooks.
 // webhook = an https target URL + subscriptions (event type + optional filter). The worker turns committed domain
 // events (change_log) into deliveries: POST {webhook_id, events:[event]} signed with HMAC-SHA256 of the body
-// (`Attio-Signature`, duplicated as `X-Attio-Signature`), `Idempotency-Key` per delivery, retried with exponential
+// (`Agentic-CRM-Signature`, plus deprecated compatibility aliases), `Idempotency-Key` per delivery, retried with exponential
 // back-off up to 10 times; then the webhook is marked degraded.
 import { z } from 'zod';
 import { acceptAfterSchema, timestampSchema, uuidSchema } from './common.ts';
@@ -87,7 +87,7 @@ export const webhookSchema = z.object({
 });
 export type Webhook = z.infer<typeof webhookSchema>;
 
-/** Creation answers the signing secret (also readable later by admins, as Attio's GET …/secret). */
+/** Creation answers the signing secret, which admins can also read later. */
 export const createdWebhookSchema = webhookSchema.extend({ secret: z.string() });
 export type CreatedWebhook = z.infer<typeof createdWebhookSchema>;
 
@@ -148,11 +148,11 @@ export const listWebhookDeliveriesInputSchema = z.object({
 });
 export type ListWebhookDeliveriesInput = z.input<typeof listWebhookDeliveriesInputSchema>;
 
-/** Retry schedule: 10 attempts with exponential back-off over ≈ 3 days (Attio "Delivery attempts"). */
+/** Retry schedule: 10 attempts with exponential back-off over ≈ 3 days. */
 export const WEBHOOK_MAX_ATTEMPTS = 10;
 /** Seconds to wait after the n-th failed attempt (1-based): 8.5 min · 2^(n−1) — the 9 waits add up to ≈ 3 days. */
 export function webhookRetryDelaySeconds(failedAttempts: number): number {
   return 510 * 2 ** Math.min(Math.max(0, failedAttempts - 1), 12);
 }
-/** Target response deadline (Attio: 5 s). */
+/** Target response deadline: 5 s. */
 export const WEBHOOK_TIMEOUT_MS = 5000;

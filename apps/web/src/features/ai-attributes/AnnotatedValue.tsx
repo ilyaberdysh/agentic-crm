@@ -1,10 +1,10 @@
-// Per-record states of formula and AI values (formulas.md §3.7, §4.8; ai-attributes.md §5), drawn around the
+// Per-record states of formula and AI values, drawn around the
 // registry's View in table cells and record fields:
-//   formula  calculating → "Calculating..." (role=status); errored → "Couldn't calculate a result" + warning (known
-//            runtime codes; tooltip = public message or code) or "Calculation error" (tooltip "Something went wrong
-//            while calculating this value."); otherwise the value.
-//   AI       thinking → "AI is thinking..."; error without a value → "Couldn't generate a value"; error with a value →
-//            the earlier value with an "outdated" dot; otherwise the value.
+// formula  calculating → "Calculating..." (role=status); errored → "Couldn't calculate a result" + warning (known
+// runtime codes; tooltip = public message or code) or "Calculation error" (tooltip "Something went wrong
+// while calculating this value."); otherwise the value.
+// AI thinking → "AI is thinking..."; error without a value → "Couldn't generate a value"; error with a value →
+// the earlier value with an "outdated" dot; otherwise the value.
 // Annotations come from the batched `formulas.annotations` reads and refresh on `entity-annotation` invalidations.
 import type { AttributeDefinition } from '@agentic-crm/contracts';
 import { RUNTIME_ERROR_CODES } from '@agentic-crm/formula';

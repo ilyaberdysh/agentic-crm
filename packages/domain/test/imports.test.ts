@@ -98,7 +98,7 @@ describe('object import: mapping, review, plan, run', () => {
     expect(status.job.uploadedRowCount).toBe(3);
     expect(status.properties.map((p) => p.columnIndex)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     expect(status.columns[11]).toMatchObject({ header: 'Ignored', propertyId: null, exampleValues: ['x', 'y'] });
-    // Format detection: "14/07/2026" → European dates; "12500,50" stays on Point, as in Attio's live run.
+    // Format detection: "14/07/2026" → European dates; "12500,50" stays on Point.
     const start = status.properties.find((p) => p.columnIndex === 6);
     expect(start?.dateFormat).toBe('uk');
     expect(status.properties.find((p) => p.columnIndex === 2)?.decimalSeparator).toBe('point');
@@ -282,7 +282,7 @@ describe('object import: mapping, review, plan, run', () => {
       ),
     ).toBe(true);
 
-    // Updated record: single values replaced, multi-select appended (Attio: imports are additive).
+    // Updated record: single values replaced, multi-select appended.
     const updated = await valuesOf(ws, object.id, existing);
     expect(updated[a.name.id]?.[0]?.value).toBe('Existing renamed');
     expect(updated[a.budget.id]?.[0]?.value).toEqual({ currencyValue: 12500.5, currencyCode: 'EUR' });

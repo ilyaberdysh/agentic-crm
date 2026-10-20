@@ -108,7 +108,7 @@ class Resolver {
     }
     const constraints: Constraint[] = [];
     for (const c of leaf.constraints) {
-      // The implicit `active_until empty` of Attio's leaves is dropped for current-value leaves.
+      // The implicit `active_until empty` is dropped for current-value leaves.
       if (!history && c.field === 'active_until') continue;
       constraints.push(...(await this.constraint(attr, history, c)));
     }

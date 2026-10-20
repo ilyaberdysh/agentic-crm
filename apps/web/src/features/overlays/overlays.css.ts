@@ -1,4 +1,4 @@
-// Floating windows and overlays (E README §2.2; D README §2.7; B system-ui §4; motion.md dialogs 160 ms scale .97).
+// Floating windows and overlays; dialogs use a 160 ms scale transition.
 // Note modal 968 × 670 at 14.6 vh (top 138 at 945), radius 16, translucent 3 px frame + e3; floating panel 456 × 556
 // at the bottom right next to the dock; dock bubbles 32 px; record overlay full viewport.
 import { derivedVars, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';
@@ -173,7 +173,7 @@ export const bubble = style({
     '&[data-hovered]': { backgroundColor: c.surface.primaryHover },
     '&[data-focus-visible]': { boxShadow: `${vars.elevation.e2}, 0 0 0 2px ${c.stroke.accent}` },
     '&[data-active]': { boxShadow: `${vars.elevation.e2}, inset 0 0 0 1px ${c.stroke.accent}` },
-    // The pinned composer's bubble is filled with the accent colour (F composer §2.11, composer-pinned.png).
+    // The pinned composer's bubble is filled with the accent colour (F composer, composer-pinned.png).
     '[data-kind="composer"] &[data-active]': {
       backgroundColor: c.surface.accent,
       color: c.content.onAccent,

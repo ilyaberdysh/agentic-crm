@@ -1,4 +1,4 @@
-// Per-browser board preferences (C2 kanban.md K3, K4, K6): collapsed columns, card display mode and "Hide empty
+// Per-browser board preferences: collapsed columns, card display mode and "Hide empty
 // attributes" live in localStorage only (no request), synced across tabs.
 import { useCallback, useMemo } from 'react';
 import { usePersistentState } from '../../lib/storage';

@@ -1,5 +1,5 @@
 // Projection round-trips for every block type and every mark: blocks ↔ ProseMirror JSON ↔ Yjs state, and
-// blocks ↔ markdown for everything markdown can carry (E editor.md §6, E README §6).
+// blocks ↔ markdown for everything markdown can carry.
 import { Node as PMNode } from '@tiptap/pm/model';
 import { describe, expect, it } from 'vitest';
 import * as Y from 'yjs';
@@ -194,7 +194,7 @@ describe('blocks ↔ markdown', () => {
     expect(viaMarkdown(everyMark)).toEqual(markdownSubset(everyMark));
   });
 
-  it("matches Attio's public markdown mapping", () => {
+  it('matches the public markdown mapping', () => {
     const blocks: Block[] = [
       textBlock('h1', 'Title'),
       textBlock('unstyled', 'alpha beta gamma delta', {

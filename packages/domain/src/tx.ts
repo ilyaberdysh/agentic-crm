@@ -169,7 +169,7 @@ async function withRetry<T>(run: () => Promise<T>): Promise<T> {
   }
 }
 
-/** Constraint violations that race past the domain's own checks → Attio-style 409s. */
+/** Constraint violations that race past the domain's own checks become 409 responses. */
 function mapPgError(err: unknown): unknown {
   if (err instanceof DomainError) return err;
   const e = err as { code?: string; constraint?: string; detail?: string };

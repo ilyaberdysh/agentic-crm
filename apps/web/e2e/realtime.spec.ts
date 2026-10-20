@@ -1,4 +1,4 @@
-// BACKLOG §1 acceptance 5: a write in tab A makes tab B refetch within 1 s with accept-after; cutting the network
+//  acceptance 5: a write in tab A makes tab B refetch within 1 s with accept-after; cutting the network
 // shows the offline banner, and it goes away once the connection is back.
 
 import { ACCEPT_AFTER_HEADER } from '@agentic-crm/realtime';

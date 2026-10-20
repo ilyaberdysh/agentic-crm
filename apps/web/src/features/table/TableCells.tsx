@@ -1,4 +1,4 @@
-// Rows and cells of the record table (C1 README §2.4–2.5, §3.3, §5; components.md §9). A row is a 36 px absolutely
+// Rows and cells of the record table. A row is a 36 px absolutely
 // positioned strip: the sticky record cell in flow, data cells absolutely placed at their column offsets, a filler
 // under "+ Add column". The active cell, editor and peers' rings are siblings of the cell so they can grow past it.
 import type { AttributeValue, ValueInput } from '@agentic-crm/contracts';
@@ -340,7 +340,7 @@ function Peers({
   return peers.length > 0 ? <PeerDecoration peers={peers} column={column} left={left} width={width} /> : null;
 }
 
-/** In-place interactions of the cell itself (C1 README §3.3): a checkbox toggles, a star sets the rating. */
+/** In-place interactions of the cell itself: a checkbox toggles, a star sets the rating. */
 const IN_PLACE = new Set(['checkbox', 'rating']);
 
 function renderValues(

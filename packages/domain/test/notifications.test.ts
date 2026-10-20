@@ -53,7 +53,7 @@ beforeAll(async () => {
 });
 
 describe('registry', () => {
-  it('has the 24 Attio types (plus list-shared and workflow-run-failed) in 11 topics with grouping keys from their payloads', () => {
+  it('has the notification types plus list-shared and workflow-run-failed in 11 topics with grouping keys from their payloads', () => {
     expect(notificationTopics).toHaveLength(11);
     expect(notificationTypes).toHaveLength(26);
     const groups = new Set(NOTIFICATION_PREFERENCE_GROUPS.map((g) => g.group));

@@ -1,4 +1,4 @@
-// Boot / loading states (B README §2.1a): while the session and workspaces load, workspace URLs paint the shell
+// Boot / loading states (a): while the session and workspaces load, workspace URLs paint the shell
 // frame with skeleton rows (sidebar sections use a 16 px circle + 80–160 px bar); other pages show a spinner.
 import { Skeleton, Spinner } from '@agentic-crm/ui';
 import * as s from './shell.css';

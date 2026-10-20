@@ -1,4 +1,4 @@
-// Diagnostics → editor marks (formulas.md §3.5, §4.4): every diagnostic marks its range with `cm-formula-error`
+// Diagnostics → editor marks: every diagnostic marks its range with `cm-formula-error`
 // (zero-width diagnostics — a missing expression at the end — mark the character before them, or the last character);
 // chips inside a marked range show the error state; the helper header summarises "Multiple errors (n)" and its
 // tooltip lists each message with "Line n" / "Lines a-b".

@@ -1,4 +1,4 @@
-// The record preview drawer opened from a table row's "Open preview" (BACKLOG 3.09; D README §2.7, C1 README §2.9):
+// The record preview drawer opened from a table row's "Open preview" (BACKLOG 3.09):
 // a floating panel over the view, no URL change, ↑ / ↓ through the view's loaded records. (The full record overlay
 // is features/overlays' `openRecordOverlay`.)
 import { useSyncExternalStore } from 'react';

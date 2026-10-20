@@ -1,4 +1,4 @@
-// Slice 6 settings: navigation search and role filtering, the inheritance hint, requirement vocabulary and value
+//  settings: navigation search and role filtering, the inheritance hint, requirement vocabulary and value
 // conversions, invite validation and date formatting.
 import type { PermissionGrant } from '@agentic-crm/contracts';
 import { describe, expect, it } from 'vitest';

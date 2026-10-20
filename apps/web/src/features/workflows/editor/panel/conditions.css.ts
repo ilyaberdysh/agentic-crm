@@ -1,4 +1,4 @@
-// Condition builder (README §3.2; evidence G/G-condition-operators.png): one bordered card per condition — the subject
+// Condition builder: one bordered card per condition — the subject
 // chip on top, then the grey "Select condition ⌄" operator pill, the value, {x} and ⋮; "+ Add condition" full width on
 // a light fill; and / or between conditions; advanced groups as nested grey boxes; Switch cases.
 import { insetRing, text, transitionColors, vars } from '@agentic-crm/ui/styles';

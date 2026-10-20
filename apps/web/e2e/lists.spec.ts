@@ -1,7 +1,7 @@
 // Lists (BACKLOG 4.01–4.04, 4.09): create a list from scratch, the list page (empty state, rename, header menu,
 // duplicate / delete), add records from the list page (choose record → form; duplicates step → edit entry), remove
 // from list, the record page Lists section and "Add to list", bulk add from an object table with the duplicate
-// dialog, entry routes, list settings and the sidebar section. Runs against the slice-4 server (lists.* / entries.*).
+// dialog, entry routes, list settings and the sidebar section. Runs against the API server (lists.* / entries.*).
 import { expect, type Page, test } from '@playwright/test';
 import { addEntry, createList, deleteList, entriesOf, findRecord, type ListInfo } from './lists-support.ts';
 import { signedInPage, trpc, uuid, ws } from './slice3-support.ts';
@@ -75,7 +75,7 @@ test.describe('lists', () => {
       .poll(async () => (await trpc<{ name: string }>(page, 'lists.get', { listId: list.id })).name)
       .toBe(renamed);
 
-    // Header menu items (C2 §2.2).
+    // Header menu items (C2).
     await page.getByTestId('list-menu-button').click();
     const menu = page.getByRole('menu');
     for (const item of [

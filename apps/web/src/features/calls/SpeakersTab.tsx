@@ -1,4 +1,4 @@
-// The Speakers tab (I calls §3.7; evidence/I/call-page-speakers.png, call-page-speakers-focus.png): one row per speaker
+// The Speakers tab: one row per speaker
 // with talk share and time, and a 4 px timeline of the speaker's utterances. The round button turns on focus mode —
 // the other rows dim and the Transcript tab shows only that speaker in full; it works without a player. A segment
 // opens the transcript at that moment.

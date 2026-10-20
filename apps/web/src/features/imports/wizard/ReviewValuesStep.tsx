@@ -1,4 +1,4 @@
-// Step 3 — Review values (C2 import.md §I4; evidence import-3-*): the Columns rail (file column over its attribute,
+// Step 3 — Review values (C2; evidence import-3-*): the Columns rail (file column over its attribute,
 // orange dot when values need review), "Sorted by …", the per-type config (decimal separator, date / timestamp format)
 // or "+ Create N missing select option(s)", and one row per distinct raw value grouped under "Needs review" and
 // "Automatically mapped": raw text + row count → the mapped value drawn with the attribute's View, with skip / fix /

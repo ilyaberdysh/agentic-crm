@@ -1,10 +1,10 @@
-// Add-to-list flows outside the list page (C2 README §2.5 B, C; §2.6) and the dialogs that any page may open:
-//   AddRecordToListDialog   record page "Add to list" / Lists "+" / `e`: Choose list → Add-to-list form (X-07)
-//   BulkAddToList           table / board bulk bar "Add to list": Choose list → "Checking for duplicate entries" →
-//                           "Duplicate entries" (skip or create duplicates) → "Adding n records to list" → "Added n
-//                           record(s) to list · Go to list"
-//   RemoveEntriesDialog     "Remove record from list" / "Remove n records from list"
-// Opened through `openListsDialog(…)` and rendered by <ListsHost/> (mounted once in the app shell), or rendered in
+// Add-to-list flows outside the list page (B, C) and the dialogs that any page may open:
+// AddRecordToListDialog record page "Add to list" / Lists "+" / `e`: Choose list → Add-to-list form (X-07)
+// BulkAddToList table / board bulk bar "Add to list": Choose list → "Checking for duplicate entries" →
+// "Duplicate entries" (skip or create duplicates) → "Adding n records to list" → "Added n
+// record(s) to list · Go to list"
+// RemoveEntriesDialog "Remove record from list" / "Remove n records from list"
+// Opened through `openListsDialog(…)` and rendered by <ListsHost/> (mounted once in the UI shell), or rendered in
 // place by the owner of the trigger.
 import type { RecordRef } from '@agentic-crm/contracts';
 import { AlertDialog, Checkbox, Icon, toast } from '@agentic-crm/ui';
@@ -308,7 +308,7 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
-/** Mounted once in the app shell (next to the overlay host). */
+/** Mounted once in the UI shell (next to the overlay host). */
 export function ListsHost() {
   const request = useSyncExternalStore(
     subscribe,

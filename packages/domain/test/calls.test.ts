@@ -224,7 +224,7 @@ describe('speakers (X-28) and transcript blocks (acceptance 3)', () => {
     ]);
     expect(merged.utterances.at(-1)?.speakerId).toBe(jane?.id);
 
-    // The public API keeps Attio's shape: segments as imported, the speaker named by the email when given.
+    // The public API keeps segments as imported, with the speaker named by email when given.
     const publicView = await calls.meetings.recordings.get(f.ctx, f.meetingId, recording.id);
     expect(publicView.transcript.segments.map((s) => s.speaker.emailAddress)).toEqual([
       f.adaEmail,

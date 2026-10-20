@@ -1,4 +1,4 @@
-// Attribute registry — slice-2 contract C1. One entry per
+// Attribute registry —  contract C1. One entry per
 // internal attribute type: read View (densities cell / field / chip), Editor, editor kind, clipboard text, single-cell
 // paste, default column width and alignment. TABLE, ADMIN and later the record page consume it.
 import type { FC } from 'react';
@@ -108,7 +108,7 @@ function entry(
   };
 }
 
-/** Default column widths per C1 README §2.4: 180 default, 200 timestamp, 100 checkbox, 140 rating. */
+/** Default column widths per: 180 default, 200 timestamp, 100 checkbox, 140 rating. */
 const registry: Record<AttributeType, AttributeUi> = {
   text: entry('text', TextView, TextEditor, 'inline'),
   number: entry('number', NumberView, NumberEditor, 'inline', 180, 'end'),
@@ -133,7 +133,7 @@ export function getAttributeUi(type: AttributeType): AttributeUi {
   return registry[type];
 }
 
-/** Record column width (the first, sticky column; C1 README §2.4). */
+/** Record column width (the first, sticky column). */
 export const RECORD_COLUMN_WIDTH = 250;
 
 /** Whether values of the attribute can be edited in place (read-only system and computed attributes cannot). */

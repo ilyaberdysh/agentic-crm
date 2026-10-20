@@ -1,5 +1,5 @@
 // tRPC procedures over HTTP against the real domain: workspaces, members, invites, schema, records, values, views,
-// snapshots, permission call sites and the Attio error envelope (BACKLOG §1: 1.03, 1.04, 1.06, 1.10; acceptance 4, 6).
+// snapshots, permission call sites and the public API error envelope (BACKLOG §1: 1.03, 1.04, 1.06, 1.10; acceptance 4, 6).
 import { randomUUID } from 'node:crypto';
 import { type ActionFlags, flagsForScope, rankBetween } from '@agentic-crm/contracts';
 import type { PolicyResolver } from '@agentic-crm/domain';
@@ -703,7 +703,7 @@ describe('permission hook', () => {
     const readOnly: PolicyResolver = {
       async resolve(_tx, subject, definitions) {
         const flags: ActionFlags = flagsForScope(subject.accessLevel === 'admin' ? 'full-access' : 'read-only');
-        // Views are writable for read-only scopes in Attio's presets; deny them here to exercise view call sites.
+        // Views are writable for read-only scopes in the public API's presets; deny them here to exercise view call sites.
         if (subject.accessLevel !== 'admin') flags.update_entity_view = false;
         return new Map(definitions.map((d) => [d.id, flags]));
       },
@@ -725,7 +725,7 @@ describe('permission hook', () => {
       // Reads pass.
       const snap = await as<Out['snapshots']['query']>(viewer, 'snapshots.query', { entityDefinitionId: 'companies' });
       expect(snap.total).toBe(0);
-      // Writes are refused by the procedure's policy check, with the Attio envelope.
+      // Writes are refused by the procedure's policy check, with the public API envelope.
       const put = await trpcError(
         as(viewer, 'records.put', { entityDefinitionId: 'companies', entityInstanceId: randomUUID(), values: {} }),
       );

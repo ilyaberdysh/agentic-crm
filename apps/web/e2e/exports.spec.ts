@@ -1,4 +1,4 @@
-// "Export view as CSV" (BACKLOG 4.08, acceptance 5; C2 export.md E1–E3): the export follows the *saved* view — its
+// "Export view as CSV": the export follows the *saved* view — its
 // filter (Strategic and Code starting with "SEED-0"), its sorts (Headcount, descending) and its columns in order —
 // shows the progress toast and downloads "<Object> - <View>.csv". Unsaved draft changes are not exported.
 import { readFileSync } from 'node:fs';

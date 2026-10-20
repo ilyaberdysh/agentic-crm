@@ -1,4 +1,4 @@
-// Attio-style error envelope (J README §5, K README §2.1):
+// Shared HTTP error envelope:
 //   {"statusCode":409,"error":"Conflict","message":"…","status_code":409,"additional_information":{…}}
 import { STATUS_CODES } from 'node:http';
 import { isPgError } from './db';
@@ -12,7 +12,7 @@ export interface ErrorEnvelope {
   additional_information?: Record<string, unknown>;
 }
 
-/** Attio's exact 401 message for a missing/expired session [observed: K README §2.1]. */
+/** Message returned when a session is missing or expired. */
 export const UNAUTHENTICATED_MESSAGE = 'The requesting user did not present an authentication token';
 const INTERNAL_MESSAGE = 'An unexpected error occurred';
 

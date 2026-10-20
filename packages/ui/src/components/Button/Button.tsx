@@ -9,7 +9,7 @@ import { Spinner } from '../Spinner/Spinner';
 import * as s from './Button.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'secondary-destructive' | 'ghost' | 'destructive';
-/** Sizes are named by height in px (components.md §2). Toolbars use 28; the default is 32. */
+/** Sizes are named by height in px. Toolbars use 28; the default is 32. */
 export type ButtonSize = 20 | 28 | 32 | 36 | '20' | '20s' | '20l' | '28' | '32' | '36';
 
 type SizeKey = '20' | '20s' | '20l' | '28' | '32' | '36';
@@ -65,7 +65,7 @@ export interface ButtonProps extends Omit<RACButtonProps, 'children' | 'classNam
 }
 
 /**
- * Attio's Button: primary (default) | secondary | secondary-destructive | ghost | destructive,
+ * the Button: primary (default) | secondary | secondary-destructive | ghost | destructive,
  * sizes 20 / 20s / 20l / 28 / 32 (default) / 36. Built on react-aria `Button` (press, focus-visible,
  * `isPending` → spinner + aria-busy).
  */

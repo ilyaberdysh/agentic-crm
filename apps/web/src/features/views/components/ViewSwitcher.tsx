@@ -1,4 +1,4 @@
-// View switcher (C1 README §3.1, evidence C1/07, 08): button with the view-type tile, title and chevron (hotkey `v`);
+// View switcher (evidence C1/07, 08): button with the view-type tile, title and chevron (hotkey `v`);
 // popover 264 px with "Search views..." (fuzzy), the views (current in accent), a hover "⋮" with the view options
 // menu (Add to favorites, Rename, Duplicate, Delete, "Created by …"), drag reorder, and "+ Create new view".
 import type { View } from '@agentic-crm/contracts';

@@ -1,5 +1,5 @@
-// Key caps for a shortcut (shortcuts.md §1, §5): `mod+k` → ⌘ K; a sequence renders the literal word "then" between its
-// steps (`g h` → G then H). Used by tooltips, the help drawer and the palette.
+// Key caps for a shortcut: `mod+k` → ⌘ K; a sequence renders the literal word "then" between its
+// steps (`g h` → G then). Used by tooltips, the help drawer and the palette.
 import { Kbd, type KbdSize, type KbdVariant } from '@agentic-crm/ui';
 import { shortcutKeys } from '../../lib/shortcuts';
 import { catalogEntry } from './catalog';
@@ -27,7 +27,7 @@ export function ShortcutCaps({
   );
 }
 
-/** "Go to home page  G then H" — tooltip content (sidebar.md §1.1, shortcuts.md §5). */
+/** "Go to home page  G then H" — tooltip content. */
 export function ShortcutTooltip({ description, shortcut }: { description: string; shortcut?: string }) {
   if (!shortcut) return <>{description}</>;
   return (

@@ -1,4 +1,4 @@
-// Sample events for "Test subscription" (Attio: "We populate test payloads with real data from your workspace …
+// Sample events for "Test subscription".
 // In cases where this is not possible … we'll fallback to randomly generated fake data"). Filters are not applied.
 import { sql } from '@agentic-crm/db';
 import { newId } from '../ids.ts';

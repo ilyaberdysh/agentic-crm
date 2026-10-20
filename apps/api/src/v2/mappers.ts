@@ -1,4 +1,4 @@
-// Internal (domain) shapes → Attio's public /v2 shapes (A public-api-mapping §1–2): composite ids, renamed types
+// Domain shapes → public /v2 shapes: composite ids, renamed types
 // (pipeline → status, entity-reference → record-reference), snake_case value fields, public actor types and
 // nanosecond-precision timestamps.
 import type {
@@ -49,8 +49,8 @@ export function internalType(type: string): AttributeType | null {
   return known.includes(type) ? (type as AttributeType) : null;
 }
 
-/** '2026-10-10T12:00:00.123456Z' → '2026-10-10T12:00:00.123456000Z' (Attio returns nanosecond precision). */
-export function attioTimestamp(iso: string): string {
+/** Normalize public timestamps to nine fractional digits, preserving the stored precision. */
+export function publicTimestamp(iso: string): string {
   const m = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.(\d+))?Z$/.exec(iso);
   if (!m) return new Date(iso).toISOString().replace(/\.(\d{3})Z$/, '.$1000000Z');
   return `${m[1]}.${(m[2] ?? '').padEnd(9, '0').slice(0, 9)}Z`;
@@ -71,7 +71,7 @@ export function objectToPublic(def: EntityDefinition) {
     api_slug: def.apiSlug,
     singular_noun: def.singularNoun,
     plural_noun: def.pluralNoun,
-    created_at: attioTimestamp(def.createdAt),
+    created_at: publicTimestamp(def.createdAt),
   };
 }
 
@@ -82,7 +82,7 @@ export function memberToPublic(m: WorkspaceMember) {
     last_name: m.lastName,
     avatar_url: null,
     email_address: m.emailAddress,
-    created_at: attioTimestamp(m.createdAt),
+    created_at: publicTimestamp(m.createdAt),
     access_level: m.accessLevel,
   };
 }
@@ -118,7 +118,7 @@ export function statusToPublic(s: PipelineStage) {
 // ---------------------------------------------------------------------------------------------------------------
 // Values
 
-/** Longest-prefix country of an E.164 number (Attio always returns a country code for phone values). */
+/** Longest-prefix country of an E.164 number (the public API always returns a country code for phone values). */
 // biome-ignore format: compact table
 const CALLING_CODES: Record<string, string> = {
   '1': 'US', '7': 'RU', '20': 'EG', '27': 'ZA', '30': 'GR', '31': 'NL', '32': 'BE', '33': 'FR', '34': 'ES', '36': 'HU',
@@ -168,7 +168,7 @@ export function valueFields(attr: AttributeDefinition, value: unknown, lookups: 
     case 'date':
       return { value };
     case 'timestamp':
-      return { value: typeof value === 'string' ? attioTimestamp(value) : value };
+      return { value: typeof value === 'string' ? publicTimestamp(value) : value };
     case 'currency':
       return {
         currency_value: v.currencyValue,
@@ -223,7 +223,7 @@ export function valueFields(attr: AttributeDefinition, value: unknown, lookups: 
     case 'interaction':
       return {
         interaction_type: v.interactionType,
-        interacted_at: typeof v.interactedAt === 'string' ? attioTimestamp(v.interactedAt) : v.interactedAt,
+        interacted_at: typeof v.interactedAt === 'string' ? publicTimestamp(v.interactedAt) : v.interactedAt,
         owner_actor: v.ownerMembershipId
           ? { type: 'workspace-member', id: v.ownerMembershipId }
           : { type: null, id: null },
@@ -233,11 +233,11 @@ export function valueFields(attr: AttributeDefinition, value: unknown, lookups: 
   }
 }
 
-/** A stored value row → Attio's value object (envelope + fields). */
+/** A stored value row → the public API's value object (envelope + fields). */
 export function valueToPublic(row: AttributeValue, attr: AttributeDefinition, lookups: ValueLookups): R {
   return {
-    active_from: attioTimestamp(row.activeFrom),
-    active_until: row.activeUntil ? attioTimestamp(row.activeUntil) : null,
+    active_from: publicTimestamp(row.activeFrom),
+    active_until: row.activeUntil ? publicTimestamp(row.activeUntil) : null,
     created_by_actor: publicActor(row.createdBy),
     ...valueFields(attr, row.value, lookups),
     attribute_type: publicType(attr.type),
@@ -276,7 +276,7 @@ export function recordToPublic(
   }
   return {
     id: { workspace_id: record.record.workspaceId, object_id: def.id, record_id: record.record.entityInstanceId },
-    created_at: attioTimestamp(record.record.createdAt),
+    created_at: publicTimestamp(record.record.createdAt),
     web_url: webUrl(v2.webUrl, v2.identity.workspace.slug, def, record.record.entityInstanceId),
     values,
   };
@@ -349,7 +349,7 @@ export function attributeToPublic(attr: AttributeDefinition, lookups: ValueLooku
           is_multiselect: related.attribute.isMultiselect,
         }
       : null,
-    created_at: attioTimestamp(attr.createdAt),
+    created_at: publicTimestamp(attr.createdAt),
     config: {
       currency: {
         default_currency_code: currency?.defaultCurrencyCode ?? null,

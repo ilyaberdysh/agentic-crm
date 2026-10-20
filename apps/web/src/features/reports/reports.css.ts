@@ -1,4 +1,4 @@
-// Styles shared by the reports screens (H README §2.2, §3.2; chart-types §2): inline-editable titles, the data-source
+// Styles shared by the reports screens: inline-editable titles, the data-source
 // chip, the "New data" pill and small layout atoms.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { keyframes, style } from '@vanilla-extract/css';

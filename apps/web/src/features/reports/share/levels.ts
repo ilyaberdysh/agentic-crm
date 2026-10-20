@@ -1,5 +1,5 @@
-// Access levels of a dashboard (H README §2.6; api §1.5): labels, the one-line explanations of the level menu, and the
-// "Inheriting …" hint when a team or member gets more than their own grant says (J permissions §5).
+// Dashboard access levels: labels, the one-line explanations of the level menu, and the
+// "Inheriting …" hint when a team or member gets more than their own grant says (J permissions).
 import { type AccessScope, accessScopeRank, type PermissionGrant } from '@agentic-crm/contracts';
 
 export const LEVELS: readonly AccessScope[] = ['full-access', 'read-write', 'read-only', 'no-access'];

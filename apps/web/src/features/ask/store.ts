@@ -1,9 +1,9 @@
-// UI state of Ask AI shared by every surface that can show the chat: the side panel (⌘J), the full page, the Home
-// block and the buttons of other pages. A tiny external store (no React context): `openAsk()` can be called from any
-// module, `useAskUi()` re-renders subscribers. The host (`AskHost`, mounted once in the workspace layout) turns
+// UI state of Ask AI shared by every surface that can show the chat: the side panel (⌘), the full page, the Home
+// block and the buttons of other pages. A tiny external store (no React context): `openAsk` can be called from any
+// module, `useAskUi` re-renders subscribers. The host (`AskHost`, mounted once in the workspace layout) turns
 // requests into navigation.
 //
-// Page context ("interests", ask-agentic-internals §7.2): pages register what the user is looking at while mounted
+// Page context ("interests", ask-agentic-internals): pages register what the user is looking at while mounted
 // (`useAskContext`); the composer shows the high-prominence item as a chip and every turn carries it. `openAsk({context})`
 // overrides the registered context for the chat it opens.
 import type { AiContext } from '@agentic-crm/contracts';
@@ -29,7 +29,7 @@ export interface AskUiState {
   panelOpen: boolean;
   /** Thread shown in the side panel; null = a new chat (`newChatId` is minted for it). */
   panelThreadId: string | null;
-  /** Client-minted id of the new chat being composed (idempotent create, I3). */
+  /** Client-minted id of the new chat being composed (idempotent create). */
   newChatId: string;
   /** Context passed to `openAsk`; null = use the registered page contexts. */
   contextOverride: AiContext | null;

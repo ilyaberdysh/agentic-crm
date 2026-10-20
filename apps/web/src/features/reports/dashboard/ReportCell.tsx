@@ -1,4 +1,4 @@
-// One report card on the dashboard grid (H README §3.4; evidence dashboard-grid-4-4-4.png): header (title, ⓘ with the
+// One report card on the dashboard grid: header (title, ⓘ with the
 // description, data-source chip, "New data", ⋮ menu) and the chart, which loads only once the card has been scrolled
 // into view (IntersectionObserver, 200 px margin). The header opens the full-screen viewer and is the drag handle.
 import { Icon, Tooltip } from '@agentic-crm/ui';

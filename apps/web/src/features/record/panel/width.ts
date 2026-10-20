@@ -1,4 +1,4 @@
-// Details panel width (D README §2.1, §2.5b; layout.md §5): a percentage of the page body persisted per object in
+// Details panel width (b): a percentage of the page body persisted per object in
 // localStorage (`record-page-attribute-panel-width:<entityDefinitionId>`, default 30), drawn clamped to
 // [320 px, min(60 %, body − 350 px)] — CSS min-width wins over max-width, so 320 px holds on narrow bodies.
 // Double-click on the divider resets to 30 %.

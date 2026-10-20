@@ -1,4 +1,4 @@
-// Record state pages (D README §2.6; evidence D-not-found, D-merged-away): centred 270 px column, 140 px
+// Record state pages: centred 270 px column, 140 px
 // illustration, title Heading.Medium, description Body secondary centred, primary 32 px button.
 import { text as type, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

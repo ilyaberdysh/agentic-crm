@@ -1,4 +1,4 @@
-// Plain text with positioned mentions (contracts `mentionSchema`; E README §2.7 task input, §3.5 comment composer):
+// Plain text with positioned mentions (contracts `mentionSchema`;  task input, comment composer):
 // keeping mention ranges valid while the text is edited, inserting a picked mention in place of "@query", and the
 // "@query" being typed before the caret.
 import type { Mention } from '@agentic-crm/contracts';
@@ -113,7 +113,7 @@ export function segments(value: MentionText): { text: string; mention: Mention |
   return out;
 }
 
-/** Records mentioned in the text (a task links them; E README §2.7 "Smart parsing"). */
+/** Records mentioned in the text (a task links them;  "Smart parsing"). */
 export function mentionedRecords(value: MentionText): { entityDefinitionId: string; entityInstanceId: string }[] {
   const seen = new Set<string>();
   const out: { entityDefinitionId: string; entityInstanceId: string }[] = [];

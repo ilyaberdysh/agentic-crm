@@ -7,7 +7,7 @@ import { normalizeDomain, normalizeEmail } from '../values/normalize.ts';
 
 /**
  * Free / personal email providers: never internal domains, never auto-created companies, never matched to a
- * company by domain (Attio creates companies only from business domains).
+ * company by domain (only business domains create companies).
  */
 // biome-ignore format: compact table
 export const PUBLIC_EMAIL_DOMAINS = new Set([

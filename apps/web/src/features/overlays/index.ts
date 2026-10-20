@@ -1,13 +1,13 @@
-// E4 — overlays and window manager (CROSS-DOMAIN B.16; slice3-contracts.md). Consumers (features/record and others):
-//   openRecordOverlay(recordRef, { list })     full-viewport record overlay, K / J through `list`; URL
-//                                              `?modal=record&id=<record>&object=<object>`
-//   registerRecordOverlay(Component)           the record page body rendered inside it (gets `navigation`, `close`)
-//   openNote(id, { mode }) / openNoteTemplate  note / template windows: modal (`?modal=note|note-template&id=`),
-//                                              floating ("Pin to screen") or minimised to the dock
-//   openTask(id)                               edit-task dialog (`?command-menu-page=task&id=`)
-//   registerWindowContent(kind, Component, options)   email modal, composer and meeting windows (slice 7)
-//   SidePanel                                  320 px right panel frame (comments)
-//   <OverlayHost/>                             mounted once in the app shell
+// E4 — overlays and window manager (CROSS-DOMAIN B.16). Consumers (features/record and others):
+// openRecordOverlay(recordRef, { list }) full-viewport record overlay, K / J through `list`; URL
+// `?modal=record&id=<record>&object=<object>`
+// registerRecordOverlay(Component) the record page body rendered inside it (gets `navigation`, `close`)
+// openNote(id, { mode }) / openNoteTemplate  note / template windows: modal (`?modal=note|note-template&id=`),
+// floating ("Pin to screen") or minimised to the dock
+// openTask(id) edit-task dialog (`?command-menu-page=task&id=`)
+// registerWindowContent(kind, Component, options) email modal, composer and meeting windows
+// SidePanel 320 px right panel frame (comments)
+// <OverlayHost/> mounted once in the UI shell
 export {
   EMPTY_OVERLAYS,
   type OverlayEntry,

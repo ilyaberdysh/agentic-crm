@@ -73,7 +73,7 @@ export function apiErrorToTRPC(err: ApiError): TRPCError {
   });
 }
 
-/** Builds the Attio envelope for a tRPC error (its cause carries additional_information when there is one). */
+/** Builds the public API envelope for a tRPC error (its cause carries additional_information when there is one). */
 export function trpcErrorEnvelope(error: TRPCError): ErrorEnvelope {
   const status = getHTTPStatusCodeFromError(error);
   const cause = error.cause;

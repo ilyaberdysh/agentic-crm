@@ -1,4 +1,4 @@
-// Per-type parsing of raw CSV cells (import.md I3/I4; Attio's CSV import formatting guide). Pure: no database.
+// Per-type parsing of raw CSV cells. Pure: no database.
 import { describe, expect, it } from 'vitest';
 import {
   detectDateFormat,
@@ -59,7 +59,7 @@ describe('numbers and decimal separators', () => {
   });
 
   it('detects the decimal separator from samples: Point unless a comma is unambiguously decimal', () => {
-    // Attio's live run: the Budget column ("12500,50", "8000") stayed on Point and imported 1,250,050.
+    // The Budget column ("12500,50", "8000") stays on Point and imports 1,250,050.
     expect(detectDecimalSeparator(['12500,50', '8000'])).toBe('point');
     expect(detectDecimalSeparator(['12,5', '7,25', '3'])).toBe('point');
     expect(detectDecimalSeparator(['12.5', '1,000.25'])).toBe('point');
@@ -83,7 +83,7 @@ describe('numbers and decimal separators', () => {
 });
 
 describe('checkbox and rating', () => {
-  it('accepts Attio checkbox spellings and rejects others', () => {
+  it('accepts checkbox spellings and rejects others', () => {
     for (const t of ['1', 'true', 'TRUE', '#t']) expect(parseCheckbox(t)).toBe(true);
     for (const f of ['0', 'false', 'FALSE', '#f']) expect(parseCheckbox(f)).toBe(false);
     expect(parseCheckbox('')).toBeNull();
@@ -282,7 +282,7 @@ describe('resolveCell', () => {
     expect(resolveCell(ctx({ type: 'checkbox' }), 'no').errors).toEqual(['Invalid checkbox']);
   });
 
-  it('names Attio particle resolution types', () => {
+  it('names particle resolution types', () => {
     expect(resolutionTypeOf('date', { isId: false, field: null, systemAttributeType: 'foundation-date' })).toBe(
       'date:foundation-date',
     );

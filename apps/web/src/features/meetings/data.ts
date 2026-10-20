@@ -1,4 +1,4 @@
-// Meetings on the client (BACKLOG 7.04; F README §2.4): one meeting, a calendar range of the viewer's own (Home), a
+// Meetings on the client (BACKLOG 7.04): one meeting, a calendar range of the viewer's own (Home), a
 // record's meetings, the call recordings of a meeting, and writes (create, update, delete). Reads are TanStack
 // queries under the `meeting` / `meeting-list` / `call-recording-list` resources of `emailKeys`; writes answer the
 // canonical meeting plus a change seq and refresh the lists and the record timelines the meeting appears in.
@@ -68,7 +68,7 @@ export function useMeetingsList(params: ListParams, enabled = true) {
   });
 }
 
-/** Call recordings of a meeting (transcript-only until slice 10). */
+/** Call recordings of a meeting (transcript-only until). */
 export function useRecordings(meetingId: string, enabled = true) {
   const ws = useWsRef();
   return useQuery({

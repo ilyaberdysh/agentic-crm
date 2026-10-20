@@ -1,5 +1,5 @@
 // Dev page chrome: a 968 px note window with radius 16, 48 px top bar, 704 px document column 132 px from the left,
-// and a 32/600 title, for repeatable local screenshots.
+// and a 32/600 title, for repeatable local visual examples.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
 

@@ -1,4 +1,4 @@
-// Slice-5 e2e helpers: a second workspace member (the notification recipient / sender), signed-in contexts for either
+//  e2e helpers: a second workspace member (the notification recipient / sender), signed-in contexts for either
 // member, and small page helpers for the palette, the inbox and the help drawer.
 import { spawnSync } from 'node:child_process';
 import type { Browser, BrowserContext, Page } from '@playwright/test';
@@ -95,7 +95,7 @@ export async function memberId(page: Page, email: string): Promise<string> {
 
 /**
  * A click on an empty spot of the page header: focuses the page without activating anything (a click lower down can
- * land on a table or task row). Waits for the app shell first, so the shortcut listeners are installed.
+ * land on a table or task row). Waits for the UI shell first, so the shortcut listeners are installed.
  */
 export async function quietClick(page: Page): Promise<void> {
   await page.getByTestId('page-header').waitFor();

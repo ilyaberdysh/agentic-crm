@@ -1,5 +1,5 @@
-// Resolution of raw CSV cells into attribute values (C2 import.md §I3 "particle resolution types", §I4). Pure: the
-// fake backend resolves with it and the wizard uses it for format auto-detection on create. Parsers follow Attio's
+// Resolves raw CSV cells into attribute values. Pure: the
+// fake backend resolves with it and the wizard uses it for format auto-detection on create. Parsers follow the
 // observed behaviour: the decimal separator decides how "12500,50" reads (Point → 1,250,050; Comma → 12 500,50),
 // dates follow the column's format (ISO / American / European, auto-detected from the samples), checkbox only takes
 // true/false-like words ("no" is invalid), ratings 0–5, statuses/selects match option titles (unknown titles are
@@ -132,7 +132,7 @@ export function parseDateWith(text: string, format: DateFormat | null): string |
   return null;
 }
 
-/** Timestamps: ISO 8601 (zone optional, UTC when absent), or a date in the column format + optional time (UTC). */
+/** Timestamps: ISO 8601 (zone optional, UTC when absent), or a date in the column format + optional time. */
 export function parseTimestampWith(text: string, format: DateFormat | null): string | null {
   const t = text.trim();
   if (!t) return null;

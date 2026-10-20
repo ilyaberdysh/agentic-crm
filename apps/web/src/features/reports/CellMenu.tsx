@@ -1,4 +1,4 @@
-// The report ⋮ menu (H README §3.6; BACKLOG acceptance 4, X-12): Download as image, Edit, Duplicate, Duplicate to…,
+// The report ⋮ menu: Download as image, Edit, Duplicate, Duplicate to…,
 // separator, Delete report, separator, footer "Created by {member}" + time. The editor's menu is the same without Edit.
 // Used by dashboard cells, the editor and the viewer.
 import type { Actor } from '@agentic-crm/contracts';
@@ -28,7 +28,7 @@ export function formatCreated(iso: string): string {
   return `${get('day')} ${MONTHS[Number(get('month')) - 1]} ${get('year')} ${get('hour')}:${get('minute')} ${get('dayPeriod')}`;
 }
 
-/** Name of the member behind an actor ("Attio system"-style names for system actors). */
+/** Name of the member behind an actor, or a system label for system actors. */
 export function useActorName(actor: Actor | null | undefined): string {
   const members = useMembers();
   if (!actor) return 'Unknown';

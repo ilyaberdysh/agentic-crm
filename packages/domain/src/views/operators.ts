@@ -119,7 +119,7 @@ export const TYPE_FIELDS: Record<AttributeType, TypeFields> = {
   ]),
 };
 
-/** Aliases accepted for fields (Attio's 'value', public-API sub-field names). */
+/** Aliases accepted for fields such as public-API sub-field names. */
 const ALIASES: Record<string, string> = {
   domain: 'normalized_domain',
   email_address: 'normalized_email_address',

@@ -1,4 +1,4 @@
-// Slash menu and @-mention typeahead (E editor.md §5, §8) on @tiptap/suggestion. The plugin finds the trigger and
+// Slash menu and @-mention typeahead  on @tiptap/suggestion. The plugin finds the trigger and
 // the query; the React layer renders from a small store (no React inside ProseMirror plugins).
 import { type Editor, Extension, type Range } from '@tiptap/core';
 import { Plugin, PluginKey, TextSelection } from '@tiptap/pm/state';

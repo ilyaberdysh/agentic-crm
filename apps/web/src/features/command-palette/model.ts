@@ -1,4 +1,4 @@
-// The palette's rows (command-palette.md §3.2): pure functions from the sources — favorites, objects, lists, context
+// The palette's rows: pure functions from the sources — favorites, objects, lists, context
 // and workspace actions, record hits — and the query to the ordered, sectioned list. The UI renders the payloads.
 import type { SearchRecordHit } from '@agentic-crm/contracts';
 import type { ObjectSummary } from '../../data/objects';
@@ -106,7 +106,7 @@ export function recordRows(hits: readonly SearchRecordHit[], section: string): P
 export function buildRootRows(sources: RootSources): PaletteRow[] {
   const q = sources.query.trim();
   const rows: PaletteRow[] = [];
-  // (Meetings arrive with slice 7: today's meetings that have not ended, empty query only.)
+  // (Meetings arrive with: today's meetings that have not ended, empty query only.)
   rows.push(...jumpToRows(sources));
   for (const context of sources.contexts) rows.push(...actionRows(context.actions, q, context.title, context.id));
   rows.push(...actionRows(sources.quick, q, 'Quick Action', null));
@@ -124,7 +124,7 @@ export function buildRootRows(sources: RootSources): PaletteRow[] {
   return rows;
 }
 
-/** URL-like queries are reduced to their hostname before searching (command-palette.md §3.1). */
+/** URL-like queries are reduced to their hostname before searching. */
 export function searchTermOf(query: string): string {
   const q = query.trim();
   if (!/^(https?:\/\/|www\.)\S+$/i.test(q)) return q;

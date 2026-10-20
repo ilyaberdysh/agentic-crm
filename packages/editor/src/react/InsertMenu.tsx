@@ -1,5 +1,5 @@
 // The "+" insert button (22 px, pinned bottom-left in the note window by the host) and its popover: a
-// "Search items..." field and the same items as the slash menu (E editor.md §8, note-insert-menu.png).
+// "Search items..." field and the same items as the slash menu (note-insert-menu.png).
 import { useThemeClassName } from '@agentic-crm/ui';
 import { autoUpdate, FloatingPortal, flip, offset, shift, useFloating } from '@floating-ui/react';
 import { Plus, Search } from 'lucide-react';
@@ -88,7 +88,7 @@ export function InsertMenuButton({ handle, className }: InsertMenuButtonProps) {
       </button>
       {open ? (
         <FloatingPortal>
-          {/* The popover is a keyboard-first picker (focus goes to the search field), like Attio's. */}
+          {/* The popover is a keyboard-first picker; focus starts in the search field. */}
           <div
             ref={refs.setFloating}
             style={floatingStyles}

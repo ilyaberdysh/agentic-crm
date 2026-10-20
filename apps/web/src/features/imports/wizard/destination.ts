@@ -1,4 +1,4 @@
-// Where an import goes and where its routes live (C2 README §1, import.md §I1): objects at `/{slug}` (standard) or
+// Where an import goes and where its routes live: objects at `/{slug}` (standard) or
 // `/custom/{slug}`, lists at `/collection/{listId}`, and the settings variants `/settings/data/objects/{slug}/imports`
 // and `/settings/data/lists/{listId}/imports`. All share `…/import/new` and
 // `…/import/{importMappingId}/job/{importJobId}/{map-properties|review-values[/{propertyId}]|preview[/{edId}]|overview[/{edId}]}`.
@@ -76,8 +76,8 @@ export function useDestination(ref: DestinationRef): { destination: ResolvedDest
 // ---- overlay session -------------------------------------------------------------------------------------------------
 
 /**
- * Opened from the app (Import / Export menu, empty states) the wizard is an overlay sheet that closes back to where it
- * was opened (Esc keeps the draft); opened by URL it is a page with breadcrumbs (import.md §I1).
+ * Opened from the UI (Import / Export menu, empty states) the wizard is an overlay sheet that closes back to where it
+ * was opened (Esc keeps the draft); opened by URL it is a page with breadcrumbs.
  */
 let session: { overlay: boolean; returnTo: string | null } = { overlay: false, returnTo: null };
 

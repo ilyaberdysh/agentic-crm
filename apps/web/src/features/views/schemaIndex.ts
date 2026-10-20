@@ -1,11 +1,11 @@
 // A read model over the loaded schema (definitions + attributes per definition) for paths (B.6/B.7): resolve the
 // attribute at each hop, the record-reference target of a hop, and the "Parent › Child" labels of path columns,
-// filters and sorts (C1 README §2.4).
+// filters and sorts.
 import type { AttributeDefinition, EntityDefinition, Path, PathHop } from '@agentic-crm/contracts';
 import type { LeafResolver } from './filterModel';
 import { subFieldLabel } from './operators';
 
-/** Path length limit for drill-downs (C1 §3.2, CROSS-DOMAIN C.4 #7: keep 5). */
+/** Path length limit for drill-downs (C1, CROSS-DOMAIN C.4 #7: keep 5). */
 export const MAX_PATH_LENGTH = 5;
 
 export class SchemaIndex {

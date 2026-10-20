@@ -12,7 +12,7 @@ import {
 } from './common.ts';
 
 // ---------------------------------------------------------------------------------------------------------------
-// One predicate AST (decision X-20). It is Attio's query form: groups `{and}` / `{or}` and leaves
+// One predicate AST: groups `{and}` / `{or}` and leaves
 // `{path, mode, constraints}`. A `must` leaf matches when some current value at `path` satisfies all constraints;
 // `must-not` when none does. A leaf without effective constraints means "has a value" (must) / "is empty" (must-not)
 // — for ratings 0 counts as empty (C1 filters-sorts-calcs §3). Groups nest to any depth (the UI shows one nested
@@ -157,7 +157,7 @@ export const kanbanConfigSchema = z.object({
   /** Stages hidden on this view ("Hide stage", Visible columns). */
   hiddenStageIds: z.array(uuidSchema),
   cardAttributePaths: z.array(pathSchema),
-  /** "Show attribute labels" (Attio label display mode `text`; off = `icon`). */
+  /** "Show attribute labels" display mode: `text`; off = `icon`. */
   showLabels: z.boolean(),
   /** The "No stage" column (Visible columns → No status). */
   showNoStage: z.boolean(),
@@ -325,7 +325,7 @@ export const resolveSelectionOutputSchema = z.object({ ids: z.array(uuidSchema),
 export type ResolveSelectionOutput = z.infer<typeof resolveSelectionOutputSchema>;
 
 /**
- * Footer calculations (C1 filters-sorts-calcs §8). The column kinds Attio stores (count/percent empty/not empty, sum,
+ * Footer calculations. The supported column kinds (count/percent empty/not empty, sum,
  * mean, min, max; on checkboxes "empty" = not checked), explicit checkbox aliases, and our extras (unique count,
  * median, earliest/latest for dates and timestamps). 'filled' is the slice-1 name of count_not_empty.
  */

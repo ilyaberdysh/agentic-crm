@@ -39,7 +39,7 @@ export type MymeetCall = z.infer<typeof mymeetCallSchema>;
 
 export const SAMPLE_PATH = new URL('./fixtures/mymeet-sample.json', import.meta.url);
 
-/** Attio's limit of segments per create call (POST /v2/meetings/{id}/call_recordings, maxItems 4000). */
+/** Segment limit for POST /v2/meetings/{id}/call_recordings. */
 export const MAX_SEGMENTS = 4000;
 
 export function loadSample(path: string | URL = SAMPLE_PATH): MymeetCall {
@@ -48,7 +48,7 @@ export function loadSample(path: string | URL = SAMPLE_PATH): MymeetCall {
 
 /**
  * Merges consecutive segments of the same speaker until the transcript fits in `max` segments (word-level exports
- * can exceed Attio's 4,000; utterance-level ones never need it).
+ * can exceed 4,000 segments; utterance-level exports rarely need it).
  */
 export function fitSegments(segments: MymeetCall['transcript'], max = MAX_SEGMENTS): MymeetCall['transcript'] {
   let out = segments;
@@ -69,7 +69,7 @@ export function fitSegments(segments: MymeetCall['transcript'], max = MAX_SEGMEN
 }
 
 /** The two /v2 request bodies for a mymeet call. */
-export function toAttioPayloads(call: MymeetCall, options: { organizerEmail?: string } = {}) {
+export function toApiPayloads(call: MymeetCall, options: { organizerEmail?: string } = {}) {
   const organizer = call.meeting.participants.find((p) => p.is_organizer)?.email;
   const remap = (email: string | undefined) =>
     email && options.organizerEmail && organizer && email.toLowerCase() === organizer.toLowerCase()
@@ -137,7 +137,7 @@ export async function importMymeetCall(options: ImportOptions): Promise<ImportRe
     if (!response.ok) throw new Error(`${method} /v2${path} → ${response.status}: ${JSON.stringify(json)}`);
     return json;
   };
-  const payloads = toAttioPayloads(call, options.organizerEmail ? { organizerEmail: options.organizerEmail } : {});
+  const payloads = toApiPayloads(call, options.organizerEmail ? { organizerEmail: options.organizerEmail } : {});
   const meeting = await request('POST', '/meetings', payloads.meeting);
   const meetingId = meeting.data.id.meeting_id as string;
   const created = await request('POST', `/meetings/${meetingId}/call_recordings`, payloads.recording);

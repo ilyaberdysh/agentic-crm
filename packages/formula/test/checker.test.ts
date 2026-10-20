@@ -42,7 +42,7 @@ describe('grammar', () => {
       'ifNull(1, 2)',
       'FunctionCall(IfNullFunctionIdentifier,ArgList(LParen,Number(Integer),Comma,Number(Integer),RParen))',
     ],
-    ['_{ab-cd} // c', 'AttioReference,LineComment'],
+    ['_{ab-cd} // c', 'RecordReference,LineComment'],
     ['$1', 'LLMReference'],
   ])('%s', (text, tree) => {
     const s = parseFormula(text).tree.toString();

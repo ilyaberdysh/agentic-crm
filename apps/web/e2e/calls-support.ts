@@ -1,5 +1,5 @@
-// Calls e2e helpers (slice 10): an API token for the mymeet import, mymeet calls imported through the public /v2 path
-// (`apps/api/src/cli/import-mymeet-sample.ts`, the reference client of mymeet-calls-import.md), and small page helpers.
+// Calls e2e helpers: an API token for the mymeet import, mymeet calls imported through the public /v2 path
+// (`apps/api/src/cli/import-mymeet-sample.ts`, the reference client of), and small page helpers.
 // The stack runs with AGENTIC_CRM_LLM=fake (playwright.config.ts), so summaries and insights come from the fixtures in
 // packages/domain/src/ai/fixtures/calls.json.
 import { spawnSync } from 'node:child_process';

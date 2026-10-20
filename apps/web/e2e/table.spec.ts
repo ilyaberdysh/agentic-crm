@@ -1,4 +1,4 @@
-// Record table (BACKLOG §2: 2.02, 2.08, 2.09, 2.10, 2.15; acceptance 2, 5, 6, 8). Objects seeded before the tests
+// Record table. Objects are seeded before the tests
 // (seed-big.ts, idempotent): `big_records` (1,933 rows → two snapshot chunks) and `bulk_records` (30 rows for
 // deletes). Seeded here rather than in prepare.ts so earlier specs see the stock sidebar.
 import { expect, type Page, type Response, test } from '@playwright/test';

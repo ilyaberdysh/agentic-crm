@@ -1,5 +1,5 @@
 // Debounced autosave: `schedule(value)` keeps only the latest value and saves it once `delayMs` passed without a
-// newer one; `flush()` saves a pending value now (blur, switching signatures, unmount). The class is plain so it is
+// newer one; `flush` saves a pending value now (blur, switching signatures, unmount). The class is plain so it is
 // unit-tested with fake timers; `useDebouncedSaver` wraps it for components and flushes when the component unmounts.
 import { useEffect, useRef } from 'react';
 

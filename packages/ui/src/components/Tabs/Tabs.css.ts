@@ -102,7 +102,7 @@ export const count = style({
 
 export const panel = style({ outline: 'none', minHeight: 0 });
 
-// Segmented control (components.md §2): tint track, padding 2, gap 2, radius 10.
+// Segmented control: tint track, padding 2, gap 2, radius 10.
 export const segmented = style({
   boxSizing: 'border-box',
   display: 'inline-flex',

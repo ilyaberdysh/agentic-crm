@@ -1,4 +1,4 @@
-// Inline marks of the note schema (E editor.md §4): bold, italic, strikethrough, text colour, highlight and link.
+// Inline marks of the note schema: bold, italic, strikethrough, text colour, highlight and link.
 // No underline and no inline code: ⌘U is swallowed, and `**x**`, `*x*`, `_x_`, `~~x~~`, `` `x` `` stay literal
 // while typing — only `[text](url)` converts (to a link). Strikethrough and link have no keyboard shortcut.
 
@@ -78,7 +78,7 @@ declare module '@tiptap/core' {
   }
 }
 
-/** Text colour (Attio COLORED style with a `block_*` key). */
+/** Text colour (the UI COLORED style with a `block_*` key). */
 export const TextColor = Mark.create({
   name: 'textColor',
 
@@ -118,7 +118,7 @@ export const TextColor = Mark.create({
   },
 });
 
-/** Highlight (Attio HIGHLIGHTED style with a `pastel_*` key). */
+/** Highlight (the UI HIGHLIGHTED style with a `pastel_*` key). */
 export const Highlight = Mark.create({
   name: 'highlight',
 
@@ -158,9 +158,9 @@ export const Highlight = Mark.create({
   },
 });
 
-/** Attio blocks ⌘U in notes and templates (no underline in the model); swallow it so the browser does not apply it. */
+/** The UI blocks ⌘U in notes and templates (no underline in the model); swallow it so the browser does not apply it. */
 export const BlockedShortcuts = Extension.create({
-  name: 'attioBlockedShortcuts',
+  name: 'agenticCrmBlockedShortcuts',
   addKeyboardShortcuts() {
     return { 'Mod-u': () => true, 'Mod-U': () => true };
   },

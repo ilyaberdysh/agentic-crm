@@ -1,4 +1,4 @@
-// Workflow page `/$ws/automations/workflows/$workflowId/*` (README §2.2, §3.3, §3.4): header (breadcrumb with the
+// Workflow page `/$ws/automations/workflows/$workflowId/*`: header (breadcrumb with the
 // inline title input, favourite star; creator, Share, help, ⋮, Ask AI) and the tab bar (Editor | Runs n | Settings;
 // right: Draft / ⏸ Paused label or ▷ Trigger workflow, and the Live switch). The routed tab renders below.
 import { Button, Icon, IconButton, Switch, Tooltip } from '@agentic-crm/ui';

@@ -1,19 +1,18 @@
-// Optimistic mutation overlay + queue (D-03, BACKLOG 1.07; CROSS-DOMAIN B.2; internal-api-shapes §2).
+// Optimistic mutation overlay + queue (D-03, BACKLOG 1.07; CROSS-DOMAIN B.2; internal-api-shapes).
 //
 // Writes are applied to an *overlay* that sits on top of the server cache: the UI reads `get(key)` first and falls
 // back to cached server data. The overlay is an external store (subscribe/getSnapshot) consumed through
 // useSyncExternalStore. Per key (the coalescing unit, e.g. record × attribute):
-//   - at most one write is in flight; a newer write waits behind it;
-//   - writes that have not been sent are *coalesced*: the newest input replaces the parked one (Attio's
-//     combineParkedWrites), keeping the oldest undo so Undo restores the value from before the burst;
-//   - ack → the kind's `onSuccess` reconciles the server copy into the cache, *then* the overlay entry is dropped
-//     (no flicker back to the stale value);
-//   - retryable failure (network, 408/429/5xx) → backoff retry, paused while offline;
-//   - final failure → rollback (the entry is dropped; the UI shows the server value or the next write) and
-//     `onFailure` (the app shows a toast with Retry);
-//   - a failure the app marks as *holdable* (`shouldHold`, slice 6: a requirement rule refused the write, 422
-//     PARTICLE_GATE_VIOLATION) keeps the write in the queue as `held`: it stays visible in the overlay but is not sent
-//     again until the user retries it (`release`), replaces it by editing the same key, or `discard`s it.
+// - at most one write is in flight; a newer write waits behind it;
+// - writes that have not been sent are *coalesced*: the newest input replaces the parked one (the
+// combineParkedWrites), keeping the oldest undo so Undo restores the value from before the burst;
+// - ack → the kind's `onSuccess` reconciles the server copy into the cache, *then* the overlay entry is dropped
+// (no flicker back to the stale value);
+// - retryable failure (network, 408/429/5xx) → backoff retry, paused while offline;
+// - final failure → drop the overlay entry and call `onFailure` to show a Retry toast;
+// - a failure the UI marks as *holdable* (`shouldHold`: a requirement rule refused the write, 422
+// PARTICLE_GATE_VIOLATION) keeps the write in the queue as `held`: it stays visible in the overlay but is not sent
+// again until the user retries it (`release`), replaces it by editing the same key, or `discard`s it.
 // Pending writes are persisted (sessionStorage by default: per tab, survives reloads) and resumed after boot; the
 // unload guard warns while anything is pending. Undo handles exist for every write that carries an inverse, even
 // where the UI shows no Undo (CROSS-DOMAIN B.15).
@@ -400,7 +399,7 @@ export class MutationQueue {
       });
       return;
     }
-    // Final: roll back and let the app offer Retry.
+    // Final: roll back and let the UI offer Retry.
     const failed = { ...write };
     this.remove(write);
     this.options.onFailure?.(failed, error, {
@@ -497,7 +496,7 @@ export class MutationQueue {
       for (const r of records) {
         if (!r || typeof r.key !== 'string' || typeof r.kind !== 'string' || typeof r.id !== 'string') continue;
         // An in-flight write may or may not have reached the server: resend (creates and value PUTs are
-        // idempotent by client id, I3).
+        // idempotent by client id).
         const write: WriteRecord = { ...r, status: 'queued', attempts: 0 };
         const list = this.writes.get(write.key) ?? [];
         list.push(write);
@@ -514,7 +513,7 @@ export class MutationQueue {
   }
 }
 
-/** Installs the "unsaved work" guard while the queue has pending writes (internal-api-shapes §2 loss prevention). */
+/** Installs the "unsaved work" guard while the queue has pending writes (internal-api-shapes loss prevention). */
 export function installUnloadGuard(
   queue: Pick<MutationQueue, 'hasPending'>,
   target: Pick<Window, 'addEventListener' | 'removeEventListener'> = window,

@@ -59,7 +59,7 @@ export async function searchMembersLive(
 
 // ---- select options ----------------------------------------------------------------------------------------------
 
-/** "+ Create “{query}”" in a select editor (C1 cells.md §2): creates the option and caches it. */
+/** "+ Create “{query}”" in a select editor: creates the option and caches it. */
 export async function createOptionLive(
   workspace: WorkspaceRef,
   attribute: AttributeDefinition,

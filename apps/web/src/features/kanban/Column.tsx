@@ -1,4 +1,4 @@
-// A board column (C2 kanban.md K2 column + header, K3 collapse, K8 drop target): 268 px, header (stage dot, title
+// A board column: 268 px, header (stage dot, title
 // opening the stage menu, count, "+" add card, ⋮⋮ reorder handle — "No stage" has neither), virtualised cards
 // (TanStack Virtual with measured heights; more ids load in chunks near the end), and the calculation line. Collapsed:
 // a 52 px strip (dot, count, title rotated), double-click expands.
@@ -70,7 +70,7 @@ export const Column = memo(function Column(props: ColumnProps) {
           </span>
           <span className={s.stripTitle}>{stage.title}</span>
         </button>
-        {/* Strips end where columns do; collapsed columns have no calculation line (K6). */}
+        {/* Strips end where columns do; collapsed columns have no calculation line. */}
         {!props.hideFooter && <div className={s.footer} />}
       </div>
     );

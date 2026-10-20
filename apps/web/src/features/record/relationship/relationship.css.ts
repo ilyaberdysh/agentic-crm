@@ -1,4 +1,4 @@
-// Relationship tab (D README §3.7; evidence D-company-team-selection): 45 px rows separated by 1 px rules —
+// Relationship tab: 45 px rows separated by 1 px rules —
 // checkbox, record chip (link), then the configured related attributes right-aligned; selected rows light blue;
 // the floating bulk bar centred at the bottom of the tab area.
 import { scales, text, vars } from '@agentic-crm/ui/styles';

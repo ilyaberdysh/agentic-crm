@@ -1,4 +1,4 @@
-// Share (README §3.7; evidence G/G-share-popover.png): a ≈440 px popover — "Workspace access" + level; search + level
+// Share: a ≈440 px popover — "Workspace access" + level; search + level
 // + Add; "Individual members" with their levels; footer "Learn more about permissions".
 
 import { Button, Icon, Popover, Spinner } from '@agentic-crm/ui';

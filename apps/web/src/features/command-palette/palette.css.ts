@@ -1,4 +1,4 @@
-// Quick actions / Search frame (command-palette.md §2; evidence/B/quick-actions-*.png, ds/ds-cmdk-input-*.png): the
+// Quick actions and search frame:
 // 748 px frame (the `palette` Modal size) with an input row, a results list (≈ 370 px) and a preview pane (≈ 360 px),
 // a footer with "↑ ↓ Navigate" and the primary gesture button.
 import { text, vars } from '@agentic-crm/ui/styles';

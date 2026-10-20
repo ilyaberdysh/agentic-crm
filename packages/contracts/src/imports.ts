@@ -148,7 +148,7 @@ export const importMappingPropertySchema = z.object({
   columnIndex: z.number().int(),
   path: pathSchema,
   field: importNameFieldSchema.nullable(),
-  /** Attio's particle resolution type, e.g. 'date:value', 'text:uuid', 'personal-name:first-name'. */
+  /** Particle resolution type, e.g. 'date:value', 'text:uuid', 'personal-name:first-name'. */
   resolutionType: z.string(),
   attributeType: attributeTypeSchema,
   /** Index of the strategy (object) the column writes to; see ImportStrategy. */

@@ -1,4 +1,4 @@
-// Slice 9 (BACKLOG §9) e2e for the dashboard page and the report editor: grid layout (resize, drag, persisted), the cell
+// e2e for the dashboard page and the report editor: grid layout (resize, drag, persisted), the cell
 // menu order (acceptance 4), duplicate / delete, the editor flow with the unsaved-changes guard, the viewer's J / K and
 // "New data" after a change made elsewhere (acceptance 3). The dashboards index, Share and Settings → Dashboards are
 // covered by reports-admin.spec.ts; chart drawing by reports-charts.spec.ts.

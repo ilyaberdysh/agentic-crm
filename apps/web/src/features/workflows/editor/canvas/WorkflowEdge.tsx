@@ -1,4 +1,4 @@
-// Edges (README §2.3, runs.md §3): orthogonal connectors with rounded corners and an open arrow into the target's left
+// Edges: orthogonal connectors with rounded corners and an open arrow into the target's left
 // edge; grey normally, blue when the source block (or the edge) is selected; green along a run's taken paths and dashed
 // light grey for outcomes the run did not take.
 import { BaseEdge, type Edge, type EdgeProps, getSmoothStepPath, Position } from '@xyflow/react';

@@ -1,5 +1,5 @@
-// Record search for ⌘K, the Search modal and the pickers (command-palette.md §3.1, §5). One request per keystroke (no
-// debounce, like Attio); the response of a superseded request never overwrites a newer one (SearchGuard +
+// Record search for ⌘K, the Search modal and the pickers. One request per keystroke (no
+// debounce, by design); the response of a superseded request never overwrites a newer one (SearchGuard +
 // `requestSeq` echoed by the server).
 import type { SearchRecordHit, SearchRecordsOutput } from '@agentic-crm/contracts';
 import { useEffect, useMemo, useRef, useState } from 'react';

@@ -1,5 +1,5 @@
-// Empty editor (README §2.2; evidence G/G-new-workflow-prompt.png, G-trigger-picker.png): the prompt box (the AI
-// workflow builder arrives with slice 10), four suggestion chips that preview their prompt on hover, "or" and the dashed
+// Empty editor: the prompt box (the AI
+// workflow builder arrives with), four suggestion chips that preview their prompt on hover, "or" and the dashed
 // "+ Start from scratch" button whose trigger picker ("Search triggers", grouped) adds the first block.
 import type { BlockDefinition } from '@agentic-crm/contracts';
 import { Icon, IconButton, PopoverPanel, toast } from '@agentic-crm/ui';

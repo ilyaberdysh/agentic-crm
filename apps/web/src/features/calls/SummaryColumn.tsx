@@ -1,4 +1,4 @@
-// The Summary and Insights column of the call page (I calls §3.6; evidence/I/call-page-insights-generated.png): the long
+// The Summary and Insights column of the call page (I calls): the long
 // summary, then the Insights section with the template picker and "Update". The same body is the Summary tab on a narrow
 // page. States: "Analyzing call data..." while the summary or an insight is generating, a "not configured" notice when
 // the workspace has no AI provider, and failures with a retry.

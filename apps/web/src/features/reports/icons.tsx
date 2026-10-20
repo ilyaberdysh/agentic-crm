@@ -1,5 +1,5 @@
 // Glyphs of the reports feature (report types and visualisations), drawn for this project on a 24 grid in the same
-// line style as the shared icon map (the Icon component hands `size` and `strokeWidth`). Never Attio's artwork.
+// line style as the shared icon map (the Icon component hands `size` and `strokeWidth`).
 import type { IconGlyph } from '@agentic-crm/ui';
 import type { SVGProps } from 'react';
 

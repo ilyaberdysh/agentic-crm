@@ -62,7 +62,7 @@ export const config = {
     redirectUri:
       optional('GOOGLE_REDIRECT_URI') ??
       `${(optional('API_PUBLIC_URL') ?? `http://localhost:${apiPort}`).replace(/\/+$/, '')}/api/integrations/google/callback`,
-    /** Initial mail sync window in days (unset = every message that was not deleted, as Attio documents). */
+    /** Initial mail sync window in days (unset = every message that was not deleted). */
     mailSyncDays: optional('GOOGLE_MAIL_SYNC_DAYS') ? Number(optional('GOOGLE_MAIL_SYNC_DAYS')) : undefined,
   },
 } as const;

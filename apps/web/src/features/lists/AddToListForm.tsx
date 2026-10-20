@@ -1,4 +1,4 @@
-// The Add-to-list form (C2 README §2.5 A.3, X-07; evidence/C2/add-to-list-form.png): breadcrumb "‹ <record> / Add to
+// The Add-to-list form (A.3, X-07): breadcrumb "‹ <record> / Add to
 // list <list chip>", tabs All · Create templates, one field per writable list attribute ("<Title> (optional)",
 // "Set <title>"), prefilled values (kanban column stage), footer Cancel ESC · "Add to list ⌘↵". Submit creates the
 // entry with every value in one `entries.add`. Closing with edits asks "Discard entry".

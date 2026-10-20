@@ -8,6 +8,7 @@ export const memberRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/workspace_members',
+    operationId: 'listWorkspaceMembers',
     scopes: v2Operations.listWorkspaceMembers.scopes,
     async handler(v2) {
       // Removed members (slice 6) are no longer workspace members; their ids stay resolvable as actors elsewhere.
@@ -18,6 +19,7 @@ export const memberRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/workspace_members/:workspace_member_id',
+    operationId: 'getWorkspaceMember',
     scopes: v2Operations.getWorkspaceMember.scopes,
     async handler(v2, request) {
       // A malformed id cannot name a member: same 404 as an unknown one.

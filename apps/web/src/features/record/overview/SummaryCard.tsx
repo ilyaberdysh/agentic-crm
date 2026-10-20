@@ -1,4 +1,4 @@
-// AI record summary (BACKLOG 10.07; D README §2.5 item 4): "{Noun} summary" with "Generated at {time}" and a
+// AI record summary (BACKLOG 10.07;  item 4): "{Noun} summary" with "Generated at {time}" and a
 // regenerate button, from `records.summary.get` (never calls the model) and `regenerate` (the bulk model over the
 // record's values, recent notes and open tasks). Shows Generate when none exists, "Out of date" when a value changed
 // after generation, and a note instead of a button when the server has no AI key.

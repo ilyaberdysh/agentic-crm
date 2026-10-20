@@ -1,4 +1,4 @@
-// Ask AI icons (slice 10: feedback thumbs, the reply-suggestion arrow, prompt tiles) → Lucide glyphs. Kept in their own
+// Ask AI icons for feedback, reply suggestions and prompt tiles → Lucide glyphs. Kept in their own
 // map (spread into iconMap) so parallel slices add icons without touching the same lines.
 import {
   BookOpen,

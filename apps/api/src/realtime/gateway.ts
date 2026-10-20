@@ -2,7 +2,7 @@
 //  - Data channel: the connection subscribes to workspaces it is a member of and receives InvalidationMessages
 //    built from change_log rows (what is stale + seq), filtered by audience. Never business data (I4a).
 //  - Resume: `subscribe-workspace {after: cursor}` replays newer rows from change_log, or answers
-//    `continuity-lost` when the cursor is older than retention (Attio: re-attach without `resumed`, realtime.md §4).
+//    `continuity-lost` when the cursor is older than retention; the client must refetch before resuming.
 //  - Rooms: presence (join/leave/state) and ephemeral fan-out, in memory (I4b).
 import { randomUUID } from 'node:crypto';
 import {

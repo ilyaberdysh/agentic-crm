@@ -1,4 +1,4 @@
-// Query keys of the calls feature (slice 10). Every key lives under ['ws', workspaceId, <resource>, …] where <resource>
+// Query keys of the calls feature. Every key lives under ['ws', workspaceId, <resource>, …] where <resource>
 // is the realtime invalidation vocabulary (packages/realtime InvalidationResource), so a server invalidation refetches
 // exactly the queries that show the changed data (data/realtime/invalidation.ts maps the message onto a prefix).
 import { keys } from '../../data/keys';

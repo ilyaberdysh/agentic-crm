@@ -99,7 +99,7 @@ export interface BannerProps {
   style?: CSSProperties;
 }
 
-/** Inline alert box (components.md §8): info / warning / error / neutral, small (radius 12) or large (16). */
+/** Inline alert box: info / warning / error / neutral, small (radius 12) or large (16). */
 export function Banner({
   variant = 'neutral',
   size = 'small',
@@ -142,7 +142,7 @@ export interface AnnouncementBannerProps {
   className?: string;
 }
 
-/** Full-width bar above the app (offline, out-of-date, system banners). */
+/** Full-width bar above the UI (offline, out-of-date, system banners). */
 export function AnnouncementBanner({
   scheme = 'accent',
   children,

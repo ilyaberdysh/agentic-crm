@@ -1,5 +1,5 @@
 // Server state of the views feature: views of an object, the schema the pickers and pills read (definitions,
-// attributes, options, statuses, members) and the view writes (A §4.10, C1 README §3.1–3.2, §5). Views are normalised:
+// attributes, options, statuses and members) and view writes. Views are normalised:
 // the list query writes each view into its own key, every write answers the whole view and replaces both.
 import {
   type AttributeDefinition,
@@ -96,7 +96,7 @@ export function serial<T>(viewId: string, run: () => Promise<T>): Promise<T> {
   return next;
 }
 
-/** "{title} (2)", "(3)", … — the first title not used by another view of the object (C1 §3.1 duplicate). */
+/** "{title} (2)", "(3)", … — the first title not used by another view of the object (C1 duplicate). */
 export function dedupeTitle(title: string, existing: readonly string[]): string {
   const base = title.replace(/ \(\d+\)$/, '');
   const taken = new Set(existing);
@@ -220,7 +220,7 @@ export async function deleteView(ws: WorkspaceRef, view: View): Promise<void> {
   }
 }
 
-/** "Save for everyone": full replace of the filter and/or the sorts (C1 §3.1). */
+/** "Save for everyone": full replace of the filter and/or the sorts (C1). */
 export async function saveFilterAndSorts(
   ws: WorkspaceRef,
   viewId: string,

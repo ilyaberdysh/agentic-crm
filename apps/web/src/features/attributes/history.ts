@@ -1,4 +1,4 @@
-// Edit history events from value rows (BACKLOG 2.11, C1 README §3.6): `records.history` returns every value of one
+// Edit history events from value rows (BACKLOG 2.11): `records.history` returns every value of one
 // attribute on one record, current and retired, newest first. Pure; unit-tested.
 import type { Actor } from '@agentic-crm/contracts';
 import type { AttributeDefinition, AttributeValue } from './types';

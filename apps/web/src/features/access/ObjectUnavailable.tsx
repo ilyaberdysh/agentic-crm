@@ -1,7 +1,7 @@
 // An object URL whose object is not in the member's readable list (the sidebar hides objects with No access): ask the
 // server why. 403 → the object exists but the member may not open it (no-access page); an admin can read any
 // definition, so a definition answered to an admin is an object without data access ("Add yourself"); 404 or an
-// archived object → the workspace root like any unknown path (B README §2.6).
+// archived object → the workspace root like any unknown path.
 import { useQuery } from '@tanstack/react-query';
 import { Navigate } from '@tanstack/react-router';
 import { keys } from '../../data/keys';

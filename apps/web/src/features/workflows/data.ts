@@ -1,13 +1,13 @@
 // Workflows on the client (BACKLOG 8.01–8.11).
 // Queries live under the realtime resources ['ws', ws, 'workflow' | 'workflow-list' | 'workflow-run' |
 // 'workflow-run-list', …] so one invalidation prefix refreshes every screen showing them:
-//   ['ws', ws, 'workflow-list', params]                     index, admin list, "Select workflow" dialog
-//   ['ws', ws, 'workflow', id, 'version', versionId|draft]  header + a version (editor, run canvas, old versions)
-//   ['ws', ws, 'workflow', id, 'versions']                  version history
-//   ['ws', ws, 'workflow', id, 'variables', blockId, v]     variable picker
-//   ['ws', ws, 'workflow', id, 'permissions']               Share popover / admin Permissions tab
-//   ['ws', ws, 'workflow-run-list', id, …]                  run history + last-7-days overview, credits usage
-//   ['ws', ws, 'workflow-run', runId]                       run viewer
+// ['ws', ws, 'workflow-list', params] index, admin list, "Select workflow" dialog
+// ['ws', ws, 'workflow', id, 'version', versionId|draft]  header + a version (editor, run canvas, old versions)
+// ['ws', ws, 'workflow', id, 'versions'] version history
+// ['ws', ws, 'workflow', id, 'variables', blockId, v] variable picker
+// ['ws', ws, 'workflow', id, 'permissions'] Share popover / admin Permissions tab
+// ['ws', ws, 'workflow-run-list', id, …] run history + last-7-days overview, credits usage
+// ['ws', ws, 'workflow-run', runId] run viewer
 // Header mutations (rename, publish, enable…) answer the canonical workflow; editor edits of the draft go through the
 // serial op queue in editor/ops.ts.
 import type { ListWorkflowsInput, PutPermissionInput, RemovePermissionInput, UsageInput } from '@agentic-crm/contracts';
@@ -210,7 +210,7 @@ function refreshWorkflow(ws: WorkspaceRef, workflowId: string) {
 
 // ---- header mutations --------------------------------------------------------------------------------------------------
 
-/** "New workflow": a transient draft (client-minted ids) the editor opens at once (README §2.2, B.21). */
+/** "New workflow": a transient draft (client-minted ids) the editor opens at once (B.21). */
 export async function createWorkflow(ws: WorkspaceRef): Promise<Workflow> {
   const id = newId();
   const { workflow, seq } = await api.workflows.create.mutate({ id, draftVersionId: newId() }, inWorkspace(ws));

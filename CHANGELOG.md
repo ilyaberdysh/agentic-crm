@@ -16,3 +16,10 @@ Notable changes are collected here before a separately authorized release.
 - Recovery controls for stuck actions and blocked tasks, including an explicit cancelled queue outcome.
 - Workspace module controls, full approval evidence and assignee details, and a read-only self-hosting doctor command.
 - A documented source-provenance gate and follow-up backlog for the standalone runner and live Linux isolation certification.
+- A product-owned public API contract with exact runtime-route parity, deterministic OpenAPI 3.1 generation, and drift checks.
+- Canonical Agentic CRM storage and webhook identifiers, with migrations and compatibility aliases for existing integrations.
+
+### Changed
+
+- Replaced the historical generated API snapshot with schemas maintained from Agentic CRM's implemented routes.
+- Removed stale product-research references from source comments and recorded the maintainer's source-use disposition for public OSS preparation.

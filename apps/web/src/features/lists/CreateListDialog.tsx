@@ -1,8 +1,8 @@
-// "Start from scratch" (C2 README §2.1.2; J objects-lists §4.1; evidence/C2/create-list-from-scratch.png): 728 px
+// "Start from scratch": 728 px
 // dialog, breadcrumb "Templates / Start from scratch" + ×; **Object** select (searchable; every active object,
 // alphabetical; default Companies), the list icon button (📋 → emoji picker) and **List name** ("New list"); footer
 // Cancel ESC · "Create list ⌘↵". Validation "Please provide a name for this list."; failure toast "Failed to create
-// list". The templates gallery is deferred (BACKLOG §4 Defer), so the dialog opens on this step.
+// list". The templates gallery is deferred (Defer), so the dialog opens on this step.
 import { Button, DialogFooter, IconButton, Modal, Select, SelectItem, TextInput, toast } from '@agentic-crm/ui';
 import { type KeyboardEvent, useMemo, useRef, useState } from 'react';
 import { Button as AriaButton, Heading } from 'react-aria-components';

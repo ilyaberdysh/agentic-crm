@@ -15,7 +15,7 @@ export interface ServiceContext {
    */
   receipt?: { seq: string | null };
   /**
-   * User-level API tokens act with the permissions of the member who authorised them (Attio token levels: "a
+   * User-level API tokens act with the permissions of the member who authorised them (token levels: "a
    * specific workspace member, limited to the data and permissions that member has"); the actor stays the token.
    */
   onBehalfOfMemberId?: string | null;

@@ -1,5 +1,4 @@
-// /api/auth/*: Better Auth's endpoints (sign-up/email, sign-in/email, sign-out, get-session, …) plus Attio's
-// `GET /api/auth/whoami` (K sessions.md §1.3) and a navigable `GET /api/auth/logout` (Attio's /auth/logout, §3).
+// /api/auth/*: Better Auth endpoints plus GET /api/auth/whoami and a navigable GET /api/auth/logout.
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { envelope, reasonPhrase, UNAUTHENTICATED_MESSAGE } from '../errors';
 import { AUTH_BASE_PATH, type Auth, type AuthSession } from './auth';
@@ -19,7 +18,7 @@ function toWebRequest(request: FastifyRequest): Request {
   return new Request(url, { method: request.method, headers: toFetchHeaders(request.headers, HOP_BY_HOP), body });
 }
 
-/** Better Auth errors are `{code, message}`; we send the Attio envelope and keep `code` for Better Auth clients. */
+/** Send the shared API envelope while preserving Better Auth's `code` for its clients. */
 async function sendWebResponse(reply: FastifyReply, response: Response): Promise<FastifyReply> {
   reply.status(response.status);
   response.headers.forEach((value, key) => {
@@ -56,7 +55,7 @@ function splitName(full: string): { first: string; last: string; full: string } 
     : { first: trimmed.slice(0, index), last: trimmed.slice(index + 1).trim(), full: trimmed };
 }
 
-/** Attio's `active_user` subset we can serve today (K sessions.md §1.2). */
+/** Session identity exposed by the whoami endpoint. */
 export function toActiveUser(session: AuthSession) {
   const { user } = session;
   return {

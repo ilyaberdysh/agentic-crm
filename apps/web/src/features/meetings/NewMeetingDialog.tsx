@@ -1,8 +1,8 @@
-// The "New meeting" dialog of the Activity tab's "Add meeting" (BACKLOG 7.04; D README §3.8; evidence
+// The "New meeting" dialog opened by "Add meeting" in the Activity tab:
 // D/D-add-meeting-dialog.png): a centred 808 px dialog over a dimmed page with a borderless title and description,
 // "Date and time" (date button + start / end time + duration), "Participants" (the current member as Host, "+" adds
 // members, people and typed addresses, "Make host"), "Linked records" (the record pre-linked) and the footer
-// "Cancel ESC" / "Create meeting ⌘↵". A meeting needs two participants. The meeting id is minted here (I3).
+// "Cancel ESC" / "Create meeting ⌘↵". A meeting needs two participants. The meeting id is minted here.
 import type { RecordRefInput } from '@agentic-crm/contracts';
 import { Button, cx, DialogHeader, Icon, IconButton, Modal, Popover, toast } from '@agentic-crm/ui';
 import { useCallback, useMemo, useRef, useState } from 'react';

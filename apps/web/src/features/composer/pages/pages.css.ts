@@ -1,4 +1,4 @@
-// Drafts list, Outbox and Templates pages (F composer §3, §5, §6; evidence/F/emails-drafts-empty.png,
+// Drafts list, Outbox and Templates pages:
 // drafts-list-minimized-composer-dark.png, emails-outbox-empty.png, emails-templates-empty.png,
 // templates-list-view-settings-dark.png). Tab chrome, toolbar, cards and states come from the notes index pages.
 import { scales, text, vars } from '@agentic-crm/ui/styles';

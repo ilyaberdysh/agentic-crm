@@ -1,11 +1,11 @@
-// Offline banner (system-ui §5; evidence/B/banner-offline.png): orange full-width bar above the app while the
+// Offline banner (system-ui): orange full-width bar above the UI while the
 // realtime connection is lost or the browser is offline. "You're offline." then "You've been offline for {duration}."
 // (updates every second) + "Please check your internet connection and <retry>." — retry skips the reconnect backoff.
 import { AnnouncementBanner } from '@agentic-crm/ui';
 import { useEffect, useState } from 'react';
 import { reconnectNow, useConnectionState } from '../../data/realtime/connection';
 
-/** Don't flash the banner for blips shorter than this (Attio confirms twice, 500 ms apart). */
+/** Don't flash the banner for connection blips shorter than one second. */
 const GRACE_MS = 1000;
 
 export function formatOfflineDuration(ms: number): string | null {

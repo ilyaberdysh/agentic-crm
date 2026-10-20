@@ -224,7 +224,7 @@ export function taskBucketBounds(now: string | number | Date, timeZone: string, 
 
 /**
  * Bucket of a task: completed tasks → 'completed'; no deadline → 'no-date'; deadline before today → 'overdue'
- * (Attio shows these inside "Today"); ≤ end of today → 'today'; ≤ end of week → 'this-week'; else 'later'.
+ * (included in "Today"); ≤ end of today → 'today'; ≤ end of week → 'this-week'; else 'later'.
  */
 export function taskBucketOf(
   task: { deadlineAt: string | null; isCompleted: boolean },
@@ -280,7 +280,7 @@ export function createdBucketRanges(
   const yearStart = `${today.slice(0, 4)}-01-01`;
   const lastYear = `${String(Number(today.slice(0, 4)) - 1).padStart(4, '0')}-01-01`;
   const min = (a: string, b: string) => (a < b ? a : b);
-  // Ranges are disjoint: a newer bucket wins where Attio's keyed queries would overlap (e.g. last week spanning
+  // Ranges are disjoint: a newer bucket wins where keyed queries would overlap (e.g. last week spanning
   // the 1st of the month). Last week always starts after the 1st of last month.
   return [
     { key: 'today', from: at(today), to: at(addDays(today, 1)) },

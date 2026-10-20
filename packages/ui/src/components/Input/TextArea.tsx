@@ -7,7 +7,7 @@ import * as s from '../Field/Field.css';
 export interface TextAreaProps extends Omit<TextFieldProps, 'children' | 'className' | 'style'>, FieldChromeProps {
   placeholder?: string;
   rows?: number;
-  /** Vertical resize handle (off by default, as in Attio). */
+  /** Show the vertical resize handle. Disabled by default. */
   resizable?: boolean;
   className?: string;
   style?: CSSProperties;

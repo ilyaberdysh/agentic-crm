@@ -1,4 +1,4 @@
-// Context actions (command-palette.md §3.2 categories 1–6, §3.3 last paragraph): pages and records register actions
+// Context actions (categories 1–6, last paragraph): pages and records register actions
 // that appear in the palette while they are mounted, in a section named after the context — the open record page
 // ("Add to list", "Add to favorites"…), the focused table row (its record actions). The most recently registered
 // context comes first.
@@ -21,9 +21,9 @@ export interface PaletteAction {
   gesture: string;
   /** Shortcut hint shown as key caps on the right (engine string: `/`, `t`, `mod+j`). */
   hint?: string;
-  /** Tertiary text after the title ("Attio API documentation"). */
+  /** Tertiary text after the title ("API documentation"). */
   description?: string;
-  /** Listed only while the query matches (Attio visibility 0: theme switches, easter eggs). */
+  /** Listed only while the query matches (visibility 0: theme switches, easter eggs). */
   searchOnly?: boolean;
   /** Opens a new tab: shows ↗ after the title. */
   external?: boolean;

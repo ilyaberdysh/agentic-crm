@@ -1,4 +1,4 @@
-// Share popover and Permissions tab rows (README §3.7; evidence G/G-share-popover.png, G-admin-permissions.png).
+// Share popover and Permissions tab rows.
 import { insetRing, text, transitionColors, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

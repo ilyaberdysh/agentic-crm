@@ -1,6 +1,6 @@
-// D-03 / BACKLOG 1.07 against the real API, driven through the app's own modules (served by Vite in the page):
+// D-03 / BACKLOG 1.07 against the real API, driven through custom modules (served by Vite in the page):
 // point reads in one frame → one `records.batchGet`; an optimistic value write → per-key pending overlay →
-// reconciled from the mutation response; our own realtime echo does not invalidate, someone else's write does.
+// reconciled from the mutation response; custom realtime echo does not invalidate, someone else's write does.
 import { expect, test } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';
 import { signIn } from './support.ts';
@@ -88,7 +88,7 @@ test('batched reads, optimistic write with reconciliation, echo suppression', as
   expect(write.stillPending).toBe(false);
   expect(write.cachedValues).toEqual(['Renamed A']);
 
-  // Our own write echoes back over realtime: already reflected, so the key is not invalidated.
+  // custom write echoes back over realtime: already reflected, so the key is not invalidated.
   await page.waitForTimeout(1200);
   const isInvalidated = () =>
     page.evaluate(async (cacheKey) => {

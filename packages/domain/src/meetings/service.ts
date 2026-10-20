@@ -246,7 +246,7 @@ const hhmmss = (seconds: number) => {
   return [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60].map((n) => String(n).padStart(2, '0')).join(':');
 };
 
-/** Public speaker label: the email address when one was given (Attio replaces the name, I calls §11.1). */
+/** Public speaker label: the email address when one was given. */
 export const speakerLabel = (s: TranscriptSegment['speaker']) => s.emailAddress ?? s.name;
 
 /** `[hh:mm:ss] speaker: text` lines; consecutive segments of the same speaker merged (I calls §11.1). */

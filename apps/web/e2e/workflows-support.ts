@@ -1,4 +1,4 @@
-// Slice-8 e2e helpers: an "Opportunities" object with a number "Amount" attribute, records created through tRPC (they
+//  e2e helpers: an "Opportunities" object with a number "Amount" attribute, records created through tRPC (they
 // trigger "Record created" workflows like UI writes), workflows built through the procedures, and polling helpers.
 import type { Page } from '@playwright/test';
 import { uuidv7 } from './kanban-support.ts';

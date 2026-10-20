@@ -1,4 +1,4 @@
-// Add column (C1 README §3.2, evidence C1/05, 06): 274 px picker "Search {object} attributes...", system attributes
+// Add column (evidence C1/05, 06): 274 px picker "Search {object} attributes...", system attributes
 // first, relationship drill-down ≤ 5 hops, location → City/State/Country, search across nested paths, query kept for
 // the session, footer "+ Create new attribute ›". Picking adds the column at once (end, or next to a column).
 import { Button, PopoverPanel } from '@agentic-crm/ui';

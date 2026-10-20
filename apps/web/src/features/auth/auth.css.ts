@@ -1,4 +1,4 @@
-// Auth page shell (K legacy-welcome §2, README §2.2 measurements at 1512 × 945): logo top-centre at y 32, centred
+// Auth page shell (K legacy-welcome,  measurements at 1512 × 945): logo top-centre at y 32, centred
 // 360 px column, legal line and footer pinned to the bottom (footer text at y ≈ 905). Phone: 15 px gutters.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
@@ -75,8 +75,8 @@ export const subtitle = style({
 export const form = style({ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 32 });
 
 /**
- * Attio's sign-in block also holds "Sign in with Google" and a divider (40 + 28 + 1 + 28 px) where we have one
- * more field (34 + 12): the difference is kept as bottom space so the centred block puts the title where Attio's is
+ * the sign-in block also holds "Sign in with Google" and a divider (40 + 28 + 1 + 28 px) where we have one
+ * more field (34 + 12): the difference is kept as bottom space so the centred block puts the title at the same height.
  * (y ≈ 329 at 1512 × 945).
  */
 export const signInBlock = style({ paddingBottom: 51 });

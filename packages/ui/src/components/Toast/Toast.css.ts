@@ -36,7 +36,7 @@ export const item = style({
   borderRadius: 8,
 });
 
-// Card (components.md §7): min 300 / max 350, radius 8, padding 10, e2, elevated surface.
+// Card: min 300 / max 350, radius 8, padding 10, e2, elevated surface.
 export const card = style({
   boxSizing: 'border-box',
   position: 'relative',

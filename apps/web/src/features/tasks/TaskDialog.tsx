@@ -1,5 +1,4 @@
-// Create / edit task dialogs (E README §2.7, §2.7b, §3.3; evidence E/task-create-dialog.png, task-create-nl-date.png,
-// task-edit-dialog.png): top-anchored 808 px frame, no dim. Body: the title with @mentions (a record mention links the
+// Create and edit task dialogs use a top-anchored 808 px frame with no dimming. Body: the title with @mentions (a record mention links the
 // record) and natural-language dates ("tomorrow at 3pm" sets the deadline; the phrase stays in the title). Footer:
 // deadline chip (default Today), "Assigned to You", "Add record" / "n linked records"; Create more · Cancel ESC ·
 // Save ⏎ (create) or ⋮ Delete · Cancel · Save (edit, with a completion checkbox before the title).
@@ -275,7 +274,7 @@ export function CreateTaskDialog({ defaults, onClose }: { defaults: CreateTaskDe
   const [saving, setSaving] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const naturalDeadline = useNaturalDeadline(calendar);
-  // A different example each time the dialog opens (E README §2.7 "rotating example placeholder").
+  // A different example each time the dialog opens ("rotating example placeholder").
   const placeholder = useMemo(() => EXAMPLES[placeholderTurn++ % EXAMPLES.length] as string, []);
 
   const save = async () => {

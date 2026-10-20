@@ -1,6 +1,6 @@
-// Record actions (command-palette.md §3.4): the Actions menu of a record row (⌘K on a highlighted search result) and
+// Record actions: the Actions menu of a record row (⌘K on a highlighted search result) and
 // the actions the focused table row contributes to the palette — Open record (↩), Open in a new tab (⌘↩), Copy domain /
-// Copy email address (⌘C), Create task, Create note, Merge record with…, Send email (people only).
+// Copy email address (⌘), Create task, Create note, Merge record with…, Send email (people only).
 import { toast } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';

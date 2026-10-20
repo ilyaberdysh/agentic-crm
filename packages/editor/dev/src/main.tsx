@@ -1,5 +1,5 @@
-// Editor dev page: sign in (API), create or open a document (collab dev endpoints), and edit it in two editors
-// side by side (`?doc=<id>`), or one full-size note window (`&single=1`, used by the e2e and parity screenshots).
+// Editor dev page: sign in, create or open a document (collab dev endpoints), and edit it in two editors
+// side by side (`?doc=<id>`), or one full-size note window (`&single=1`, used by the e2e and parity visual examples).
 import { Button, ThemeProvider, Toaster } from '@agentic-crm/ui';
 import { StrictMode, useCallback, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';

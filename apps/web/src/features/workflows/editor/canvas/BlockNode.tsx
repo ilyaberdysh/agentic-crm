@@ -1,4 +1,4 @@
-// A block card on the canvas (README §2.3; runs.md §3): tile + title, description line, the "Trigger" tab, outcome
+// A block card on the canvas: tile + title, description line, the "Trigger" tab, outcome
 // handles (labelled rows for multi-outcome blocks), the validation ⚠, the blue "+" next to a selected block's free
 // handles and, in the run viewer, the status tag and green / grey handles.
 import type { ExecutionStatus } from '@agentic-crm/contracts';

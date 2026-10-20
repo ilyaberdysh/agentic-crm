@@ -1,5 +1,5 @@
-// The Emails page (F composer §3, §5, §6): the header with the Drafts n · Outbox n · Templates n tabs, a toolbar per
-// tab and the tab body. There is no inbox: synced mail only shows on record pages (F README §2.1).
+// The Emails page (F composer): the header with the Drafts n · Outbox n · Templates n tabs, a toolbar per
+// tab and the tab body. There is no inbox: synced mail only shows on record pages.
 import { Button, Icon } from '@agentic-crm/ui';
 import { Link } from '@tanstack/react-router';
 import { useDocumentTitle } from '../../../lib/useDocumentTitle';

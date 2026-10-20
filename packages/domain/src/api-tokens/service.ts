@@ -1,4 +1,4 @@
-// Workspace API tokens for the public REST API (BACKLOG 1.12; J workspace-admin §6; Attio docs authentication guide).
+// Workspace API tokens for the public REST API.
 // Admins create, rename/re-scope and revoke tokens; the secret is returned once and only its SHA-256 is stored.
 // authenticate() resolves a presented secret to its token and workspace before any workspace context exists, so it
 // runs as the owner role (cross-tenant by nature, like the workspace picker).

@@ -1,9 +1,9 @@
-// Record page routes (D README §1): `/$ws/company/$id[/$activeTab]`, `/$ws/person/…`, `/$ws/<deals|users|
+// Record page routes: `/$ws/company/$id[/$activeTab]`, `/$ws/person/…`, `/$ws/<deals|users|
 // workspaces>/record/…`, `/$ws/custom/$slug/record/…`; bare `record/` → the object's views; the page-layout entry
 // `/{object}/page-layout/$configurationId` → `/settings/data/objects/{apiSlug}/record-page/$configurationId`.
 import { type AnyRoute, createRoute, redirect, useParams } from '@tanstack/react-router';
 import { LayoutEditorPage } from './layoutEditor/LayoutEditorPage';
-// Registers the record overlay body with features/overlays (E4) when the routes load.
+// Registers the record overlay body with features/overlays  when the routes load.
 import './overlay/RecordOverlayPage';
 import { RecordPage } from './RecordPage';
 

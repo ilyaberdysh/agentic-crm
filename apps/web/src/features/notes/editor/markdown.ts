@@ -1,4 +1,4 @@
-// A small reader for the markdown projection of note bodies (documents.markdown, E README §6 mapping): headings
+// A small reader for the markdown projection of note bodies (documents.markdown,  mapping): headings
 // `#`–`###`, `-`/`*`/`+` and `1.` list items with 2 spaces of indent per level, **bold**, *italic*, ~~strike~~,
 // ==highlight==, [links](url). Used for read-only previews until (and wherever) the editor's flat blocks are absent.
 

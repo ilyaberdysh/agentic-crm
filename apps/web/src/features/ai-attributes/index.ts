@@ -1,4 +1,4 @@
-// Public surface of AI autofill attributes (BACKLOG 10.05; ai-attributes.md): the attribute dialog card, the
+// Public surface of AI autofill attributes (BACKLOG 10.05): the attribute dialog card, the
 // "Recalculate values" dialog, value states for cells and record fields, label markers.
 export { AiAutofillCard } from './AiAutofillCard';
 export { AnnotatedValue, AttributeKindMarker, RunAiAction } from './AnnotatedValue';

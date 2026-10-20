@@ -1,5 +1,5 @@
-// Clipboard (BACKLOG 2.10; C1 README §3.6): copy the active cell or a cell range as `text/plain` (TSV) and
-// `text/html` (a table) — toast "1 cell copied" / "{n} cells copied"; paste is single-cell (Attio's multi-cell paste
+// Clipboard (BACKLOG 2.10): copy the active cell or a cell range as `text/plain`  and
+// `text/html` (a table) — toast "1 cell copied" / "{n} cells copied"; paste is single-cell (the multi-cell paste
 // semantics are unknown, BACKLOG defer list): the first clipboard cell goes through the registry's `pasteValue`.
 
 export function toTsv(matrix: string[][]): string {
@@ -14,7 +14,7 @@ export function toHtmlTable(matrix: string[][]): string {
   return `<table><tbody>${rows}</tbody></table>`;
 }
 
-/** First cell of pasted text (TSV clipboard content from spreadsheets or our own copy). */
+/** First cell of pasted text (TSV clipboard content from spreadsheets or custom copy). */
 export function firstClipboardCell(text: string): string {
   const firstLine = text.replace(/\r\n?/g, '\n').split('\n')[0] ?? '';
   return (firstLine.split('\t')[0] ?? '').trim();

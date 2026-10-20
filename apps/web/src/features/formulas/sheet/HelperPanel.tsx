@@ -1,5 +1,5 @@
-// Helper panel body (formulas.md §4.3): searchable list (Attributes with drill-in and Show more / Show less,
-// Functions `name()`) on the left; detail of the active row on the right — the intro when nothing is active, a
+// Helper panel body: searchable list (Attributes with drill-in and Show more / Show less,
+// Functions `name`) on the left; detail of the active row on the right — the intro when nothing is active, a
 // function's signature, description and examples, an attribute's description, return type and examples. Examples are
 // clickable ("Examples • Click to add to formula"). Mouse hover sets the active row.
 import type { AttributeDefinition } from '@agentic-crm/contracts';

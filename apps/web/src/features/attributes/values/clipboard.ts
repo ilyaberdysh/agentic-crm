@@ -1,4 +1,4 @@
-// Clipboard text per type (2.10) and plain single-cell paste. Attio's paste semantics are unknown (C1 README §9,
+// Clipboard text per type (2.10) and plain single-cell paste. the paste semantics are unknown (
 // BACKLOG defer list), so paste is ours: the text is parsed as the attribute's type; anything that does not parse
 // returns null (the table counts it as an invalid cell: "# invalid cells were skipped."). Empty text clears.
 import { formatOne, memberName } from '../format/formatValue';

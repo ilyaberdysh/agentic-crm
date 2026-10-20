@@ -1,4 +1,4 @@
-// Details panel body (D README §2.3): the layout's `details-sidebar` sections in order — Record Details sections
+// Details panel body: the layout's `details-sidebar` sections in order — Record Details sections
 // (configured attributes or the first five) with "View all values", and the locked Lists section (the record's list
 // entries, features/lists). "View all values" replaces the body with every attribute and a fuzzy search;
 // it is transient and resets when the record changes.
@@ -111,7 +111,7 @@ function ViewAllValues({ onBack }: { onBack: () => void }) {
   );
 }
 
-/** Lists section (locked, D §2.3): the record's list entries (features/lists, slice 4). */
+/** Lists section (locked, D): the record's list entries (features/lists). */
 function ListsSection() {
   const { openDialog, recordRef } = useRecordPage();
   const { href } = useWorkspace();

@@ -1,4 +1,4 @@
-// The email template editor (F composer §2.12, §6; evidence/F/template-editor-options.png): Subject row, body, footer
+// The email template editor (F composer): Subject row, body, footer
 // with the attachment / image / variable tools, "⋮ Email template options" (Add to favorites, Delete template) and
 // "Use template". Used inside the composer window ("Create email template") and as the centred dialog of the Templates
 // page (808 × 548, editable title). Subject and body autosave (~600 ms) through `email.templates.update`.

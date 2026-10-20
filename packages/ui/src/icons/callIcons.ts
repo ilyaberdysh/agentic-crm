@@ -1,4 +1,4 @@
-// Call intelligence icons (slice 10, I calls §3–§4): call-page tabs, template editor and preset gallery → Lucide glyphs.
+// Call intelligence icons (I calls): call-page tabs, template editor and preset gallery → Lucide glyphs.
 // Kept in their own map (spread into iconMap) so parallel slices add icons without touching the same lines.
 import {
   Archive,

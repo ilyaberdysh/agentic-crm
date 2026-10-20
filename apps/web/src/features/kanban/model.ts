@@ -1,10 +1,10 @@
-// Pure model of the kanban board (C2 kanban.md K2–K8; slice4-contracts.md): stage keys and visible columns, the
+// Pure model of the kanban board: stage keys and visible columns, the
 // optimistic move overlay (removed from the source, prepended to the destination until the next refetch — in-column
 // order is not persisted), stage target times as fully expanded ISO-8601 durations, time in stage, and the calculation
 // menu's eligible attributes. No React, no network: unit-tested.
 import type { AttributeDefinition, AttributeType, Path, PipelineStage, SelectOption } from '@agentic-crm/contracts';
 
-/** Key of the "No stage" column (also its token in the collapsed-columns list, as Attio stores it). */
+/** Key of the "No stage" column and its token in the collapsed-columns list. */
 export const NO_STAGE = 'no-stage';
 export type StageKey = string;
 
@@ -87,7 +87,7 @@ export interface PendingMove {
   cardId: string;
   from: StageKey;
   to: StageKey;
-  /** `Date.now()` when the server acknowledged the write; null while in flight. */
+  /** `Date.now` when the server acknowledged the write; null while in flight. */
   settledAt: number | null;
 }
 
@@ -135,7 +135,7 @@ export interface TargetTime {
   unit: TargetUnit;
 }
 
-/** `{7, days}` → "P0Y0M7DT0H0M0S" (Attio always sends every field). */
+/** `{7, days}` → "P0Y0M7DT0H0M0S" (all fields are always sent). */
 export function formatTargetTime({ value, unit }: TargetTime): string {
   const n = Math.max(0, Math.floor(Number.isFinite(value) ? value : 0));
   const y = unit === 'years' ? n : 0;
@@ -166,7 +166,7 @@ export function targetDeadline(from: Date, target: TargetTime): Date {
   return out;
 }
 
-// ---- time in stage (C2 README §4, BACKLOG 4.06) --------------------------------------------------------------------------
+// ---- time in stage (BACKLOG 4.06) --------------------------------------------------------------------------
 
 const DAY_MS = 86_400_000;
 
@@ -245,7 +245,7 @@ export function adjacentColumn(order: readonly StageKey[], current: StageKey, ke
   return null;
 }
 
-/** New position of a dragged column among the visible ones (stage reorder, K3). */
+/** New position of a dragged column among the visible ones (stage reorder). */
 export function reorderTarget(
   order: readonly StageKey[],
   dragged: StageKey,

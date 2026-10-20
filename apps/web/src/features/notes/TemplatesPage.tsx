@@ -1,4 +1,4 @@
-// Note templates page `/$ws/notes/templates` (BACKLOG 3.14; E README §2.4; evidence E/templates-page.png): the notes
+// Note templates page `/$ws/notes/templates`: the notes
 // header tabs; toolbar "Sorted by Creation date" · search (expands to "Search templates") · View settings ·
 // "+ New template"; favourites strip; 395 × 208 template cards (title, ⋮ Add to favorites | Delete template, preview,
 // creator + date). Empty: "No templates yet! Create your first template to get started."

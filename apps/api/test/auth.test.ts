@@ -28,7 +28,7 @@ afterAll(async () => {
 const whoami = (cookie?: string) => fetch(`${h.baseUrl}/api/auth/whoami`, { headers: cookie ? { cookie } : {} });
 
 describe('sign up', () => {
-  it('creates the user, signs them in and sets an Attio-style session cookie', async () => {
+  it('creates the user, signs them in and sets an standard session cookie', async () => {
     const email = uniqueEmail('signup');
     const response = await authPost(h, '/sign-up/email', { email, password: PASSWORD, name: 'Ada Lovelace' });
     expect(response.status).toBe(200);
@@ -87,12 +87,12 @@ describe('sign in', () => {
     const cookie = cookieHeader(response);
     expect(cookie).toContain('agentic-crm-session=');
     expect((await whoami(cookie)).status).toBe(200);
-    // Each sign-in is its own session (Attio auth sessions).
+    // Each sign-in is its own session (the public API auth sessions).
     const sessions = await h.db.query('SELECT count(*)::int AS n FROM sessions WHERE user_id = $1', [user.id]);
     expect(sessions.rows[0]?.n).toBe(2);
   });
 
-  it('answers a wrong password with 401 in the Attio envelope and no cookie', async () => {
+  it('answers a wrong password with 401 in the public API envelope and no cookie', async () => {
     const user = await signUp(h);
     const response = await authPost(h, '/sign-in/email', { email: user.email, password: 'wrong-password' });
     expect(response.status).toBe(401);
@@ -115,7 +115,7 @@ describe('sign in', () => {
 });
 
 describe('session', () => {
-  it('whoami without a session is Attio’s 401', async () => {
+  it('whoami without a session is the public API’s 401', async () => {
     const response = await whoami();
     expect(response.status).toBe(401);
     expect(await response.json()).toEqual({

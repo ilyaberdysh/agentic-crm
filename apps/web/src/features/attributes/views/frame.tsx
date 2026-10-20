@@ -1,5 +1,5 @@
-// The density root every View renders into (C1 cells.md §1: data-align / data-numeric / data-expanded hooks for the
-// table; D §2.3 field rows with the "Set {title}" placeholder).
+// The density root every View renders into (C1: data-align / data-numeric / data-expanded hooks for the
+// table; D field rows with the "Set {title}" placeholder).
 import { cx } from '@agentic-crm/ui';
 import type { ReactNode } from 'react';
 import type { Density } from '../types';

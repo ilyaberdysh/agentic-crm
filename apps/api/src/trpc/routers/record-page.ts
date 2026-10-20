@@ -23,7 +23,7 @@ export const timelineRouter = router({
 });
 
 export const layoutsRouter = router({
-  /** The object's record-page layout (created with Attio's defaults on first read). */
+  /** The object's record-page layout (created with the public API's defaults on first read). */
   get: workspaceProcedure
     .input(getLayoutInputSchema)
     .query(({ ctx, input }) => ctx.domain.layouts.get(ctx.service, input)),

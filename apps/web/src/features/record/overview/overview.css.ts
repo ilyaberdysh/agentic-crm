@@ -1,4 +1,4 @@
-// Overview tab (D README §2.5, §2.5b; layout.md §5): padding 24 20, sections 32 apart; Highlights grid
+// Overview tab (b): padding 24 20, sections 32 apart; Highlights grid
 // `repeat(auto-fill, minmax(max(168px, (100% − 2×8px)/3), 1fr))` gap 8, cards radius 12 ~86 px (padding 10 12,
 // label 12/16 + type icon, value at the bottom, option-tinted for select / status widgets); section headers with
 // count, "View all" and "+".

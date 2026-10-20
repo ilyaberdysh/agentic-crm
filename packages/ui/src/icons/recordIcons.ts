@@ -1,4 +1,4 @@
-// Record page icons (slice 3, D README): tabs, header actions, merge, files and activity filters → Lucide glyphs.
+// Record page icons: tabs, header actions, merge, files and activity filters → Lucide glyphs.
 // Kept in their own map (spread into iconMap) so parallel slices add icons without touching the same lines.
 import {
   ArrowLeftRight,

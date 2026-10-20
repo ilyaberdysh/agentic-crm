@@ -8,7 +8,7 @@ import { vars } from '../../theme/vars.css';
 const c = vars.color;
 const mix = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, transparent)`;
 
-/** Primary/destructive shadow formula (tokens.md §5): hairline + two tinted drops. */
+/** Primary/destructive shadow formula: hairline + two tinted drops. */
 const tintedShadow = (tint: string) =>
   `${insetRing(c.stroke.primaryTransparent)}, 0 2px 4px -2px ${mix(tint, 12)}, 0 3px 6px -2px ${mix(tint, 8)}`;
 
@@ -158,7 +158,7 @@ export const badgeOnAccent = style({
   boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
 });
 
-/** Square-off inner radii and overlap borders by 1 px (components.md §2 groups). */
+/** Square-off inner radii and overlap borders by 1 px (groups). */
 export const group = style({ display: 'inline-flex', alignItems: 'center', isolation: 'isolate' });
 
 globalStyle(`${group} > *:not(:first-child)`, {

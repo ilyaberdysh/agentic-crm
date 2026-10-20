@@ -1,4 +1,4 @@
-// Mounted once in the app shell (E4). Keeps the overlay store and the URL in step (B system-ui §4: overlays open on
+// Mounted once in the UI shell. Keeps the overlay store and the URL in step (B system-ui: overlays open on
 // top of any path via `?modal=…&id=…` / `?command-menu-page=task&id=…`; closing removes the params) and renders the
 // layers: record overlay, note / template modal, edit-task dialog, the floating panel and the dock.
 import { useRouter, useRouterState } from '@tanstack/react-router';
@@ -84,11 +84,11 @@ export function OverlayHost() {
     overlayStore.syncFromUrl(fromUrl);
   }, [urlKey]);
 
-  // `n` new note (Choose record outside a record page) and `t` new task (E README §3.4); a record page binds its own
+  // `n` new note (Choose record outside a record page) and `t` new task; a record page binds its own
   // `n` / `t` later and wins (last mounted).
   useAction('new-note', () => openNewNote());
   useAction('new-task', () => openCreateTask());
-  // `c` Create a new email (F composer §1): a record page binds its own and wins (last mounted).
+  // `c` Create a new email (F composer): a record page binds its own and wins (last mounted).
   useAction('new-email', () => openComposer());
 
   const floating = state.detached.find((w) => w.mode === 'floating');

@@ -1,5 +1,5 @@
-// Dashboards index `/$ws/reports` (BACKLOG 9.01; H README §2.1, §3.1, §3.9, §3.10; evidence
-// H/dashboards-index-favorites.png): page header (Reports crumb, Help, Ask AI), toolbar (Sorted by Creation date,
+// Dashboards index `/$ws/reports`:
+// The page has a Reports breadcrumb, Help and Ask AI actions, a toolbar sorted by creation date,
 // expanding title search driving `?query=`, View settings, + New dashboard), the Favorites strip, then the table
 // Dashboard | Reports | Created at grouped by creation date in the viewer's zone ("Created today 1"). Sort, grouping and
 // "Show favorites" are per member. The list is fetched once and searched / grouped on the client; realtime keeps it live

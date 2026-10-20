@@ -1,4 +1,4 @@
-// The report editor / viewer frame (BACKLOG 9.03, 9.05, 9.08; H README §2.3, §2.4, §3.5, §3.8; builder §1, §5):
+// The report editor and viewer frame:
 // an overlay over the main pane with the top bar (close, previous / next report, "n of m reports", presence, ⋮), the
 // title row (inline title and description, Discard changes, Save ▾ As new report), the chart canvas (time toolbar,
 // chart, calculated values) and the 416 px configuration panel. The draft is local until Save; Escape or ✕ with a
@@ -61,7 +61,7 @@ import { TypePicker } from './TypePicker';
 
 export interface ReportEditorProps {
   dashboardId: string;
-  /** The dashboard's cells in order (neighbours for ▲ ▼ and J / K). */
+  /** The dashboard's cells in order (neighbours for ▲ ▼ and J /). */
   cells: (DashboardCell & { report: Report })[];
   /** The cell being edited; undefined = a new report. */
   cellId?: string;
@@ -106,7 +106,7 @@ export function ReportEditor({ dashboardId, cells, cellId, mode, canEdit }: Repo
   const dirtyRef = useRef(dirty);
   dirtyRef.current = dirty;
 
-  // A saved report that changed elsewhere (or by our own Save) replaces a clean draft.
+  // A saved report that changed elsewhere (or by custom Save) replaces a clean draft.
   const savedStamp = saved?.updatedAt;
   useEffect(() => {
     if (saved && !dirtyRef.current) setDraft(draftFromReport(saved));

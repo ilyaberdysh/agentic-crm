@@ -90,7 +90,7 @@ export const resourceKinds = ['object', 'list', 'dashboard', 'workflow', 'sequen
 export const resourceKindSchema = z.enum(resourceKinds);
 export type ResourceKind = z.infer<typeof resourceKindSchema>;
 
-/** Flags per kind, in Attio's order. */
+/** Flags per permission kind. */
 export const resourceKindFlags = {
   object: actionFlags,
   list: actionFlags,
@@ -144,7 +144,7 @@ export function maxAccessScope(a: AccessScope, b: AccessScope): AccessScope {
  * Defaults per resource kind (decision X-06, slice6-contracts.md): the workspace level a newly created resource gets,
  * the creator's own level, and the level assumed when a resource has no workspace grant at all (objects that existed
  * before slice 6, standard objects). A workspace may override `createWorkspaceScope` in
- * settings.defaultWorkspaceAccess.<kind> (Attio's default_*_workspace_permission_scope, K sessions §1.2).
+ * settings.defaultWorkspaceAccess.<kind>.
  */
 export const resourceKindDefaults: Record<
   ResourceKind,
@@ -161,7 +161,7 @@ export const resourceKindDefaults: Record<
   sequence: { createWorkspaceScope: 'full-access', creatorScope: 'full-access', implicitWorkspaceScope: 'full-access' },
 };
 
-/** Grant targets as the procedures name them (`member` is stored as Attio's `workspace-member`). */
+/** Grant targets as the procedures name them (`member` is stored as `workspace-member`). */
 export const permissionTargetTypes = ['workspace', 'team', 'member', 'workflow'] as const;
 export type PermissionTargetType = (typeof permissionTargetTypes)[number];
 export const permissionTargetSchema = z.discriminatedUnion('type', [

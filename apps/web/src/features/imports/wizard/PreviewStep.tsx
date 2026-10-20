@@ -1,5 +1,5 @@
-// Step 4 — Preview import (C2 import.md §I5; evidence import-4-preview.png): the duplicates info alert, the rows that
-// will not be imported (listed before the run, BACKLOG §4 acc. 4), tabs per object, "+ Up to N will be created ·
+// Step 4 — Preview import (C2; evidence import-4-preview.png): the duplicates info alert, the rows that
+// will not be imported (listed before the run,  acc. 4), tabs per object, "+ Up to N will be created ·
 // ↻ N will be updated · ⊘ N will be skipped", the planned rows, and "Start import" behind a confirmation.
 import { AlertDialog, Button, Icon, Popover, Spinner, toast } from '@agentic-crm/ui';
 import { useState } from 'react';

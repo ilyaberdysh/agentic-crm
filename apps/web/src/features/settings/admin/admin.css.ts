@@ -1,5 +1,5 @@
-// Shared styles of the slice-6 settings pages (members, teams, permissions, rules, developers, security). Page column,
-// tab rows and table cards come from the objects settings styles (same 768 px column, J README §2.1); this file adds
+// Shared styles of settings pages (members, teams, permissions, rules, developers, security). Page column,
+// tab rows and table cards come from the objects settings styles (same 768 px column); this file adds
 // the tab-page header, list rows, chips and cards the admin pages share.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
@@ -21,7 +21,7 @@ export const toolbar = style({ display: 'flex', alignItems: 'center', gap: 8, ma
 
 export const toolbarGrow = style({ flex: 1, minWidth: 0 });
 
-// Attio's table search sits on a faint fill (#fafafa on the white page), not on the bare page.
+// the table search sits on a faint fill (#fafafa on the white page), not on the bare page.
 globalStyle(`${toolbarGrow} > div`, { backgroundColor: c.surface.secondary });
 
 export const sectionHeaderRow = style({

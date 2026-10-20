@@ -1,4 +1,4 @@
-// Settings → Appearance (system-ui §8; evidence/B/settings-appearance-light.png / -dark.png): Theme as three cards
+// Settings → Appearance (system-ui;  / -dark.png): Theme as three cards
 // (Light / Dark / System with a mini app preview) and Accent color as 7 swatches, right-aligned. Applies instantly
 // app-wide, persisted device-locally and synced across tabs by the ui ThemeProvider.
 import { AccentPicker, Icon, type IconName, type ThemePreference, useThemeSettings } from '@agentic-crm/ui';

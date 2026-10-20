@@ -1,4 +1,4 @@
-// Share popover (H README §2.6; evidence H/dashboard-share-popover-dark.png, 612 × 300 crop at 1x): 420 px wide, 224 px
+// Share popover: 420 px wide, 224 px
 // tall with one member — workspace row 58 px, rule, add row 32 px, "Individual members", member rows 32 px, rule,
 // "Learn more about permissions". Inner padding 12 inside the panel's 4.
 import { insetRing, scales, text, vars } from '@agentic-crm/ui/styles';

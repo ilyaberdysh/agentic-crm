@@ -1,8 +1,8 @@
 // Record and member search for ⌘K, the Search modal, pickers, add-to-list dialogs and mentions (CROSS-DOMAIN B.8;
-// B-shell/command-palette.md §3.1, §4, §5; C1 cells §2 record reference editor; Attio's
+// Search and record reference behavior.
 // `POST …/search/…/query {query, filters:{entity_definition_id}, hitsPerPage}`).
 //
-// Ranking is ours (Attio's is opaque; decision "Search ranking & debounce" in slice5-contracts.md, X-17, C.4 #8):
+// Ranking is deterministic:
 //   exact match on name / email / domain / phone (or social handle) > prefix > word prefix (name and identifiers,
 //   then every query word in any order, then description / location words) > substring > trigram similarity
 //   (typos); ties by recency of the record's last update. A record id finds its record exactly. Results carry the
@@ -73,7 +73,7 @@ export const searchRecordHitSchema = z.object({
   /** The value that matched (e.g. the email address); equals `title` for name matches; null when unknown. */
   matchedValue: z.string().nullable(),
   highlights: z.array(searchHighlightSchema),
-  /** People / companies identifiers (Attio hit fields email_addresses, phone_numbers, domains). */
+  /** People / companies identifiers: email addresses, phone numbers, and domains. */
   emailAddresses: z.array(z.string()),
   phoneNumbers: z.array(z.string()),
   domains: z.array(z.string()),

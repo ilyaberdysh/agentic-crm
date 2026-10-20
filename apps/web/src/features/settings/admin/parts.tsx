@@ -1,4 +1,4 @@
-// Shared pieces of the slice-6 settings pages: the header of tab pages ("Members and teams", "Developers": title,
+// Shared pieces of settings pages: the header of tab pages ("Members and teams", "Developers": title,
 // description with "Learn more ↗", tab row), autosaving inputs, member avatars and the write helper that notes the
 // change seq (I4a).
 import { Avatar, type AvatarSize, Icon, type IconName, Tab, TabList, TabPanel, Tabs, TextInput } from '@agentic-crm/ui';

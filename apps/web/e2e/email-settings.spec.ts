@@ -1,7 +1,7 @@
-// Email and calendar settings (BACKLOG 7.08; F settings §1–4): the accounts list with a dev-only test account, mailbox
+// Email and calendar settings (BACKLOG 7.08; F settings): the accounts list with a dev-only test account, mailbox
 // General (visibility, individuals with full access), blocklist, signatures, and the workspace Email visibility and
 // Record creation tabs. Runs against the e2e stack; every test connects mailboxes of its own (unique addresses) and
-// restores the workspace settings it changes, so the other slice-7 specs see the seeded state.
+// restores the workspace settings it changes, so the other  specs see the seeded state.
 import { expect, type Locator, type Page, test } from '@playwright/test';
 import { trpc, ws } from './slice3-support.ts';
 import { ada, memberId, mod, secondMember, signedInAs } from './slice5-support.ts';
@@ -59,7 +59,7 @@ test('accounts: connect a test account through the dialog, make it default, remo
     await expect(page.getByText('Manage and sync your email and calendar accounts to stay organized.')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Connected accounts' })).toBeVisible();
 
-    // Google (slice 7b): the e2e stack has no Google OAuth client, so the button is disabled and says why.
+    // Google: the e2e stack has no Google OAuth client, so the button is disabled and says why.
     await expect(page.getByRole('button', { name: 'Connect Google Account' })).toBeDisabled();
     await expect(page.getByTestId('google-not-configured')).toHaveText('Google is not configured on this server');
 
@@ -229,7 +229,7 @@ test('blocklist: empty state, invalid and duplicate tokens, remove', async ({ br
     await expect(page).toHaveURL(/\/blocklist$/);
     const empty = page.getByTestId('blocklist-empty');
     await expect(empty).toContainText('No emails or domains yet');
-    await expect(empty).toContainText("Emails from blocklisted domains and addresses won't appear in Attio.");
+    await expect(empty).toContainText("Emails from blocklisted domains and addresses won't appear in Agentic CRM.");
 
     await empty.getByRole('button', { name: 'Add to blocklist' }).click();
     const dialog = page.getByRole('dialog', { name: 'Mailbox-only blocklist' });
@@ -470,7 +470,7 @@ test('email visibility: protected contacts (add, enforcement, remove), internal 
     await expect(page.getByRole('heading', { name: 'Email visibility', level: 2 })).toBeVisible();
     await expect(page.getByText('Workspace protected and blocked contacts')).toBeVisible();
     await expect(
-      page.getByText('Hide emails and calendar event entries involving certain contacts, everywhere in Attio.'),
+      page.getByText('Hide emails and calendar event entries involving certain contacts, everywhere in Agentic CRM.'),
     ).toBeVisible();
 
     // Built-in rows: members' addresses, and one switch per internal domain.

@@ -41,7 +41,7 @@ describe('inline markdown', () => {
     expect(chip).toMatchObject({ t: 'record', label: '[seed] Jane' });
   });
 
-  it('turns agentic-crm://meeting links into meeting links and drops unknown attio links to text', () => {
+  it('turns internal meeting links into meeting links and drops unknown links to text', () => {
     const meeting = '33333333-3333-4333-8333-333333333333';
     expect(parseInline(`[Kickoff](agentic-crm://meeting:${meeting})`)).toEqual([
       { t: 'meeting', meetingId: meeting, label: 'Kickoff' },

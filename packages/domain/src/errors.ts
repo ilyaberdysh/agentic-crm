@@ -1,4 +1,4 @@
-// Domain errors map 1:1 onto the Attio error envelope (contracts/errors.ts). Transports call toErrorEnvelope().
+// Domain errors map 1:1 onto the public error envelope. Transports call toErrorEnvelope().
 import { type ErrorCode, type ErrorEnvelope, makeErrorEnvelope } from '@agentic-crm/contracts';
 import { ZodError } from 'zod';
 
@@ -43,7 +43,7 @@ export function valueError(attributeId: string, reason: string, message: string)
   return badRequest('VALUE_VALIDATION_FAILED', message, { attribute_definition_id: attributeId, reason });
 }
 
-/** Any thrown value → Attio envelope (Zod issues become 400 VALIDATION_ERROR). */
+/** Any thrown value → public error envelope (Zod issues become 400 VALIDATION_ERROR). */
 export function toErrorEnvelope(err: unknown): ErrorEnvelope {
   if (err instanceof DomainError) return err.toEnvelope();
   if (err instanceof ZodError) {

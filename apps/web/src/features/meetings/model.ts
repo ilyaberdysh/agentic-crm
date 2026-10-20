@@ -1,4 +1,4 @@
-// Meeting view logic (F README §2.4–2.5; D README §3.8; B-shell/home.md §2.3; BACKLOG 7.04): time rows and durations,
+// Meeting view logic: time rows and durations,
 // the viewer's RSVP pill, the timeline sentence, the mini calendar tile, the "New meeting" defaults and validation,
 // and the Home widget's day window. Pure and unit-tested.
 
@@ -93,7 +93,7 @@ export interface Rsvp {
   tone: RsvpTone;
 }
 
-/** The status pill of a participant (F §2.4): "Attended" when the meeting is over and the RSVP was yes. */
+/** Participant status pill: "Attended" when the meeting is over and the RSVP was yes. */
 export function rsvpOf(status: MeetingParticipantStatus, past: boolean): Rsvp {
   switch (status) {
     case 'accepted':
@@ -107,7 +107,7 @@ export function rsvpOf(status: MeetingParticipantStatus, past: boolean): Rsvp {
   }
 }
 
-/** The verb phrase of a timeline meeting event (D §3.8), by the attending member's RSVP and whether it is over. */
+/** The verb phrase of a timeline meeting event (D), by the attending member's RSVP and whether it is over. */
 export function timelineVerb(memberStatus: MeetingParticipantStatus | null, past: boolean): string | null {
   switch (memberStatus) {
     case 'accepted':
@@ -140,7 +140,7 @@ export interface MeetingDraftTimes {
   end: ClockTime;
 }
 
-/** Default time of a new meeting: now rounded up to the next half hour, lasting 30 minutes (D §3.8). */
+/** Default time of a new meeting: now rounded up to the next half hour, lasting 30 minutes (D). */
 export function defaultMeetingTimes(now: Date | number, timeZone: string): MeetingDraftTimes {
   const w = wallParts(now, timeZone);
   const minutes = Math.ceil((w.hour * 60 + w.minute) / 30) * 30;
@@ -240,7 +240,7 @@ export const asDeadline = (date: string): DraftDeadline => ({ date, time: null }
 
 // ---- Home widget -------------------------------------------------------------------------------------------------------
 
-/** Start and end instants (ISO) of a local date in the viewer's zone. */
+/** Start and end instants  of a local date in the viewer's zone. */
 export function dayBounds(date: string, timeZone: string): { from: string; to: string } {
   return {
     from: zonedInstant(date, { hour: 0, minute: 0 }, timeZone),

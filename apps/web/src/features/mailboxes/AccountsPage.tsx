@@ -1,6 +1,6 @@
-// Settings → Email and calendar accounts (F settings §1; BACKLOG 7.08): "Connected accounts" with one row per mailbox
+// Settings → Email and calendar accounts (F settings; BACKLOG 7.08): "Connected accounts" with one row per mailbox
 // (provider tile, address, Default badge, what syncs, status chip, ⋮ Options → Manage / Make default / Reconnect
-// (Google) / Remove mailbox) and the connect buttons below. "Connect Google Account" (slice 7b) leaves for Google's
+// (Google) / Remove mailbox) and the connect buttons below. "Connect Google Account"  leaves for Google's
 // consent through the server's start URL and comes back here with `?google=…` (shown as a toast); without a Google
 // OAuth client on the server the button is disabled with "Google is not configured on this server". "Connect test
 // account" (dev builds and e2e) connects a test-connector mailbox. The forwarding address and the "Sent with"

@@ -1,4 +1,4 @@
-// Workspace → Record creation (F settings §4.2; evidence/F/workspace-email-record-creation.png): "Default record
+// Workspace → Record creation (F settings): "Default record
 // creation" radio cards (All contacts / Selective contact creation, recommended / None), the "Automatically create
 // company records" switch, and "Record suppression" (domains and addresses that never create records).
 import {

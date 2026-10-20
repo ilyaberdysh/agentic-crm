@@ -1,4 +1,4 @@
-// Run / overview page (C2 import.md §I6; evidence import-5-overview-object / -list): the status card ("Import queued…",
+// Run / overview page (C2; evidence import-5-overview-object / -list): the status card ("Import queued…",
 // "Importing records…", "Import completed", "Import canceled"; "x / y"; progress bar, green when complete; "<member>
 // confirmed <time>"), tabs per object, "{n} created · {n} updated · {n} skipped · {n} failed", the Filter menu and the
 // rows with their result. The page polls while the job runs; it can be closed, the job continues.

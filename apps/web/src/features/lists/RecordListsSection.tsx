@@ -1,5 +1,5 @@
-// Record page Lists section (C2 README §2.5 B; D README §2.3, §3.6; raw C2 s47-record-after, s48-entry-options,
-// s48-lists-more; evidence/C2/entry-remove-confirm.png): header "Lists <n> ⌄" with a gear (View mode Standard /
+// Record page Lists section:
+// s48-lists-more): header "Lists <n> ⌄" with a gear (View mode Standard /
 // Compact, Show attribute name) and "+" (Choose list); one card per entry — list emoji + name + "added" time (hover:
 // Comment, ⋮ Manage attributes / Remove from list), its first three list attributes edited in place and "Show more";
 // empty: "This record has not been added to any lists".

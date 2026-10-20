@@ -1,6 +1,6 @@
 // Two browsers (Ada, Grace) on one document through the real collab server: typing converges, each sees the other's
 // caret with a name pill and both avatars, the body survives a reload and the server projection (markdown) follows.
-// Plus the editor behaviours of E editor.md: markdown shortcuts, slash menu, mentions, toolbar formatting, lists.
+// Plus the editor behaviours of E: markdown shortcuts, slash menu, mentions, toolbar formatting, lists.
 import { expect, test } from '@playwright/test';
 import {
   accounts,
@@ -56,7 +56,9 @@ test('two users see each other’s text, carets and avatars; the body persists a
   await contextB.close();
 });
 
-test('markdown shortcuts, slash menu, mentions and the selection toolbar write Attio’s model', async ({ browser }) => {
+test('markdown shortcuts, slash menu, mentions and the selection toolbar write the supported model', async ({
+  browser,
+}) => {
   const [ada] = accounts().users;
   if (!ada) throw new Error('missing account');
   const context = await signedInContext(browser, ada);
@@ -81,7 +83,7 @@ test('markdown shortcuts, slash menu, mentions and the selection toolbar write A
   await page.keyboard.type('#### not a heading');
   await page.keyboard.press('Enter');
 
-  // Slash menu: 7 items in Attio's order; filtering keeps the order; Enter applies.
+  // Slash menu: 7 items in the order; filtering keeps the order; Enter applies.
   await page.keyboard.type('/');
   const menu = page.getByTestId('slash-menu');
   await expect(menu.getByRole('option')).toHaveText([

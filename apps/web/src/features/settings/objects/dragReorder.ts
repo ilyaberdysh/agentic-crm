@@ -1,4 +1,4 @@
-// Drag handles (⋮⋮) on attribute rows, select options and statuses (J README §3 "Drag and drop"): native HTML drag
+// Drag handles (⋮⋮) on attribute rows, select options and statuses ("Drag and drop"): native HTML drag
 // and drop with a before/after drop line; the caller turns the new order into a rank write (X-01).
 import { type DragEvent, useState } from 'react';
 

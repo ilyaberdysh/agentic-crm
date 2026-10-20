@@ -1,4 +1,4 @@
-// Slice 9 e2e for the report editor's types and controls (BACKLOG 9.03–9.07; builder §3–§11): visualisation reasons,
+//  e2e for the report editor's types and controls (BACKLOG 9.03–9.07; builder): visualisation reasons,
 // included stages, target, sort, filter, date grouping with the time toolbar and comparison, drill-down to the
 // contributing records, historical / funnel / time in stage / stage changed, and a list as data source. Numbers come
 // from the "[seed] Projects" fixture (reports-web-support.ts): Build 470k (4), Discovery 200k (4), Review 43k (2),

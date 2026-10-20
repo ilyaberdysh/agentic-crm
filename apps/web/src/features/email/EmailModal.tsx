@@ -1,4 +1,4 @@
-// The "View email" modal (BACKLOG 7.03; F README §2.3; acceptance 3), opened at `?modal=email&id=<messageId>` (a row of
+// The "View email" modal is opened at `?modal=email&id=<messageId>` (a row of
 // the Emails tab or a shared link): the subject with "Share", then every message of the thread (the opened one
 // expanded) with the sender, "to …" details, Reply / Reply all / Forward, the timestamp and the body — the original
 // HTML in a sandboxed iframe without scripts. Below full access the body is replaced by a restricted card and the

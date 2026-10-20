@@ -101,7 +101,7 @@ globalStyle(sel('.agentic-crm-note-mention'), {
 });
 globalStyle(sel('.agentic-crm-note-mention:hover'), { backgroundColor: c.interactive.selectedSubtle });
 
-// ---- placeholder variables (F composer §2.6): chips "{ Name › First }", yellow without a fallback, blue with ------
+// ---- placeholder variables (F composer): chips "{ Name › First }", yellow without a fallback, blue with ------
 globalStyle(sel('.agentic-crm-variable'), {
   display: 'inline-block',
   boxSizing: 'border-box',
@@ -155,7 +155,7 @@ globalStyle(sel('.agentic-crm-slash-query.is-empty::after'), {
 globalStyle(sel('.ProseMirror-selectednode'), { outline: 'none' });
 globalStyle(`${content}.ProseMirror-focused .ProseMirror-gapcursor:after`, { borderTopColor: c.content.primary });
 
-// Remote carets (editor.md §10.5): 2 px caret in the peer colour with a name pill above it.
+// Remote carets: 2 px caret in the peer colour with a name pill above it.
 globalStyle(sel('.collaboration-carets__caret'), {
   position: 'relative',
   marginLeft: -1,

@@ -1,4 +1,4 @@
-// Run viewer model (runs.md §2–4): the canvas overlay of one attempt (latest execution per block over the attempts up to
+// Run viewer model: the canvas overlay of one attempt (latest execution per block over the attempts up to
 // it, the outcome each block took, the paths taken), the failed execution to retry from, runtime labels. Pure.
 import type { ExecutionStatus } from '@agentic-crm/contracts';
 import type { BlockExecution, RunDetail } from '../types';

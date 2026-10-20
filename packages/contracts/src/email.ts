@@ -25,7 +25,7 @@ export const ACCESS_RANK: Record<EmailAccess, number> = {
   'full-access': 3,
 };
 
-/** Workspace record creation (F settings §4.2; Attio `automatic_record_creation_mode` all | enhanced | none). */
+/** Workspace record creation mode: all, enhanced, or none. */
 export const recordCreationModes = ['all', 'selective', 'none'] as const;
 export const recordCreationModeSchema = z.enum(recordCreationModes);
 export type RecordCreationMode = z.infer<typeof recordCreationModeSchema>;
@@ -502,7 +502,7 @@ export const deliveryStates = ['scheduled', 'error', 'completed', 'failed', 'can
 export const deliveryStateSchema = z.enum(deliveryStates);
 export type DeliveryState = z.infer<typeof deliveryStateSchema>;
 
-/** Failure reasons (F composer §5; Attio `delivery_last_attempt_error_code`). */
+/** Delivery failure reasons. */
 export const deliveryErrorCodes = [
   'account_access_error',
   'mailbox_disconnected',

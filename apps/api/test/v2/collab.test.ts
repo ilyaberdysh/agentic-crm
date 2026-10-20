@@ -1,10 +1,11 @@
 // /v2 contract tests for slice 3 (BACKLOG 3.18): notes (markdown and plaintext content), tasks, threads and comments,
-// files (folders, multipart upload, download redirect). Every 200 is checked against Attio's OpenAPI schema and the
+// files (folders, multipart upload, download redirect). Every 200 is checked against the public API's OpenAPI schema and the
 // generated Zod schema of the operation.
 import { readFileSync } from 'node:fs';
+import { BUILTIN_STORAGE_PROVIDER } from '@agentic-crm/contracts/v2';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { type Harness, startHarness } from '../support/harness';
-import { expectError, expectOk, slice, type V2Fixture, v2Fixture } from './support';
+import { expectError, expectOk, operationResponse, type V2Fixture, v2Fixture } from './support';
 
 let h: Harness;
 let f: V2Fixture;
@@ -133,7 +134,6 @@ describe('notes', () => {
       await f.call('POST', '/notes', { body: { data: { parent_object: 'companies', title: 'x' } } }),
       400,
       'validation_type',
-      { deviation: 'createNote documents no 400 response' },
     );
     expectError('getNote', await f.call('GET', '/notes/not-a-uuid'), 404, 'not_found');
   });
@@ -328,10 +328,7 @@ describe('threads and comments', () => {
         },
       },
     });
-    // The spec's 400 schema for this operation spells `statusCode`; we answer Attio's documented `status_code` shape.
-    expectError('createComment', res, 400, 'value_not_found', {
-      deviation: 'createComment 400 schema uses statusCode',
-    });
+    expectError('createComment', res, 400, 'value_not_found');
     expectError('listThreads', await f.call('GET', '/threads'), 400, 'validation_type');
   });
 });
@@ -349,6 +346,7 @@ describe('files', () => {
       name: 'Contracts',
       parent_folder_id: null,
       object_slug: 'companies',
+      storage_provider: BUILTIN_STORAGE_PROVIDER,
     });
     const form = new FormData();
     form.set('object', 'companies');
@@ -368,13 +366,15 @@ describe('files', () => {
       content_type: 'application/pdf',
       content_size: 9,
       parent_folder_id: folder.data.id.file_id,
-      storage_provider: 'attio',
+      storage_provider: BUILTIN_STORAGE_PROVIDER,
     });
-    const schema = slice.operations.uploadFile?.responses['201'];
+    const schema = operationResponse('uploadFile', 201)?.content?.['application/json']?.schema;
     expect(schema).toBeDefined();
     const listed = expectOk(
       'listFiles',
-      await f.call('GET', '/files', { query: { object: 'companies', record_id: companyId } }),
+      await f.call('GET', '/files', {
+        query: { object: 'companies', record_id: companyId, storage_provider: BUILTIN_STORAGE_PROVIDER },
+      }),
     );
     expect(listed.data.map((e: { name: string }) => e.name).sort()).toEqual(['Contracts', 'msa.pdf']);
     expect(listed.pagination.next_cursor).toBeNull();
@@ -408,7 +408,7 @@ describe('files', () => {
         external_provider_file_id: 'x',
       },
     });
-    expectError('createFileEntry', res, 400, 'validation_type', { deviation: 'createFileEntry documents no 400' });
+    expectError('createFileEntry', res, 400, 'validation_type');
     const form = new FormData();
     form.set('object', 'companies');
     const upload = await fetch(`${h.baseUrl}/v2/files/upload`, {

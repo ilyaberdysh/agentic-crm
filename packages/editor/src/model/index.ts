@@ -1,5 +1,5 @@
 // @agentic-crm/editor/model — the document model shared by the browser editor, the collab server and the domain:
-// flat blocks (Attio's server content model), markdown, the ProseMirror schema and Yjs conversions.
+// flat blocks (the server content model), markdown, the ProseMirror schema and Yjs conversions.
 // No React and no DOM: safe to import from Node services.
 export { DOCUMENT_FRAGMENT, getDocumentSchema, schemaExtensions } from '../extensions/schema.ts';
 export {

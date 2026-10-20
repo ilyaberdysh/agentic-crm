@@ -1,4 +1,4 @@
-// Settings → Developers (J workspace-admin §6; admin only): "Learn more about the Attio API and Apps" with the
+// Settings → Developers (J workspace-admin; admin only): "Learn more about the UI API and Apps" with the
 // Access tokens | Webhooks tabs (raw s73-tokens, s74-webhooks).
 import { useNavigate } from '@tanstack/react-router';
 import { useWorkspace } from '../../shell/workspaceContext';

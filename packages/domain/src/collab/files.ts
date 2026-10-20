@@ -49,7 +49,7 @@ function toEntry(row: EntryRow, hasChildren: boolean | null): StorageEntry {
     parentFolderId: row.parent_folder_id,
     rootEntryId: row.root_entry_id,
     entryType: row.entry_type,
-    storageProvider: 'attio',
+    storageProvider: 'agentic-crm',
     name: row.name,
     contentType: row.content_type,
     contentSize: row.content_size === null ? null : Number(row.content_size),

@@ -1,4 +1,4 @@
-// Table columns from view columns (C1 README §2.4, §4 entity-view-attribute): the implicit record column first,
+// Table columns from view columns ( entity-view-attribute): the implicit record column first,
 // then the view's columns in rank order. A column's path ends at the attribute it shows (path length > 1 = related
 // record column "Parent › Child"); widths default per type (C1 table: 250 record, 180 default, 200 timestamp,
 // 100 checkbox, 140 rating; min 100 / 150, max 500).

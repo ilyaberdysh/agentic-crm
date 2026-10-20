@@ -1,4 +1,4 @@
-// Call cards (I calls §11.6; evidence/I/record-company-calls-tab.png, record-company-activity-call.png): the 330 × 183 card
+// Call cards: the 330 × 183 card
 // of a record's Calls tab and of the favourites strip (275 × 152), and the meeting card of the Activity feed (a green
 // accent bar, camera tile, title, time, duration, participants and the concise summary).
 import { scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';

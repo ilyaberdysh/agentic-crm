@@ -417,7 +417,7 @@ const CASES: Case[] = [
     (r) => r.day !== null && r.day <= -40,
   ],
   [
-    'date before 5 days ago (Attio form)',
+    'date before 5 days ago',
     () => must('day', c('value', 'lt', '-P0Y0M5DT0H0M0S', true)),
     (r) => r.day !== null && r.day < -5,
   ],
@@ -464,8 +464,8 @@ const CASES: Case[] = [
   ['rating is not', () => mustNot('stars', c('value', 'eq', 5)), (r) => r.stars !== 5],
   ['rating less than', () => must('stars', c('value', 'lt', 3)), (r) => r.stars !== null && r.stars < 3],
   ['rating greater than', () => must('stars', c('value', 'gt', 3)), (r) => r.stars !== null && r.stars > 3],
-  ['rating is empty (Attio)', () => mustNot('stars', c('value', 'gt', 0)), ratingEmpty],
-  ['rating is not empty (Attio)', () => must('stars', c('value', 'gte', 1)), (r) => !ratingEmpty(r)],
+  ['rating is empty', () => mustNot('stars', c('value', 'gt', 0)), ratingEmpty],
+  ['rating is not empty', () => must('stars', c('value', 'gte', 1)), (r) => !ratingEmpty(r)],
   ['rating is empty (presence)', () => mustNot('stars'), ratingEmpty],
   ['rating is not empty (presence)', () => must('stars'), (r) => !ratingEmpty(r)],
   ['rating empty operator', () => must('stars', c('value', 'empty')), ratingEmpty],
@@ -654,7 +654,7 @@ const CASES: Case[] = [
   // record reference (single)
   ['record is', () => must('company', c('target_entity_instance_id', 'eq', company.C1)), (r) => r.company === 'C1'],
   [
-    'record is (Attio pair)',
+    'record is (record pair)',
     () =>
       must(
         'company',

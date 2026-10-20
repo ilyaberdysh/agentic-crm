@@ -401,8 +401,7 @@ export interface BuildMimeOptions {
 /** RFC 2822 text of an outgoing message (UTF-8 bodies, base64 parts, CRLF line endings). */
 export function buildMime(message: OutgoingMessage, options: BuildMimeOptions): string {
   const boundary =
-    options.boundary ??
-    ((n: number) => `=_attio_re_${n}_${options.messageId.replace(/[^A-Za-z0-9]/g, '').slice(0, 24)}`);
+    options.boundary ?? ((n: number) => `=_crm_re_${n}_${options.messageId.replace(/[^A-Za-z0-9]/g, '').slice(0, 24)}`);
   const lines: string[] = [];
   lines.push(`From: ${formatAddress(message.from)}`);
   if (message.to.length > 0) lines.push(folded('To', message.to.map(formatAddress), ', '));

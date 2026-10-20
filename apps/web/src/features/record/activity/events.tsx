@@ -1,4 +1,4 @@
-// Event renderings of the activity feed (D README §3.8): actor (member avatar + name, or a tile for API tokens,
+// Event renderings of the activity feed: actor (member avatar + name, or a tile for API tokens,
 // workflows and the system), the sentence per event type, and the note / task cards under an event. Attribute
 // changes show the new value through the attribute registry (chip density); several changes collapse into
 // "changed [n attributes]" with a popover table "Attribute | New value".
@@ -99,7 +99,7 @@ export function useEventHydration(recordRef: RecordRef, events: readonly Timelin
 }
 
 /**
- * The person an event is about: upcoming / overdue task events read "{assignee} has an upcoming task" (D §3.8), so
+ * The person an event is about: upcoming / overdue task events read "{assignee} has an upcoming task" (D), so
  * they show the task's first assignee rather than the system that derived the event.
  */
 export function displayEvent(event: TimelineEvent, hydrated: Hydrated): TimelineEvent {
@@ -157,7 +157,7 @@ function NewValue({
   previous?: readonly AttributeValue[];
 }) {
   const { View } = getAttributeUi(attribute.type);
-  // The old value of the change: on hover (Attio's sentence shows only the new one).
+  // The old value of the change: on hover (the sentence shows only the new one).
   const before = previous.length > 0 ? formatValue(attribute, asCurrent(previous)) : '';
   return (
     <span
@@ -329,7 +329,7 @@ export function EventSentence({ event, ctx }: { event: TimelineEvent; ctx: Sente
       );
     case 'meeting': {
       // "{actor} attended a meeting / was invited to / is attending / declined" by the attending member's RSVP
-      // (D §3.8); a meeting no member takes part in has no actor to name.
+      // (D); a meeting no member takes part in has no actor to name.
       const past = Date.parse(event.occurredAt) <= Date.now();
       const verb = timelineVerb(event.memberStatus, past);
       return verb ? (
@@ -396,7 +396,7 @@ export function EventCard({ event, hydrated }: { event: TimelineEvent; hydrated:
   return null;
 }
 
-/** Title, time range and participant count of a meeting; opens the meeting modal (F README §2.5). */
+/** Title, time range and participant count of a meeting; opens the meeting modal. */
 function MeetingCard({ meeting }: { meeting: Meeting }) {
   const { timeZone } = useCalendar();
   return (

@@ -1,6 +1,6 @@
-// Slice 3 — notes, templates, tasks, comments, favorites and the window manager (BACKLOG 3.12, 3.14–3.17, B.16;
-// acceptance 6 and 7). Runs against the e2e stack (API + collab + web) with seed-slice3 data; every test creates the
-// items it changes so the seeded ones stay intact for the parity run.
+//  — notes, templates, tasks, comments, favorites and the window manager (BACKLOG 3.12, 3.14–3.17, B.16;
+// acceptance 6 and 7). Runs against the e2e stack (API + collab + web) with seed- data; every test creates the
+// items it changes so the seeded ones stay intact for the visual review run.
 import { expect, type Page, test } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';
 import { clearFavorites, seedSlice3, signedInPage, trpc, uuid, ws } from './slice3-support.ts';
@@ -284,7 +284,7 @@ test('comment deep link opens the thread (acceptance 7); reply, react, resolve, 
   await expect(panel.getByTestId('thread-divider')).toHaveText('1 reply');
   await expect(reply).toHaveValue('');
 
-  // React with 👍 from the picker; clicking the own chip removes it.
+  // React with 👍 from the picker; clicking custom chip removes it.
   const root = panel.locator(`[data-testid="comment"][data-comment-id="${rootId}"]`);
   await root.hover();
   await root.getByRole('button', { name: 'Pick emoji' }).first().click();

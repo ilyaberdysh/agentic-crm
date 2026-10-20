@@ -1,4 +1,4 @@
-// Entries as table rows (C2 README §2.2; A §4.4): the record column of a list table shows each entry's parent record
+// Entries as table rows: the record column of a list table shows each entry's parent record
 // (avatar + name, a link to the record page); opening a row opens the parent record in the record overlay (J / K
 // through the view's parents), "Open preview" previews the parent record. Parents come from the entry's
 // `parent_record` value (normalised values cache, batched like every cell).

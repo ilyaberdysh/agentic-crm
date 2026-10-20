@@ -1,4 +1,4 @@
-// Dashboard page (H README §2.2, §3.3–3.4; evidence dashboard-empty.png, dashboard-grid-4-4-4.png, cell-new-data-pill.png):
+// Dashboard page:
 // title row 49 px, grid of 12 columns with 458 px rows, 14 px container margin and 6 px cell padding.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

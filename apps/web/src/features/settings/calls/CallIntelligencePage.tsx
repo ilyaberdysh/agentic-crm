@@ -1,4 +1,4 @@
-// Settings → Call intelligence (BACKLOG 10.13; I calls §5.1; evidence/I/settings-call-intelligence.png, minus auto-record:
+// Settings → Call intelligence, excluding automatic recording:
 // mymeet records the calls). The member's "Default insights template": a select of the published templates, "None" at
 // the bottom. The call page pre-selects it and the server applies it to calls the member takes part in.
 import { Icon, Popover, toast } from '@agentic-crm/ui';

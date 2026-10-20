@@ -1,5 +1,5 @@
 // Record page layouts (BACKLOG 3.10; D README §2.2–2.5, §2.8, §4.1; A README §4.11). One layout per object, seeded
-// with Attio's defaults when the object is created / activated (or lazily on first read), saved by full replacement.
+// with defaults when the object is created / activated (or lazily on first read), saved by full replacement.
 // Editor rules (D §4.1, ConfigureRecordPageStore): groups are locked; system elements accept only sort-order changes;
 // system and locked elements cannot be removed; at least one Record Details section; at most 6 highlight widgets;
 // tab slugs are unique (a "-N" suffix is appended).

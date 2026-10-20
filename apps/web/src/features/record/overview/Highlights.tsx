@@ -1,4 +1,4 @@
-// Highlights (D README §2.5): up to six widget cards from the layout's `widgets-v2` group. A widget shows one
+// Highlights: up to six widget cards from the layout's `widgets-v2` group. A widget shows one
 // attribute of the record, or — for a multi-hop path such as "Associated people › Next interaction" — the attribute
 // of the first related record. Select widgets show the option title and tint the card with the option colour;
 // status widgets add a segmented bar of the pipeline stages with the current one highlighted.
@@ -117,7 +117,7 @@ function TintLayer({ hue }: { hue: string }) {
   return <span style={style} aria-hidden="true" />;
 }
 
-/** "No interaction", "No Connection", "No phone numbers", else "No {title}" (D §2.5, evidence D-*-overview). */
+/** "No interaction", "No Connection", "No phone numbers", else "No {title}" (D, evidence D-*-overview). */
 export function emptyWidgetText(attribute: AttributeDefinition): string {
   if (attribute.type === 'interaction') return 'No interaction';
   if (attribute.systemAttributeType?.startsWith('strongest-connection')) return 'No Connection';

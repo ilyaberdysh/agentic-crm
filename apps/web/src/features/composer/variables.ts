@@ -1,4 +1,4 @@
-// The variable menu's model (F composer §2.6): the recipient object's attributes in order, attributes with sub-fields
+// The variable menu's model (F composer): the recipient object's attributes in order, attributes with sub-fields
 // (a name's First / Last / Full, a location's City …) or a relationship (Company → its attributes) drill in place.
 // A choice is a path of attribute steps plus an optional sub-field, labelled like the chip: "Name › First".
 import type { AttributeDefinition } from '@agentic-crm/contracts';
@@ -117,5 +117,5 @@ export function fallbackExample(attribute: Pick<AttributeDefinition, 'type' | 't
   }
 }
 
-/** Icon of a menu row (the attribute-type icon shown in Attio's menu). */
+/** Icon of a menu row (the attribute-type icon shown in the menu). */
 export type RowIcon = IconName;

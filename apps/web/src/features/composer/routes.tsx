@@ -1,7 +1,7 @@
-// Routes of the Emails page (F README §1; composer.md §3, §5, §6):
-//   /$ws/emails                      → /emails/drafts
-//   /$ws/emails/drafts|outbox|templates
-//   /$ws/messages → drafts, /$ws/message-templates → templates (legacy aliases)
+// Routes of the Emails page ():
+// /$ws/emails → /emails/drafts
+// /$ws/emails/drafts|outbox|templates
+// /$ws/messages → drafts, /$ws/message-templates → templates (legacy aliases)
 import { type AnyRoute, createRoute, redirect } from '@tanstack/react-router';
 import { EmailsPage, type EmailsTab } from './pages/EmailsPage';
 

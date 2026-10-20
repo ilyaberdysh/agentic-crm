@@ -1,4 +1,4 @@
-// Home → Ask AI block (B-shell/home.md §2.2): above the composer a credit-limit warning or a "Recent chat · <title>"
+// Home → Ask AI block: above the composer a credit-limit warning or a "Recent chat · <title>"
 // row; the composer (rotating examples, model chip, Insert prompt, submit) — submitting starts a chat and opens it —
 // and below it suggestion chips. Without an AI key it says so instead of failing.
 import { parseAiTargetModelChoice } from '@agentic-crm/contracts';

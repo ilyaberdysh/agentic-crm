@@ -1,4 +1,4 @@
-// Attio-style error envelope (J README §5, A internal-api-shapes §1.2):
+// Error envelope:
 //   {"statusCode":409,"error":"Conflict","message":"…","status_code":409,"additional_information":{"code":…}}
 // Domain errors carry a stable `code` in additional_information plus code-specific keys
 // (entity_instance_ids for unique conflicts, conflicting_field for slugs, …).

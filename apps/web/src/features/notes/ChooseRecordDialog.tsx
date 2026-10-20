@@ -1,4 +1,4 @@
-// "Choose record" (E README §2.3): opened by "+ New note" and `n` outside a record. Search records (autofocus),
+// "Choose record": opened by "+ New note" and `n` outside a record. Search records (autofocus),
 // "Records" (recent) / "Results" (typed), each with avatar, name, secondary text and object on the right; last option
 // "Create new record" / `Create "<query>" as record`; footer "↑ ↓ Navigate" and "Select record ⏎". Enter picks.
 import { Button, DialogHeader, Icon, Kbd, Modal } from '@agentic-crm/ui';

@@ -1,4 +1,4 @@
-// Workflows client model (slice 8): index buckets / grouping / sorting, config and rich-text helpers, the variable
+// Workflows client model: index buckets / grouping / sorting, config and rich-text helpers, the variable
 // picker levels with isAssignable greying and chip labels, palette groups, card geometry, run overlays.
 import { cfg, T, type VariableExpr } from '@agentic-crm/contracts';
 import { describe, expect, it } from 'vitest';

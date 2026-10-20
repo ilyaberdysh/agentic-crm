@@ -1,5 +1,5 @@
-// Mailbox → Mailbox-only blocklist (F settings §2.2; evidence/F/mailbox-blocklist-empty.png): emails from listed
-// domains and addresses never reach Attio (the server keeps them out at ingestion). Empty state, or the entries with
+// Mailbox → Mailbox-only blocklist (F settings): emails from listed
+// domains and addresses never reach the UI (the server keeps them out at ingestion). Empty state, or the entries with
 // a remove button; "Add to blocklist" opens the token dialog.
 import { Button, ErrorState, Icon, IconButton, LoadingState, toast } from '@agentic-crm/ui';
 import { useState } from 'react';

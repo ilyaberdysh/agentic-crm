@@ -4,7 +4,7 @@ import { eventCombo, parseCombo, ShortcutRegistry } from './shortcuts';
 import { isValidSlug, kebabCase } from './slug';
 
 describe('slug', () => {
-  it('kebab-cases company names like Attio’s handle field', () => {
+  it('kebab-cases company names for handle fields', () => {
     expect(kebabCase('Acme, Inc.')).toBe('acme-inc');
     expect(kebabCase('  Mymeet AI  ')).toBe('mymeet-ai');
     expect(kebabCase('Café Zürich')).toBe('cafe-zurich');

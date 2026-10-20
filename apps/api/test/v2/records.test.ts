@@ -230,9 +230,7 @@ describe('create and get', () => {
 
   it('creates a deal once Deals is activated: status, actor, currency and relationship values', async () => {
     const disabled = await f.call('POST', '/objects/deals/records', { body: { data: { values: { name: 'X' } } } });
-    expectError('createRecord', disabled, 400, 'standard_object_disabled', {
-      deviation: 'createRecord declares value_not_found and particle_gate_violation for 400',
-    });
+    expectError('createRecord', disabled, 400, 'standard_object_disabled');
     await h.domain.schema.updateObject(systemContext(f.workspaceId, 'test'), {
       entityDefinitionId: 'deals',
       isArchived: false,
@@ -261,25 +259,19 @@ describe('create and get', () => {
     expect(body.data.web_url).toContain('/deals/record/');
   });
 
-  it('rejects invalid writes with Attio error codes', async () => {
+  it('rejects invalid writes with the public API error codes', async () => {
     const post = (object: string, vals: Record<string, unknown>) =>
       f.call('POST', `/objects/${object}/records`, { body: { data: { values: vals } } });
     const option = await post('projects', { tags: ['Purple'] });
     expect(expectError('createRecord', option, 400, 'value_not_found').message).toBe(
       'Cannot find select attribute with select option title "Purple".',
     );
-    expectError('createRecord', await post('projects', { hours: 'many' }), 400, 'validation_type', {
-      deviation: 'createRecord declares value_not_found and particle_gate_violation for 400',
-    });
+    expectError('createRecord', await post('projects', { hours: 'many' }), 400, 'validation_type');
     expectError('createRecord', await post('projects', { nope: 'x' }), 400, 'value_not_found');
     expectError('createRecord', await post('projects', { lead: 'nobody@example.com' }), 400, 'value_not_found');
     expectError('createRecord', await post('projects', { owner: 'stranger@example.com' }), 400, 'value_not_found');
-    expectError('createRecord', await post('projects', { site: { locality: 'Paris' } }), 400, 'validation_type', {
-      deviation: 'createRecord declares value_not_found and particle_gate_violation for 400',
-    });
-    expectError('createRecord', await post('projects', { record_id: 'x' }), 400, 'system_edit_unauthorized', {
-      deviation: 'createRecord declares value_not_found and particle_gate_violation for 400',
-    });
+    expectError('createRecord', await post('projects', { site: { locality: 'Paris' } }), 400, 'validation_type');
+    expectError('createRecord', await post('projects', { record_id: 'x' }), 400, 'system_edit_unauthorized');
     expectError('createRecord', await post('nothing', { name: 'x' }), 404, 'not_found');
   });
 
@@ -287,10 +279,7 @@ describe('create and get', () => {
     const response = await f.call('POST', '/objects/people/records', {
       body: { data: { values: { email_addresses: ['ada@example.com'] } } },
     });
-    const error = expectError('createRecord', response, 409, 'uniqueness_conflict', {
-      deviation:
-        'createRecord declares only concurrent_write_conflict for 409 (uniqueness_conflict is 400/409 in the code table)',
-    });
+    const error = expectError('createRecord', response, 409, 'uniqueness_conflict');
     expect(error.message).toContain(ada);
   });
 
@@ -300,10 +289,7 @@ describe('create and get', () => {
     const response = await f.call('POST', '/objects/projects/records', {
       body: { data: { values: { name: 'No region' } } },
     });
-    const error = expectError('createRecord', response, 400, 'missing_value', {
-      deviation:
-        'createRecord declares value_not_found and particle_gate_violation for 400 (missing_value is PATCH/PUT)',
-    });
+    const error = expectError('createRecord', response, 400, 'missing_value');
     expect(error.message).toMatch(/^Required value for attribute with ID "[0-9a-f-]+" was not provided\.$/);
     await f.call('PATCH', '/objects/projects/attributes/region', { body: { data: { is_required: false } } });
   });
@@ -404,13 +390,9 @@ describe('assert (PUT …/records?matching_attribute=)', () => {
       query: { matching_attribute: 'job_title' },
       body: { data: { values: { job_title: 'x' } } },
     });
-    expectError('assertRecord', notUnique, 400, 'matching_attribute_definition_not_unique', {
-      deviation: 'assertRecord declares value_not_found, merge_in_progress and particle_gate_violation for 400',
-    });
+    expectError('assertRecord', notUnique, 400, 'matching_attribute_definition_not_unique');
     const missing = await f.call('PUT', '/objects/people/records', { body: { data: { values: { job_title: 'x' } } } });
-    expectError('assertRecord', missing, 400, 'validation_type', {
-      deviation: 'assertRecord declares value_not_found, merge_in_progress and particle_gate_violation for 400',
-    });
+    expectError('assertRecord', missing, 400, 'validation_type');
   });
 });
 

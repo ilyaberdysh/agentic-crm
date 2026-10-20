@@ -1,4 +1,4 @@
-// Settings → Dashboards `/$ws/settings/reports/dashboards` (BACKLOG 9.09; H README §3.11): "Dashboards — Manage
+// Settings → Dashboards `/$ws/settings/reports/dashboards` (BACKLOG 9.09): "Dashboards — Manage
 // reporting dashboards in your workspace. Learn more", a "Search dashboards" box and the admin list of every
 // dashboard of the workspace (also the ones without a grant for the admin): Dashboard | Reports (chips, "+N") |
 // Created at ("Oct 9th 2026") and a ⋮ "Options" menu with "Delete dashboard". Rows open the dashboard's Reports tab.

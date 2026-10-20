@@ -1,4 +1,4 @@
-// Object page frame (C1 README §2.1; layout.md §3–4): page header 48 + 1, view bar 48 + 1 (padding 0 12, gap 12
+// Object page frame: page header 48 + 1, view bar 48 + 1 (padding 0 12, gap 12
 // between groups, 8 inside), sort/filter bar 48 + 1, then the table filling the rest.
 import { vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
@@ -47,6 +47,6 @@ export const placeholderBody = style({
 
 export const toolbarSkeleton = style({ display: 'flex', alignItems: 'center', gap: 8 });
 
-/** Filter bar + table beside the view-level comments panel (E README §2.8 "Object/list views"). */
+/** Filter bar + table beside the view-level comments panel ("Object/list views"). */
 export const contentRow = style({ flex: 1, minHeight: 0, display: 'flex' });
 export const contentColumn = style({ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column' });

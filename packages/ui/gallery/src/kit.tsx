@@ -24,7 +24,7 @@ export function Section({
   );
 }
 
-/** Renders `render()` in a light and a dark panel side by side. */
+/** Renders `render` in a light and a dark panel side by side. */
 export function Panels({ children, secondary }: { children: () => ReactNode; secondary?: boolean }) {
   return (
     <div className={g.panels}>

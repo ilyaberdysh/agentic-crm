@@ -1,10 +1,10 @@
-// The flat block model of a document body (E editor.md §6): an ordered list of blocks, each with its plain text,
+// The flat block model of a document body: an ordered list of blocks, each with its plain text,
 // inline style ranges and mention references over that text. This is the server projection of the Yjs document
 // (documents.blocks), the input of previews (<RichTextPreview>), markdown, search and AI.
 //
-// Differences from Attio's wire form (kept deliberately small): camelCase names, one `mentions` array for actor and
+// Differences from the wire form (kept deliberately small): camelCase names, one `mentions` array for actor and
 // entity references, no per-block ids / sort orders / revisions (the Yjs document is the source of truth), and
-// STRIKETHROUGH is not paired with Attio's extra SUBTLE style. Positions are UTF-16 offsets into `text`.
+// STRIKETHROUGH is not paired with the extra SUBTLE style. Positions are UTF-16 offsets into `text`.
 import { z } from 'zod';
 
 export const BLOCK_TYPES = ['unstyled', 'h1', 'h2', 'h3', 'ul', 'ol', 'image-embed'] as const;
@@ -17,7 +17,7 @@ export type InlineStyle = (typeof INLINE_STYLES)[number];
 export const IMAGE_ALIGNMENTS = ['left', 'center', 'right'] as const;
 export type ImageAlignment = (typeof IMAGE_ALIGNMENTS)[number];
 
-/** Deepest list indent we keep (Attio enforces none client-side; 8 levels were created in its UI). */
+/** Deepest list indent the model supports. The editor currently creates at most eight levels. */
 export const MAX_INDENT = 8;
 
 const position = z.number().int().min(0);
@@ -38,14 +38,14 @@ export const mentionRefSchema = z.discriminatedUnion('type', [
     type: z.literal('member'),
     start: position,
     length: z.number().int().min(1),
-    /** Workspace member id (Attio actor_references, referenced_actor_type workspace-member). */
+    /** Workspace member id (actor_references, referenced_actor_type workspace-member). */
     id: z.string(),
   }),
   z.object({
     type: z.literal('record'),
     start: position,
     length: z.number().int().min(1),
-    /** Entity instance id (Attio entity_references). */
+    /** Entity instance id (entity_references). */
     id: z.string(),
     entityDefinitionId: z.string(),
   }),
@@ -53,7 +53,7 @@ export const mentionRefSchema = z.discriminatedUnion('type', [
 export type MentionRef = z.infer<typeof mentionRefSchema>;
 
 /**
- * Placeholder variable (CROSS-DOMAIN B.11; F composer §2.6, §4): occupies exactly one `_` character of the block
+ * Placeholder variable (CROSS-DOMAIN B.11; F composer): occupies exactly one `_` character of the block
  * text at `start`. `path` walks attributes from the recipient record (each step an attribute id or api slug, with
  * the definition it belongs to when known); `field` picks a sub-field (e.g. `first_name` of a personal name);
  * `fallback` is used when the merged value is empty.
@@ -128,7 +128,7 @@ export function imageBlock(image: Partial<ImageEmbed> & Pick<ImageEmbed, 'src'>)
   };
 }
 
-/** Plain text of a document: one line per block, images as empty lines (Attio's content_plaintext). */
+/** Plain text of a document: one line per block, images as empty lines (the content_plaintext). */
 export function blocksToPlaintext(blocks: readonly Block[]): string {
   return blocks.map((b) => (b.type === 'image-embed' ? '' : b.text)).join('\n');
 }
@@ -141,7 +141,7 @@ export function blocksToSearchText(blocks: readonly Block[]): string {
     .join('\n');
 }
 
-/** Member and record mentions of a document, de-duplicated (Attio's public `tags[]`). */
+/** Member and record mentions of a document, de-duplicated (the public `tags[]`). */
 export function mentionsOf(
   blocks: readonly Block[],
 ): Array<{ type: 'member'; id: string } | { type: 'record'; id: string; entityDefinitionId: string }> {

@@ -7,7 +7,7 @@ import { vars } from './vars.css';
 
 const { duration } = scales;
 
-/** Buttons: `outline: 1px solid stroke.accent; outline-offset: 1px` (tokens.md §7). */
+/** Buttons: `outline: 1px solid stroke.accent; outline-offset: 1px`. */
 export const focusRing = {
   outline: `1px solid ${vars.color.stroke.accent}`,
   outlineOffset: 1,
@@ -26,7 +26,7 @@ export const visuallyHidden = style({
 });
 
 /**
- * Menu / popover / dropdown chrome (components.md §7): elevated surface, e2, radius 12,
+ * Menu / popover / dropdown chrome: elevated surface, e2, radius 12,
  * padding 4, items stacked with a 1 px gap, 80 ms side-aware entrance.
  */
 export const floatingPanel = style([

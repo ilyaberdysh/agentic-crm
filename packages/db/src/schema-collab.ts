@@ -133,7 +133,7 @@ export interface StorageEntriesTable {
   parent_folder_id: string | null;
   root_entry_id: string;
   entry_type: 'file' | 'folder';
-  storage_provider: Defaulted<'attio'>;
+  storage_provider: Defaulted<'agentic-crm'>;
   name: string;
   content_type: string | null;
   /** bigint → string */

@@ -1,4 +1,4 @@
-// Step 2 — Map columns (C2 import.md §I3, §I9; evidence import-2-map-columns / -attribute-picker): "File column → Attributes"
+// Step 2 — Map columns (C2, §I9; evidence import-2-map-columns / -attribute-picker): "File column → Attributes"
 // rows with a mapping chip (type icon, attribute title, × "Remove attribute mapping") or "Select attribute", the data
 // preview of the focused column on the right, list imports' "For records already in the list:" strategy pill, and
 // validation + the duplicate warning on Continue.

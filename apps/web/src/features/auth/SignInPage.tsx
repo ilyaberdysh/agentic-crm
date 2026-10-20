@@ -1,5 +1,5 @@
-// `/auth/sign-in` (K README §2.2, legacy-welcome §3) adapted to email + password (ARCHITECTURE D-15): no Google or
-// SAML buttons; the fields follow Attio's temporary-password step (email + secret + Continue, 12 px apart).
+// `/auth/sign-in` (legacy-welcome) adapted to email + password: no Google or
+// SAML buttons; the fields follow the temporary-password step (email + secret + Continue, 12 px apart).
 import { Button, TextInput } from '@agentic-crm/ui';
 import { Link } from '@tanstack/react-router';
 import { type FormEvent, useState } from 'react';
@@ -45,7 +45,7 @@ export function SignInPage({ origin }: { origin?: string }) {
     setPending(true);
     try {
       await signIn({ email, password });
-      // Full page load, as Attio does after the code step: the app boots with the new session.
+      // Full page load, by design after the code step: the UI boots with the new session.
       window.location.assign(afterSignInPath(origin));
     } catch (error) {
       setErrors(signInErrorMessage(error));

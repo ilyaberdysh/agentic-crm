@@ -1,12 +1,12 @@
 // The import backend contract the wizard codes against:
 // `imports.create / uploadRows / mappableProperties / setMapping / reviewValues / setOverride / createOptions /
-// preview / run / status / cancel / history`). Shapes follow C2 import.md §I7 (mapping → mapping properties with
+// preview / run / status / cancel / history`). Shapes follow the contract (mapping → mapping properties with
 // overrides keyed by the raw value's hash; job → raw rows, mappable columns, per-column resolution, plan → strategies →
 // per-row assertions). The app uses `server.ts` (the `imports.*` procedures); `fake.ts` (in-memory) backs the unit
 // tests of the wizard model.
 import type { Path } from '@agentic-crm/contracts';
 
-/** Attio's job states (U-C2-10 full enum unknown): ingesting → waiting (draft) → confirmed → executing → completed. */
+/** the job states (U-C2-10 full enum unknown): ingesting → waiting (draft) → confirmed → executing → completed. */
 export type ImportJobStatus =
   | 'ingesting'
   | 'upload-failed'
@@ -31,14 +31,14 @@ export interface PropertyConfig {
   decimalSeparator: DecimalSeparator | null;
 }
 
-/** A CSV column (Attio "mappable property"): header, index and unique sample values for the data preview. */
+/** A CSV column (the UI "mappable property"): header, index and unique sample values for the data preview. */
 export interface ImportColumn {
   index: number;
   title: string;
   exampleValues: string[];
 }
 
-/** Column → attribute (Attio "import mapping property"). Unmapped (ignored) columns have no property. */
+/** Column → attribute (the UI "import mapping property"). Unmapped (ignored) columns have no property. */
 export interface MappingProperty {
   /** Client-minted id; the review-values route param. */
   id: string;
@@ -107,7 +107,7 @@ export type ResolvedPart =
 /** Skip the value (`{skip: true}`) or replace it with these write-form values. */
 export type ValueOverride = { skip: true } | { values: unknown[] };
 
-/** A distinct raw value of a column (Attio "resolution", addressed by the SHA-256 of the raw value). */
+/** A distinct raw value of a column (the UI "resolution", addressed by the SHA-256 of the raw value). */
 export interface DistinctValue {
   hash: string;
   raw: string;
@@ -135,7 +135,7 @@ export type ReviewSummary = Array<{ propertyId: string; needsReview: boolean }>;
 export type PlanOutcome = 'create' | 'update' | 'skip';
 export type RowStatus = 'planned' | 'created' | 'updated' | 'skipped' | 'failed' | 'canceled';
 
-/** Attio's assertion failure reasons (import.md §I6). */
+/** the assertion failure reasons. */
 export type FailureReason =
   | 'unknown-error'
   | 'entity-definition-not-found'
@@ -156,7 +156,7 @@ export type FailureReason =
   | 'particle-gate-violation'
   | 'retries-exceeded';
 
-/** One row of a strategy (Attio "assertion"). `values` are write forms keyed by attribute id of the strategy object. */
+/** One row of a strategy (the UI "assertion"). `values` are write forms keyed by attribute id of the strategy object. */
 export interface PlanRow {
   /** 0-based data row of the file. */
   row: number;
@@ -185,7 +185,7 @@ export interface PlanStrategy {
   rows: PlanRow[];
 }
 
-/** A row that will not be imported (every mapped value empty or invalid) — listed before the run (BACKLOG §4 acc. 4). */
+/** A row that will not be imported (every mapped value empty or invalid) — listed before the run (acc. 4). */
 export interface InvalidRow {
   row: number;
   reason: string;
@@ -207,7 +207,7 @@ export interface ImportHistoryQuery {
 // ---- backend ----------------------------------------------------------------------------------------------------------
 
 export interface CreateImportInput {
-  /** Client-minted ids (idempotent create, I3). */
+  /** Client-minted ids (idempotent create). */
   importId: string;
   jobId: string;
   entityDefinitionId: string;

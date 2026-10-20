@@ -1,4 +1,4 @@
-// Dates as the notes index shows them (E README §2.1: relative "Today" on cards and rows) and the creation-date bucket
+// Dates as the notes index shows them: relative "Today" on cards and rows, and the creation-date bucket
 // labels ("Created today" …; B.24 buckets in the viewer's zone and week start).
 import { type CreatedBucket, localDateOf } from '@agentic-crm/contracts';
 

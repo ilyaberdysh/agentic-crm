@@ -1,4 +1,4 @@
-// Workflow page chrome (README §2.2–2.3; evidence G/G-trigger-config.png, G-editor-live.png): the 49 px header with the
+// Workflow page chrome: the 49 px header with the
 // "Workflows / <title>" breadcrumb (title is an inline input), star, creator avatar, Share, help, ⋮ and Ask AI; the
 // 49 px tab bar Editor | Runs | Settings with the Draft / Paused label, Trigger workflow and the Live switch.
 import { insetRing, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';

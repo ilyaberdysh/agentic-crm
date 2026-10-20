@@ -1,8 +1,8 @@
 // `/__dev/report-charts` (dev builds only): every chart on fixture data in a light and a dark column, at canvas and
-// cell sizes, plus the empty / error states and the calculated-values footer. Query parameters for the screenshot runs:
-//   ?only=<fixture id>[,<id>]  just these charts   &theme=light|dark  one theme only
-//   &w=830&h=790               the box of a single chart (default: canvas 830×790, cell 385×418)  &size=cell|canvas
-//   &footer=1                  the calculated-values bar under the chart
+// cell sizes, plus the empty / error states and the calculated-values footer. Query parameters for the visual examples runs:
+// ?only=<fixture id>[,<id>]  just these charts &theme=light|dark  one theme only
+// &w=830&h=790 the box of a single chart (default: canvas 830×790, cell 385×418)  &size=cell|canvas
+// &footer=1 the calculated-values bar under the chart
 import { ThemeProvider } from '@agentic-crm/ui';
 import { type ReactNode, useState } from 'react';
 import { CalculatedValuesBar } from '../CalculatedValuesBar';
@@ -88,7 +88,7 @@ function Section({
   );
 }
 
-/** One chart in a fixed box (screenshots): the chart and the calculated-values bar share the highlight. */
+/** One chart in a fixed box (visual examples): the chart and the calculated-values bar share the highlight. */
 function Solo({
   fixture,
   size,

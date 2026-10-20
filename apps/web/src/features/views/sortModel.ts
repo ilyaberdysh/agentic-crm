@@ -1,7 +1,7 @@
-// Sorts (C1 filters-sorts-calcs §7, README §3.2): the draft is a plain `Sort[]` (contracts), saved as a full array.
+// Sorts (C1 filters-sorts-calcs): the draft is a plain `Sort[]` (contracts), saved as a full array.
 import type { Path, Sort, ViewSort } from '@agentic-crm/contracts';
 
-/** "+ Add sort" stops at five sorts (§7). */
+/** "+ Add sort" stops at five sorts. */
 export const MAX_SORTS = 5;
 
 export function samePath(a: Path, b: Path): boolean {
@@ -44,7 +44,7 @@ export function sortDirectionOf(sorts: readonly Sort[], path: Path): 'asc' | 'de
 }
 
 /**
- * Column header "Sort ascending / descending" (C1 §3.2 item 1): flips the direction of an existing sort on the same
+ * Column header "Sort ascending / descending" (C1 item 1): flips the direction of an existing sort on the same
  * column, otherwise replaces all sorts with this one.
  */
 export function applyColumnSort(

@@ -1,4 +1,4 @@
-// Preview text of the helper header (formulas.md §4.6): the value (text as is, otherwise JSON, truncated to 500
+// Preview text of the helper header: the value (text as is, otherwise JSON, truncated to 500
 // characters), "No value", "Can't preview: syntax error", "Can't preview: {code}", "Preview failed".
 import type { PreviewFormulaOutput } from '@agentic-crm/contracts';
 

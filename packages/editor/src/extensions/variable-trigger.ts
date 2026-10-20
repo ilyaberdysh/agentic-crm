@@ -27,10 +27,10 @@ export interface VariableTriggerOptions {
   onVariableClick: (click: VariableClick) => void;
 }
 
-const key = new PluginKey('attioVariableTrigger');
+const key = new PluginKey('agenticCrmVariableTrigger');
 
 export const VariableTrigger = Extension.create<VariableTriggerOptions>({
-  name: 'attioVariableTrigger',
+  name: 'agenticCrmVariableTrigger',
 
   addOptions() {
     return { onOpenMenu: () => undefined, onVariableClick: () => undefined };

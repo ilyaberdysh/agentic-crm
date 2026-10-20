@@ -1,7 +1,7 @@
 // Numbers of numbered-list items in a flat block sequence (shared by the editor decoration, the preview and the
 // markdown serialiser). A list is a run of consecutive list items; any other block ends it. Within a run, numbering
 // at a depth continues across deeper items, restarts when the list type at that depth changes, and deeper levels
-// restart whenever a shallower item appears (nested lists in Attio/Lexical behave the same way).
+// restart whenever a shallower item appears (nested lists in the UI/Lexical behave the same way).
 
 export interface NumberingItem {
   /** Block type: 'ol' / 'ul' for list items, anything else ends the run. */
