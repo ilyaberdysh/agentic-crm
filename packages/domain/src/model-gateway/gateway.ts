@@ -648,23 +648,23 @@ export function createModelGateway(options: ModelGatewayOptions) {
         const target = await loadTarget(tx, member, invocation.target_id);
         if (target.runner_id !== principal.runnerId || target.owner_id !== member.id)
           throw forbidden('The runner binding has changed');
-        const { rows: dispatches } = await sql<{
-          status: string;
-          generation: string;
-          leaseLive: boolean;
-          withinDeadline: boolean;
-        }>`
-          SELECT status, lease_generation::text AS generation,
-            lease_expires_at > clock_timestamp() AS "leaseLive",
-            created_at > clock_timestamp() - interval '120 seconds' AS "withinDeadline"
-          FROM model_runner_dispatches
+        const { rows: dispatches } = await sql<{ status: string; generation: string }>`
+          SELECT status, lease_generation::text AS generation FROM model_runner_dispatches
           WHERE workspace_id = ${tx.workspaceId}::uuid AND invocation_id = ${invocationId}::uuid
             AND runner_id = ${principal.runnerId}::uuid FOR UPDATE`.execute(tx.db);
         const dispatch = dispatches[0];
         if (!dispatch || dispatch.generation !== input.leaseGeneration)
           throw conflict('VERSION_CONFLICT', 'Runner invocation lease has changed');
         if (dispatch.status === 'settled' && invocation.outcome !== 'pending') return;
-        if (!dispatch.withinDeadline && dispatch.status === 'leased' && invocation.outcome === 'pending') {
+        // Evaluate database time only after FOR UPDATE returns: projected expressions can be stale after a lock wait.
+        const { rows: timings } = await sql<{ leaseLive: boolean; withinDeadline: boolean }>`SELECT
+          lease_expires_at > clock_timestamp() AS "leaseLive",
+          created_at > clock_timestamp() - interval '120 seconds' AS "withinDeadline"
+          FROM model_runner_dispatches
+          WHERE workspace_id = ${tx.workspaceId}::uuid AND invocation_id = ${invocationId}::uuid`.execute(tx.db);
+        const timing = timings[0];
+        if (!timing) throw conflict('VERSION_CONFLICT', 'Runner invocation lease has changed');
+        if (!timing.withinDeadline && dispatch.status === 'leased' && invocation.outcome === 'pending') {
           await tx.db
             .updateTable('model_invocations')
             .set({ outcome: 'failed', failure_code: 'transient', completed_at: tx.now })
@@ -678,7 +678,7 @@ export function createModelGateway(options: ModelGatewayOptions) {
               AND status = 'leased' AND lease_generation = ${input.leaseGeneration}::bigint`.execute(tx.db);
           return;
         }
-        if (dispatch.status !== 'leased' || !dispatch.leaseLive || !dispatch.withinDeadline)
+        if (dispatch.status !== 'leased' || !timing.leaseLive || !timing.withinDeadline)
           throw conflict('VERSION_CONFLICT', 'Runner invocation lease has expired');
         if (invocation.outcome !== 'pending')
           throw conflict('VERSION_CONFLICT', 'Runner invocation is already settled');

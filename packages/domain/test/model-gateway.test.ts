@@ -435,7 +435,7 @@ describe('stored model gateway (PostgreSQL and injected HTTP)', () => {
     expect(rows[0]).toMatchObject({ status: 'settled', encryptedRequest: null });
   });
 
-  it('discards a completion that crosses the absolute deadline while waiting for a target lock', async () => {
+  it('discards a completion that crosses the absolute deadline while waiting for the dispatch lock', async () => {
     const ws = await createWorkspace();
     const runnerId = newId();
     const proof = Symbol('runner proof');
@@ -482,7 +482,8 @@ describe('stored model gateway (PostgreSQL and injected HTTP)', () => {
       reportLocked = resolve;
     });
     const blocker = database.kysely.transaction().execute(async (tx) => {
-      await tx.selectFrom('model_targets').select('id').where('id', '=', target.id).forUpdate().execute();
+      await sql`SELECT invocation_id FROM model_runner_dispatches
+        WHERE invocation_id = ${invocationId}::uuid FOR UPDATE`.execute(tx);
       reportLocked();
       await release;
     });

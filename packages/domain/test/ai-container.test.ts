@@ -77,6 +77,7 @@ describe('runner container sandbox protocol (fake runtime, not conformance evide
         '--pid=private',
         '--cgroupns=private',
         '--userns=keep-id',
+        '--passwd=false',
         '--cap-drop=all',
         '--security-opt=no-new-privileges',
         '--memory=512m',
