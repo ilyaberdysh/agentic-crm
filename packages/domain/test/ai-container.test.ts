@@ -88,8 +88,8 @@ describe('runner container sandbox protocol (fake runtime, not conformance evide
         '--log-driver=none',
       ]),
     );
-    const authMount = observed.args.find((arg: string) => arg.includes('dst=/state/codex/auth.json'));
-    expect(authMount).toBe(`type=bind,src=${profile}/auth.json,dst=/state/codex/auth.json,ro=true`);
+    const authMount = observed.args.find((arg: string) => arg.includes('dst=/runner-auth.json'));
+    expect(authMount).toBe(`type=bind,src=${profile}/auth.json,dst=/runner-auth.json,ro=true`);
     expect(
       Object.keys(observed.env)
         .filter((key) => key !== '__CF_USER_TEXT_ENCODING')

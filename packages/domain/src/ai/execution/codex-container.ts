@@ -217,7 +217,7 @@ export class CodexContainerSandbox {
       const binds = [
         { source: await realpath(bootstrap), destination: '/bootstrap.mjs' },
         { source: join(state, 'egress.sock'), destination: '/relay/egress.sock' },
-        ...(authFile ? [{ source: authFile, destination: '/state/codex/auth.json' }] : []),
+        ...(authFile ? [{ source: authFile, destination: '/runner-auth.json' }] : []),
         ...(mcpSocket ? [{ source: mcpSocket, destination: '/relay/mcp.sock' }] : []),
       ];
       // Reject delimiter injection into Podman's mount grammar, including trusted operator paths.
@@ -234,6 +234,8 @@ export class CodexContainerSandbox {
           hostProbePath,
           namespaces,
           probeOnly: !request,
+          diagnostics: !request && process.env.CRM_CODEX_SANDBOX_CONFORMANCE_DIAGNOSTICS === '1',
+          authenticated: !!authFile,
           scopedMcp: !!mcpSocket,
           version: supportedCodexVersion,
           disabledFeatures: disabledCodexFeatures,
@@ -336,13 +338,17 @@ export class CodexContainerSandbox {
               type: z.literal('sandbox.failed'),
               nonce: z.literal(nonce),
               code: z.enum(['sandbox_conformance_failed', 'incompatible_cli', 'unauthenticated', 'missing_executable']),
+              detail: z.string().max(200).optional(),
             })
             .safeParse(report);
-          if (failed.success)
+          if (failed.success) {
+            if (!request && process.env.CRM_CODEX_SANDBOX_CONFORMANCE_DIAGNOSTICS === '1' && failed.data.detail)
+              process.stderr.write(`Sandbox probe: ${failed.data.detail}\n`);
             throw new ExecutionError(
               failed.data.code,
               'Container preflight failed; provider diagnostics are withheld.',
             );
+          }
           if (
             !z.strictObject({ type: z.literal('sandbox.ready'), nonce: z.literal(nonce) }).safeParse(report).success
           ) {

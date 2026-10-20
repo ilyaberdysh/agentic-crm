@@ -9,7 +9,7 @@ gate below before it is offered as a production runner. The current development
 host is macOS: fixture tests passed, but Linux kernel conformance and authenticated
 live generation have **not** been verified here.
 
-Supported host: a non-root Linux user, local Podman 6, cgroup v2 with delegated CPU,
+Supported host: a non-root Linux user, local Podman 5.7 or newer, cgroup v2 with delegated CPU,
 memory and PID controllers, user namespaces, and the runtime's seccomp support.
 macOS/Windows/remote Podman, rootful Docker, missing controllers, and unsupported
 runtime versions fail closed. The operator must trust the local Podman executable,

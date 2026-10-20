@@ -6,8 +6,15 @@ import { createConnection, createServer } from 'node:net';
 import { networkInterfaces } from 'node:os';
 
 const config = JSON.parse(Buffer.from(process.argv[2], 'base64url').toString('utf8'));
-const fail = (code) => {
-  process.stdout.write(`${JSON.stringify({ type: 'sandbox.failed', code, nonce: config.nonce })}\n`);
+const fail = (code, detail) => {
+  process.stdout.write(
+    `${JSON.stringify({
+      type: 'sandbox.failed',
+      code,
+      nonce: config.nonce,
+      ...(config.diagnostics && detail ? { detail } : {}),
+    })}\n`,
+  );
   process.exit(70);
 };
 
@@ -58,7 +65,7 @@ function conform() {
     '/bootstrap.mjs',
     '/relay/egress.sock',
     '/relay/mcp.sock',
-    '/state/codex/auth.json',
+    '/runner-auth.json',
   ]);
   for (const mount of mounts) {
     const path = mount.split(' ')[4];
@@ -102,13 +109,17 @@ function conform() {
 
 try {
   conform();
-} catch {
-  fail('sandbox_conformance_failed');
+} catch (error) {
+  fail('sandbox_conformance_failed', error instanceof Error ? error.message : 'unknown probe failure');
 }
 const ready = () => process.stdout.write(`${JSON.stringify({ type: 'sandbox.ready', nonce: config.nonce })}\n`);
 if (config.probeOnly) {
   ready();
   process.exit(0);
+}
+
+if (config.authenticated) {
+  writeFileSync('/state/codex/auth.json', readFileSync('/runner-auth.json'), { flag: 'wx', mode: 0o600 });
 }
 
 function bridge(socketPath) {
