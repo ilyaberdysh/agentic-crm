@@ -16,7 +16,7 @@
     "@agentic-crm/editor": "workspace:*",
     "@agentic-crm/formula": "workspace:*",
     "@agentic-crm/realtime": "workspace:*",
-    "pg-boss": "12.36.0",
+    "pg-boss": "12.38.0",
     "uuid": "14.0.2",
     "yjs": "13.6.33",
     "zod": "4.6.5"
