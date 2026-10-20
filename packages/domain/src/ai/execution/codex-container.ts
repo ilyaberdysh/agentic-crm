@@ -276,9 +276,11 @@ export class CodexContainerSandbox {
         '--workdir=/workspace',
         '--entrypoint=/usr/local/bin/node',
         '--umask=0077',
+        // Podman 5.7 cannot assign tmpfs uid/gid. World bits do not grant host access:
+        // the mount is private to this single-user PID/user namespace and all capabilities are dropped.
         ...['/workspace', '/state', '/tmp'].flatMap((path) => [
           '--tmpfs',
-          `${path}:rw,noexec,nosuid,nodev,size=64m,mode=0700`,
+          `${path}:rw,noexec,nosuid,nodev,size=64m,mode=0777`,
         ]),
         ...binds.flatMap(({ source, destination }) => [
           '--mount',
