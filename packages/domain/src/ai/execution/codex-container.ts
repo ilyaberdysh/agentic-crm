@@ -278,7 +278,7 @@ export class CodexContainerSandbox {
         '--umask=0077',
         ...['/workspace', '/state', '/tmp'].flatMap((path) => [
           '--tmpfs',
-          `${path}:rw,noexec,nosuid,nodev,size=64m,mode=0700,uid=${uid},gid=${gid}`,
+          `${path}:rw,noexec,nosuid,nodev,size=64m,mode=0700`,
         ]),
         ...binds.flatMap(({ source, destination }) => [
           '--mount',
