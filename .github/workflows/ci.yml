@@ -58,7 +58,10 @@ jobs:
         run: pnpm typecheck
 
       - name: Test
-        run: pnpm test
+        # Integration suites share one PostgreSQL service and exercise real job
+        # workers. Run packages serially so queue timing remains deterministic
+        # on GitHub's smaller standard runners.
+        run: pnpm turbo run test --concurrency=1
 
       - name: Build
         run: pnpm build
