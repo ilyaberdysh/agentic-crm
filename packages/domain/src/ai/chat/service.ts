@@ -65,6 +65,7 @@ async function threadDetail(
   tx: Tx,
   thread: ThreadRow,
   isRunning: (turnId: string) => boolean,
+  models: ModelGateway,
 ): Promise<AiThreadDetail> {
   const turns = await tx.db
     .selectFrom('ai_turns')
@@ -87,6 +88,10 @@ async function threadDetail(
     if (t.status !== 'executing' || view.pendingApprovals.length > 0 || isRunning(t.id) || t.updated_at > cutoff) {
       continue;
     }
+    for (const step of steps.get(t.id) ?? []) {
+      const invocationId = runnerInvocationId(step);
+      if (invocationId) await models.cancelRunnerInvocationInTransaction(tx, invocationId);
+    }
     await tx.db
       .updateTable('ai_turns')
       .set({ status: 'failed', failed_at: tx.now, failure_reason: 'interrupted', updated_at: tx.now })
@@ -96,6 +101,13 @@ async function threadDetail(
   }
   const costs = await threadCosts(tx, [thread.id]);
   return { thread: threadView(thread, costs.get(thread.id) ?? 0), turns: views };
+}
+
+function runnerInvocationId(step: StepRow): string | null {
+  const value = step.usage;
+  if (!value || typeof value !== 'object' || !('invocationId' in value)) return null;
+  const invocationId = (value as { invocationId?: unknown }).invocationId;
+  return typeof invocationId === 'string' ? invocationId : null;
 }
 
 function toolPartsOf(steps: StepRow[]): { step: StepRow; index: number; part: AiToolPart }[] {
@@ -128,11 +140,8 @@ async function cancelTurnRows(tx: Tx, turnId: string, models: ModelGateway): Pro
     .execute();
   const steps = await loadSteps(tx, [turnId]);
   for (const step of steps.get(turnId) ?? []) {
-    const invocationId =
-      step.usage && typeof step.usage === 'object' && 'invocationId' in step.usage
-        ? (step.usage as { invocationId?: unknown }).invocationId
-        : null;
-    if (typeof invocationId === 'string') await models.cancelRunnerInvocationInTransaction(tx, invocationId);
+    const invocationId = runnerInvocationId(step);
+    if (invocationId) await models.cancelRunnerInvocationInTransaction(tx, invocationId);
     if (step.status !== 'executing-llm' && step.status !== 'executing-tools') continue;
     const parts = ((step.parts ?? []) as unknown as Record<string, unknown>[]).map((p) => ({
       ...p,
@@ -177,9 +186,14 @@ export const chatOps = {
     return { threads: rows.map((r) => threadView(r, costs.get(r.id) ?? 0)) };
   },
 
-  async getThread(tx: Tx, threadId: string, isRunning: (turnId: string) => boolean): Promise<AiThreadDetail> {
+  async getThread(
+    tx: Tx,
+    threadId: string,
+    isRunning: (turnId: string) => boolean,
+    models: ModelGateway,
+  ): Promise<AiThreadDetail> {
     const memberId = requireMember(tx);
-    return threadDetail(tx, await loadThread(tx, threadId, memberId), isRunning);
+    return threadDetail(tx, await loadThread(tx, threadId, memberId), isRunning, models);
   },
 
   async createThread(tx: Tx, input: CreateAiThreadInput): Promise<AiThread> {

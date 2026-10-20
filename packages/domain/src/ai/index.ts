@@ -190,7 +190,7 @@ export function createAiServices(wiring: AiWiring) {
       threads: {
         list: (ctx: ServiceContext, input?: ListAiThreadsInput) => run(ctx, (tx) => chatOps.listThreads(tx, input)),
         get: (ctx: ServiceContext, threadId: string) =>
-          run(ctx, (tx) => chatOps.getThread(tx, threadId, (id) => running.has(id))),
+          run(ctx, (tx) => chatOps.getThread(tx, threadId, (id) => running.has(id), modelGateway)),
         create: (ctx: ServiceContext, input: CreateAiThreadInput = {}) =>
           run(ctx, (tx) => chatOps.createThread(tx, input)),
         rename: (ctx: ServiceContext, input: RenameAiThreadInput) => run(ctx, (tx) => chatOps.renameThread(tx, input)),

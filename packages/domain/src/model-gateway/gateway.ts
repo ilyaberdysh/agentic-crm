@@ -189,6 +189,24 @@ export function createModelGateway(options: ModelGatewayOptions) {
       WHERE workspace_id = ${tx.workspaceId}::uuid AND invocation_id = ${invocationId}::uuid
         AND status IN ('queued', 'leased')`.execute(tx.db);
   }
+  /** Absolute two-minute lifetime: a crashed API cannot leave CRM prompts claimable indefinitely. */
+  async function expireRunnerInvocationsInTransaction(tx: Tx, runnerId: string, memberId: string): Promise<void> {
+    await sql`WITH expired AS (
+      UPDATE model_runner_dispatches d SET status = 'settled', encrypted_request = NULL,
+        lease_expires_at = NULL, settled_at = clock_timestamp()
+      FROM model_invocations source
+      WHERE d.workspace_id = ${tx.workspaceId}::uuid AND d.runner_id = ${runnerId}::uuid
+        AND source.workspace_id = d.workspace_id AND source.id = d.invocation_id
+        AND source.member_id = ${memberId}::uuid AND source.outcome = 'pending'
+        AND d.status IN ('queued', 'leased')
+        AND d.created_at <= clock_timestamp() - interval '120 seconds'
+      RETURNING d.invocation_id
+    )
+    UPDATE model_invocations target SET outcome = 'failed', failure_code = 'transient',
+      completed_at = clock_timestamp()
+    WHERE target.workspace_id = ${tx.workspaceId}::uuid AND target.outcome = 'pending'
+      AND target.id IN (SELECT invocation_id FROM expired)`.execute(tx.db);
+  }
   async function save(
     ctx: ServiceContext,
     input: CreateModelTargetInput | ConfigureModelTargetInput,
@@ -448,6 +466,7 @@ export function createModelGateway(options: ModelGatewayOptions) {
         systemContext(principal.workspaceId, 'runner-model-claim'),
         async (tx) => {
           await runner(tx, principal.runnerId, principal.memberId);
+          await expireRunnerInvocationsInTransaction(tx, principal.runnerId, principal.memberId);
           const { rows } = await sql<{
             invocationId: string;
             runnerId: string;
@@ -466,6 +485,7 @@ export function createModelGateway(options: ModelGatewayOptions) {
             WHERE d.workspace_id = ${tx.workspaceId}::uuid AND d.runner_id = ${principal.runnerId}::uuid
               AND i.member_id = ${principal.memberId}::uuid AND i.outcome = 'pending'
               AND t.enabled = true AND t.version = d.target_version AND t.runner_id = d.runner_id
+              AND d.created_at > clock_timestamp() - interval '120 seconds'
               AND (d.status = 'queued' OR (d.status = 'leased' AND d.lease_expires_at < clock_timestamp()))
             ORDER BY d.created_at, d.invocation_id FOR UPDATE OF d SKIP LOCKED LIMIT ${limit}`.execute(tx.db);
           const leases = [];
@@ -509,6 +529,7 @@ export function createModelGateway(options: ModelGatewayOptions) {
         systemContext(principal.workspaceId, 'runner-model-heartbeat'),
         async (tx) => {
           await runner(tx, principal.runnerId, principal.memberId);
+          await expireRunnerInvocationsInTransaction(tx, principal.runnerId, principal.memberId);
           const { rows } = await sql<{ expiresAt: string }>`UPDATE model_runner_dispatches d
             SET lease_expires_at = clock_timestamp() + interval '60 seconds'
             FROM model_invocations i
@@ -516,6 +537,7 @@ export function createModelGateway(options: ModelGatewayOptions) {
               AND d.runner_id = ${principal.runnerId}::uuid AND d.status = 'leased'
               AND d.lease_generation = ${input.leaseGeneration}::bigint
               AND d.lease_expires_at > clock_timestamp()
+              AND d.created_at > clock_timestamp() - interval '120 seconds'
               AND i.workspace_id = d.workspace_id AND i.id = d.invocation_id
               AND i.member_id = ${principal.memberId}::uuid AND i.outcome = 'pending'
             RETURNING d.lease_expires_at AS "expiresAt"`.execute(tx.db);
@@ -598,6 +620,7 @@ export function createModelGateway(options: ModelGatewayOptions) {
       const principal = await authenticatedRunner(proof);
       await runInWorkspace(options.database, systemContext(principal.workspaceId, 'runner-model-usage'), async (tx) => {
         await runner(tx, principal.runnerId, principal.memberId);
+        await expireRunnerInvocationsInTransaction(tx, principal.runnerId, principal.memberId);
         const invocation = await tx.db
           .selectFrom('model_invocations')
           .selectAll()

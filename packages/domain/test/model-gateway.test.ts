@@ -389,6 +389,52 @@ describe('stored model gateway (PostgreSQL and injected HTTP)', () => {
     ).rejects.toMatchObject({ code: '23514' });
   });
 
+  it('expires unclaimed durable runner prompts after the absolute two-minute lifetime', async () => {
+    const ws = await createWorkspace();
+    const runnerId = newId();
+    const proof = Symbol('runner proof');
+    const w = world({
+      authorizeRunner: async () => {},
+      authenticateRunnerCompletion: async (supplied) => {
+        if (supplied !== proof) throw new Error('Unauthenticated');
+        return { workspaceId: ws.workspaceId, runnerId, memberId: ws.memberId };
+      },
+    });
+    const target = await w.gateway.targets.create(ws.ctx, {
+      id: newId(),
+      name: 'Expiring local model',
+      kind: 'runner-local',
+      ownerKind: 'member',
+      provider: 'openai-compatible',
+      model: 'local-model',
+      runnerId,
+      endpoint: 'http://127.0.0.1:11434/v1',
+      features: localFeatures,
+    });
+    const invocationId = newId();
+    await sql`INSERT INTO model_invocations
+      (id, workspace_id, target_id, target_version, member_id, provider, model, runner_id, outcome,
+        cost_status, cost_reason, created_at)
+      VALUES (${invocationId}::uuid, ${ws.workspaceId}::uuid, ${target.id}::uuid, ${target.version},
+        ${ws.memberId}::uuid, 'openai-compatible', 'local-model', ${runnerId}::uuid, 'pending',
+        'unknown', 'usage_unavailable', clock_timestamp() - interval '121 seconds')`.execute(database.kysely);
+    await sql`INSERT INTO model_runner_dispatches
+      (invocation_id, workspace_id, runner_id, target_id, target_version, encrypted_request, created_at)
+      VALUES (${invocationId}::uuid, ${ws.workspaceId}::uuid, ${runnerId}::uuid, ${target.id}::uuid,
+        ${target.version}, '{"test":"ciphertext"}'::jsonb, clock_timestamp() - interval '121 seconds')`.execute(
+      database.kysely,
+    );
+    expect(await w.gateway.claimRunnerInvocations(proof)).toEqual([]);
+    expect(await w.gateway.getRunnerInvocation(ws.ctx, invocationId)).toMatchObject({
+      outcome: 'failed',
+      failureCode: 'transient',
+    });
+    const { rows } = await sql<{ status: string; encryptedRequest: unknown }>`SELECT status,
+      encrypted_request AS "encryptedRequest" FROM model_runner_dispatches
+      WHERE invocation_id = ${invocationId}::uuid`.execute(database.kysely);
+    expect(rows[0]).toMatchObject({ status: 'settled', encryptedRequest: null });
+  });
+
   it('fails closed for unenrolled runners and unconfigured completion authentication', async () => {
     const ws = await createWorkspace();
     const input: CreateModelTargetInput = {

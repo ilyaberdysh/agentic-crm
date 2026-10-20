@@ -283,4 +283,45 @@ describe('Ask Agentic with saved API and local targets', () => {
     expect(dispatch!.status).toBe('settled');
     expect(dispatch!.encrypted_request).toBeNull();
   });
+
+  it('fences durable local work when another API instance recovers a stale turn after restart', async () => {
+    const fx = await local();
+    const sent = await ai.ai.turns.send(fx.ctx, {
+      threadId: newId(),
+      model: fx.model,
+      content: 'Do not execute after a restart',
+    });
+    await vi.waitFor(async () => {
+      const step = await database.kysely
+        .selectFrom('ai_turn_steps')
+        .select('usage')
+        .where('turn_id', '=', sent.turnId)
+        .executeTakeFirst();
+      expect(step?.usage).toMatchObject({ invocationId: expect.any(String) });
+    });
+    await sql`UPDATE ai_turns SET updated_at = clock_timestamp() - interval '11 minutes'
+      WHERE id = ${sent.turnId}::uuid`.execute(database.kysely);
+    const restarted = createDomain({
+      database,
+      storage,
+      llm: new UnconfiguredLlm(),
+      modelEncryptionKey: encryptionKey,
+    });
+    const detail = await restarted.ai.threads.get(fx.ctx, sent.threadId);
+    expect(detail.turns.find((turn) => turn.id === sent.turnId)).toMatchObject({
+      status: 'failed',
+      failureReason: 'interrupted',
+    });
+    expect(await restarted.agentic.models.claimRunnerInvocations(fx.enrolled.bearerToken)).toEqual([]);
+    const invocation = await database.kysely
+      .selectFrom('model_invocations')
+      .select(['outcome', 'id'])
+      .where('workspace_id', '=', fx.workspaceId)
+      .executeTakeFirstOrThrow();
+    expect(invocation.outcome).toBe('canceled');
+    const { rows } = await sql<{ status: string; encryptedRequest: unknown }>`SELECT status,
+      encrypted_request AS "encryptedRequest" FROM model_runner_dispatches
+      WHERE invocation_id = ${invocation.id}::uuid`.execute(database.kysely);
+    expect(rows[0]).toMatchObject({ status: 'settled', encryptedRequest: null });
+  });
 });
