@@ -1,4 +1,4 @@
-// Shared types of the attribute registry (slice-2 contract C1, research/architecture/decisions/slice2-contracts.md).
+// Shared types of the attribute registry (slice-2 contract C1).
 // Values are the wire rows of `values.list` / `values.put` (read forms, A §4.7); writes use the write forms of
 // packages/contracts `valueInputSchemas`.
 import type {

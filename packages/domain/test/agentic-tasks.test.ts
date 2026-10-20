@@ -41,7 +41,9 @@ async function fixture() {
     );
   };
   // Storage-only action fixtures: queue recovery must never inspect a proposal, authorize, or mutate the action.
-  const linkedAction = async (status: 'PROPOSED' | 'EXECUTING' | 'OUTCOME_UNKNOWN' = 'EXECUTING') => {
+  const linkedAction = async (
+    status: 'PROPOSED' | 'APPROVED' | 'REJECTED' | 'STALE' | 'EXECUTING' | 'OUTCOME_UNKNOWN' = 'EXECUTING',
+  ) => {
     const id = newId();
     await runInWorkspace(database, fx.sys, async (tx) => {
       await sql`INSERT INTO agentic_action_proposals
@@ -91,6 +93,27 @@ describe('explainable leased record-follow-up queue', () => {
     expect(claimed.every((task) => task.attemptCount === 1 && task.leaseGeneration === '1')).toBe(true);
     expect(await fx.claim()).toEqual([]);
     expect((await fx.get(future.id)).status).toBe('QUEUED');
+  });
+
+  it('does not let a pending approval starve approved or effect-free work', async () => {
+    const fx = await fixture();
+    const pendingActionId = await fx.linkedAction('PROPOSED');
+    const approvedActionId = await fx.linkedAction('APPROVED');
+    const pending = await fx.enqueue({ ...fx.input, id: newId(), actionId: pendingActionId });
+    const approved = await fx.enqueue({ ...fx.input, id: newId(), actionId: approvedActionId });
+    const effectFree = await fx.enqueue({ ...fx.input, id: newId() });
+
+    const claimed = await runInWorkspace(database, fx.sys, (tx) =>
+      queue.claimDue(tx, {
+        holder: 'runner:worker-with-mixed-queue',
+        limit: 3,
+        leaseDurationMs: 60_000,
+        approvedActionsOnly: true,
+      }),
+    );
+
+    expect(claimed.map((task) => task.id).sort()).toEqual([approved.id, effectFree.id].sort());
+    expect((await fx.get(pending.id)).status).toBe('QUEUED');
   });
 
   it('skips an uncommitted claim instead of waiting behind its row lock', async () => {
@@ -286,6 +309,41 @@ describe('explainable leased record-follow-up queue', () => {
       );
       expect(action.rows).toEqual([{ status, version: 1 }]);
     }
+  });
+
+  it('derives blocked-task continuation from the locked action and never retries an uncertain outcome', async () => {
+    const fx = await fixture();
+    const cases = [
+      { action: 'APPROVED', expected: 'QUEUED' },
+      { action: 'REJECTED', expected: 'CANCELLED' },
+      { action: 'STALE', expected: 'CANCELLED' },
+      { action: 'EXECUTING', expected: 'BLOCKED' },
+      { action: 'OUTCOME_UNKNOWN', expected: 'BLOCKED' },
+    ] as const;
+    for (const value of cases) {
+      const actionId = await fx.linkedAction(value.action);
+      const task = await fx.enqueue({ ...fx.input, id: newId(), actionId });
+      const [claimed] = await fx.claim();
+      expect(claimed!.id).toBe(task.id);
+      await fx.expire(task.id);
+      await runInWorkspace(database, fx.sys, (tx) => queue.recoverExpired(tx));
+      const resumed = await runInWorkspace(database, fx.sys, (tx) => queue.resumeBlocked(tx, { taskId: task.id }));
+      expect(resumed.status).toBe(value.expected);
+      if (value.expected === 'CANCELLED') {
+        expect(resumed.finishedAt).not.toBeNull();
+        expect(resumed.leaseHolder).toBeNull();
+        expect(resumed.nextEvent).toContain('No further queue work');
+      }
+    }
+  });
+
+  it('rejects caller-selected continuation for tasks that are not blocked', async () => {
+    const fx = await fixture();
+    const task = await fx.enqueue();
+    await expectCode(
+      runInWorkspace(database, fx.sys, (tx) => queue.resumeBlocked(tx, { taskId: task.id })),
+      'ID_CONFLICT',
+    );
   });
 
   it('persists the caller recheck explanation and due time across restart, release, and terminal failure', async () => {

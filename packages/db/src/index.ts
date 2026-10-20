@@ -5,7 +5,13 @@ import pg from 'pg';
 import type { DB, Json } from './schema.ts';
 
 export { type Kysely, type Selectable, sql, type Transaction, type Updateable } from 'kysely';
-export { type MigrationResult, migrateReset, migrateUp } from './migrate.ts';
+export {
+  inspectMigrations,
+  type MigrationInspection,
+  type MigrationResult,
+  migrateReset,
+  migrateUp,
+} from './migrate.ts';
 export * from './schema.ts';
 export * from './schema-ai.ts';
 export * from './schema-calls.ts';
@@ -14,6 +20,7 @@ export * from './schema-email.ts';
 export * from './schema-formulas.ts';
 export * from './schema-imports.ts';
 export * from './schema-lists.ts';
+export * from './schema-model-gateway.ts';
 export * from './schema-reports.ts';
 export * from './schema-slice5.ts';
 export * from './schema-slice6.ts';

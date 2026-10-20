@@ -1,4 +1,4 @@
-// Workflows on the client (BACKLOG 8.01–8.11; procedures in research/architecture/decisions/slice8-9-contracts.md).
+// Workflows on the client (BACKLOG 8.01–8.11).
 // Queries live under the realtime resources ['ws', ws, 'workflow' | 'workflow-list' | 'workflow-run' |
 // 'workflow-run-list', …] so one invalidation prefix refreshes every screen showing them:
 //   ['ws', ws, 'workflow-list', params]                     index, admin list, "Select workflow" dialog

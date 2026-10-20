@@ -1,5 +1,4 @@
-// Styles of the chart library. Measurements are from the curated Attio screenshots (research/evidence/H) at 1512×945
-// and chart-types §2; colours are theme tokens so both themes follow.
+// Styles of the chart library; colours are theme tokens so both themes follow.
 import { alpha, insetRing, scales, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
 

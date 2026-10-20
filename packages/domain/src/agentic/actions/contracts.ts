@@ -93,6 +93,8 @@ export const decideActionSchema = z.strictObject({
 export type DecideActionInput = z.input<typeof decideActionSchema>;
 export const startActionAttemptSchema = z.strictObject({ ...casFields, id: uuidSchema });
 export type StartActionAttemptInput = z.input<typeof startActionAttemptSchema>;
+export const reconcileExecutingActionSchema = z.strictObject({ actionId: uuidSchema });
+export type ReconcileExecutingActionInput = z.input<typeof reconcileExecutingActionSchema>;
 
 /** Execute only the immutable approved diff; transports cannot supply replacement task fields or outcomes. */
 export const executeTaskCreateSchema = startActionAttemptSchema.extend({ receiptId: uuidSchema }).strict();

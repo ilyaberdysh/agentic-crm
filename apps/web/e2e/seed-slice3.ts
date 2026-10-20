@@ -1,6 +1,6 @@
-// Slice-3 e2e data (notes, templates, tasks, comments, favorites) seeded through the domain services, mirroring the
-// "[seed]" items of the Attio captures in research/evidence/E: an account plan and kickoff notes with bodies, a
-// discovery-call template, eight tasks around today (overdue … completed) and a comment thread with a reply plus a
+// Slice-3 e2e data (notes, templates, tasks, comments, favorites) seeded through the domain services: an account plan,
+// kickoff notes with bodies, a discovery-call template, eight tasks around today (overdue … completed), and a comment
+// thread with a reply plus a
 // resolved one. Idempotent (stable ids). Prints the ids as JSON on the last line.
 //   pnpm --filter @agentic-crm/api exec tsx ../web/e2e/seed-slice3.ts --db agentic_crm_test_s3notes
 import { createHash } from 'node:crypto';

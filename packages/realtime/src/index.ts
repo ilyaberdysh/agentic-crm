@@ -1,5 +1,5 @@
 // Realtime contract shared by packages/domain (writer of change_log) and apps/api (WS gateway) and apps/web (client).
-// See ARCHITECTURE.md I4 and research/specs/A-data-model/realtime.md (Attio's invalidation vocabulary).
+// See ARCHITECTURE.md I4 for the transaction and delivery contract.
 
 /**
  * One row of `change_log` (outbox), written in the same transaction as the change it describes (I1).

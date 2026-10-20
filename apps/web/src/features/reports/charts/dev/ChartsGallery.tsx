@@ -1,6 +1,5 @@
 // `/__dev/report-charts` (dev builds only): every chart on fixture data in a light and a dark column, at canvas and
-// cell sizes, plus the empty / error states and the calculated-values footer, for visual comparison with
-// research/evidence/H. Query parameters for the screenshot runs:
+// cell sizes, plus the empty / error states and the calculated-values footer. Query parameters for the screenshot runs:
 //   ?only=<fixture id>[,<id>]  just these charts   &theme=light|dark  one theme only
 //   &w=830&h=790               the box of a single chart (default: canvas 830×790, cell 385×418)  &size=cell|canvas
 //   &footer=1                  the calculated-values bar under the chart

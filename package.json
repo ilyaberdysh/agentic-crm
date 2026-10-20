@@ -25,6 +25,7 @@
     "db:down": "docker compose -f docker/compose.dev.yml down",
     "db:migrate": "pnpm --filter @agentic-crm/db migrate",
     "db:reset": "pnpm --filter @agentic-crm/db reset",
+    "doctor": "pnpm --filter @agentic-crm/api doctor",
     "seed": "pnpm --filter @agentic-crm/db seed"
   },
   "devDependencies": {

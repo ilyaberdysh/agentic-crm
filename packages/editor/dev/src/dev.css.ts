@@ -1,5 +1,5 @@
-// Dev page chrome: a note window with Attio's geometry (E README §2.2: 968 px window, radius 16, 48 px top bar,
-// 704 px document column 132 px from the left, 32/600 title) so parity screenshots line up with research/evidence/E.
+// Dev page chrome: a 968 px note window with radius 16, 48 px top bar, 704 px document column 132 px from the left,
+// and a 32/600 title, for repeatable local screenshots.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
 

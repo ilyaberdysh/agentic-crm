@@ -6,6 +6,8 @@ import { memberActor, systemActor } from './actors.ts';
 export interface ServiceContext {
   workspaceId: string;
   actor: Actor;
+  /** Set only by the authenticated runner tool host for one transaction. Never read from a request body. */
+  agentRuntime?: { runnerId: string; grantId: string };
   /**
    * Optional sink a transport passes to learn the change_log seq of the write: after a successful call `seq` is the
    * highest change_log id the transaction wrote (null when nothing changed, e.g. an idempotent replay). Clients use it

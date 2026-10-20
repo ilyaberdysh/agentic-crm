@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { api, errorEnvelopeOf, inWorkspace, noteAcceptAfter, type RouterOutputs } from '../../../data/trpc';
 import { newId } from '../../../lib/ids';
+import { useMembers } from '../../attributes';
 import { useWorkspace } from '../../shell/workspaceContext';
 import type { RecordRef } from '../context';
 import { recordKeys } from '../data';
@@ -26,7 +27,8 @@ function queueFor(data: PersistedState, actionId: string) {
 
 function closedQueueFor(data: PersistedState, actionId: string) {
   const row = data.tasks.find((task) => task.actionId === actionId);
-  if (!row || row.status === 'SUCCEEDED' || row.status === 'FAILED_TERMINAL') return queueFor(data, actionId);
+  if (!row || row.status === 'SUCCEEDED' || row.status === 'FAILED_TERMINAL' || row.status === 'CANCELLED')
+    return queueFor(data, actionId);
   return {
     reason: `This proposal is closed, while its linked queue row is still ${row.status.toLowerCase()}.`,
     nextEvent: 'Queue reconciliation is pending; this row does not authorize a CRM write.',
@@ -51,8 +53,8 @@ export function presentAgentState(data: PersistedState, memberId: string): Agent
     return { status: 'empty' };
   }
   const { action } = activity;
-  const evidence = activity.evidence[0];
-  if (!evidence) return { status: 'error', message: 'This action has no readable supporting evidence.' };
+  const evidence = activity.evidence;
+  if (evidence.length === 0) return { status: 'error', message: 'This action has no readable supporting evidence.' };
   const task = action.proposal.diff.task;
   const deadline =
     task.deadline === null
@@ -63,12 +65,14 @@ export function presentAgentState(data: PersistedState, memberId: string): Agent
   const shared = {
     goal: 'Prepare a useful follow-up from the latest customer request.',
     task: task.content.text,
-    currentStep: `${deadline} · ${task.assigneeMemberIds.length ? `${task.assigneeMemberIds.length} assigned` : 'Unassigned'} · Linked to this record`,
-    evidence: {
-      band: evidence.snapshot.band,
-      quote: evidence.snapshot.fragment.quote,
-      source: `CRM note · ${shownAt(evidence.snapshot.capturedAt)}`,
-    },
+    currentStep: `${deadline} · Linked to this record`,
+    evidence: evidence.map(({ snapshot }) => ({
+      band: snapshot.band,
+      quote: snapshot.fragment.quote,
+      source: `CRM note · ${shownAt(snapshot.capturedAt)}`,
+    })),
+    assigneeMemberIds: task.assigneeMemberIds,
+    reviewerMemberId: action.proposal.reviewerMemberId,
     queue: queueFor(data, action.id),
   } as const;
   const ownsDecision = action.proposal.reviewerMemberId === memberId;
@@ -143,6 +147,7 @@ export function presentAgentState(data: PersistedState, memberId: string): Agent
 
 export function useAgentTab(scope: RecordRef): RecordAgentTabProps {
   const { workspace } = useWorkspace();
+  const members = useMembers();
   const client = useQueryClient();
   const queryKey = agentKey(workspace.id, scope);
   const query = useQuery({
@@ -200,6 +205,7 @@ export function useAgentTab(scope: RecordRef): RecordAgentTabProps {
         : presentAgentState(query.data as PersistedState, workspace.membership.id);
     return {
       state,
+      members,
       onDecision: (actionId, decision) =>
         mutation.mutate({ actionId, outcome: decision === 'approve' ? 'APPROVE' : 'REJECT' }),
       onExecute: (actionId) => mutation.mutate({ actionId, executeOnly: true }),
@@ -217,5 +223,6 @@ export function useAgentTab(scope: RecordRef): RecordAgentTabProps {
     query.isError,
     query.isPending,
     workspace.membership.id,
+    members,
   ]);
 }

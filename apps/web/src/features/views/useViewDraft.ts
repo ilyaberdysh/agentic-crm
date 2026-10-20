@@ -1,4 +1,4 @@
-// useViewDraft — contract C2 (research/architecture/decisions/slice2-contracts.md), consumed by the record table.
+// useViewDraft — contract C2, consumed by the record table.
 //
 // Filter and sort edits are drafts (C1 README §3.1): kept per view for the session (they survive in-app navigation),
 // re-queried immediately by the table, cleared by "Discard changes"; "Save for everyone" replaces the whole filter and

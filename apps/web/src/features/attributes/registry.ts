@@ -1,4 +1,4 @@
-// Attribute registry — slice-2 contract C1 (research/architecture/decisions/slice2-contracts.md). One entry per
+// Attribute registry — slice-2 contract C1. One entry per
 // internal attribute type: read View (densities cell / field / chip), Editor, editor kind, clipboard text, single-cell
 // paste, default column width and alignment. TABLE, ADMIN and later the record page consume it.
 import type { FC } from 'react';

@@ -1,5 +1,4 @@
-// Email (slice 7a; BACKLOG 7.01–7.03, 7.06–7.08; specs F README §2.2–2.3, §4, F composer §2–6, F settings §1–4;
-// decisions in research/architecture/decisions/slice7-contracts.md). Procedure contracts for mailboxes, workspace
+// Email (slice 7a; BACKLOG 7.01–7.03, 7.06–7.08). Procedure contracts for mailboxes, workspace
 // email settings, record suppression, protected contacts, synced emails with visibility levels and sharing grants,
 // drafts (autosave per field), review, outbox, templates, signatures and variables.
 import { z } from 'zod';

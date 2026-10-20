@@ -1,6 +1,5 @@
-// Notes, note templates, tasks and comments (BACKLOG 3.12, 3.14–3.16; specs E README §2–4; decisions B.10, X-09,
-// X-10 in research/architecture/decisions/slice3-contracts.md). Note and template bodies are documents (Yjs, owned by
-// apps/collab); these contracts carry the headers plus read-only content projections (markdown / blocks / plaintext).
+// Notes, note templates, tasks and comments (BACKLOG 3.12, 3.14–3.16). Note and template bodies are Yjs documents
+// owned by apps/collab; these contracts carry their headers and read-only content projections (markdown / blocks / plaintext).
 // Comments and task bodies are plain text with positioned mentions.
 import { z } from 'zod';
 import { acceptAfterSchema, actorSchema, dateSchema, idOrSlugSchema, timestampSchema, uuidSchema } from './common.ts';

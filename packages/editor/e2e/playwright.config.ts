@@ -1,6 +1,5 @@
-// Editor e2e: two browsers editing one document through the real collab server, plus parity screenshots against
-// research/evidence/E. Starts its own backend (apps/collab/scripts/e2e-stack.ts: fresh database, API on 4152,
-// collab on 4151) and the editor dev page (Vite on 5185).
+// Editor e2e: two browsers edit one document through the real collab server. Starts its own backend with a fresh
+// database, API on 4152, collab on 4151, and the editor dev page on Vite 5185.
 //   pnpm --filter @agentic-crm/editor e2e          (E2E_REUSE=1 reuses servers already listening)
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from '@playwright/test';

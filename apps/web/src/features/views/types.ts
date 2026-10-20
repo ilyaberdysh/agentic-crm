@@ -1,4 +1,4 @@
-// Shared types of the views feature (C2 in research/architecture/decisions/slice2-contracts.md).
+// Shared types of the views feature (C2).
 import type { Path, Predicate, Sort, View, ViewColumn } from '@agentic-crm/contracts';
 
 /** The predicate AST of a view (contracts `Predicate`, X-20); `null` = no filter. */

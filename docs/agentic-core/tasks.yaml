@@ -52,7 +52,7 @@ tasks:
       - packages/domain/src/collab/tasks.ts is the existing task write path.
       - apps/web/src/features/record/RecordView.tsx is the record Agent-tab integration seam.
       - apps/api/src/v2/routes/tasks.ts and the Ask tool catalog already adapt task creation.
-      - No MCP server exists yet; only a curated adapter belongs in this milestone.
+      - At planning time no MCP server existed; the completed milestone now exposes only the curated authenticated transport added for this capability.
 
   - id: W1-PRINCIPALS
     outcome: Add explicit agent principals and a fail-closed capability policy boundary.

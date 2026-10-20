@@ -1,4 +1,4 @@
-// Views feature (BACKLOG 2.04–2.07; contract C2 in research/architecture/decisions/slice2-contracts.md).
+// Views feature (BACKLOG 2.04–2.07; contract C2).
 //
 //   const draft = useViewDraft(viewId);           // suspends until the view is loaded
 //   <ViewSwitcher entityDefinitionId=… currentViewId=… onNavigate=… />

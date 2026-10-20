@@ -1,7 +1,9 @@
 // The same AES-256-GCM / HKDF-SHA256 design as Google SecretBox, with a separate purpose key and row-bound AAD.
 // Google keys, ciphertext, cookies, and their historical AAD are deliberately unchanged.
 import { createCipheriv, createDecipheriv, createHash, hkdfSync, randomBytes } from 'node:crypto';
+import { InferenceError, type InferenceResponse } from '../ai/inference.ts';
 import { isSealedValue, type SealedValue } from '../connectors/google/crypto.ts';
+import { safeInferenceError, sanitizeInferenceResponse } from './safety.ts';
 
 export interface ProviderConnectionBinding {
   workspaceId: string;
@@ -51,6 +53,46 @@ export class ProviderConnectionSecrets {
       };
     } finally {
       plaintext.fill(0);
+    }
+  }
+
+  /** Server-only invocation capability. Neither the credential nor upstream error/diagnostic objects escape. */
+  async invoke(
+    sealed: unknown,
+    binding: ProviderConnectionBinding,
+    dispatch: (apiKey: string) => Promise<InferenceResponse>,
+  ): Promise<InferenceResponse> {
+    if (!isSealedValue(sealed) || sealed.kid !== this.#kid)
+      throw new InferenceError('not_configured', 'The inference credential is unreadable');
+    let plaintext: Buffer | undefined;
+    try {
+      const iv = Buffer.from(sealed.iv, 'base64url');
+      const tag = Buffer.from(sealed.tag, 'base64url');
+      if (iv.length !== 12 || tag.length !== 16) throw new Error();
+      const decipher = createDecipheriv('aes-256-gcm', this.#key, iv);
+      decipher.setAAD(aad(binding));
+      decipher.setAuthTag(tag);
+      plaintext = Buffer.concat([decipher.update(Buffer.from(sealed.data, 'base64url')), decipher.final()]);
+      const value: unknown = JSON.parse(plaintext.toString('utf8'));
+      if (
+        !value ||
+        typeof value !== 'object' ||
+        !('apiKey' in value) ||
+        typeof value.apiKey !== 'string' ||
+        !/^[\x21-\x7e]{1,8192}$/.test(value.apiKey)
+      )
+        throw new Error();
+      // No closure containing this string is retained in the service or returned to the caller.
+      try {
+        return sanitizeInferenceResponse(await dispatch(value.apiKey), value.apiKey);
+      } catch (error) {
+        throw safeInferenceError(error);
+      }
+    } catch (error) {
+      if (error instanceof InferenceError) throw error;
+      throw new InferenceError('not_configured', 'The inference credential is unreadable');
+    } finally {
+      plaintext?.fill(0);
     }
   }
 

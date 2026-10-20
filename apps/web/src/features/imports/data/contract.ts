@@ -1,4 +1,4 @@
-// The import backend contract the wizard codes against (research/architecture/decisions/slice4-contracts.md:
+// The import backend contract the wizard codes against:
 // `imports.create / uploadRows / mappableProperties / setMapping / reviewValues / setOverride / createOptions /
 // preview / run / status / cancel / history`). Shapes follow C2 import.md §I7 (mapping → mapping properties with
 // overrides keyed by the raw value's hash; job → raw rows, mappable columns, per-column resolution, plan → strategies →

@@ -21,7 +21,7 @@ export type CreateProviderConnectionInput = z.input<typeof createInputSchema>;
 export type RotateProviderConnectionInput = z.input<typeof rotateInputSchema>;
 export type DisableProviderConnectionInput = z.input<typeof versionedInputSchema>;
 
-interface ConnectionRow {
+export interface ConnectionRow {
   id: string;
   workspace_id: string;
   owner_kind: 'workspace' | 'member';
@@ -62,7 +62,7 @@ function parse<S extends z.ZodType>(schema: S, input: unknown): z.output<S> {
   return result.data;
 }
 
-const bindingOf = (row: ConnectionRow): ProviderConnectionBinding => ({
+export const bindingOf = (row: ConnectionRow): ProviderConnectionBinding => ({
   workspaceId: row.workspace_id,
   connectionId: row.id,
   ownerKind: row.owner_kind,
@@ -71,7 +71,7 @@ const bindingOf = (row: ConnectionRow): ProviderConnectionBinding => ({
 });
 
 /** Only current authenticated humans manage credentials; tokens, agents, workflows, and system fallback deny. */
-async function caller(tx: Tx) {
+export async function caller(tx: Tx) {
   if (tx.ctx.actor.type !== 'workspace-member') throw forbidden('Provider connections require a workspace member');
   const row = await tx.db
     .selectFrom('workspace_members')
@@ -95,12 +95,17 @@ function requireManage(row: ConnectionRow, actor: Caller) {
   if (row.owner_kind === 'member' && row.owner_id !== actor.id) throw notFound('Provider connection not found');
 }
 
-async function load(tx: Tx, actor: Caller, id: string, lock = false): Promise<ConnectionRow> {
+export async function loadConnection(
+  tx: Tx,
+  actor: Caller,
+  id: string,
+  lock: 'update' | 'share' | false = false,
+): Promise<ConnectionRow> {
   const { rows } = await sql<ConnectionRow>`
     SELECT * FROM provider_connections
     WHERE workspace_id = ${tx.workspaceId}::uuid AND id = ${id}::uuid
       AND (owner_kind = 'workspace' OR (owner_kind = 'member' AND owner_id = ${actor.id}::uuid))
-    ${lock ? sql`FOR UPDATE` : sql``}`.execute(tx.db);
+    ${lock === 'update' ? sql`FOR UPDATE` : lock === 'share' ? sql`FOR SHARE` : sql``}`.execute(tx.db);
   const row = rows[0];
   if (!row) throw notFound('Provider connection not found');
   return row;
@@ -183,7 +188,7 @@ export function createProviderConnections(options: { database: Database; encrypt
           await changed(tx, actor, row, 'created');
           return metadata(row);
         }
-        const existing = await load(tx, actor, data.id);
+        const existing = await loadConnection(tx, actor, data.id);
         requireManage(existing, actor);
         if (
           existing.owner_kind !== binding.ownerKind ||
@@ -199,7 +204,7 @@ export function createProviderConnections(options: { database: Database; encrypt
     async get(ctx: ServiceContext, id: string): Promise<ProviderConnectionMetadata> {
       const connectionId = parse(idSchema, id);
       return runInWorkspace(options.database, ctx, async (tx) =>
-        metadata(await load(tx, await caller(tx), connectionId)),
+        metadata(await loadConnection(tx, await caller(tx), connectionId)),
       );
     },
 
@@ -218,7 +223,7 @@ export function createProviderConnections(options: { database: Database; encrypt
       const data = parse(rotateInputSchema, input);
       return runInWorkspace(options.database, ctx, async (tx) => {
         const actor = await caller(tx);
-        const row = await load(tx, actor, data.id, true);
+        const row = await loadConnection(tx, actor, data.id, 'update');
         requireManage(row, actor);
         checkVersion(row, data.expectedVersion);
         const sealed = secrets.seal(data.apiKey, bindingOf(row));
@@ -237,7 +242,7 @@ export function createProviderConnections(options: { database: Database; encrypt
       const data = parse(versionedInputSchema, input);
       return runInWorkspace(options.database, ctx, async (tx) => {
         const actor = await caller(tx);
-        const row = await load(tx, actor, data.id, true);
+        const row = await loadConnection(tx, actor, data.id, 'update');
         requireManage(row, actor);
         checkVersion(row, data.expectedVersion);
         if (!row.enabled) return metadata(row);

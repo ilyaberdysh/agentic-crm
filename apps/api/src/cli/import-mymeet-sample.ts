@@ -1,5 +1,5 @@
-// Imports a mymeet call into a workspace through the public REST API (/v2), exactly as the mymeet integration does
-// (research/architecture/decisions/mymeet-calls-import.md):
+// Imports a mymeet call into a workspace through the public REST API (/v2).
+// Request sequence:
 //   1. POST /v2/meetings                              title, times, participants (emails → people / companies)
 //   2. POST /v2/meetings/{meeting_id}/call_recordings  transcript segments (≤ 4,000; speaker name + email, seconds)
 //   3. (optional) poll GET …/call_recordings/{id} until `completed` (speakers mapped, summaries written; the

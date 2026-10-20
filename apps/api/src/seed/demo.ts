@@ -1,6 +1,5 @@
-// Demo data (ARCHITECTURE D-23, BACKLOG 1.01): team accounts and a `mymeet` workspace mirroring the research seed
-// of Attio's test workspace (research/tools/seed/seed.mjs): 8 companies on example.com domains, 16 people, a custom
-// object "Projects" with 15 attribute types and 12 records, Deals activated with a few deals, and default views.
+// Demo data (ARCHITECTURE D-23, BACKLOG 1.01): team accounts and a `mymeet` workspace with 8 companies on example.com
+// domains, 16 people, a custom "Projects" object with 15 attribute types and 12 records, deals, and default views.
 //
 // Every write goes through the domain services (I1) acting as the first team member. Ids are derived from the
 // workspace id and a stable key, so re-running is a no-op for anything that exists (PUT-idempotent creates, I3):
