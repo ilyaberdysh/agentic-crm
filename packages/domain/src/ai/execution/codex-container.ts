@@ -255,7 +255,6 @@ export class CodexContainerSandbox {
         '--cgroupns=private',
         '--userns=keep-id',
         `--user=${uid}:${gid}`,
-        '--passwd=false',
         '--cap-drop=all',
         '--security-opt=no-new-privileges',
         '--security-opt=label=disable',
