@@ -99,15 +99,15 @@ items:
   - id: B016
     title: Ship a standalone paired-runner daemon and authenticated MCP relay
     status: done
-    why_deferred: This change delivers the enrollment, grants, dispatch protocol, MCP transport, and sandbox primitives, but not a single packaged process that connects them end to end for operators.
+    why_deferred: The standalone runner now connects enrollment, grants, local-model dispatch, authenticated MCP transport, and the sandbox adapter in one operator process.
     revisit_when: Before calling Codex CLI execution turnkey or documenting it as a one-command production path.
 
   - id: B017
-    title: Run live Codex sandbox conformance on Linux with rootless Podman
-    why_deferred: Unit and fake-process coverage runs on macOS, while the live isolation test requires a Linux host with rootless Podman and cgroup support.
+    title: Complete authenticated Codex acceptance on each supported Linux runner host
+    why_deferred: GitHub CI now passes the credential-free live rootless-Podman kernel-boundary probe. Authenticated generation and native-tool denial still require operator-host acceptance with the exact CLI, image, profile, and egress policy that will handle CRM data.
     revisit_when: Before enabling the standalone runner for sensitive CRM data or publishing a runner image.
 
   - id: B018
     title: Complete independent provenance review before public visibility
-    why_deferred: A separate automated technical audit on 2026-10-20 verified the export inventory and found no Gitleaks findings in advertised export refs, but confirmed derivation of API contracts from Attio OpenAPI and UI tokens from shipped JS/CSS. Rights disposition, independent review of inherited implementation, and an author or rights-holder attestation remain unresolved; PROVENANCE.md records the evidence and closure checklist.
+    why_deferred: A refreshed automated technical audit on 2026-10-20 verified the final implementation head and advertised export refs. Gitleaks reported only the documented token-source SHA-256 in PROVENANCE.md, which was inspected as a content fingerprint rather than a credential. The audit also confirmed derivation of API contracts from Attio OpenAPI and UI tokens from shipped JS/CSS. Rights disposition, independent review of inherited implementation, and an author or rights-holder attestation remain unresolved; PROVENANCE.md records the evidence and closure checklist.
     revisit_when: Before changing the personal repository from private to public.
