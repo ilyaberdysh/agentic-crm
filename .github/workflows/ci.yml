@@ -57,6 +57,21 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Start S3-compatible storage
+        run: |
+          docker run --detach --rm --name agentic-crm-s3 \
+            --publish 8333:8333 \
+            chrislusf/seaweedfs:latest \
+            server -s3 -s3.port=8333 -dir=/data -volume.max=0
+          for attempt in {1..30}; do
+            if curl --silent --show-error http://127.0.0.1:8333/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs agentic-crm-s3
+          exit 1
+
       - name: Test
         # Integration suites share one PostgreSQL service and exercise real job
         # workers. Run packages serially so queue timing remains deterministic
