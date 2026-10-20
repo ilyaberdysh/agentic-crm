@@ -36,7 +36,7 @@ if (command === 'info') {
           NetworkMode: mode === 'host-network' ? 'host' : 'none',
           PidMode: 'private',
           IpcMode: 'private',
-          CgroupnsMode: 'private',
+          CgroupMode: 'private',
           CapAdd: [],
           Devices: [],
           Binds: [],

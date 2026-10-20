@@ -462,7 +462,9 @@ export function verifyContainerInspection(raw: string, binds: { source: string; 
           NetworkMode: z.literal('none'),
           PidMode: z.literal('private'),
           IpcMode: z.literal('private'),
-          CgroupnsMode: z.literal('private'),
+          // Podman 5 reports CgroupMode; Podman 6 renamed the inspect field to CgroupnsMode.
+          CgroupMode: z.literal('private').optional(),
+          CgroupnsMode: z.literal('private').optional(),
           CapAdd: z.array(z.string()).nullable().optional(),
           Devices: z.array(z.unknown()).nullable().optional(),
           Binds: z.array(z.string()).nullable().optional(),
@@ -475,7 +477,12 @@ export function verifyContainerInspection(raw: string, binds: { source: string; 
     .length(1);
   try {
     const [container] = inspectionSchema.parse(JSON.parse(raw));
-    if (!container || container.HostConfig.CapAdd?.length || container.HostConfig.Devices?.length) {
+    if (
+      !container ||
+      (container.HostConfig.CgroupMode ?? container.HostConfig.CgroupnsMode) !== 'private' ||
+      container.HostConfig.CapAdd?.length ||
+      container.HostConfig.Devices?.length
+    ) {
       throw new Error('Unexpected inherited authority');
     }
     for (const mount of container.Mounts) {
