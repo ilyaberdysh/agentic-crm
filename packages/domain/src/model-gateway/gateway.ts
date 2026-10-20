@@ -191,21 +191,23 @@ export function createModelGateway(options: ModelGatewayOptions) {
   }
   /** Absolute two-minute lifetime: a crashed API cannot leave CRM prompts claimable indefinitely. */
   async function expireRunnerInvocationsInTransaction(tx: Tx, runnerId: string, memberId: string): Promise<void> {
-    await sql`WITH expired AS (
-      UPDATE model_runner_dispatches d SET status = 'settled', encrypted_request = NULL,
-        lease_expires_at = NULL, settled_at = clock_timestamp()
-      FROM model_invocations source
-      WHERE d.workspace_id = ${tx.workspaceId}::uuid AND d.runner_id = ${runnerId}::uuid
-        AND source.workspace_id = d.workspace_id AND source.id = d.invocation_id
-        AND source.member_id = ${memberId}::uuid AND source.outcome = 'pending'
-        AND d.status IN ('queued', 'leased')
-        AND d.created_at <= clock_timestamp() - interval '120 seconds'
-      RETURNING d.invocation_id
-    )
-    UPDATE model_invocations target SET outcome = 'failed', failure_code = 'transient',
+    // Keep the same invocation -> dispatch lock order as cancellation and completion.
+    await sql`UPDATE model_invocations target SET outcome = 'failed', failure_code = 'transient',
       completed_at = clock_timestamp()
+    FROM model_runner_dispatches d
     WHERE target.workspace_id = ${tx.workspaceId}::uuid AND target.outcome = 'pending'
-      AND target.id IN (SELECT invocation_id FROM expired)`.execute(tx.db);
+      AND target.member_id = ${memberId}::uuid AND target.runner_id = ${runnerId}::uuid
+      AND d.workspace_id = target.workspace_id AND d.invocation_id = target.id
+      AND d.runner_id = target.runner_id AND d.status IN ('queued', 'leased')
+      AND d.created_at <= clock_timestamp() - interval '120 seconds'`.execute(tx.db);
+    await sql`UPDATE model_runner_dispatches d SET status = 'settled', encrypted_request = NULL,
+      lease_expires_at = NULL, settled_at = clock_timestamp()
+    FROM model_invocations target
+    WHERE d.workspace_id = ${tx.workspaceId}::uuid AND d.runner_id = ${runnerId}::uuid
+      AND target.workspace_id = d.workspace_id AND target.id = d.invocation_id
+      AND target.member_id = ${memberId}::uuid AND target.outcome = 'failed'
+      AND target.failure_code = 'transient' AND d.status IN ('queued', 'leased')
+      AND d.created_at <= clock_timestamp() - interval '120 seconds'`.execute(tx.db);
   }
   async function save(
     ctx: ServiceContext,
@@ -646,16 +648,37 @@ export function createModelGateway(options: ModelGatewayOptions) {
         const target = await loadTarget(tx, member, invocation.target_id);
         if (target.runner_id !== principal.runnerId || target.owner_id !== member.id)
           throw forbidden('The runner binding has changed');
-        const { rows: dispatches } = await sql<{ status: string; generation: string; live: boolean }>`
+        const { rows: dispatches } = await sql<{
+          status: string;
+          generation: string;
+          leaseLive: boolean;
+          withinDeadline: boolean;
+        }>`
           SELECT status, lease_generation::text AS generation,
-            lease_expires_at > clock_timestamp() AS live FROM model_runner_dispatches
+            lease_expires_at > clock_timestamp() AS "leaseLive",
+            created_at > clock_timestamp() - interval '120 seconds' AS "withinDeadline"
+          FROM model_runner_dispatches
           WHERE workspace_id = ${tx.workspaceId}::uuid AND invocation_id = ${invocationId}::uuid
             AND runner_id = ${principal.runnerId}::uuid FOR UPDATE`.execute(tx.db);
         const dispatch = dispatches[0];
         if (!dispatch || dispatch.generation !== input.leaseGeneration)
           throw conflict('VERSION_CONFLICT', 'Runner invocation lease has changed');
         if (dispatch.status === 'settled' && invocation.outcome !== 'pending') return;
-        if (dispatch.status !== 'leased' || !dispatch.live)
+        if (!dispatch.withinDeadline && dispatch.status === 'leased' && invocation.outcome === 'pending') {
+          await tx.db
+            .updateTable('model_invocations')
+            .set({ outcome: 'failed', failure_code: 'transient', completed_at: tx.now })
+            .where('workspace_id', '=', tx.workspaceId)
+            .where('id', '=', invocationId)
+            .where('outcome', '=', 'pending')
+            .execute();
+          await sql`UPDATE model_runner_dispatches SET status = 'settled', encrypted_request = NULL,
+            lease_expires_at = NULL, settled_at = clock_timestamp()
+            WHERE workspace_id = ${tx.workspaceId}::uuid AND invocation_id = ${invocationId}::uuid
+              AND status = 'leased' AND lease_generation = ${input.leaseGeneration}::bigint`.execute(tx.db);
+          return;
+        }
+        if (dispatch.status !== 'leased' || !dispatch.leaseLive || !dispatch.withinDeadline)
           throw conflict('VERSION_CONFLICT', 'Runner invocation lease has expired');
         if (invocation.outcome !== 'pending')
           throw conflict('VERSION_CONFLICT', 'Runner invocation is already settled');

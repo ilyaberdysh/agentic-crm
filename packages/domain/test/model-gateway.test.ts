@@ -435,6 +435,73 @@ describe('stored model gateway (PostgreSQL and injected HTTP)', () => {
     expect(rows[0]).toMatchObject({ status: 'settled', encryptedRequest: null });
   });
 
+  it('discards a completion that crosses the absolute deadline while waiting for a target lock', async () => {
+    const ws = await createWorkspace();
+    const runnerId = newId();
+    const proof = Symbol('runner proof');
+    const w = world({
+      authorizeRunner: async () => {},
+      authenticateRunnerCompletion: async () => ({
+        workspaceId: ws.workspaceId,
+        runnerId,
+        memberId: ws.memberId,
+      }),
+    });
+    const target = await w.gateway.targets.create(ws.ctx, {
+      id: newId(),
+      name: 'Deadline local model',
+      kind: 'runner-local',
+      ownerKind: 'member',
+      provider: 'openai-compatible',
+      model: 'local-model',
+      runnerId,
+      endpoint: 'http://127.0.0.1:11434/v1',
+      features: localFeatures,
+    });
+    const invocationId = newId();
+    await sql`INSERT INTO model_invocations
+      (id, workspace_id, target_id, target_version, member_id, provider, model, runner_id, outcome,
+        cost_status, cost_reason, created_at)
+      VALUES (${invocationId}::uuid, ${ws.workspaceId}::uuid, ${target.id}::uuid, ${target.version},
+        ${ws.memberId}::uuid, 'openai-compatible', 'local-model', ${runnerId}::uuid, 'pending',
+        'unknown', 'usage_unavailable', clock_timestamp() - interval '119 seconds')`.execute(database.kysely);
+    await sql`INSERT INTO model_runner_dispatches
+      (invocation_id, workspace_id, runner_id, target_id, target_version, encrypted_request, status,
+        lease_generation, lease_expires_at, created_at)
+      VALUES (${invocationId}::uuid, ${ws.workspaceId}::uuid, ${runnerId}::uuid, ${target.id}::uuid,
+        ${target.version}, '{"test":"ciphertext"}'::jsonb, 'leased', 1,
+        clock_timestamp() + interval '60 seconds', clock_timestamp() - interval '119 seconds')`.execute(
+      database.kysely,
+    );
+    let releaseTarget!: () => void;
+    let reportLocked!: () => void;
+    const release = new Promise<void>((resolve) => {
+      releaseTarget = resolve;
+    });
+    const locked = new Promise<void>((resolve) => {
+      reportLocked = resolve;
+    });
+    const blocker = database.kysely.transaction().execute(async (tx) => {
+      await tx.selectFrom('model_targets').select('id').where('id', '=', target.id).forUpdate().execute();
+      reportLocked();
+      await release;
+    });
+    await locked;
+    const completion = w.gateway.completeRunnerInvocation(
+      { invocationId, leaseGeneration: '1', outcome: 'completed', text: 'too late', usage: unknown },
+      proof,
+    );
+    await new Promise((resolve) => setTimeout(resolve, 2_500));
+    releaseTarget();
+    await blocker;
+    await completion;
+    expect(await w.gateway.getRunnerInvocation(ws.ctx, invocationId)).toMatchObject({
+      outcome: 'failed',
+      failureCode: 'transient',
+      text: null,
+    });
+  }, 10_000);
+
   it('fails closed for unenrolled runners and unconfigured completion authentication', async () => {
     const ws = await createWorkspace();
     const input: CreateModelTargetInput = {
