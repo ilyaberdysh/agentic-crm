@@ -100,8 +100,8 @@ The destination is one provider contract across API keys, OpenAI-compatible loca
 | Deterministic fake | Wired into the application through `AGENTIC_CRM_LLM=fake` for tests and demos. |
 | OpenAI-compatible HTTP | Saved cloud connections can be selected for application inference; endpoints are policy-checked and redirects fail closed. A management UI is still pending. |
 | Scoped API-key storage | Encrypted connections are resolved only for a scoped invocation, with masked metadata outside the adapter boundary. Verification and management UI are still pending. |
-| Local OpenAI-compatible | Requests are dispatched through an enrolled workspace runner rather than letting the hosted API reach arbitrary user URLs. The standalone runner daemon is still pending. |
-| Codex CLI | Enrollment, scoped grants, auth-profile metadata, and a rootless-container sandbox are implemented as foundations. No authenticated live generation or Linux conformance run has been completed. |
+| Local OpenAI-compatible | Requests are dispatched through the standalone enrolled workspace runner rather than letting the hosted API reach arbitrary user URLs. |
+| Codex CLI | The standalone runner connects enrollment, isolated auth profiles, scoped grants, authenticated MCP, and the rootless-container sandbox. Authenticated live generation still requires acceptance on the operator's Linux host. |
 
 The full CLI safety boundary and its limitations are documented in [the execution experiment](packages/domain/src/ai/execution/README.md).
 
@@ -134,6 +134,7 @@ The monorepo is organized around those boundaries:
 | `apps/web` | React CRM and the record-level Agent experience |
 | `apps/api` | Fastify, tRPC, public API, auth, curated agent endpoints |
 | `apps/worker` | Background CRM jobs |
+| `apps/runner` | Outbound paired runner for local models and sandboxed Codex execution |
 | `packages/domain` | CRM services, agentic actions, evidence, queue, model gateway |
 | `packages/contracts` | Shared schemas, policy and module contracts |
 | `packages/db` | PostgreSQL schema, migrations, RLS, and seed |
@@ -166,8 +167,7 @@ Useful project documents:
 Near-term work is intentionally focused:
 
 - add verification and management UI for saved provider connections;
-- package the Codex CLI foundations as a standalone runner and complete live Linux sandbox conformance before any sensitive CRM data reaches it;
-- connect the authenticated MCP transport to the standalone runner relay;
+- complete authenticated Codex acceptance on each supported Linux runner host before sensitive CRM data reaches it;
 - run queue claiming and reconciliation in production workers;
 - expand the Agent tab from the latest action into a useful record-level work history;
 - add more evidence sources and high-value CRM capabilities without weakening the policy boundary.
@@ -176,7 +176,7 @@ Ideas that are useful but not ready belong in [`docs/agentic-core/backlog.yaml`]
 
 ## Open-source status
 
-Agentic CRM is licensed under the [Apache License 2.0](LICENSE) and is an early public preview, not a production-ready CRM. An independent provenance review has not been completed. Known review items and the release gate are listed in [PROVENANCE.md](PROVENANCE.md). Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
+Agentic CRM declares the [Apache License 2.0](LICENSE) and is an early preview candidate, not a production-ready CRM. An automated technical provenance audit is recorded in [PROVENANCE.md](PROVENANCE.md); it found unresolved rights questions for inherited API contracts and UI tokens. Independent rights clearance and an author attestation remain required, so the repository must stay private until that gate is complete. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
 
 Source-level dependency attribution is summarized in [NOTICE](NOTICE). A complete license audit is still required before publishing binary or container distributions that bundle third-party code.
 

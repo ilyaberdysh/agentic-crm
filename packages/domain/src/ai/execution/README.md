@@ -75,9 +75,12 @@ broker. Every capability call must derive actor/scope/grant on the server, enfor
 lease expiry/revocation and policy, and preserve atomic CRM writes. The scope
 comparison and socket ownership check here are **not** server authentication.
 Never deserialize the execution contract directly from a model or public API.
-This module does not implement enrollment, lease validation, the authenticated
-MCP relay, or application/worker wiring. Their integration is a separate acceptance
-requirement; supplying an arbitrary local socket does not complete it.
+This module does not implement enrollment, lease validation or the authenticated
+MCP relay itself. The standalone [`apps/runner`](../../../../../apps/runner/README.md)
+daemon constructs this scope from authenticated claims, renews the exact lease,
+and exposes a private relay restricted to the server-issued execution descriptor.
+Live authenticated acceptance is still required; supplying an arbitrary local
+socket does not complete it.
 
 Native CLI tools remain disabled by the pinned manifest. Scoped CRM requests can
 use only the configured `crm` MCP server; raw tool arguments/results never become
@@ -120,8 +123,8 @@ the authenticated MCP relay on that runner before enabling CRM work. Reference:
 Status: local synthetic-data harness, tested with fake executables. The repository
 also contains paired-runner enrollment, scoped execution grants, auth-profile
 metadata, authenticated MCP transport, and a rootless Podman sandbox. Those
-primitives are not yet packaged into a standalone runner daemon or verified by an
-authenticated live generation run on Linux.
+primitives are connected by the standalone [`apps/runner`](../../../../../apps/runner/README.md)
+daemon. An authenticated live generation run on Linux remains a separate acceptance gate.
 
 `contract.ts` is an execution boundary, separate from the inference client. The
 only request is synthetic text generation with native tools and CRM access
@@ -166,10 +169,9 @@ read-only mode is not a host-wide network policy, and a process can escape its
 group with setsid. The harness process itself can access its auth and provider
 network. No native tool authority is granted by the request, but actual denial of
 every native tool has not been independently established against a live CLI.
-Therefore this must remain a manually invoked synthetic-data experiment, with no
-CRM input or mutation access and no API/worker integration. B016 tracks the
-standalone runner and authenticated relay; B017 tracks live Linux sandbox
-certification.
+Therefore this harness must remain a manually invoked synthetic-data experiment,
+with no CRM input or mutation access and no API/worker integration. The standalone
+daemon uses the separate container adapter. B017 tracks live Linux sandbox certification.
 
 One shared deadline and byte budget cover all preflight and execution subprocesses.
 First-event and idle timers reset only on parsed complete events during execution;
@@ -199,9 +201,8 @@ denial for the exact executable and isolate the host appropriately. Use only a
 fresh empty directory and synthetic text such as “Reply with SYNTHETIC_OK”; never
 use CRM data, mounted user files, production credentials, or external mutation
 tools. A CLI runs locally but can send the prompt to its vendor. Live generation
-and end-to-end runner integration remain explicit future work rather than
-acceptance claims for these fixture tests. B016 tracks the standalone runner and
-relay; B017 tracks live Linux conformance and native-tool denial.
+remains a separate acceptance gate rather than an acceptance claim for these
+fixture tests. B017 tracks live Linux conformance and native-tool denial.
 
 The implementation checked the installed CLI help and official OpenAI
 [non-interactive mode](https://learn.chatgpt.com/docs/non-interactive-mode) and

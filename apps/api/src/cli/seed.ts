@@ -1,7 +1,7 @@
 // Seeds the demo workspace (see src/seed/demo.ts). Run through `pnpm seed` (packages/db/src/seed.ts applies the
 // migrations first), or directly: `pnpm --filter @agentic-crm/api exec tsx src/cli/seed.ts`.
-//   SEED_USERS="ilya@mymeet.ai:Ilya,anna@mymeet.ai:Anna"   team accounts (default: ilya@ and team@mymeet.ai)
-//   SEED_WORKSPACE_SLUG=mymeet                               workspace handle
+//   SEED_USERS="admin@example.com:Admin,team@example.com:Team" team accounts (defaults are example.com addresses)
+//   SEED_WORKSPACE_SLUG=agentic-crm                           workspace handle
 // Passwords of newly created accounts are generated and printed once; existing accounts keep theirs.
 import { createDb } from '@agentic-crm/db';
 import { createDomain } from '@agentic-crm/domain';
@@ -17,7 +17,7 @@ try {
   const users = parseSeedUsers(process.env.SEED_USERS);
   const result = await seedDemo(
     { domain: createDomain({ database }), auth: createAuth({ db: createKysely(pool), config }) },
-    { users, workspaceSlug: process.env.SEED_WORKSPACE_SLUG?.trim() || 'mymeet' },
+    { users, workspaceSlug: process.env.SEED_WORKSPACE_SLUG?.trim() || 'agentic-crm' },
   );
   const where = new URL(config.databaseUrl);
   console.log(

@@ -67,12 +67,14 @@ export function AccountsPage() {
           id="connected-accounts"
           title="Connected accounts"
           description={
-            <>
-              We take your privacy very seriously. Read our{' '}
-              <a className={s.privacy} href={brand.privacyUrl} target="_blank" rel="noreferrer">
-                Privacy Policy
-              </a>
-            </>
+            brand.privacyUrl && (
+              <>
+                We take your privacy very seriously. Read our{' '}
+                <a className={s.privacy} href={brand.privacyUrl} target="_blank" rel="noreferrer">
+                  Privacy Policy
+                </a>
+              </>
+            )
           }
         >
           {mailboxes.isPending ? (

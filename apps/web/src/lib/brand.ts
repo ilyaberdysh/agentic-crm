@@ -1,15 +1,14 @@
-// Product identity. Attio's name, wordmark and legal entity are not reused (clean room, PLAN §1); the layout of the
-// places that show them (auth pages, footers, document titles) follows Attio.
+// Product identity and public project links. Policy URLs can be supplied by a deployment when it has adopted them.
 export const brand = {
   /** Shown in document titles ("Home - <name>") and the wordmark. */
   name: 'Agentic CRM',
   /** Lower-case wordmark text next to the logo mark. */
   wordmark: 'agentic crm',
-  legalEntity: 'mymeet.ai',
-  privacyUrl: 'https://mymeet.ai/privacy',
-  supportUrl: 'https://mymeet.ai/support',
-  termsUrl: 'https://mymeet.ai/terms',
-  acceptableUseUrl: 'https://mymeet.ai/terms',
+  supportUrl: 'https://github.com/ilyaberdysh/agentic-crm/issues',
+  // Set these only when the deployment has adopted corresponding policies.
+  privacyUrl: import.meta.env.VITE_PRIVACY_URL?.trim() || '',
+  termsUrl: import.meta.env.VITE_TERMS_URL?.trim() || '',
+  acceptableUseUrl: import.meta.env.VITE_ACCEPTABLE_USE_URL?.trim() || '',
 } as const;
 
 export function documentTitle(page?: string | null): string {

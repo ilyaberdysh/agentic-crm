@@ -107,6 +107,7 @@ describe('runner container sandbox protocol (fake runtime, not conformance evide
 
   it.each([
     ['rootful', 'sandbox_unavailable'],
+    ['old-runtime', 'sandbox_unavailable'],
     ['host-network', 'sandbox_conformance_failed'],
     ['injected-volume', 'sandbox_conformance_failed'],
     ['writable-bind', 'sandbox_conformance_failed'],

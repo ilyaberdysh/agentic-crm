@@ -12,7 +12,7 @@ if (command === 'info') {
   console.log(
     JSON.stringify({
       host: { os: 'linux', cgroupVersion: 'v2', security: { rootless: mode !== 'rootful' } },
-      version: { Version: '6.1.3' },
+      version: { Version: mode === 'old-runtime' ? '5.6.2' : '5.7.0' },
     }),
   );
 } else if (command === 'create') {

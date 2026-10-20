@@ -14,7 +14,7 @@ const scopeSchema = z.strictObject({
   runnerId: z.uuid(),
   workspaceId: z.uuid(),
   taskId: z.uuid(),
-  leaseGeneration: z.number().int().positive(),
+  leaseGeneration: z.union([z.string().regex(/^[1-9]\d*$/), z.number().int().positive().max(Number.MAX_SAFE_INTEGER)]),
 });
 export type CodexRunnerScope = z.infer<typeof scopeSchema>;
 const baseRequest = {
@@ -77,6 +77,13 @@ export interface CodexContainerResult extends CodexSandboxConformance {
 const memoryBytes = 536_870_912;
 const pids = 64;
 const bootstrap = fileURLToPath(new URL('./container/bootstrap.mjs', import.meta.url));
+const supportedPodmanVersion = (version: string) => {
+  const match = /^(\d+)\.(\d+)(?:\.|$)/.exec(version);
+  if (!match) return false;
+  const major = Number(match[1]);
+  const minor = Number(match[2]);
+  return major > 5 || (major === 5 && minor >= 7);
+};
 
 /** An enforceable runner-side boundary. It never mounts a checkout, host HOME, or runtime socket. */
 export class CodexContainerSandbox {
@@ -168,10 +175,13 @@ export class CodexContainerSandbox {
         cgroupVersion: z.literal('v2'),
         security: z.object({ rootless: z.literal(true) }),
       }),
-      version: z.object({ Version: z.string().regex(/^6\./) }),
+      version: z.object({ Version: z.string().refine(supportedPodmanVersion) }),
     });
     if (info.exitCode !== 0 || !infoSchema.safeParse(runtime).success) {
-      throw new ExecutionError('sandbox_unavailable', 'Podman 6, rootless execution, and cgroup v2 are required.');
+      throw new ExecutionError(
+        'sandbox_unavailable',
+        'Podman 5.7 or newer, rootless execution, and cgroup v2 are required.',
+      );
     }
     let authFile: string | undefined;
     if (request) {

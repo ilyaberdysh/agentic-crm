@@ -1,5 +1,9 @@
 # Paired runner protocol
 
+The standalone outbound daemon lives in [`apps/runner`](../apps/runner/README.md).
+Its operator guide covers pairing, private credential storage, local endpoint
+allowlists, Codex configuration, shutdown and the live acceptance gates.
+
 An operator pairs a runner from a workspace admin session. `POST /api/agentic/runners/enrollments` returns a ten-minute, single-use enrollment token. The runner calls `POST /api/agentic/runners/enroll` with that token, a runner UUID and optional CLI auth profile metadata (`id`, `provider`, `label`). Enrollment returns the runner bearer token once. The server stores only token hashes; the CLI login files and API credentials stay on the runner host. The operator can list and revoke runners through the admin-session routes.
 
 The runner connects outbound to the API. Every request after enrollment sends `Authorization: Bearer <runner token>`. The API derives the workspace from the token only to select the tenant transaction, then verifies its hash, revocation state and delegated member in that transaction. A removed or suspended member invalidates the runner. Workspace admins can call `POST /api/agentic/runners/:id/revoke` to invalidate the bearer and grants.

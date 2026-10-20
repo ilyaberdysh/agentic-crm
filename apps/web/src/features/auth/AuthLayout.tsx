@@ -1,5 +1,5 @@
 // Shared auth page shell ("AuthPage", K legacy-welcome §2): logo header, centred content, optional legal line,
-// footer "© {year} {entity} · Privacy Policy · Support" with optional Sign out.
+// footer "© {year} {project} · Privacy Policy · Support" with optional policy link and Sign out.
 
 import { cx } from '@agentic-crm/ui';
 import type { ReactNode } from 'react';
@@ -27,7 +27,7 @@ export function AuthLayout({ children, legal, signOut: showSignOut, wide, conten
         <Wordmark />
       </header>
       <div className={cx(s.content, wide && s.contentWide, contentClassName)}>{children}</div>
-      {legal && (
+      {legal && brand.termsUrl && (
         <p className={s.legal}>
           By proceeding you acknowledge that you have read, understood and agree to our{' '}
           <a className={s.link} href={brand.termsUrl} target="_blank" rel="noreferrer">
@@ -44,11 +44,13 @@ export function AuthFooter({ signOut: showSignOut }: { signOut?: boolean }) {
   return (
     <footer className={s.footer}>
       <span>
-        © {new Date().getFullYear()} {brand.legalEntity}
+        © {new Date().getFullYear()} {brand.name} project
       </span>
-      <a className={s.link} href={brand.privacyUrl} target="_blank" rel="noreferrer">
-        Privacy Policy
-      </a>
+      {brand.privacyUrl && (
+        <a className={s.link} href={brand.privacyUrl} target="_blank" rel="noreferrer">
+          Privacy Policy
+        </a>
+      )}
       <a className={s.link} href={brand.supportUrl} target="_blank" rel="noreferrer">
         Support
       </a>

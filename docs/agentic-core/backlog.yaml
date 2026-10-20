@@ -98,6 +98,7 @@ items:
 
   - id: B016
     title: Ship a standalone paired-runner daemon and authenticated MCP relay
+    status: done
     why_deferred: This change delivers the enrollment, grants, dispatch protocol, MCP transport, and sandbox primitives, but not a single packaged process that connects them end to end for operators.
     revisit_when: Before calling Codex CLI execution turnkey or documenting it as a one-command production path.
 
@@ -108,5 +109,5 @@ items:
 
   - id: B018
     title: Complete independent provenance review before public visibility
-    why_deferred: The repository inventory is documented, but legal and authorship review of inherited contract shapes and UI tokens requires an independent reviewer.
+    why_deferred: A separate automated technical audit on 2026-10-20 verified the export inventory and found no Gitleaks findings in advertised export refs, but confirmed derivation of API contracts from Attio OpenAPI and UI tokens from shipped JS/CSS. Rights disposition, independent review of inherited implementation, and an author or rights-holder attestation remain unresolved; PROVENANCE.md records the evidence and closure checklist.
     revisit_when: Before changing the personal repository from private to public.
