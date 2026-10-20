@@ -1,0 +1,6 @@
+[
+  {
+    "match": { "purpose": "fake-smoke", "contains": "ping" },
+    "reply": { "text": "pong" }
+  }
+]

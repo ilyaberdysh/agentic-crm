@@ -1,0 +1,7 @@
+data: {"id":"chatcmpl-fixture-stream","object":"chat.completion.chunk","model":"fixture-model","choices":[{"index":0,"delta":{"role":"assistant","content":"Hello "},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-fixture-stream","object":"chat.completion.chunk","model":"fixture-model","choices":[{"index":0,"delta":{"content":"stream."},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-fixture-stream","object":"chat.completion.chunk","model":"fixture-model","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"usage":{"prompt_tokens":8,"completion_tokens":4,"total_tokens":12}}
+
+data: [DONE]

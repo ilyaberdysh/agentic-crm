@@ -1,0 +1,128 @@
+{
+  "meeting": {
+    "title": "Discovery call — Northwind Robotics",
+    "description": "Imported from mymeet",
+    "start": "2026-10-09T14:00:00Z",
+    "end": "2026-10-09T14:30:00Z",
+    "timezone": "Europe/Moscow",
+    "participants": [
+      { "name": "Ilya Berdysh", "email": "ilya@mymeet.example.com", "is_organizer": true },
+      { "name": "Jane Cooper", "email": "jane.cooper@northwind.example.com", "is_organizer": false },
+      { "name": "Wade Warren", "email": "wade.warren@northwind.example.com", "is_organizer": false }
+    ]
+  },
+  "transcript": [
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 2.1,
+      "end": 7.4,
+      "text": "Hi Jane, hi Wade, thanks for making time today. Shall we start with a quick round of introductions?"
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 8.0,
+      "end": 14.2,
+      "text": "Sure. I run sales operations at Northwind, we sell warehouse robots to logistics companies."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 15.04,
+      "end": 21.6,
+      "text": "Wade leads our account executives, so he is the one living with the problem every day."
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 22.3,
+      "end": 33.9,
+      "text": "Right. My team has about forty customer calls a week and nobody writes proper notes. Deals stall because we forget what was promised."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 34.5,
+      "end": 41.0,
+      "text": "How do you handle follow-ups today? Is anything recorded in the CRM after a call?"
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 41.6,
+      "end": 52.8,
+      "text": "Mostly a two-line summary typed from memory, sometimes nothing. Managers cannot review calls, and onboarding new reps takes months."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 53.5,
+      "end": 63.0,
+      "text": "We tried another recorder last year but people disliked the bot joining calls, and the summaries were too generic to be useful."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 63.8,
+      "end": 76.2,
+      "text": "That is common. With mymeet the transcript and summary land on the company and the people in your CRM automatically, and you can define insight templates per call type."
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 77.0,
+      "end": 84.5,
+      "text": "Templates would help. For discovery calls we follow MEDDPICC, so pain, champion and decision process are what I need."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 85.2,
+      "end": 95.0,
+      "text": "On budget: we have money approved for sales tooling this quarter, around twenty thousand dollars per year. The decision is mine together with our CFO."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 95.6,
+      "end": 104.9,
+      "text": "Great. What would a successful pilot look like for you, and how long should it run?"
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 105.5,
+      "end": 117.0,
+      "text": "Two weeks with five reps. If managers can review calls without listening to them and notes are complete, that is a win."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 117.6,
+      "end": 124.0,
+      "text": "And security review: our IT team needs the data processing agreement before anyone installs anything."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 124.6,
+      "end": 135.8,
+      "text": "Understood. I will send the DPA and a pilot proposal by Friday, and set up the five seats once IT approves."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 136.4,
+      "end": 141.0,
+      "text": "Perfect. Let us reconvene next Thursday to kick off the pilot."
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 141.5,
+      "end": 144.2,
+      "text": "Thanks, talk soon."
+    }
+  ]
+}

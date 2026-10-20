@@ -1,0 +1,38 @@
+name: Feature proposal
+description: Propose a user problem or narrowly scoped product improvement.
+title: "proposal: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Who has the problem, what are they trying to do, and what blocks them today?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the observable result, not only a preferred implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or examples
+      description: Add sanitized examples, prior art, or workflow details if available.
+  - type: textarea
+    id: trust
+    attributes:
+      label: Agent trust boundary
+      description: If an agent changes CRM state, explain the evidence, approval, policy, and receipt you expect.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched the roadmap and existing issues before opening this proposal.
+          required: true
+        - label: I have not included customer data or secrets.
+          required: true

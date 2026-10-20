@@ -1,0 +1,84 @@
+schema_version: 1
+milestone: agentic-core-v1
+
+policy:
+  capture_when: useful work is discovered but does not block the active packet or milestone gate
+  required_fields: [id, title, why_deferred, revisit_when]
+  promotion_rule: promote only after the current gate or when evidence shows it blocks the critical path
+
+items:
+  - id: B001
+    title: Remove model I/O from transaction-held workflow and Ask web-search paths
+    why_deferred: Important runtime hardening, but independent from the current neutral adapter extraction.
+    revisit_when: Before enabling long-running or non-Anthropic model execution in those paths.
+
+  - id: B002
+    title: Persist workspace ProductModule enable and disable state
+    why_deferred: The first packet only needs a static built-in manifest and compiled registry.
+    revisit_when: Before a second module or workspace-selectable module ships.
+
+  - id: B003
+    title: Upgrade existing customized record layouts with the Agent tab
+    status: done
+    why_deferred: Layout migration belongs with the visible W9 Agent-tab implementation.
+    revisit_when: Completed in W9; retain this entry as backlog history.
+
+  - id: B004
+    title: Add endpoint registration and SSRF policy for OpenAI-compatible connections
+    why_deferred: The bounded W4 packet proves wire compatibility only; safe endpoint ownership is separate.
+    revisit_when: Before accepting user-configured URLs or enabling hosted calls to private endpoints.
+
+  - id: B005
+    title: Add production paired-runner enrollment and enforceable sandbox
+    why_deferred: W5 is an explicitly bounded local experiment and cannot claim production isolation.
+    revisit_when: Before any CLI receives real CRM data or mutation capabilities.
+
+  - id: B006
+    title: Represent unknown provider cost in persistent usage accounting
+    why_deferred: Neutral inference now preserves unknown cost, while legacy billing fails closed.
+    revisit_when: Before a BYO connection with unknown pricing can be selected in production.
+
+  - id: B007
+    title: Materialize provider credentials only inside a scoped adapter invocation
+    why_deferred: W3 deliberately stores and validates encrypted keys but exposes no plaintext resolver.
+    revisit_when: Before provider connection selection is wired to Anthropic or OpenAI-compatible execution.
+
+  - id: B008
+    title: Certify Codex native-tool denial and dedicated auth-profile lifecycle
+    why_deferred: W5 uses fake processes and rejects tool events, which does not prove prevention before execution.
+    revisit_when: Before a live Codex profile or any CRM data is allowed into the runner.
+
+  - id: B009
+    title: Add authenticated MCP host transport and enrollment
+    why_deferred: W9 proves one curated MCP-shaped tool adapter without introducing a generic server or SDK.
+    revisit_when: Before a CLI or external model connects to CRM capabilities over MCP.
+
+  - id: B010
+    title: Reconcile split EXECUTING action attempts before redispatch
+    why_deferred: The first local task-create broker commits the CRM write and receipt atomically; older split attempts fail closed.
+    revisit_when: Before remote executors or retries can leave an action in EXECUTING across transactions.
+
+  - id: B011
+    title: Reconcile and resume blocked agent tasks through the action owner
+    why_deferred: W8 conservatively blocks expired tasks linked to actions; choosing an outcome or retry is outside the dispatch queue.
+    revisit_when: Before a worker dispatches consequential actions or a product surface offers resume after lease expiry.
+
+  - id: B012
+    title: Add an explicit cancelled queue outcome for rejected or stale actions
+    why_deferred: W9 shows the persisted mismatch and prevents treating it as authority; adding a new durable terminal status requires a separate queue state-machine migration.
+    revisit_when: Before queued action work is dispatched automatically or terminal queue analytics ship.
+
+  - id: B013
+    title: Add a self-hosted installation doctor command
+    why_deferred: The first milestone proves the local demo with repository checks; a stable diagnostic contract depends on the public packaging and supported deployment shape.
+    revisit_when: Before the first public self-hosted preview or external installation guide ships.
+
+  - id: B014
+    title: Inventory provenance and distributable public inputs
+    why_deferred: The repository contains inherited research, mirrored public documentation, screenshots and generated artifacts that require legal and privacy review before public export.
+    revisit_when: Before repository visibility changes from private or an open-source license is selected.
+
+  - id: B015
+    title: Show every evidence reference and exact assignee identity in the approval surface
+    why_deferred: The first seeded vertical slice proposes one evidence-backed unassigned task; the persisted contract already permits multiple evidence references and assignees, while the current Agent tab summarizes those shapes too aggressively.
+    revisit_when: Before agents propose assigned tasks or actions supported by more than one evidence item.

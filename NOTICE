@@ -1,0 +1,17 @@
+Agentic CRM
+Copyright 2026 Agentic CRM contributors
+
+This product depends on third-party open-source software. Major direct
+dependencies include React, Fastify, TanStack Query and Router, tRPC, Zod,
+Kysely, PostgreSQL clients, Yjs, Hocuspocus, Tiptap/ProseMirror, Lucide,
+Vanilla Extract, Motion, CodeMirror, pg-boss, and the Anthropic TypeScript SDK.
+
+The authoritative dependency names and pinned versions are recorded in the
+workspace package.json files and pnpm-lock.yaml. Each dependency remains under
+its own copyright and license terms. This NOTICE is not a substitute for those
+licenses.
+
+Before publishing a binary, container image, hosted distribution, or other
+artifact that bundles third-party code, release maintainers must generate and
+review a complete license and attribution report for that artifact. The source
+repository does not yet claim that such a distribution audit has been completed.

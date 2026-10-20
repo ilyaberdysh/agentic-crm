@@ -1,0 +1,27 @@
+# Local dev stack. Ports chosen to avoid ones already used on the owner's Mac.
+name: agentic-crm
+services:
+  postgres:
+    image: pgvector/pgvector:pg18
+    ports: ["5450:5432"]
+    environment:
+      POSTGRES_USER: agentic_crm
+      POSTGRES_PASSWORD: agentic_crm
+      POSTGRES_DB: agentic_crm
+    command: >
+      postgres -c max_connections=300 -c shared_buffers=512MB -c work_mem=32MB -c random_page_cost=1.1 -c jit=off
+               -c max_wal_size=4GB -c wal_compression=lz4 -c default_toast_compression=lz4
+    volumes: [pgdata:/var/lib/postgresql]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentic_crm -d agentic_crm"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  s3:
+    image: chrislusf/seaweedfs:latest
+    command: server -s3 -s3.port=8333 -dir=/data -volume.max=0
+    ports: ["8333:8333"]
+    volumes: [s3data:/data]
+volumes:
+  pgdata: {}
+  s3data: {}

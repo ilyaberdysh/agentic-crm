@@ -1,0 +1,115 @@
+// Formula language grammar (I-ai-calls/formulas.md §1). Compiled by scripts/build-grammar.ts into parser.gen.ts
+// and parser.terms.gen.ts (committed; a test checks they are up to date).
+//
+// Precedence, tight → loose (§1.4): postfix (call, index, field) · prefix (! -) · ?? (right) · * / · + - ·
+// comparisons (one level) · and · or. Word operators and literals are case-insensitive (external specializer in
+// tokens.ts); `if` and `ifNull` are exact-case keywords.
+
+@precedence {
+  member,
+  call,
+  prefix,
+  coalesce @right,
+  times @left,
+  plus @left,
+  compare @left,
+  and @left,
+  or @left
+}
+
+@top Formula { expression? }
+
+@skip { space | LineComment }
+
+expression[@isGroup=Expression] {
+  Number |
+  String |
+  Bool |
+  Null |
+  AttioReference |
+  LLMReference |
+  Identifier |
+  Parenthesized |
+  ArrayExpression |
+  UnaryExpression |
+  BinaryExpression |
+  MemberExpression |
+  FunctionCall
+}
+
+Number { Integer | Decimal }
+
+Bool { kwTrue | kwFalse }
+
+Null { kwNull }
+
+Parenthesized { LParen expression RParen }
+
+ArrayExpression { LBracket commaSep<expression> RBracket }
+
+UnaryExpression { !prefix Operator<"!" | "-"> expression }
+
+BinaryExpression {
+  expression !coalesce Operator<"??"> expression |
+  expression !times Operator<"*" | "/"> expression |
+  expression !plus Operator<"+" | "-"> expression |
+  expression !compare Operator<"==" | "!=" | "<" | "<=" | ">" | ">="> expression |
+  expression !and Operator<kwAnd> expression |
+  expression !or Operator<kwOr> expression
+}
+
+MemberExpression { expression !member (Dot Identifier | ArrayIndex) }
+
+ArrayIndex { LBracket expression RBracket }
+
+// `and(…)` / `or(…)` are also callable by name.
+FunctionCall { (Identifier | ControlKeyword | IfNullFunctionIdentifier | kwAnd | kwOr) !call ArgList }
+
+ArgList { LParen commaSep<expression> RParen }
+
+Operator<content> { content }
+
+commaSep<content> { (content (Comma content)*)? }
+
+@external specialize {Identifier} specializeIdentifier from "./tokens.ts" {
+  kwTrue,
+  kwFalse,
+  kwNull,
+  kwAnd,
+  kwOr,
+  ControlKeyword,
+  IfNullFunctionIdentifier
+}
+
+@tokens {
+  space { $[ \t\n\r\u000b\u000c   -     　﻿]+ }
+
+  LineComment { "//" ![\n]* }
+
+  Identifier { $[a-zA-Z_] $[a-zA-Z0-9_]* }
+
+  Integer { @digit+ }
+
+  Decimal { @digit* "." @digit+ }
+
+  String { '"' (![\\\n"] | "\\" ![\n])* '"' }
+
+  AttioReference { "_{" $[a-zA-Z0-9]+ ("-" $[a-zA-Z0-9]+)+ "}" }
+
+  LLMReference { "$" @digit+ }
+
+  LParen { "(" }
+  RParen { ")" }
+  LBracket { "[" }
+  RBracket { "]" }
+  Comma { "," }
+  Dot { "." }
+
+  "!" "-" "+" "*" "/" "??" "==" "!=" "<" "<=" ">" ">="
+
+  @precedence { LineComment, "/" }
+  @precedence { Decimal, Integer, Dot }
+  @precedence { AttioReference, Identifier }
+}
+
+@detectDelim

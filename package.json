@@ -1,0 +1,36 @@
+{
+  "name": "agentic-crm",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyaberdysh/agentic-crm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ilyaberdysh/agentic-crm/issues"
+  },
+  "homepage": "https://github.com/ilyaberdysh/agentic-crm#readme",
+  "packageManager": "pnpm@11.11.0",
+  "engines": {
+    "node": ">=24.11"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "db:up": "docker compose -f docker/compose.dev.yml up -d",
+    "db:down": "docker compose -f docker/compose.dev.yml down",
+    "db:migrate": "pnpm --filter @agentic-crm/db migrate",
+    "db:reset": "pnpm --filter @agentic-crm/db reset",
+    "seed": "pnpm --filter @agentic-crm/db seed"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "turbo": "2.11.7",
+    "typescript": "7.0.2",
+    "@types/node": "24.19.1"
+  }
+}

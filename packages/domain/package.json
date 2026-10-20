@@ -1,0 +1,32 @@
+{
+  "name": "@agentic-crm/domain",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Domain services (single write path)",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.131.0",
+    "@agentic-crm/config": "workspace:*",
+    "@agentic-crm/contracts": "workspace:*",
+    "@agentic-crm/db": "workspace:*",
+    "@agentic-crm/editor": "workspace:*",
+    "@agentic-crm/formula": "workspace:*",
+    "@agentic-crm/realtime": "workspace:*",
+    "pg-boss": "12.36.0",
+    "uuid": "14.0.2",
+    "yjs": "13.6.33",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/pg": "8.23.1",
+    "pg": "8.23.1",
+    "vitest": "5.0.3"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

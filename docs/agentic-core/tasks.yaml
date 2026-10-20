@@ -1,0 +1,137 @@
+schema_version: 1
+milestone: agentic-core-v1
+base_sha: 66462be736d4345c3e6ce32002ec2f409f7fd551
+release_authorized: false
+status: complete
+
+principles:
+  - prove one useful end-to-end flow before generalizing
+  - reuse existing domain services and UI primitives
+  - add abstractions only for a real boundary or two current consumers
+  - protect human-authored CRM values
+  - keep UI API and MCP on the same policy-brokered capability path
+  - capture useful non-blocking work in backlog.yaml instead of expanding an active packet
+
+tasks:
+  - id: W0-BASELINE
+    outcome: Reproduce the current credential-free baseline and freeze executable checks.
+    depends_on: []
+    model: gpt-6-luna
+    effort: medium
+    write_scope: []
+    status: done
+    acceptance:
+      - Exact setup and check commands are recorded with pass/fail evidence.
+      - Existing failures are separated from milestone regressions.
+      - Follow-up tasks use the integrated base SHA.
+
+  - id: W0-ARCHITECTURE
+    outcome: Convert the confirmed product scope into a repository-grounded implementation DAG.
+    depends_on: []
+    model: gpt-6.1-sol
+    effort: xhigh
+    write_scope: []
+    status: done
+    acceptance:
+      - Every packet names concrete seams and acceptance checks.
+      - The first vertical slice is visible and credential-free.
+      - Speculative framework work is excluded.
+
+  - id: W0-SURFACE-MAP
+    outcome: Map existing record UI, AI, queue, API, MCP, seed, and registration seams.
+    depends_on: []
+    model: gpt-6-luna
+    effort: medium
+    write_scope: []
+    status: done
+    acceptance:
+      - Exact files and symbols identify the shortest reusable path.
+      - One capability can be exercised through the supported product surfaces.
+
+    evidence:
+      - packages/domain/src/collab/tasks.ts is the existing task write path.
+      - apps/web/src/features/record/RecordView.tsx is the record Agent-tab integration seam.
+      - apps/api/src/v2/routes/tasks.ts and the Ask tool catalog already adapt task creation.
+      - No MCP server exists yet; only a curated adapter belongs in this milestone.
+
+  - id: W1-PRINCIPALS
+    outcome: Add explicit agent principals and a fail-closed capability policy boundary.
+    depends_on: [W0-BASELINE, W0-ARCHITECTURE]
+    model: gpt-6.1-sol
+    effort: xhigh
+    status: done
+
+  - id: W2-MODEL-GATEWAY
+    outcome: Extract provider-neutral model contracts while preserving Anthropic behavior.
+    depends_on: [W0-BASELINE, W0-ARCHITECTURE]
+    model: gpt-6.1-sol
+    effort: high
+    status: done
+
+  - id: W3-PROVIDER-CONNECTIONS
+    outcome: Store scoped encrypted provider connections and expose masked status only.
+    depends_on: [W1-PRINCIPALS, W2-MODEL-GATEWAY]
+    model: gpt-6.1-sol
+    effort: high
+    status: done
+
+  - id: W4-OPENAI-COMPATIBLE
+    outcome: Support cloud and local OpenAI-compatible inference behind capability checks.
+    depends_on: [W1-PRINCIPALS, W2-MODEL-GATEWAY]
+    model: gpt-6.1-sol
+    effort: high
+    status: done
+
+  - id: W5-CODEX-CLI-EXPERIMENT
+    outcome: Prove one bounded Codex CLI execution path without claiming production runner isolation.
+    depends_on: [W1-PRINCIPALS, W2-MODEL-GATEWAY]
+    model: gpt-6.1-sol
+    effort: xhigh
+    status: done_with_concerns
+
+  - id: W6-ACTION-EVIDENCE
+    outcome: Persist evidence bands, exact decisions, attempts, and immutable receipts.
+    depends_on: [W1-PRINCIPALS]
+    model: gpt-6.1-sol
+    effort: xhigh
+    status: done
+
+  - id: W7-PRODUCT-MODULE
+    outcome: Introduce the smallest ProductModule contract used by the vertical slice.
+    depends_on: [W0-ARCHITECTURE, W0-SURFACE-MAP]
+    model: gpt-6.1-sol
+    effort: high
+    status: done
+
+  - id: W8-TASK-QUEUE
+    outcome: Add leased explainable agent tasks with visible recheck reasons.
+    depends_on: [W1-PRINCIPALS, W6-ACTION-EVIDENCE]
+    model: gpt-6.1-sol
+    effort: high
+    status: done
+    evidence:
+      - Leased queue uses SKIP LOCKED, bigint generation fencing, explicit recheck explanations and immutable history.
+      - Expired effect-free work recovers; linked uncertain effects block instead of retrying.
+      - Successful exact task-create receipts atomically settle linked active queue rows.
+
+  - id: W9-VERTICAL-SLICE
+    outcome: Ship a seeded record Agent tab using one policy-brokered capability across supported UI API and MCP paths.
+    depends_on: [W2-MODEL-GATEWAY, W6-ACTION-EVIDENCE, W7-PRODUCT-MODULE, W8-TASK-QUEUE]
+    model: gpt-6.1-sol
+    effort: xhigh
+    status: done
+    evidence:
+      - Demo seed persists note-backed VERIFIED evidence, an exact task proposal and a linked queue row.
+      - Record Agent tab reads persisted action, evidence, queue and receipt state and supports reviewer decisions.
+      - UI, product REST and curated MCP-shaped adapters execute the same crm.task.create domain capability.
+
+  - id: W10-INDEPENDENT-REVIEW
+    outcome: Verify architecture security behavior UX and regression evidence on the integrated SHA.
+    depends_on: [W9-VERTICAL-SLICE]
+    model: gpt-6.1-sol
+    effort: xhigh
+    write_scope: []
+    status: done
+    evidence:
+      - Independent Sol xhigh review found and verified fixes for layout slug collisions and misleading queue presentation.
+      - Final review reported no remaining correctness or security findings.

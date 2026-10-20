@@ -1,0 +1,171 @@
+<div align="center">
+
+# Agentic CRM
+
+**A CRM where agents do the work and people keep authority.**
+
+Evidence-backed actions, explicit policy, human review where risk demands it, and a durable receipt for every important change.
+
+[Quickstart](#quickstart) · [What works today](#what-works-today) · [Bring your own models](#bring-your-own-models) · [Architecture](#architecture) · [Roadmap](#roadmap)
+
+![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A524.11-5FA04E?logo=nodedotjs&logoColor=white)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue)
+![Status](https://img.shields.io/badge/status-early_development-F59E0B)
+
+</div>
+
+![Agentic CRM reviewing an evidence-backed task proposal](docs/assets/agentic-core-review.jpg)
+
+Most CRMs add a chat box to a system designed only for humans. Agentic CRM starts from a different contract: people and agents share the same records, capabilities, and audit trail. An agent can propose useful work, but it cannot silently turn uncertain context into customer-facing side effects.
+
+The first complete slice is deliberately small and real:
+
+```text
+CRM note → exact evidence → proposed action → policy → human decision
+                                                    ↓
+                              CRM task ← capability broker → receipt
+                                                    ↓
+                                              queue settled
+```
+
+A seeded customer request becomes an evidence-backed `crm.task.create` proposal. A reviewer sees the source quote and exact change in the record's **Agent** tab, approves or declines it, and receives a persisted execution receipt. Approval rechecks policy, evidence freshness, record access, and proposal version before the task is created.
+
+> **Project status:** early development. The CRM foundation and the first supervised agent loop work today. General agent orchestration, end-user model routing, installable modules, and public release packaging are still in progress.
+
+## Quickstart
+
+Prerequisites: Node.js 24.11 or newer, pnpm 11.11.0, and Docker with Compose.
+
+```bash
+git clone https://github.com/ilyaberdysh/agentic-crm.git
+cd agentic-crm
+corepack enable
+pnpm install --frozen-lockfile
+pnpm db:up
+SEED_USERS='demo@example.com:Demo User' SEED_WORKSPACE_SLUG=demo pnpm seed
+AGENTIC_CRM_LLM=fake pnpm dev
+```
+
+`pnpm seed` applies migrations, creates fictional CRM data, and prints two things once: a generated password and the exact **Agent demo** URL. Open [http://localhost:5173](http://localhost:5173), sign in as `demo@example.com`, and use that URL to review the seeded Northwind Robotics proposal.
+
+Click **Approve**. The CRM creates the exact linked task, settles the queue item, and replaces the decision panel with a receipt.
+
+<details>
+<summary>See the completed action and receipt</summary>
+
+![Agentic CRM receipt after an approved task is created](docs/assets/agentic-core-receipt.jpg)
+
+</details>
+
+The fake model keeps this path credential-free and deterministic. The evidence and proposal are seeded so the demo exercises the trust and execution path, not model quality.
+
+## What works today
+
+### Agentic Core
+
+- **Evidence with provenance.** Exact source fragments, source versions, timestamps, and trust bands are persisted. The first source adapter uses CRM notes.
+- **Actions as state machines.** Propose, approve, decline, execute, fail, and receipt transitions are explicit and versioned.
+- **Fail-closed policy.** Agent principals have declared capabilities. The first task-create action always requires a human decision, including for verified evidence.
+- **Explainable work queue.** Durable leases, concurrent claiming, fencing, recovery primitives, reasons, and next-event explanations are implemented.
+- **Capability symmetry.** The same curated `crm.task.create` capability is used by the UI, API, and an MCP-shaped adapter.
+- **Agent tab.** Persisted evidence, proposal, reviewer decision, queue state, and receipt appear beside the CRM record where the work matters.
+- **Product modules.** A validated `ProductModule` contract declares record and UI surfaces, task types, executable capabilities, connector requirements, migrations, and core compatibility without folding every future feature into the core.
+
+### CRM foundation
+
+This repository already contains a substantial CRM surface: configurable objects and attributes, records, tables and kanban views, notes, tasks, comments, collaborative editing, email and calendar integrations, calls, workflows, sequences, reports, imports and exports, permissions, REST/tRPC APIs, and realtime collaboration.
+
+That breadth is a foundation, not a maturity claim. Agentic Core currently integrates one supervised action deeply rather than pretending every CRM mutation is agent-safe.
+
+## Bring your own models
+
+The destination is one provider contract across API keys, OpenAI-compatible local or cloud endpoints, and subscription-backed CLIs. The current implementation is honest about where each path stands:
+
+| Model path | Current status |
+| --- | --- |
+| Anthropic API | Wired into the application through server-side `ANTHROPIC_API_KEY`. |
+| Deterministic fake | Wired into the application through `AGENTIC_CRM_LLM=fake` for tests and demos. |
+| OpenAI-compatible HTTP | Text, streaming, tools, and structured-output adapter is fixture-tested. Application-level provider selection is not wired yet. |
+| Scoped API-key storage | Encrypted provider connections with masked metadata exist. Credential resolution, routing, verification, and management UI are still pending. |
+| Codex CLI | Bounded synthetic-data experiment with fake-executable tests. It has no live CRM access, app registration, authenticated production run, or proven host isolation. |
+
+The full CLI safety boundary and its limitations are documented in [the execution experiment](packages/domain/src/ai/execution/README.md).
+
+## Architecture
+
+```mermaid
+flowchart LR
+    S[CRM source] --> E[Evidence ledger]
+    M[Model gateway] --> P[Action proposal]
+    E --> P
+    P --> B[Policy broker]
+    B -->|safe to continue| C[Curated capability]
+    B -->|review required| H[Human decision]
+    H -->|approve exact version| C
+    H -->|decline| X[Closed proposal]
+    C --> R[CRM mutation + receipt]
+    R --> Q[Queue settlement]
+```
+
+The design keeps three boundaries separate:
+
+1. **Models reason.** They may produce suggestions or structured proposals; they do not receive ambient CRM authority.
+2. **Policy decides.** The broker evaluates principal, capability, evidence, current access, and risk at execution time.
+3. **Capabilities mutate.** Narrow application services perform the side effect and record the outcome.
+
+The monorepo is organized around those boundaries:
+
+| Path | Responsibility |
+| --- | --- |
+| `apps/web` | React CRM and the record-level Agent experience |
+| `apps/api` | Fastify, tRPC, public API, auth, curated agent endpoints |
+| `apps/worker` | Background CRM jobs |
+| `packages/domain` | CRM services, agentic actions, evidence, queue, model gateway |
+| `packages/contracts` | Shared schemas, policy and module contracts |
+| `packages/db` | PostgreSQL schema, migrations, RLS, and seed |
+| `packages/realtime` | Change feed and collaboration transport |
+
+## Development
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+Database-backed suites expect the local Postgres service from `pnpm db:up`. Tests derive checkout-specific database names so parallel worktrees do not destroy each other's suite databases.
+
+Useful project documents:
+
+- [Deferred backlog](docs/agentic-core/backlog.yaml)
+- [Implementation task ledger](docs/agentic-core/tasks.yaml)
+- [Changelog](CHANGELOG.md)
+- [Contribution guide](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security policy](SECURITY.md)
+- [License](LICENSE) and [third-party notice](NOTICE)
+
+## Roadmap
+
+Near-term work is intentionally focused:
+
+- wire OpenAI-compatible and scoped provider connections into application-level selection;
+- turn the Codex CLI experiment into an independently verified, enforceably sandboxed runner before any CRM data reaches it;
+- add authenticated MCP transport around curated capabilities;
+- run queue claiming and reconciliation in production workers;
+- expand the Agent tab from the latest action into a useful record-level work history;
+- add more evidence sources and high-value CRM capabilities without weakening the policy boundary.
+
+Ideas that are useful but not ready belong in [`docs/agentic-core/backlog.yaml`](docs/agentic-core/backlog.yaml), not in speculative production code.
+
+## Open-source status
+
+Agentic CRM is licensed under the [Apache License 2.0](LICENSE) and is being prepared as an early public preview, not a production-ready CRM. Publication is still gated on an independent provenance review of the Attio-compatible `/v2` contract artifacts and the current UI token snapshots. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
+
+Source-level dependency attribution is summarized in [NOTICE](NOTICE). A complete license audit is still required before publishing binary or container distributions that bundle third-party code.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before sending changes, follow the [Code of Conduct](CODE_OF_CONDUCT.md), and use [SECURITY.md](SECURITY.md) for vulnerability reports.

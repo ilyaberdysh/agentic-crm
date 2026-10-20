@@ -1,0 +1,9 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
+    "typecheck": { "dependsOn": ["^typecheck"] },
+    "test": { "dependsOn": ["^build"], "cache": false, "passThroughEnv": ["AGENTIC_CRM_TEST_DB_PREFIX", "TEST_LOG_LEVEL"] },
+    "dev": { "cache": false, "persistent": true }
+  }
+}

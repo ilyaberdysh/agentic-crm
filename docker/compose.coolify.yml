@@ -1,0 +1,121 @@
+# Production stand for Coolify (revenue.mymeet.ai). Images are built on the developer's Mac and pushed to GHCR:
+#   docker buildx build --platform linux/amd64 -f docker/Dockerfile --target app -t ghcr.io/ilyaberdysh/agentic-crm-app:<tag> --push .
+#   docker buildx build --platform linux/amd64 -f docker/Dockerfile --target web -t ghcr.io/ilyaberdysh/agentic-crm-web:<tag> --push .
+# Coolify fills SERVICE_* variables (passwords, the web URL). The VM is shared (8 GB): every service has a memory cap.
+# Demo data: `docker exec <api container> sh -c 'cd /app/packages/db && node --import tsx src/seed.ts'` (prints passwords).
+x-app-env: &app-env
+  NODE_ENV: production
+  DATABASE_URL: postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/crm
+  AUTH_SECRET: ${SERVICE_PASSWORD_64_AUTH}
+  WEB_ORIGIN: ${SERVICE_URL_WEB}
+  API_PUBLIC_URL: ${SERVICE_URL_WEB}
+  COLLAB_ALLOWED_ORIGINS: ${SERVICE_URL_WEB}
+  AUTH_SIGNUP_ENABLED: 'false'
+  S3_ENDPOINT: http://s3:8333
+  S3_PUBLIC_ENDPOINT: ${SERVICE_URL_WEB}
+  S3_BUCKET: crm-files
+  S3_ACCESS_KEY_ID: ${SERVICE_USER_S3}
+  S3_SECRET_ACCESS_KEY: ${SERVICE_PASSWORD_S3}
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  AGENTIC_CRM_LLM: ${AGENTIC_CRM_LLM:-}
+  LOG_LEVEL: info
+
+services:
+  web:
+    image: ghcr.io/ilyaberdysh/agentic-crm-web:${IMAGE_TAG:-latest}
+    environment:
+      SERVICE_URL_WEB_80: ''
+      S3_BUCKET: crm-files
+    depends_on:
+      api: { condition: service_healthy }
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1/']
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    mem_limit: 96m
+    restart: unless-stopped
+
+  api:
+    image: ghcr.io/ilyaberdysh/agentic-crm-app:${IMAGE_TAG:-latest}
+    # Migrations run before every start (forward-only, idempotent).
+    command: ['sh', '-c', 'cd /app/packages/db && node --import tsx src/migrate.ts up && cd /app/apps/api && exec node --import tsx src/server.ts']
+    environment:
+      <<: *app-env
+      NODE_OPTIONS: --max-old-space-size=512
+    depends_on:
+      postgres: { condition: service_healthy }
+      s3: { condition: service_started }
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:4100/api/health/ready').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    mem_limit: 768m
+    restart: unless-stopped
+
+  collab:
+    image: ghcr.io/ilyaberdysh/agentic-crm-app:${IMAGE_TAG:-latest}
+    working_dir: /app/apps/collab
+    command: ['node', '--import', 'tsx', 'src/index.ts']
+    environment:
+      <<: *app-env
+      NODE_OPTIONS: --max-old-space-size=256
+    depends_on:
+      api: { condition: service_healthy }
+    mem_limit: 384m
+    restart: unless-stopped
+
+  worker:
+    image: ghcr.io/ilyaberdysh/agentic-crm-app:${IMAGE_TAG:-latest}
+    working_dir: /app/apps/worker
+    command: ['node', '--import', 'tsx', 'src/index.ts']
+    environment:
+      <<: *app-env
+      NODE_OPTIONS: --max-old-space-size=384
+      WORKER_CONCURRENCY: '2'
+    depends_on:
+      api: { condition: service_healthy }
+    mem_limit: 512m
+    restart: unless-stopped
+
+  postgres:
+    image: pgvector/pgvector:0.8.7-pg18-bookworm
+    environment:
+      POSTGRES_USER: ${SERVICE_USER_POSTGRES}
+      POSTGRES_PASSWORD: ${SERVICE_PASSWORD_POSTGRES}
+      POSTGRES_DB: crm
+    command: >
+      postgres -c max_connections=150 -c shared_buffers=256MB -c work_mem=16MB -c random_page_cost=1.1 -c jit=off
+               -c max_wal_size=1GB -c wal_compression=lz4 -c default_toast_compression=lz4
+    volumes: [pgdata:/var/lib/postgresql]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d crm']
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    shm_size: 256m
+    mem_limit: 1g
+    restart: unless-stopped
+
+  s3:
+    image: chrislusf/seaweedfs:4.48
+    # Identities make SeaweedFS verify every request's signature (presigned URLs reach it through the web container).
+    entrypoint:
+      - sh
+      - -c
+      - >
+        printf '{"identities":[{"name":"crm","credentials":[{"accessKey":"%s","secretKey":"%s"}],"actions":["Admin","Read","Write","List","Tagging"]}]}'
+        "$$S3_ACCESS_KEY_ID" "$$S3_SECRET_ACCESS_KEY" > /tmp/s3.json &&
+        exec weed server -dir=/data -s3 -s3.port=8333 -s3.config=/tmp/s3.json -volume.max=0 -master.volumeSizeLimitMB=1024
+    environment:
+      S3_ACCESS_KEY_ID: ${SERVICE_USER_S3}
+      S3_SECRET_ACCESS_KEY: ${SERVICE_PASSWORD_S3}
+    volumes: [s3data:/data]
+    mem_limit: 384m
+    restart: unless-stopped
+
+volumes:
+  pgdata: {}
+  s3data: {}

@@ -1,0 +1,44 @@
+{
+  "name": "@agentic-crm/api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Fastify: tRPC, public /v2, realtime WS, auth",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "user:create": "tsx src/cli/user-create.ts",
+    "auth:schema": "tsx scripts/auth-schema.ts",
+    "token:create": "tsx src/cli/token-create.ts",
+    "calls:import-sample": "tsx src/cli/import-mymeet-sample.ts"
+  },
+  "dependencies": {
+    "@agentic-crm/config": "workspace:*",
+    "@agentic-crm/contracts": "workspace:*",
+    "@agentic-crm/db": "workspace:*",
+    "@agentic-crm/domain": "workspace:*",
+    "@agentic-crm/realtime": "workspace:*",
+    "@fastify/cors": "11.3.0",
+    "@fastify/websocket": "11.3.2",
+    "@trpc/server": "11.19.0",
+    "better-auth": "1.7.7",
+    "fastify": "5.12.5",
+    "kysely": "0.29.6",
+    "pg": "8.23.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/pg": "8.23.1",
+    "@types/ws": "8.18.2",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "tsx": "4.23.15",
+    "vitest": "5.0.3",
+    "ws": "8.22.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

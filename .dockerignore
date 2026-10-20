@@ -1,0 +1,16 @@
+# Build context of docker/Dockerfile: sources and lockfile only. Never ship secrets or local state.
+**/node_modules
+**/dist
+**/.turbo
+**/*.tsbuildinfo
+.git
+.env
+.env.*
+!.env.example
+.dev-credentials
+.claude
+research
+**/e2e/out
+**/e2e/.auth
+**/test-results
+**/playwright-report

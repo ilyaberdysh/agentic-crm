@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+node_modules/
+research/evidence/raw/
+.DS_Store
+*.har
+dist/
+.turbo/
+*.tsbuildinfo
+.claude/worktrees/
+.dev-credentials

@@ -1,0 +1,23 @@
+{
+  "name": "@agentic-crm/contracts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Shared Zod schemas: internal API + generated public v2",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "vitest": "5.0.3"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./product-modules": "./src/product-modules.ts",
+    "./v2": "./src/v2/index.ts",
+    "./v2/openapi.json": "./src/v2/openapi.gen.json"
+  }
+}

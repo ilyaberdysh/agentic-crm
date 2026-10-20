@@ -1,0 +1,184 @@
+{
+  "meeting": {
+    "title": "[seed] Discovery call — Northwind",
+    "description": "Imported from mymeet",
+    "start": "2026-10-09T14:00:00Z",
+    "end": "2026-10-09T14:30:00Z",
+    "timezone": "Europe/Moscow",
+    "participants": [
+      { "name": "Ilya Berdysh", "email": "ilya@mymeet.example.com", "is_organizer": true },
+      { "name": "Wade Warren", "email": "wade.warren@northwind.example.com", "is_organizer": false },
+      { "name": "Jane Cooper", "email": "jane.cooper@northwind.example.com", "is_organizer": false }
+    ]
+  },
+  "transcript": [
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 2.1,
+      "end": 16.8,
+      "text": "Hi Jane, hi Wade, thanks for making time today. The goal for the next half hour is to understand how your robot fleet runs today and see whether fleet telemetry is worth exploring together. Does that work?"
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 18.2,
+      "end": 24.9,
+      "text": "Sounds good. I'll give the business context and Wade can go deep on operations."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 25.7,
+      "end": 36.5,
+      "text": "We make autonomous picking robots for mid-size warehouses. We have about three hundred and forty units deployed across eleven customer sites, mostly in Germany and the Netherlands."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 38.4,
+      "end": 43.1,
+      "text": "Great. How do you monitor those units once they're live at a customer site?"
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 44.6,
+      "end": 58.2,
+      "text": "Honestly it's a patchwork. Each robot pushes logs to our own server, and we have a dashboard that shows battery level and error codes, but it refreshes every fifteen minutes and nobody trusts it."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 60.1,
+      "end": 65.5,
+      "text": "What happens when a robot goes down in the middle of a shift?"
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 67.2,
+      "end": 82.0,
+      "text": "The customer calls our support line, someone pulls the logs manually, and we often send a technician on site. Last quarter we had forty-two unplanned site visits, and roughly half were for issues we could have fixed remotely."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 84.3,
+      "end": 90.4,
+      "text": "That's a big cost. Do you have a sense of what one of those visits costs you?"
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 92.1,
+      "end": 101.8,
+      "text": "Around nine hundred euros all in, plus the downtime penalty in some contracts. Two of our customers have uptime clauses at ninety-eight percent."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 102.5,
+      "end": 112.9,
+      "text": "And that's the real risk for us. Our largest customer, the one in Rotterdam, is up for renewal in February and uptime is the first thing they'll ask about."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 115.4,
+      "end": 128.0,
+      "text": "Understood. What we do is collect telemetry from every robot in near real time and flag the patterns that usually come before a failure, so your team sees a problem before the customer does."
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 130.2,
+      "end": 140.6,
+      "text": "That would change a lot for us. How much work is it to connect our robots, and who has to do it on our side?"
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 142.5,
+      "end": 168.9,
+      "text": "We ship a lightweight agent that runs next to your existing logger. Most teams have the first site streaming within two weeks, and we handle the dashboard and alerting. Your engineers only need to install the agent and give us read access to the logs."
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 175.2,
+      "end": 181.4,
+      "text": "Our robots run a custom Linux build on ARM. Is that supported?"
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 181.9,
+      "end": 189.8,
+      "text": "Yes, ARM64 is supported. I'd want our solutions engineer to confirm your kernel version on a technical call, though."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 190.4,
+      "end": 202.0,
+      "text": "Let's talk about budget. We hadn't planned a separate line item for this, but if it protects the Rotterdam renewal I can make a case. What range are we talking about?"
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 205.1,
+      "end": 214.3,
+      "text": "For a fleet your size it usually lands between forty and fifty thousand euros a year, depending on the number of sites and data retention."
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 217.0,
+      "end": 222.8,
+      "text": "That's within what I can approve myself up to fifty. Above that it goes to our CFO."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 226.2,
+      "end": 231.4,
+      "text": "Good to know. Who else would be involved in evaluating this?"
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 233.1,
+      "end": 241.5,
+      "text": "Wade owns the operational side, and our head of engineering, Courtney, will need to sign off on the agent. I make the final call."
+    },
+    {
+      "speaker": "Wade Warren",
+      "email": "wade.warren@northwind.example.com",
+      "start": 243.2,
+      "end": 250.4,
+      "text": "I'd also like to pilot it on one site first. Utrecht is our noisiest site, so if it works there it works anywhere."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 255.3,
+      "end": 266.9,
+      "text": "A pilot on Utrecht makes sense. Shall I set up the technical deep dive with Courtney next week and send you a short pilot proposal by Friday?"
+    },
+    {
+      "speaker": "Jane Cooper",
+      "email": "jane.cooper@northwind.example.com",
+      "start": 267.4,
+      "end": 278.1,
+      "text": "Yes, please do. Send the proposal to me and copy Wade. If the pilot shows fewer site visits by the end of November, we'll move forward before the renewal."
+    },
+    {
+      "speaker": "Ilya Berdysh",
+      "email": "ilya@mymeet.example.com",
+      "start": 279.0,
+      "end": 281.6,
+      "text": "Perfect, I'll send both today."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "match": { "purpose": "formula", "contains": ["Task: write a formula that does this: Add one and two"] },
+    "reply": { "json": { "formula": "1 + 2", "refusal": null } }
+  },
+  {
+    "match": { "purpose": "formula", "contains": ["Task: fix the current formula", "unknownFn"] },
+    "reply": { "json": { "formula": "1 + 2", "refusal": null } }
+  },
+  {
+    "match": {
+      "purpose": "formula",
+      "contains": ["Task: change the current formula as requested: Round the result to a whole number"]
+    },
+    "reply": { "json": { "formula": "round(12500 / 1, 0)", "refusal": null } }
+  },
+  {
+    "match": { "purpose": "formula", "contains": ["Task: write a formula that does this: Use a regular expression"] },
+    "reply": {
+      "json": {
+        "formula": null,
+        "refusal": { "category": "unsupported_function", "message": "Regular expressions are not supported" }
+      }
+    }
+  },
+  {
+    "match": { "purpose": "ai-attribute", "contains": ["Summarize this project"] },
+    "reply": { "text": "A build-phase project with a dedicated team and an approved budget." }
+  }
+]

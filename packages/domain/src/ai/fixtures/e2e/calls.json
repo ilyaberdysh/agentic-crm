@@ -1,0 +1,134 @@
+[
+  {
+    "match": { "purpose": "call-summary" },
+    "reply": {
+      "json": {
+        "summary": "Ilya spoke with Jane Cooper and Wade Warren at Northwind about monitoring their autonomous warehouse robots. Northwind described a patchwork of logs and a slow dashboard, costly manual support visits and a key customer renewal tied to uptime. They agreed to run a pilot on one site, schedule a technical deep dive and review a short proposal by Friday.",
+        "concise_summary": "Northwind: fleet monitoring gaps and uptime pressure. Pilot on one site, deep dive next week, proposal by Fri."
+      }
+    }
+  },
+  {
+    "match": { "purpose": "call-insight" },
+    "reply": {
+      "json": {
+        "sections": [
+          {
+            "id": "s1",
+            "content": "The team wants dependable, real-time visibility into the robot fleet and fewer unplanned site visits.",
+            "items": [
+              "Improve fleet visibility with real-time telemetry across deployed robots.",
+              "Reduce on-site visits and downtime ahead of the customer renewal.",
+              "Detect issues earlier instead of waiting for a robot to stop."
+            ]
+          },
+          {
+            "id": "s2",
+            "content": "Monitoring is a patchwork of logs and a dashboard that refreshes every fifteen minutes.",
+            "items": [
+              "Current monitoring is a patchwork that the team does not trust.",
+              "When a robot fails, support pulls logs manually and sends a technician.",
+              "Unplanned site visits are costly and some contracts include uptime penalties."
+            ]
+          },
+          {
+            "id": "s3",
+            "content": "They run their own log server and a dashboard for battery level and error codes.",
+            "items": [
+              "Each robot pushes logs to Northwind's own server.",
+              "A dashboard shows battery level and error codes but refreshes slowly.",
+              "Support relies on calls and manual log review."
+            ]
+          },
+          {
+            "id": "s4",
+            "content": "A pilot is possible within the contact's own approval limit; larger amounts need the CFO.",
+            "items": [
+              "Budget up to the contact's approval limit, above that the CFO decides.",
+              "Pilot target: fewer site visits by the end of the quarter."
+            ]
+          },
+          {
+            "id": "s5",
+            "content": "Set up a technical deep dive and send a short pilot proposal.",
+            "items": [
+              "Set up a technical deep dive with the head of engineering next week.",
+              "Send a short pilot proposal by Friday.",
+              "Pilot the solution on one site and review results at the end of the quarter."
+            ]
+          },
+          {
+            "id": "s6",
+            "content": "The head of engineering signs off on the technical side; the sales operations lead makes the final call.",
+            "items": ["Head of engineering signs off on the agent.", "Sales operations lead makes the final call."]
+          },
+          {
+            "id": "s7",
+            "content": "Customer renewal in February is the main pressure on timing.",
+            "items": ["The renewal in February drives the timeline."]
+          },
+          {
+            "id": "s8",
+            "content": "No further risks were raised.",
+            "items": ["No further risks were raised."]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "match": { "purpose": "call-insight-preview" },
+    "reply": {
+      "json": {
+        "sections": [
+          {
+            "id": "p1",
+            "content": "Preview: the team wants real-time visibility into the robot fleet and fewer unplanned site visits.",
+            "items": [
+              "Improve fleet visibility with real-time telemetry across their robot fleet.",
+              "Reduce unplanned site visits by catching issues before robots stop.",
+              "Protect the customer renewal by improving uptime."
+            ]
+          },
+          {
+            "id": "p2",
+            "content": "Preview: monitoring is a patchwork with a delayed dashboard.",
+            "items": [
+              "Their current monitoring is a patchwork with delayed dashboard refreshes.",
+              "When robots fail, support pulls logs manually and sends technicians.",
+              "Unplanned site visits are costly and some contracts include penalties."
+            ]
+          },
+          {
+            "id": "p3",
+            "content": "Preview: they collect logs on their own server and use a basic dashboard.",
+            "items": [
+              "They collect robot logs on their own server.",
+              "The dashboard shows battery level and error codes.",
+              "They want to start with a pilot on one site."
+            ]
+          },
+          {
+            "id": "p4",
+            "content": "Preview: a pilot fits the contact's own approval limit; more needs CFO approval.",
+            "items": ["Budget within the contact's approval limit.", "Anything above needs CFO approval."]
+          },
+          {
+            "id": "p5",
+            "content": "Preview: set up a deep dive and send a proposal.",
+            "items": [
+              "Set up a technical deep dive next week.",
+              "Send a short pilot proposal by Friday.",
+              "Pilot on one site and review at the end of the quarter."
+            ]
+          },
+          {
+            "id": "p6",
+            "content": "Preview: the head of engineering signs off; the sales operations lead decides.",
+            "items": ["Head of engineering signs off.", "Sales operations lead decides."]
+          }
+        ]
+      }
+    }
+  }
+]

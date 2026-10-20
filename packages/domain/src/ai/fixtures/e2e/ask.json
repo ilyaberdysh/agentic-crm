@@ -1,0 +1,352 @@
+[
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:summary-slow]",
+      "toolResults": true
+    },
+    "reply": {
+      "text": "**{{results.0.records.0.name}}** makes industrial robots for warehouses.\n\n```agentic-crm:entity-embed\n{\"entity_definition_id\":\"{{results.0.records.0.entity_definition_id}}\",\"entity_instance_id\":\"{{results.0.records.0.entity_instance_id}}\"}\n```\n\n**People (2)**\n\n| Name | Role |\n| --- | --- |\n| {{results.1.records.0.link}} | CEO, linked to the open deal |\n| {{results.1.records.1.link}} | Head of Operations |\n\n**Open tasks**\n\n- There are no open tasks linked to this company.",
+      "chunkDelayMs": 400
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:summary-slow]"
+    },
+    "reply": {
+      "text": "I'll pull up the company record and the people who work there.",
+      "toolCalls": [
+        {
+          "name": "search-records",
+          "input": {
+            "query": "Northwind",
+            "objects": ["companies"]
+          }
+        },
+        {
+          "name": "search-records",
+          "input": {
+            "query": "northwind",
+            "objects": ["people"]
+          }
+        }
+      ],
+      "chunkDelayMs": 15
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:summary]",
+      "toolResults": true
+    },
+    "reply": {
+      "text": "**{{results.0.records.0.name}}** makes industrial robots for warehouses.\n\n```agentic-crm:entity-embed\n{\"entity_definition_id\":\"{{results.0.records.0.entity_definition_id}}\",\"entity_instance_id\":\"{{results.0.records.0.entity_instance_id}}\"}\n```\n\n**People (2)**\n\n| Name | Role |\n| --- | --- |\n| {{results.1.records.0.link}} | CEO, linked to the open deal |\n| {{results.1.records.1.link}} | Head of Operations |\n\n**Open tasks**\n\n- There are no open tasks linked to this company.",
+      "chunkDelayMs": 15
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:summary]"
+    },
+    "reply": {
+      "text": "I'll pull up the company record and the people who work there.",
+      "toolCalls": [
+        {
+          "name": "search-records",
+          "input": {
+            "query": "Northwind",
+            "objects": ["companies"]
+          }
+        },
+        {
+          "name": "search-records",
+          "input": {
+            "query": "northwind",
+            "objects": ["people"]
+          }
+        }
+      ],
+      "chunkDelayMs": 15
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:task-linked]",
+      "toolResults": true
+    },
+    "reply": {
+      "text": "I created the task, linked it to the company and assigned it to you.\n\n```agentic-crm:task-embed\n{\"task_id\":\"{{result.task_id}}\"}\n```"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:task-linked]"
+    },
+    "reply": {
+      "text": "I'll create the task linked to this company, assigned to you.",
+      "toolCalls": [
+        {
+          "name": "create-task",
+          "input": {
+            "body": "[e2e] AI follow-up call",
+            "due_date": "2030-01-15",
+            "assignee_member_ids": ["{{context.member_id}}"],
+            "linked_records": [
+              {
+                "entity_definition_id": "{{context.entity_definition_id}}",
+                "entity_instance_id": "{{context.entity_instance_id}}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:task]",
+      "toolResults": true
+    },
+    "reply": {
+      "text": "I created the task.\n\n```agentic-crm:task-embed\n{\"task_id\":\"{{result.task_id}}\"}\n```"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:task]"
+    },
+    "reply": {
+      "text": "I'll create the task for you.",
+      "toolCalls": [
+        {
+          "name": "create-task",
+          "input": {
+            "body": "[e2e] Plain follow-up",
+            "due_date": "2030-01-15"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:web]",
+      "toolResults": true
+    },
+    "reply": {
+      "text": "Northwind Robotics describes itself as a maker of warehouse robots (https://northwind.example.com)."
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:web]"
+    },
+    "reply": {
+      "text": "I'll search the web for what northwind.example.com says on its homepage.",
+      "toolCalls": [
+        {
+          "name": "search-web",
+          "input": {
+            "objective": "What northwind.example.com says on its homepage",
+            "search_queries": ["northwind.example.com"]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "match": {
+      "purpose": "web-search"
+    },
+    "reply": {
+      "text": "Northwind Robotics builds robots for warehouses. Source: https://northwind.example.com",
+      "webSearchRequests": 1
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:snippets]",
+      "toolResults": true
+    },
+    "reply": {
+      "text": "Two moments stand out.\n\n```agentic-crm:call-recording-snippets\n{\"meeting_id\":\"{{context.meeting_id}}\",\"call_recording_id\":\"{{context.call_recording_id}}\",\"snippets\":[{\"title\":\"Budget and fleet size\",\"start_time\":\"0:18\",\"end_time\":\"0:44\"},{\"title\":\"Next steps\",\"start_time\":\"1:00\",\"end_time\":\"1:32\"}]}\n```\n\nI can create tasks for the follow-ups if you'd like."
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:snippets]"
+    },
+    "reply": {
+      "text": "I'll read the call first.",
+      "toolCalls": [
+        {
+          "name": "get-call-recording",
+          "input": {
+            "meeting_id": "{{context.meeting_id}}",
+            "call_recording_id": "{{context.call_recording_id}}"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:slow]"
+    },
+    "reply": {
+      "text": "This answer is streamed slowly so that other tabs can follow it. First the setup, then the details, and finally a short conclusion for the reader.",
+      "chunkDelayMs": 120
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:refuse]"
+    },
+    "reply": {
+      "stopReason": "refusal",
+      "text": ""
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:plain]"
+    },
+    "reply": {
+      "text": "Here is a **short** answer with a [link](https://example.com) and a list:\n\n- first point\n- second point\n\nAnything else?"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask",
+      "contains": "[e2e:prompt]"
+    },
+    "reply": {
+      "text": "Prompt received."
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask"
+    },
+    "reply": {
+      "text": "I'm the scripted assistant of the e2e stack."
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-title",
+      "contains": "[e2e:summary"
+    },
+    "reply": {
+      "text": "Summary of Northwind Robotics"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-title",
+      "contains": "[e2e:task"
+    },
+    "reply": {
+      "text": "Create AI follow-up task"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-title",
+      "contains": "[e2e:web]"
+    },
+    "reply": {
+      "text": "Search northwind.example.com homepage"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-title",
+      "contains": "[e2e:snippets]"
+    },
+    "reply": {
+      "text": "Next steps from the call"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-title"
+    },
+    "reply": {
+      "text": "E2E chat"
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-suggestions",
+      "contains": "makes industrial robots"
+    },
+    "reply": {
+      "json": {
+        "suggestions": [
+          "Draft follow-up email to Jane Cooper",
+          "Suggest follow-up tasks for this deal",
+          "Show deal details and timeline"
+        ]
+      }
+    }
+  },
+  {
+    "match": {
+      "purpose": "ask-suggestions"
+    },
+    "reply": {
+      "json": {
+        "suggestions": ["Tell me more", "Summarize this in one line"]
+      }
+    }
+  },
+  {
+    "match": {
+      "purpose": "record-summary"
+    },
+    "reply": {
+      "text": "Northwind Robotics is an industrial-robotics company with a warehouse expansion deal in progress. The relationship is early: there is one open deal and no logged calls yet. Next, confirm the pilot scope with the head of operations."
+    }
+  },
+  {
+    "match": {
+      "purpose": "prompt-generate"
+    },
+    "reply": {
+      "json": {
+        "title": "Project status digest",
+        "prompt": "**Context**\n\nYou summarize the status of a project record.\n\n**Task**\n\nGive a short digest of phases and owners.\n\n**Constraints**\n\n- Be concise\n- Use bullet points"
+      }
+    }
+  },
+  {
+    "match": {
+      "purpose": "prompt-metadata"
+    },
+    "reply": {
+      "json": {
+        "title": "Summarize project phases and owners",
+        "summary": "Get a short digest of a project's phases and who owns them.",
+        "icon": "chart-arrow-up",
+        "color": "blue",
+        "targets": ["entity-instance"]
+      }
+    }
+  }
+]
