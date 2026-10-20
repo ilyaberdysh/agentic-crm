@@ -166,6 +166,29 @@ export function createModelGateway(options: ModelGatewayOptions) {
       throw forbidden('The provider connection does not match the model target');
     return connection;
   }
+  async function cancelRunnerInvocationInTransaction(tx: Tx, rawId: string): Promise<void> {
+    const invocationId = id(rawId);
+    const member = await caller(tx);
+    const invocation = await tx.db
+      .selectFrom('model_invocations')
+      .select(['id', 'runner_id'])
+      .where('workspace_id', '=', tx.workspaceId)
+      .where('id', '=', invocationId)
+      .where('member_id', '=', member.id)
+      .forUpdate()
+      .executeTakeFirst();
+    if (!invocation?.runner_id) throw notFound('Runner invocation not found');
+    await tx.db
+      .updateTable('model_invocations')
+      .set({ outcome: 'canceled', failure_code: 'canceled', completed_at: tx.now })
+      .where('id', '=', invocationId)
+      .where('outcome', '=', 'pending')
+      .execute();
+    await sql`UPDATE model_runner_dispatches SET status = 'settled', encrypted_request = NULL,
+      lease_expires_at = NULL, settled_at = clock_timestamp()
+      WHERE workspace_id = ${tx.workspaceId}::uuid AND invocation_id = ${invocationId}::uuid
+        AND status IN ('queued', 'leased')`.execute(tx.db);
+  }
   async function save(
     ctx: ServiceContext,
     input: CreateModelTargetInput | ConfigureModelTargetInput,
@@ -227,6 +250,13 @@ export function createModelGateway(options: ModelGatewayOptions) {
   }
 
   return {
+    /** Internal transaction seam for product flows; dispatch rechecks the same authority before I/O. */
+    async assertTargetAvailable(tx: Tx, input: { targetId: string; expectedVersion: number }): Promise<void> {
+      const member = await caller(tx);
+      const target = await loadTarget(tx, member, id(input.targetId));
+      checkVersion(target.version, input.expectedVersion);
+      await checkRoute(tx, member, target);
+    },
     targets: {
       create: (ctx: ServiceContext, input: CreateModelTargetInput) => save(ctx, input, false),
       configure: (ctx: ServiceContext, input: ConfigureModelTargetInput) => save(ctx, input, true),
@@ -271,7 +301,11 @@ export function createModelGateway(options: ModelGatewayOptions) {
         }),
     },
 
-    async invoke(ctx: ServiceContext, input: InvokeModelTargetInput): Promise<ModelInvocationResult> {
+    async invoke(
+      ctx: ServiceContext,
+      input: InvokeModelTargetInput,
+      onRunnerReserved?: (tx: Tx, invocationId: string) => Promise<void>,
+    ): Promise<ModelInvocationResult> {
       const targetId = id(input.targetId);
       const expected = version(input.expectedVersion);
       const invocationId = newId();
@@ -316,6 +350,8 @@ export function createModelGateway(options: ModelGatewayOptions) {
             (invocation_id, workspace_id, runner_id, target_id, target_version, encrypted_request)
             VALUES (${invocationId}::uuid, ${tx.workspaceId}::uuid, ${target.runner_id}::uuid,
               ${target.id}::uuid, ${target.version}, ${JSON.stringify(sealed)}::jsonb)`.execute(tx.db);
+          // Persist the consumer's cancellation fence before this dispatch can become claimable.
+          await onRunnerReserved?.(tx, invocationId);
         }
       });
       try {
@@ -395,6 +431,12 @@ export function createModelGateway(options: ModelGatewayOptions) {
         throw safe;
       }
     },
+
+    /** A product cancellation fences any queued or leased local work before it can report a result. */
+    async cancelRunnerInvocation(ctx: ServiceContext, rawId: string): Promise<void> {
+      await runInWorkspace(options.database, ctx, (tx) => cancelRunnerInvocationInTransaction(tx, rawId));
+    },
+    cancelRunnerInvocationInTransaction,
 
     /** Outbound poll. Each claim is fenced; the plaintext exists only in this authenticated response. */
     async claimRunnerInvocations(proof: unknown, limit = 1): Promise<ClaimedRunnerModelInvocation[]> {

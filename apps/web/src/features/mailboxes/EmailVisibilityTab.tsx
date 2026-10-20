@@ -127,7 +127,7 @@ export function EmailVisibilityTab({ isAdmin }: { isAdmin: boolean }) {
           </div>
           <Block
             title="Workspace protected and blocked contacts"
-            description="Hide emails and calendar event entries involving certain contacts, everywhere in Attio."
+            description="Hide emails and calendar event entries involving certain contacts, everywhere in Agentic CRM."
             aside={
               isAdmin ? (
                 <Button variant="secondary" size={28} icon="add" onPress={() => setAdding(true)}>

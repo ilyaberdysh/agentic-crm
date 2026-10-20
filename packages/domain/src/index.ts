@@ -502,7 +502,13 @@ export function createDomain(options: DomainOptions) {
     ...(options.workflowHttp ? { http: options.workflowHttp } : {}),
   });
   const reportServices = createReportServices({ database, policies });
-  const aiServices = createAiServices({ database, policies, llm, ...(options.aiHub ? { hub: options.aiHub } : {}) });
+  const aiServices = createAiServices({
+    database,
+    policies,
+    llm,
+    modelGateway,
+    ...(options.aiHub ? { hub: options.aiHub } : {}),
+  });
   const formulaServices = createFormulaServices({
     database,
     policies,

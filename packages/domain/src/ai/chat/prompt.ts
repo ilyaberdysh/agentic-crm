@@ -7,14 +7,13 @@
 //   messages     the thread path, replayed byte-for-byte from stored JSON text (thinking blocks must come back
 //                unchanged), then the new user message with the volatile parts (date, page context, mentions).
 import type { AiAnnotation, AiContext, AiRefinement } from '@agentic-crm/contracts';
-import { recordLabels } from '../../collab/common.ts';
 import { meetingOps } from '../../meetings/service.ts';
 import type { Policies } from '../../permissions.ts';
 import { loadDefinition } from '../../schema/model.ts';
 import type { Tx } from '../../tx.ts';
 import type { LlmContentBlockParam, LlmMessageParam, LlmTextBlockParam } from '../llm.ts';
 import { resolvePrompt } from '../prompts/library.ts';
-import { memberNames, recordLink, renderRecords } from '../render.ts';
+import { memberNames, renderRecords } from '../render.ts';
 import { memberSettingsOf, workspaceSettingsOf } from '../settings.ts';
 import type { StepRow, TurnRow } from './model.ts';
 
@@ -188,14 +187,22 @@ export async function userMessageContent(
   }
 
   if (mentioned.length) {
-    const labels = await recordLabels(
-      tx,
-      mentioned.map((m) => ({ entityDefinitionId: m.defId, entityInstanceId: m.id })),
-    );
-    ctx.push(
-      'Mentioned records:',
-      ...mentioned.map((m) => `- ${recordLink(m.defId, m.id, labels.get(m.id) ?? 'record')}`),
-    );
+    const mentionedByDef = new Map<string, string[]>();
+    for (const item of mentioned)
+      mentionedByDef.set(item.defId, [...new Set([...(mentionedByDef.get(item.defId) ?? []), item.id])]);
+    const rendered: string[] = [];
+    for (const [defId, ids] of mentionedByDef) {
+      try {
+        const def = await loadDefinition(tx, defId);
+        const [allowed] = await policies.allowed(tx, [def], 'read_entity_instance');
+        if (!allowed) continue;
+        for (const record of await renderRecords(tx, def, ids, { withValues: true }))
+          rendered.push(JSON.stringify(record));
+      } catch {
+        // Unknown or unreadable records add no model context.
+      }
+    }
+    if (rendered.length) ctx.push('Mentioned records:', ...rendered);
   }
   const memberMentions = input.annotations.filter((a) => a.type === 'workspace-member');
   if (memberMentions.length) {

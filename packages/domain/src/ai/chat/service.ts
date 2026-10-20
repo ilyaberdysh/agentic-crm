@@ -18,6 +18,7 @@ import {
   denyAiToolInputSchema,
   type ListAiThreadsInput,
   listAiThreadsInputSchema,
+  parseAiTargetModelChoice,
   type RenameAiThreadInput,
   type RetryAiTurnInput,
   renameAiThreadInputSchema,
@@ -29,6 +30,7 @@ import {
 import { jsonb, sql } from '@agentic-crm/db';
 import { badRequest } from '../../errors.ts';
 import { newId } from '../../ids.ts';
+import type { ModelGateway } from '../../model-gateway/gateway.ts';
 import type { Policies } from '../../permissions.ts';
 import type { Tx } from '../../tx.ts';
 import { creditOps } from '../credits/ledger.ts';
@@ -115,8 +117,8 @@ async function writePart(tx: Tx, step: StepRow, index: number, part: AiToolPart)
     .execute();
 }
 
-/** Cancels an executing assistant turn (state only; the caller aborts the in-process run). */
-async function cancelTurnRows(tx: Tx, turnId: string): Promise<boolean> {
+/** Cancels an executing assistant turn and atomically fences any durable local-model dispatch. */
+async function cancelTurnRows(tx: Tx, turnId: string, models: ModelGateway): Promise<boolean> {
   const turn = await tx.db.selectFrom('ai_turns').selectAll().where('id', '=', turnId).forUpdate().executeTakeFirst();
   if (!turn || turn.status !== 'executing') return false;
   await tx.db
@@ -126,6 +128,11 @@ async function cancelTurnRows(tx: Tx, turnId: string): Promise<boolean> {
     .execute();
   const steps = await loadSteps(tx, [turnId]);
   for (const step of steps.get(turnId) ?? []) {
+    const invocationId =
+      step.usage && typeof step.usage === 'object' && 'invocationId' in step.usage
+        ? (step.usage as { invocationId?: unknown }).invocationId
+        : null;
+    if (typeof invocationId === 'string') await models.cancelRunnerInvocationInTransaction(tx, invocationId);
     if (step.status !== 'executing-llm' && step.status !== 'executing-tools') continue;
     const parts = ((step.parts ?? []) as unknown as Record<string, unknown>[]).map((p) => ({
       ...p,
@@ -209,7 +216,7 @@ export const chatOps = {
     return threadView(row, (await threadCosts(tx, [row.id])).get(row.id) ?? 0);
   },
 
-  async deleteThread(tx: Tx, threadId: string): Promise<{ id: string; canceled: string[] }> {
+  async deleteThread(tx: Tx, threadId: string, models: ModelGateway): Promise<{ id: string; canceled: string[] }> {
     const memberId = requireMember(tx);
     const thread = await loadThread(tx, threadId, memberId, { forUpdate: true });
     const executing = await tx.db
@@ -219,14 +226,19 @@ export const chatOps = {
       .where('status', '=', 'executing')
       .execute();
     const canceled: string[] = [];
-    for (const t of executing) if (await cancelTurnRows(tx, t.id)) canceled.push(t.id);
+    for (const t of executing) if (await cancelTurnRows(tx, t.id, models)) canceled.push(t.id);
     await tx.db.updateTable('ai_threads').set({ deleted_at: tx.now }).where('id', '=', thread.id).execute();
     await emitThread(tx, thread);
     return { id: thread.id, canceled };
   },
 
   /** ai.turns.send: the user turn and an executing assistant turn (started after commit). */
-  async send(tx: Tx, policies: Policies, input: SendAiTurnInput): Promise<SendAiTurnOutput & ChatEffects> {
+  async send(
+    tx: Tx,
+    policies: Policies,
+    input: SendAiTurnInput,
+    models: ModelGateway,
+  ): Promise<SendAiTurnOutput & ChatEffects> {
     const data = sendAiTurnInputSchema.parse(input);
     const memberId = requireMember(tx);
     let thread = await tx.db
@@ -260,7 +272,9 @@ export const chatOps = {
         };
       }
     }
-    await creditOps.assertAvailable(tx, { memberId, spend: 'ask' });
+    const target = parseAiTargetModelChoice(data.model);
+    if (target) await models.assertTargetAvailable(tx, target);
+    else await creditOps.assertAvailable(tx, { memberId, spend: 'ask' });
     if (!thread) {
       thread = await tx.db
         .insertInto('ai_threads')
@@ -293,7 +307,7 @@ export const chatOps = {
     }
     // Sending interrupts a running parent.
     const canceled: string[] = [];
-    if (parentId && (await cancelTurnRows(tx, parentId))) canceled.push(parentId);
+    if (parentId && (await cancelTurnRows(tx, parentId, models))) canceled.push(parentId);
 
     const settings = await memberSettingsOf(tx, memberId);
     const annotations = data.annotations ?? [];
@@ -307,7 +321,7 @@ export const chatOps = {
     let model: string;
     let mode: 'auto' | 'manual';
     if (data.model && data.model !== 'auto') {
-      if (!modelInfo(data.model)) throw badRequest('VALIDATION_ERROR', `Unknown model "${data.model}"`);
+      if (!target && !modelInfo(data.model)) throw badRequest('VALIDATION_ERROR', `Unknown model "${data.model}"`);
       model = data.model;
       mode = 'manual';
     } else if (preferredModel && modelInfo(preferredModel)) {
@@ -401,13 +415,12 @@ export const chatOps = {
   },
 
   /** Try again: a sibling assistant turn under the same user turn (other model / refinement). */
-  async retry(tx: Tx, input: RetryAiTurnInput): Promise<{ turnId: string } & ChatEffects> {
+  async retry(tx: Tx, input: RetryAiTurnInput, models: ModelGateway): Promise<{ turnId: string } & ChatEffects> {
     const data = retryAiTurnInputSchema.parse(input);
     const memberId = requireMember(tx);
     const { turn, thread } = await loadTurn(tx, data.turnId, memberId, { forUpdate: true });
     if (turn.role !== 'assistant') throw badRequest('VALIDATION_ERROR', 'Only assistant turns can be retried');
     if (turn.status === 'executing') throw turnStateConflict('This answer is still being generated');
-    await creditOps.assertAvailable(tx, { memberId, spend: 'ask' });
     let model = turn.model ?? (await workspaceModelFor(tx, 'ask'));
     let mode = turn.model_mode ?? 'auto';
     if (data.model) {
@@ -415,11 +428,15 @@ export const chatOps = {
         model = await workspaceModelFor(tx, 'ask');
         mode = 'auto';
       } else {
-        if (!modelInfo(data.model)) throw badRequest('VALIDATION_ERROR', `Unknown model "${data.model}"`);
+        if (!parseAiTargetModelChoice(data.model) && !modelInfo(data.model))
+          throw badRequest('VALIDATION_ERROR', `Unknown model "${data.model}"`);
         model = data.model;
         mode = 'manual';
       }
     }
+    const target = parseAiTargetModelChoice(model);
+    if (target) await models.assertTargetAvailable(tx, target);
+    else await creditOps.assertAvailable(tx, { memberId, spend: 'ask' });
     let refinement: Record<string, unknown> | null = null;
     if (data.refinement) {
       const steps = (await loadSteps(tx, [turn.id])).get(turn.id) ?? [];
@@ -535,10 +552,10 @@ export const chatOps = {
     return { thread: threadView(updated), start, canceled: [] };
   },
 
-  async cancel(tx: Tx, turnId: string): Promise<{ canceled: string[]; start: string[] }> {
+  async cancel(tx: Tx, turnId: string, models: ModelGateway): Promise<{ canceled: string[]; start: string[] }> {
     const memberId = requireMember(tx);
     const { turn, thread } = await loadTurn(tx, turnId, memberId, { forUpdate: true });
-    const canceled = (await cancelTurnRows(tx, turn.id)) ? [turn.id] : [];
+    const canceled = (await cancelTurnRows(tx, turn.id, models)) ? [turn.id] : [];
     await emitThread(tx, thread, { turnIds: [turn.id], list: false });
     return { canceled, start: [] };
   },

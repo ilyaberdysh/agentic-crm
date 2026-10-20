@@ -229,5 +229,8 @@ function displayMember(
   id: string,
   members: Array<Pick<Member, 'id' | 'firstName' | 'lastName' | 'emailAddress'>>,
 ): string {
-  return memberName(members.find((member) => member.id === id)) || id;
+  const member = members.find((candidate) => candidate.id === id);
+  if (!member) return id;
+  const name = memberName(member);
+  return name && name !== member.emailAddress ? `${name} · ${member.emailAddress}` : member.emailAddress;
 }

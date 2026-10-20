@@ -39,6 +39,8 @@ function failureMessage(turn: AiTurn): string | null {
       return "You've reached your credit limit.";
     case 'interrupted':
       return 'This answer was interrupted. Try again.';
+    case 'runner-unavailable':
+      return 'The local runner did not answer in time. Check that it is connected, then try again.';
     default:
       return 'Something went wrong while generating this response, try again later';
   }
@@ -138,7 +140,14 @@ function RetryMenu({ turn }: { turn: AiTurn }) {
               <button type="button" className={s.menuItem} onClick={() => setSwitching(false)}>
                 <Icon icon="chevronLeft" size={16} /> Switch model
               </button>
-              {[{ id: 'auto', label: 'Auto', isUnavailable: false }, ...(models.data?.models ?? [])].map((m) => (
+              {[
+                {
+                  id: 'auto',
+                  label: 'Auto',
+                  isUnavailable: !models.data?.models.some((model) => model.isAuto && !model.isUnavailable),
+                },
+                ...(models.data?.models ?? []),
+              ].map((m) => (
                 <button
                   key={m.id}
                   type="button"
@@ -150,7 +159,12 @@ function RetryMenu({ turn }: { turn: AiTurn }) {
                     void retryTurn(ws, turn, { model: m.id });
                   }}
                 >
-                  {m.id !== 'auto' && <BrandGlyph />}
+                  {m.id !== 'auto' &&
+                    ('brand' in m && m.brand === 'anthropic' ? (
+                      <BrandGlyph />
+                    ) : (
+                      <Icon icon="askAi" size={14} />
+                    ))}
                   {m.label}
                   {(turn.modelMode === 'auto' ? 'auto' : turn.model) === m.id && (
                     <span className={s.menuTrailing}>Last used</span>

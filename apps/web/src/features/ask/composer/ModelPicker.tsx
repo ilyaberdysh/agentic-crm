@@ -1,6 +1,6 @@
 // Model picker (ask-agentic §2.1): a text button with the current choice ("Auto" by default) opening a radio menu, "Auto"
-// first, a divider, then one item per model with its brand glyph. Unavailable models are listed disabled.
-import { Menu, MenuItem, MenuSeparator, MenuTrigger } from '@agentic-crm/ui';
+// first, a divider, then one item per model. Saved targets use a version-pinned choice. Unavailable models are disabled.
+import { Icon, Menu, MenuItem, MenuSeparator, MenuTrigger } from '@agentic-crm/ui';
 import { Button } from 'react-aria-components';
 import { useModels } from '../data';
 import * as s from './composer.css';
@@ -55,10 +55,17 @@ export function ModelPicker({
           if (next) onChange(String(next));
         }}
       >
-        <MenuItem id="auto">Auto</MenuItem>
+        <MenuItem id="auto" isDisabled={!list.some((m) => m.isAuto && !m.isUnavailable)}>
+          Auto
+        </MenuItem>
         <MenuSeparator />
         {list.map((m) => (
-          <MenuItem key={m.id} id={m.id} icon={<BrandGlyph />} isDisabled={m.isUnavailable}>
+          <MenuItem
+            key={m.id}
+            id={m.id}
+            icon={m.brand === 'anthropic' ? <BrandGlyph /> : <Icon icon="askAi" size={14} />}
+            isDisabled={m.isUnavailable}
+          >
             {m.label}
           </MenuItem>
         ))}

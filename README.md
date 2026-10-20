@@ -33,7 +33,7 @@ CRM note → exact evidence → proposed action → policy → human decision
 
 A seeded customer request becomes an evidence-backed `crm.task.create` proposal. A reviewer sees the source quote and exact change in the record's **Agent** tab, approves or declines it, and receives a persisted execution receipt. Approval rechecks policy, evidence freshness, record access, and proposal version before the task is created.
 
-> **Project status:** early development. The CRM foundation and the first supervised agent loop work today. General agent orchestration, end-user model routing, installable modules, and public release packaging are still in progress.
+> **Project status:** early development. The CRM foundation, first supervised agent loop, and Ask routing through saved cloud or paired local models work today. General agent orchestration, richer model-management UI, installable modules, and public release packaging are still in progress.
 
 ## Quickstart
 

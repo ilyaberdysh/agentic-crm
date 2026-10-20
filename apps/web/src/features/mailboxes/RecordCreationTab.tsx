@@ -137,7 +137,7 @@ export function RecordCreationTab({ isAdmin }: { isAdmin: boolean }) {
       </div>
       <Block
         title="Record suppression"
-        description="Emails or domains listed here will not create people and company records in Attio."
+        description="Emails or domains listed here will not create people and company records in Agentic CRM."
         aside={
           isAdmin ? (
             <Button variant="secondary" size={28} icon="add" onPress={() => setAdding(true)}>

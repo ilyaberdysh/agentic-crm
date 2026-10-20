@@ -58,7 +58,7 @@ function VisibilitySection({ mailbox, isOwner }: { mailbox: Mailbox; isOwner: bo
     <Section
       id="email-visibility"
       title="Email visibility"
-      description="Choose how much of your synced email and calendar your workspace can see by default. You'll always see all your own emails and calendar events in Attio."
+      description="Choose how much of your synced email and calendar your workspace can see by default. You'll always see all your own emails and calendar events in Agentic CRM."
     >
       <RadioCards
         label="Email visibility"

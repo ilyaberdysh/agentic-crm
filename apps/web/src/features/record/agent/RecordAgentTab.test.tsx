@@ -50,9 +50,9 @@ describe('record Agent tab', () => {
     expect(screen.getByText('Probable')).toBeTruthy();
     expect(screen.getByText(/Send the timeline by Friday/)).toBeTruthy();
     expect(screen.getByText('Call transcript · 17 Oct 2026')).toBeTruthy();
-    expect(screen.getByText('Ava Chen')).toBeTruthy();
-    expect(screen.getByText('Noah Patel')).toBeTruthy();
-    expect(screen.getByText('Mira Jones')).toBeTruthy();
+    expect(screen.getByText('Ava Chen · ava@example.com')).toBeTruthy();
+    expect(screen.getByText('Noah Patel · noah@example.com')).toBeTruthy();
+    expect(screen.getByText('Mira Jones · mira@example.com')).toBeTruthy();
     expect(screen.queryByText(/2 assigned/)).toBeNull();
   });
 

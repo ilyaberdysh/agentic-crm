@@ -40,7 +40,7 @@ import { TaskCheckbox } from './TaskCheckbox';
 import * as s from './tasks.css';
 
 const EXAMPLES = [
-  'Tweet about @Attio',
+  'Share the Agentic CRM launch',
   'Send thank you note to @Contact for recent lunch',
   'Follow up with @Company next week',
   'Prepare the quarterly review for @Team',

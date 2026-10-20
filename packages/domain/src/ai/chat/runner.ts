@@ -7,15 +7,24 @@
 //
 // No database transaction is open during an LLM call; every write is its own short transaction (I1).
 
-import type { AiAssistantPart, AiStreamEvent, AiToolPart, AiTurn } from '@agentic-crm/contracts';
+import { setTimeout as delay } from 'node:timers/promises';
+import {
+  type AiAssistantPart,
+  type AiStreamEvent,
+  type AiToolPart,
+  type AiTurn,
+  parseAiTargetModelChoice,
+} from '@agentic-crm/contracts';
 import { type Database, jsonb } from '@agentic-crm/db';
 import Anthropic from '@anthropic-ai/sdk';
 import { memberContext } from '../../context.ts';
 import { DomainError } from '../../errors.ts';
 import { newId } from '../../ids.ts';
+import type { ModelGateway } from '../../model-gateway/gateway.ts';
 import type { Policies } from '../../permissions.ts';
 import { runInWorkspace, type Tx } from '../../tx.ts';
 import { creditOps } from '../credits/ledger.ts';
+import { InferenceError, type InferenceMessage, type InferenceUsage } from '../inference.ts';
 import {
   addUsage,
   creditsFor,
@@ -42,6 +51,7 @@ export interface RunnerDeps {
   database: Database;
   policies: Policies;
   llm: LlmClient;
+  modelGateway: ModelGateway;
   hub: AiTurnHub;
   /** Turns executing in this process (cancel aborts them; tests await them). */
   running: Map<string, { abort: AbortController; done: Promise<void> }>;
@@ -314,7 +324,8 @@ async function finishTurn(
       .selectAll()
       .where('id', '=', turn.thread_id)
       .executeTakeFirstOrThrow();
-    await chargeTurn(tx, turn, extra.segment, memberId);
+    // Saved targets are paid directly by the provider/runner owner. Their nullable cost lives in model_invocations.
+    if (!parseAiTargetModelChoice(turn.model)) await chargeTurn(tx, turn, extra.segment, memberId);
     if (turn.status === 'executing') {
       await tx.db
         .updateTable('ai_turns')
@@ -380,6 +391,167 @@ function userText(history: LlmMessageParam[]): string {
   return '';
 }
 
+/** Text-only cross-provider history excludes signed reasoning and executable provider tool blocks. */
+function targetHistory(history: LlmMessageParam[]): InferenceMessage[] {
+  return history.flatMap((message) => {
+    if (message.role === 'system') return [];
+    const content =
+      typeof message.content === 'string'
+        ? message.content
+        : message.content
+            .flatMap((block) => {
+              if (block.type === 'text') return [block.text];
+              if (block.type === 'tool_result' && typeof block.content === 'string')
+                return [`Tool result from the preceding conversation: ${block.content}`];
+              return [];
+            })
+            .join('\n');
+    return content.trim() ? [{ role: message.role, content }] : [];
+  });
+}
+
+/** Bounded first product consumer of the saved-target gateway: attached CRM context, text answers, no tools. */
+async function executeTargetTurn(
+  deps: RunnerDeps,
+  loaded: Loaded,
+  live: LiveTurn,
+  target: { targetId: string; expectedVersion: number },
+  signal: AbortSignal,
+): Promise<void> {
+  const { workspace_id: workspaceId, created_by_member_id: memberId, id: turnId } = loaded.turn;
+  const ctx = memberContext(workspaceId, memberId);
+  const stepId = newId();
+  let invocationId: string | null = null;
+  const bounded = AbortSignal.any([signal, AbortSignal.timeout(120_000)]);
+  try {
+    if (signal.aborted) return;
+    await runInWorkspace(deps.database, ctx, async (tx) => {
+      await tx.db
+        .insertInto('ai_turn_steps')
+        .values({
+          id: stepId,
+          workspace_id: workspaceId,
+          turn_id: turnId,
+          position: 0,
+          status: 'executing-llm',
+        })
+        .execute();
+    });
+    live.turn.steps.push({
+      id: stepId,
+      index: 0,
+      status: 'executing-llm',
+      parts: [],
+      createdAt: new Date().toISOString(),
+      completedAt: null,
+    });
+    live.snapshot();
+    const result = await deps.modelGateway.invoke(
+      ctx,
+      {
+        ...target,
+        request: {
+          purpose: 'ask',
+          system:
+            `You are Ask Agentic, a CRM assistant. Answer using the supplied conversation and CRM context. ` +
+            `You have no tools in this mode. Explain when the supplied context is insufficient. ` +
+            `Do not claim to search, change records, create tasks, or browse the web.\n\n${loaded.system}`,
+          messages: targetHistory(loaded.history),
+          maxTokens: 4096,
+          signal: bounded,
+        },
+      },
+      async (tx, reservedId) => {
+        invocationId = reservedId;
+        const turn = await tx.db
+          .selectFrom('ai_turns')
+          .select('status')
+          .where('id', '=', turnId)
+          .forUpdate()
+          .executeTakeFirstOrThrow();
+        if (turn.status !== 'executing') throw new InferenceError('canceled', 'The Ask turn was canceled');
+        await tx.db
+          .updateTable('ai_turn_steps')
+          .set({ usage: jsonb({ invocationId: reservedId }) })
+          .where('id', '=', stepId)
+          .execute();
+      },
+    );
+    let text: string;
+    let usage: InferenceUsage;
+    if (result.kind === 'completed') {
+      if (result.response.refused) throw new InferenceError('provider', 'The provider declined the request');
+      text = result.response.text;
+      usage = result.response.usage;
+    } else {
+      invocationId = result.invocationId;
+      for (;;) {
+        bounded.throwIfAborted();
+        const state = await deps.modelGateway.getRunnerInvocation(ctx, invocationId);
+        if (state.outcome === 'completed') {
+          text = state.text ?? '';
+          usage = state.usage;
+          break;
+        }
+        if (state.outcome !== 'pending')
+          throw new InferenceError('provider', 'The runner could not complete the answer');
+        await delay(250, undefined, { signal: bounded });
+      }
+    }
+    if (signal.aborted) return;
+    const part: AiAssistantPart = { id: newId(), type: 'text', status: 'completed', content: text };
+    const saved = await runInWorkspace(deps.database, ctx, async (tx) => {
+      const turn = await tx.db
+        .selectFrom('ai_turns')
+        .select('status')
+        .where('id', '=', turnId)
+        .forUpdate()
+        .executeTakeFirstOrThrow();
+      if (turn.status !== 'executing') return false;
+      await tx.db
+        .updateTable('ai_turn_steps')
+        .set({
+          status: 'completed',
+          parts: jsonb([part]),
+          llm_content: JSON.stringify([{ type: 'text', text }]),
+          usage: jsonb({ ...usage, invocationId: result.invocationId }),
+          completed_at: tx.now,
+        })
+        .where('id', '=', stepId)
+        .execute();
+      if (!loaded.thread.ai_title)
+        await tx.db
+          .updateTable('ai_threads')
+          .set({ ai_title: userText(loaded.history).trim().slice(0, 120) || 'Untitled chat' })
+          .where('id', '=', loaded.thread.id)
+          .where('ai_title', 'is', null)
+          .execute();
+      return true;
+    });
+    if (!saved) return;
+    live.part(stepId, 0, part);
+    await finishTurn(deps, live, workspaceId, memberId, turnId, 'completed', {
+      segment: ZERO_USAGE,
+      contextTokens: usage.inputTokens,
+    });
+  } catch {
+    if (invocationId) await deps.modelGateway.cancelRunnerInvocation(ctx, invocationId).catch(() => {});
+    if (signal.aborted) return; // cancel() already persisted the canceled state.
+    await runInWorkspace(deps.database, ctx, (tx) =>
+      saveStep(tx, {
+        id: stepId,
+        status: 'failed',
+        parts: [],
+        completed: true,
+      }),
+    );
+    await finishTurn(deps, live, workspaceId, memberId, turnId, 'failed', {
+      failureReason: bounded.aborted && invocationId ? 'runner-unavailable' : 'provider-error',
+      segment: ZERO_USAGE,
+    });
+  }
+}
+
 export async function executeTurn(
   deps: RunnerDeps,
   workspaceId: string,
@@ -395,6 +567,12 @@ export async function executeTurn(
   const live = new LiveTurn(deps.hub, workspaceId, turnView(loaded.turn, loaded.steps));
   const usage = { total: { ...ZERO_USAGE } };
   let contextTokens: number | null = null;
+
+  const target = parseAiTargetModelChoice(loaded.turn.model);
+  if (target) {
+    await executeTargetTurn(deps, loaded, live, target, signal);
+    return;
+  }
 
   // Credits: a turn that cannot be paid fails before calling the model.
   try {

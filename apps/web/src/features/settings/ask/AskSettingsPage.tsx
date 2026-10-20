@@ -100,7 +100,9 @@ function GeneralTab() {
   const data = settings.data;
   const modelItems = [
     { id: 'auto', label: 'Auto' },
-    ...(models.data?.models ?? []).map((m) => ({ id: m.id, label: m.label })),
+    ...(models.data?.models ?? [])
+      .filter((m) => !m.id.startsWith('target:'))
+      .map((m) => ({ id: m.id, label: m.label })),
   ];
   const member = usage.data?.member;
   return (

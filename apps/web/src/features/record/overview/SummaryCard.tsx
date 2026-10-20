@@ -19,7 +19,8 @@ export function SummaryCard() {
   const ws = useWorkspaceRef();
   const client = useQueryClient();
   const models = useModels();
-  const configured = models.data?.configured ?? true;
+  // Saved targets currently power Ask text answers; summaries still require the server's configured LLM.
+  const configured = models.data?.models.some((m) => m.isAuto && !m.isUnavailable) ?? true;
   const summary = useRecordSummary(recordRef.entityDefinitionId, recordRef.entityInstanceId);
   useSummaryFreshness(ws.id, recordRef.entityDefinitionId, recordRef.entityInstanceId);
   const [busy, setBusy] = useState(false);

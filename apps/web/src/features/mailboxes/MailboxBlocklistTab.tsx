@@ -51,7 +51,7 @@ export function MailboxBlocklistTab({ mailbox }: { mailbox: Mailbox }) {
           title="No emails or domains yet"
           description={
             <>
-              Emails from blocklisted domains and addresses won't appear in Attio. <LearnMore />
+              Emails from blocklisted domains and addresses won't appear in Agentic CRM. <LearnMore />
             </>
           }
           action={
