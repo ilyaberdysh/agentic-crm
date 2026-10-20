@@ -61,8 +61,8 @@ jobs:
         run: |
           docker run --detach --rm --name agentic-crm-s3 \
             --publish 8333:8333 \
-            chrislusf/seaweedfs:latest \
-            server -s3 -s3.port=8333 -dir=/data -volume.max=0
+            chrislusf/seaweedfs@sha256:4e61d15fd35994cb1e43e1e553dff106794841fd9a99ade2fc8c8bfce4d7872d \
+            server -s3 -s3.port=8333 -dir=/data
           for attempt in {1..30}; do
             if curl --silent --show-error http://127.0.0.1:8333/ >/dev/null; then
               exit 0
