@@ -68,12 +68,15 @@ function conform() {
     '/runner-auth.json',
   ]);
   const runtimeIdentityMounts = new Set(['/etc/passwd', '/etc/group']);
+  const ociDeviceMounts = new Set(['/dev/null', '/dev/random', '/dev/urandom', '/dev/tty', '/dev/full', '/dev/zero']);
   for (const mount of mounts) {
     const path = mount.split(' ')[4];
     if (runtimeIdentityMounts.has(path)) {
       if (!mount.split(' ')[5].split(',').includes('ro')) throw new Error(`Writable runtime identity mount: ${path}`);
       continue;
     }
+    // OCI supplies only these inert/entropy character devices; arbitrary host devices remain forbidden.
+    if (ociDeviceMounts.has(path)) continue;
     // OCI runtimes add protected proc/sys masks. Other image/default-config mounts fail closed.
     if (!allowedMounts.has(path) && !path.startsWith('/proc/') && !path.startsWith('/sys/')) {
       throw new Error(`Unexpected runtime mount: ${path}`);
