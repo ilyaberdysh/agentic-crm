@@ -71,7 +71,7 @@ function conform() {
     const path = mount.split(' ')[4];
     // OCI runtimes add protected proc/sys masks. Other image/default-config mounts fail closed.
     if (!allowedMounts.has(path) && !path.startsWith('/proc/') && !path.startsWith('/sys/')) {
-      throw new Error('Unexpected runtime mount');
+      throw new Error(`Unexpected runtime mount: ${path}`);
     }
   }
   const root = mounts.find((line) => line.split(' ')[4] === '/');

@@ -160,11 +160,7 @@ function RetryMenu({ turn }: { turn: AiTurn }) {
                   }}
                 >
                   {m.id !== 'auto' &&
-                    ('brand' in m && m.brand === 'anthropic' ? (
-                      <BrandGlyph />
-                    ) : (
-                      <Icon icon="askAi" size={14} />
-                    ))}
+                    ('brand' in m && m.brand === 'anthropic' ? <BrandGlyph /> : <Icon icon="askAi" size={14} />)}
                   {m.label}
                   {(turn.modelMode === 'auto' ? 'auto' : turn.model) === m.id && (
                     <span className={s.menuTrailing}>Last used</span>
