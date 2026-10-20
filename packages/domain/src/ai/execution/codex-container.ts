@@ -290,11 +290,16 @@ export class CodexContainerSandbox {
       ];
       creationAttempted = true;
       const created = await command(argv);
-      if (created.exitCode !== 0)
+      if (created.exitCode !== 0) {
+        // Credential-free operator checks may opt in to local runtime diagnostics.
+        // Execution requests never expose Podman stderr because it can contain host paths.
+        if (!request && process.env.CRM_CODEX_SANDBOX_CONFORMANCE_DIAGNOSTICS === '1')
+          process.stderr.write(created.stderr);
         throw new ExecutionError(
           'sandbox_unavailable',
           'The container could not be created with all required restrictions.',
         );
+      }
       const inspected = await command(['inspect', '--type=container', name]);
       if (inspected.exitCode !== 0)
         throw new ExecutionError('sandbox_conformance_failed', 'The created container could not be inspected.');
