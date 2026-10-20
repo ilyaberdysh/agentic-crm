@@ -303,7 +303,13 @@ export class CodexContainerSandbox {
       const inspected = await command(['inspect', '--type=container', name]);
       if (inspected.exitCode !== 0)
         throw new ExecutionError('sandbox_conformance_failed', 'The created container could not be inspected.');
-      verifyContainerInspection(inspected.stdout, binds);
+      try {
+        verifyContainerInspection(inspected.stdout, binds);
+      } catch (error) {
+        if (!request && process.env.CRM_CODEX_SANDBOX_CONFORMANCE_DIAGNOSTICS === '1')
+          process.stderr.write(inspected.stdout);
+        throw error;
+      }
       let ready = false;
       let header = Buffer.alloc(0);
       const result = await command(['start', '--attach', '--interactive', name], {
