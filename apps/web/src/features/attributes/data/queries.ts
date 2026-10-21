@@ -122,7 +122,7 @@ export function useAttributes(entityDefinitionId: string | null | undefined): {
   return { attributes: q.data ?? EMPTY, isLoading: q.isPending };
 }
 
-/** `can(flag)`: true until the policy is known (allow-all resolver in slice 1/2). */
+/** `can(flag)`: true until the policy is known (allow-all resolver in /2). */
 export function usePolicy(
   entityDefinitionId: string | null | undefined,
 ): (flag: keyof ResolvedActionPolicy) => boolean {
@@ -160,7 +160,7 @@ export interface RecordTitle {
   definition: EntityDefinition | undefined;
 }
 
-/** A record's display name: its object's display-name attribute value (D §2.2), else the record id. */
+/** A record's display name: its object's display-name attribute value (D), else the record id. */
 export function useRecordTitle(entityDefinitionId: string, entityInstanceId: string): RecordTitle {
   const { workspace } = useAttributeEnv();
   const definition = useObjectDefinition(entityDefinitionId || null);

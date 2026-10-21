@@ -1,4 +1,4 @@
-// "Export view as CSV" (C2 export.md §E3; C1 README §3.8; evidence C1/42-export-toast-dark.png): a sticky toast
+// "Export view as CSV": a sticky toast
 // "<Object> - <View> Export" that walks Preparing → Collecting data (progress) → Building CSV file → Downloading export
 // → "Export complete" (5 s), or "No records to export" / "Failed to export" / "Failed to download".
 import { toast } from '@agentic-crm/ui';

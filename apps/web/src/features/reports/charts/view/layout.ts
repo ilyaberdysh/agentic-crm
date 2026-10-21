@@ -1,4 +1,4 @@
-// Geometry of bar / line charts, measured from the Attio screenshots (1512×945): plot origin, axis label gutters,
+// Geometry of bar / line charts, measured from visual examples (1512×945): plot origin, axis label gutters,
 // title positions, rotated labels. Pure given a text measurer, so it is unit-testable.
 import { scaleBand, scaleLinear } from '@visx/scale';
 import type { CartesianModel } from '../model/cartesian';

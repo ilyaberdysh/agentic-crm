@@ -1,4 +1,4 @@
-// The kanban filter bar (C2 kanban.md K2 row 3, K6): Sort and Filter chips (views feature, drafts as on tables),
+// The kanban filter bar: Sort and Filter chips (views feature, drafts as on tables),
 // "Discard / Save for everyone" when drafted, and at the far right two 2-segment toggles — "Collapse columns" /
 // "Expand columns" and "Collapse cards" / "Expand cards" (both per browser).
 

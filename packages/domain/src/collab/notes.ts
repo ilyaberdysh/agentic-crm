@@ -117,7 +117,7 @@ async function hydrateNotes(
   }));
 }
 
-/** A live note the caller can read (404 otherwise, like Attio's "Note not found"). */
+/** A live note the caller can read (404 otherwise). */
 async function requireNote(tx: Tx, deps: CollabDeps, noteId: string): Promise<{ row: NoteRow; parents: RecordRef[] }> {
   const row = await tx.db
     .selectFrom('notes')

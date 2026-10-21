@@ -1,5 +1,5 @@
-// Record overlay (D README §2.7): the record page as a full-viewport dialog above the originating page. Top bar:
-// close ×, Previous record ↑ (K), Next record ↓ (J), "n of N in ‹view›"; the record page (S3-RECORD, registered via
+// Record overlay: the record page as a full-viewport dialog above the originating page. Top bar:
+// close ×, Previous record ↑, Next record ↓, "n of N in ‹view›"; the record page (S3-RECORD, registered via
 // registerRecordOverlay) renders the rest. Esc / × close it back to the originating page; K / J replace-navigate
 // within the sequence (prev disabled on the first record, next on the last).
 import { cx, IconButton, useThemeClassName } from '@agentic-crm/ui';

@@ -1,8 +1,8 @@
-// Calls on the client (slice 10; BACKLOG 10.11–10.15). Public surface:
-//   callsRoutes(getParentRoute)            the Calls list, Insight Templates, the template editor and the call page routes
-//   RecordCallsTab / useRecordCallCount     the Calls tab of record pages and its count (D README §2.9)
-//   ActivityCallCard / useCallsByMeetings   the meeting card of the Activity feed for a meeting with a call
-//   callPath / openCallRecording            links to a call page
+// Calls data and views. Public surface:
+// callsRoutes(getParentRoute) the Calls list, Insight Templates, the template editor and the call page routes
+// RecordCallsTab / useRecordCallCount the Calls tab of record pages and its count
+// ActivityCallCard / useCallsByMeetings the meeting card of the Activity feed for a meeting with a call
+// callPath / openCallRecording links to a call page
 
 export { callPath } from './actions';
 export { ActivityCallCard, CallCard } from './CallCard';

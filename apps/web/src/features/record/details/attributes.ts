@@ -1,4 +1,4 @@
-// Which attributes the details panel shows (D README §2.3): configured section rows, else the first five attributes
+// Which attributes the details panel shows: configured section rows, else the first five attributes
 // in attribute order; "View all values" lists every non-system attribute with fuzzy search by title. System and
 // computed attributes (Record ID, interactions, connection strength, next due task, created at/by, list entries) are
 // never listed.
@@ -69,7 +69,7 @@ export function substringDistance(query: string, text: string): number {
 }
 
 /**
- * Fuzzy title match of "Search attributes..." (D §2.3: "inter" keeps "Twitter"): a substring, or a substring within
+ * Fuzzy title match of "Search attributes..." (D: "inter" keeps "Twitter"): a substring, or a substring within
  * one edit for queries of four or more characters (two edits from eight).
  */
 export function fuzzyMatches(query: string, title: string): boolean {

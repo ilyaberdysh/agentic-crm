@@ -17,7 +17,9 @@ import websocket from '@fastify/websocket';
 import { type FastifyTRPCPluginOptions, fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
 import { getHTTPStatusCodeFromError } from '@trpc/server/http';
 import Fastify, { type FastifyInstance } from 'fastify';
+import { registerModelRunnerRoutes } from './agentic/model-routes';
 import { registerAgenticRoutes } from './agentic/routes';
+import { registerRunnerRoutes } from './agentic/runner-routes';
 import { registerAiStreamRoutes } from './ai/stream';
 import { type Auth, authTrustedOrigins, createAuth } from './auth/auth';
 import { registerAuthRoutes } from './auth/routes';
@@ -119,8 +121,7 @@ export async function buildApp(options: BuildAppOptions = {}): Promise<ApiApp> {
     reply.header('x-frame-options', 'DENY');
     reply.header('x-content-type-options', 'nosniff');
     reply.header('referrer-policy', 'strict-origin-when-cross-origin');
-    // Cookie-authenticated writes from a foreign page are refused (Attio relies on SameSite=Lax + JSON + custom
-    // headers, K sessions.md §1.1; we also check Origin). Better Auth checks its own routes.
+    // Check Origin on cookie-authenticated writes in addition to SameSite cookies. Better Auth checks its own routes.
     if (
       !SAFE_METHODS.has(request.method) &&
       (request.url.startsWith('/trpc') || request.url.startsWith('/api/agentic/'))
@@ -178,6 +179,8 @@ export async function buildApp(options: BuildAppOptions = {}): Promise<ApiApp> {
 
   await registerAuthRoutes(app, auth, { onSessionEnded: (sessionId) => gateway.closeSession(sessionId) });
   await registerAgenticRoutes(app, { auth, workspaces, domain });
+  await registerRunnerRoutes(app, { auth, workspaces, runners: domain.agentic.runners });
+  await registerModelRunnerRoutes(app, domain);
 
   await app.register(fastifyTRPCPlugin, {
     prefix: '/trpc',

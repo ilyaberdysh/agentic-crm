@@ -1,5 +1,5 @@
-// <RichTextEditor> — contract E1 (slice3-contracts.md): TipTap + Yjs over a HocuspocusProvider connected to
-// apps/collab, restricted to Attio's note model, with Attio's slash menu, mention typeahead, selection toolbar,
+// <RichTextEditor> — contract E1: TipTap + Yjs over a HocuspocusProvider connected to
+// apps/collab, restricted to the note model, with the slash menu, mention typeahead, selection toolbar,
 // link popover, images, placeholder, remote carets and presence data.
 import { HocuspocusProvider } from '@hocuspocus/provider';
 import { type AnyExtension, type Editor, Extension, getMarkRange } from '@tiptap/core';
@@ -431,7 +431,7 @@ function CollabEditor({ session, ...props }: RichTextEditorProps & { session: Se
   );
 }
 
-/** Remote caret: 2 px line in the peer colour with a name pill above it (editor.md §10.5). */
+/** Remote caret: 2 px line in the peer colour with a name pill above it. */
 function renderCaret(user: Record<string, unknown>): HTMLElement {
   const color = typeof user.color === 'string' && /^#[0-9a-f]{6}$/i.test(user.color) ? user.color : '#266DF0';
   const caret = document.createElement('span');

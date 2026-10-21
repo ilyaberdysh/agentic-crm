@@ -196,7 +196,7 @@ export const chipSuffix = style({
   color: c.content.secondary,
   cursor: 'pointer',
   outline: 'none',
-  // Revealed after hovering the chip for 100 ms, sliding in from 4 px (motion.md §3).
+  // Revealed after hovering the chip for 100 ms, sliding in from 4 px.
   opacity: 0,
   transform: 'translateX(4px)',
   transition: `opacity ${scales.duration.breezy}ms ease, transform ${scales.duration.breezy}ms ease, background-color ${scales.duration.breezy}ms ease`,

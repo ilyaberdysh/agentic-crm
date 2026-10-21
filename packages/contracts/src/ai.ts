@@ -1,6 +1,6 @@
 // AI layer (slice 10, S10-ASK): Ask Agentic threads and turns, tool parts and approvals, the SSE stream, models,
 // settings, prompts library, credits and the AI record summary (BACKLOG 10.01–10.04, 10.07, 10.16; I ask-agentic.md,
-// ask-agentic-internals.md; slice10-contracts.md). Camel-case renderings of Attio's merlin_* shapes.
+// Camel-case representations of AI attribute values.
 //
 // Procedures:
 //   ai.threads.list/get/create/delete/rename        ai.turns.send/approve/deny/retry/cancel/feedback/suggestions
@@ -20,7 +20,7 @@ export const aiModelSchema = z.object({
   /** Model id sent with turns (`model`); "auto" is not a model (it resolves to the workspace's Ask model). */
   id: z.string(),
   label: z.string(),
-  brand: z.literal('anthropic'),
+  brand: z.enum(['anthropic', 'openai', 'openai-compatible']),
   /** The model "Auto" resolves to. */
   isAuto: z.boolean(),
   isUnavailable: z.boolean(),
@@ -30,6 +30,19 @@ export const aiModelsOutputSchema = z.object({ configured: z.boolean(), models: 
 export type AiModelsOutput = z.infer<typeof aiModelsOutputSchema>;
 /** "auto" or a model id. */
 export const aiModelChoiceSchema = z.string().min(1).max(64);
+
+/** Version-pinned saved target IDs share the existing model picker and turn model field. */
+export function aiTargetModelChoice(targetId: string, version: number): string {
+  return `target:${targetId.toLowerCase()}:${version}`;
+}
+
+export function parseAiTargetModelChoice(
+  choice: string | null | undefined,
+): { targetId: string; expectedVersion: number } | null {
+  const match = /^target:([\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}):([1-9]\d*)$/i.exec(choice ?? '');
+  if (!match || !Number.isSafeInteger(Number(match[2]))) return null;
+  return { targetId: match[1]!.toLowerCase(), expectedVersion: Number(match[2]) };
+}
 
 // ---------------------------------------------------------------------------------------------------------------
 // Threads

@@ -1,4 +1,4 @@
-// Our own drop-zone illustration (clean room: Attio's artwork is not copied): a folder holding a spreadsheet, with an
+// custom drop-zone illustration (clean room: the artwork is not copied): a folder holding a spreadsheet, with an
 // upload arrow. Strokes follow the text colour; the sheet's grid uses the accent.
 export function UploadIllustration() {
   return (

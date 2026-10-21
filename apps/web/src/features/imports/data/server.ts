@@ -1,4 +1,4 @@
-// The import backend on the `imports.*` procedures (slice4-contracts.md; packages/contracts imports.ts). The server
+// The import backend calls the `imports.*` procedures. The server
 // answers `imports.status` → {mapping, job, columns, properties, validation, strategies}; job-level procedures take
 // `jobId`; review values carry `hashedValue` / `rawValue` / `status`; `preview` (a mutation) generates the plan and
 // `assertions` pages its rows; `reviewSummary` drives the orange dots of the Columns rail. Everything is translated

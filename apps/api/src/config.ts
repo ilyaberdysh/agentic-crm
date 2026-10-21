@@ -51,7 +51,7 @@ export interface ApiConfig {
   isProduction: boolean;
   logLevel: string;
   signUpEnabled: boolean;
-  /** Session lifetime; Attio's session cookies live ~180 days (K sessions.md §1.1). */
+  /** Session lifetime in seconds (default: approximately 180 days). */
   sessionTtlSeconds: number;
   /** Sliding refresh: a session used after this age gets a new expiry. */
   sessionUpdateAgeSeconds: number;

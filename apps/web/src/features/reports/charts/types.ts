@@ -1,5 +1,5 @@
 // The seam between the report pages (dashboard cells, editor canvas, viewer) and the chart library (BACKLOG 9.07;
-// H chart-types.md). The pages build a `ChartContext` from the report and the schema (labels, attribute types, value
+//). The pages build a `ChartContext` from the report and the schema (labels, attribute types, value
 // formats) and hand it with the server's `DatasetOutput`; the library turns both into a chart model and draws it
 // with visx. Nothing in features/reports/charts reads the schema or calls the API.
 import type {
@@ -10,7 +10,7 @@ import type {
   VisualisationType,
 } from '@agentic-crm/contracts';
 
-/** How one number is written (formatting follows the metric attribute, chart-types §2 "Number formatting"). */
+/** How one number is written (formatting follows the metric attribute, chart-types "Number formatting"). */
 export type ValueFormat =
   /** Counts: integers ("12"). */
   | { kind: 'count' }

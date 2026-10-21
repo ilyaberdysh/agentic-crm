@@ -256,7 +256,7 @@ export interface ContextMenuProps<T extends object> extends Omit<RACMenuProps<T>
 }
 
 /**
- * Right-click menu opened at the pointer (components.md §7 ContextMenu): always the dark contextual chrome, no
+ * Right-click menu opened at the pointer (ContextMenu): always the dark contextual chrome, no
  * trigger element. Choosing an item closes it.
  */
 export function ContextMenu<T extends object>({

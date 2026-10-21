@@ -1,4 +1,4 @@
-// Settings left nav (B README §2.8; evidence/B/settings-appearance-light.png): groups, order, paths (Attio route
+// Settings navigation groups, order and paths:
 // tree) and searchable subsections ("theme" → Appearance › Theme).
 import type { IconName } from '@agentic-crm/ui';
 

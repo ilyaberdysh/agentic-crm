@@ -1,4 +1,4 @@
-// Comment deep link `/$ws/comment/$commentHeaderId` (B README §2.7; E README §1): locates the comment and redirects
+// Comment deep link `/$ws/comment/$commentHeaderId`: locates the comment and redirects
 // (replace) to the commented record's object view with `threadCommentId`, `commentId`, `commentEntityDefinitionId`,
 // `commentEntityInstanceId`; that page opens the "All comments" panel on the thread ("Comment on ‹record›", highlighted).
 // Not found / no access: toast "We can't find that comment" (5 s) and back to the workspace root.

@@ -1,6 +1,6 @@
 // E2E: starts its own API (fresh database `agentic_crm_test_web_e2e`, seeded), collab server, worker and web dev server,
 // then drives Chromium.
-//   pnpm --filter @agentic-crm/web e2e
+// pnpm --filter @agentic-crm/web e2e
 // Ports and database are overridable (e2e/env.ts); E2E_REUSE=1 reuses servers already listening on those ports.
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from '@playwright/test';
@@ -39,7 +39,7 @@ export default defineConfig({
         LOG_LEVEL: 'warn',
         // AI features answer from the scripted scenarios of the deterministic fake (packages/domain src/ai/fixtures/e2e).
         AGENTIC_CRM_LLM: process.env.AGENTIC_CRM_LLM ?? 'fake',
-        // The stack must not pick up the checkout's .env secrets (Google client, Anthropic key): deterministic e2e.
+        // The stack must not pick up the checkout's.env secrets (Google client, Anthropic key): deterministic e2e.
         AGENTIC_CRM_DOTENV: '0',
       },
       reuseExistingServer: process.env.E2E_REUSE === '1',
@@ -47,7 +47,7 @@ export default defineConfig({
       stdout: 'pipe',
     },
     {
-      // Note bodies (slice 3): the collab server on the same database; started after the API prepared it.
+      // Note bodies: the collab server on the same database; started after the API prepared it.
       command: `node e2e/wait-for.ts ${API_ORIGIN}/api/health && pnpm --filter @agentic-crm/collab start`,
       cwd: webRoot,
       url: `http://127.0.0.1:${COLLAB_PORT}/health`,
@@ -62,7 +62,7 @@ export default defineConfig({
       timeout: 60_000,
     },
     {
-      // CSV imports and view exports run in the worker (pg-boss, slice 4) on the same database; it has no HTTP
+      // CSV imports and view exports run in the worker (pg-boss) on the same database; it has no HTTP
       // port, so the stack waits for its "worker ready" log line.
       command: `node e2e/wait-for.ts ${API_ORIGIN}/api/health && pnpm --filter @agentic-crm/worker start`,
       cwd: webRoot,

@@ -1,4 +1,4 @@
-// View settings (C1 README §3.2, evidence C1/12, 13): "View settings" button (hotkey `y`) → 270 px popover, max 60vh:
+// View settings (evidence C1/12, 13): "View settings" button (hotkey `y`) → 270 px popover, max 60vh:
 // the view's columns in order (drag handle, type icon, title or "A › B" path, "⋮" view attribute menu with Edit
 // attribute / Change attribute label / Formatting › / Remove column) and "+ Add attribute to view ›". Tables have no
 // density/row-height/wrap settings (bundle 108318).

@@ -35,6 +35,13 @@ export interface WorkspacesTable {
   updated_at: CreatedAt;
 }
 
+export interface WorkspaceProductModulesTable {
+  workspace_id: string;
+  module_id: string;
+  enabled: ColumnType<boolean, boolean | undefined, boolean>;
+  updated_at: CreatedAt;
+}
+
 export interface WorkspaceMembersTable {
   id: string;
   workspace_id: string;
@@ -306,6 +313,7 @@ export interface SchemaMigrationsTable {
 export interface DB {
   users: UsersTable;
   workspaces: WorkspacesTable;
+  workspace_product_modules: WorkspaceProductModulesTable;
   workspace_members: WorkspaceMembersTable;
   workspace_invites: WorkspaceInvitesTable;
   entity_definitions: EntityDefinitionsTable;

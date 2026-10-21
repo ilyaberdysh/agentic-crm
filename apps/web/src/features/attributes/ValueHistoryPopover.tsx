@@ -1,4 +1,4 @@
-// "View edit history" (BACKLOG 2.11; C1 README §3.6, D §3.2; evidence/C1/36, D-project-edit-history): a 320 px
+// "View edit history": a 320 px
 // popover beside the cell, "Edit history", a newest-first timeline of "{actor} · 9 Oct 2026 5:06 PM" / "Updated:
 // {value}"; hovering an entry shows "Resulting value" in a side card.
 import type { Actor } from '@agentic-crm/contracts';

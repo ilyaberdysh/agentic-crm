@@ -1,4 +1,4 @@
-// Background upload of the parsed rows after "Next" (C2 import.md §I2 steps 4–7): chunks of rows go up in order while
+// After "Next", parsed rows upload in chunks and in order while
 // the user maps columns; steps after Map columns wait for it ("We're still uploading your CSV file…"). "Start over"
 // cancels it. State is a tiny external store keyed by import id.
 import { useSyncExternalStore } from 'react';

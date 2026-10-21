@@ -1,6 +1,6 @@
-// Settings → Workspace → General (J workspace-admin §2; admin only): logo (upload / remove), name (saved on blur) and
+// Settings → Workspace → General (J workspace-admin; admin only): logo (upload / remove), name (saved on blur) and
 // the slug with an availability check (typing asks `workspace.checkSlug`; saving asks for confirmation because every
-// URL of the workspace changes). Workspace export and deletion are deferred (BACKLOG §6 defer list).
+// URL of the workspace changes). Workspace export and deletion are deferred (defer list).
 import { workspaceSlugSchema } from '@agentic-crm/contracts';
 import { AlertDialog, Avatar, Button, ErrorState, Icon, IconButton, Spinner, TextInput, toast } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';

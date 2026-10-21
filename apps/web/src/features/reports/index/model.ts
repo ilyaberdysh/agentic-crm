@@ -1,4 +1,4 @@
-// Pure logic of the dashboards index (BACKLOG 9.01; H README §2.1, §3.1, §3.9): title search, creation-date sort,
+// Pure logic of the dashboards index (BACKLOG 9.01): title search, creation-date sort,
 // date-bucket groups in the viewer's zone and week start (the shared B.24 buckets, as the notes index), the favourites
 // strip, the report chips of a row and the tint of a dashboard's tile.
 import { type CreatedBucket, createdBucketOf, createdBucketRanges, type WeekDay } from '@agentic-crm/contracts';
@@ -130,6 +130,6 @@ export function tintOf(id: string): TileTint {
   return TILE_TINTS[h % TILE_TINTS.length] as TileTint;
 }
 
-/** Screen-reader and chip title of a report: its title, or "Untitled Report" when empty (H README §2.3). */
+/** Screen-reader and chip title of a report: its title, or "Untitled Report" when empty. */
 export const reportTitle = (title: string): string => title.trim() || 'Untitled Report';
 export const dashboardTitle = (title: string): string => title.trim() || 'Untitled Dashboard';

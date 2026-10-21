@@ -1,6 +1,6 @@
 // /v2 contract tests for meetings and call recordings (BACKLOG 7.04, acceptance 5; I calls §11.1 — the flow mymeet
 // imports use: create a meeting, attach a transcript-only recording, read it back). Every 200 is checked against
-// Attio's OpenAPI schema and the generated Zod schema of the operation.
+// the public API's OpenAPI schema and the generated Zod schema of the operation.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { type Harness, startHarness } from '../support/harness';
 import { expectError, expectOk, type V2Fixture, v2Fixture } from './support';
@@ -117,11 +117,9 @@ describe('meetings', () => {
         },
       },
     });
-    // Attio's spec declares this 400 with `statusCode` (camelCase); every other error, ours included, uses status_code.
-    const camel = { deviation: 'createMeeting 400 declares statusCode instead of status_code' };
-    expectError('createMeeting', mixed, 400, 'validation_type', camel);
+    expectError('createMeeting', mixed, 400, 'validation_type');
     const missing = await f.call('POST', '/meetings', { body: { data: { title: 'x' } } });
-    expectError('createMeeting', missing, 400, 'validation_type', camel);
+    expectError('createMeeting', missing, 400, 'validation_type');
     const nameless = await f.call('POST', '/meetings', {
       body: {
         data: {
@@ -134,7 +132,7 @@ describe('meetings', () => {
         },
       },
     });
-    expectError('createMeeting', nameless, 400, 'validation_type', camel);
+    expectError('createMeeting', nameless, 400, 'validation_type');
   });
 
   it('lists with linked record / participant filters (OR), time window, sort and cursor', async () => {
@@ -170,7 +168,6 @@ describe('meetings', () => {
       await f.call('GET', '/meetings', { query: { linked_object: 'companies' } }),
       400,
       'validation_type',
-      { deviation: 'listMeetings declares no 400' },
     );
   });
 

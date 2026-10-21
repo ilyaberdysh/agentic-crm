@@ -1,4 +1,4 @@
-// Stage header menu (C2 kanban.md K3; evidence kanban-stage-menu.png, kanban-stage-color-confetti.png,
+// Stage header menu:
 // kanban-stage-track-time.png): a 276 px popover over the column header — colour dot (4×3 swatch grid) + "Stage name"
 // (rename inline), "Track time in stage" (+ Target time with Days / Months / Years, saved after 1.5 s), "Confetti"
 // (plays a burst when switched on), then Collapse stage, Hide stage and Delete stage (archives, X-08, after "Are you
@@ -354,7 +354,7 @@ function StageEditor({ workspace, attribute, stage, stages, onOpenChange }: Stag
                 onChange={(on) => {
                   setConfetti(on);
                   save({ celebrationEnabled: on });
-                  // Switching it on previews the celebration (K3).
+                  // Switching it on previews the celebration.
                   if (on) fireConfetti();
                 }}
               />

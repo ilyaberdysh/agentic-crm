@@ -1,4 +1,4 @@
-// An open record (BACKLOG 3.01; D README §2.1–2.4, §3.1, §3.11): top bar (breadcrumb, or — inside the record overlay
+// An open record (BACKLOG 3.01): top bar (breadcrumb, or — inside the record overlay
 // of features/overlays — its ×, ↑ / ↓ and "1 of N in {view}" controls), the resizable details panel, the tab area and
 // the comments panel. Owns the record dialogs (edit, merge, delete, choose list) and the record-page shortcuts (⌥←/→
 // in the tab bar, e, c, n, t here; J / K belong to the overlay).
@@ -77,7 +77,7 @@ export interface RecordViewProps {
   layout: CustomLayout;
   activeTab: string | undefined;
   basePath: string;
-  /** Rendered inside the record overlay (E4): its controls replace the breadcrumb. */
+  /** Rendered inside the record overlay: its controls replace the breadcrumb. */
   overlay?: RecordOverlayChrome;
   /** Comments panel open on load (`?show-comments=true`, `?side-panel-tab=comments`). */
   initialComments?: boolean;
@@ -161,7 +161,7 @@ function RecordFrame({
   const canMerge = object.entityType === 'company-record' || object.entityType === 'person-record';
   const favoriteToggle = favorite.toggle;
   const isFavorite = favorite.isFavorite;
-  // Palette: the open record's own actions (command-palette.md §3.3 "record page: Add to list, Add/Remove from
+  // Palette: the open record's own actions ("record page: Add to list, Add/Remove from
   // favorites…") in a section named after it.
   const paletteContext = useMemo(() => {
     const actions: PaletteAction[] = [
@@ -429,7 +429,7 @@ function TopBarActions({ comments, onToggleComments }: { comments: boolean; onTo
   );
 }
 
-/** "Record actions" ⋮ (D §3.1). */
+/** "Record actions" ⋮ (D). */
 function RecordActionsMenu() {
   const { object, recordRef, rawLayout, basePath, openDialog } = useRecordPage();
   const { href } = useWorkspace();

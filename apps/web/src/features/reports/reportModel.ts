@@ -1,4 +1,4 @@
-// What the pages know about report types, visualisations and aggregations (builder §2–6, chart-types §1): names,
+// What the pages know about report types, visualisations and aggregations (builder, chart-types): names,
 // descriptions, icons, which visualisations a configuration allows (and why a disabled one is), defaults and the
 // small formatting helpers shared by cells, editor and viewer.
 import type {
@@ -37,7 +37,7 @@ export interface ReportTypeMeta {
   icon: IconGlyph;
 }
 
-/** The type picker's cards, in order (H README §2.3 step 1; strings `+KJg00`, `KZFHD/`, `TenaZR`, `VotX0X`, `zG4DnL`). */
+/** The type picker's cards, in order (step 1; strings `+KJg00`, `KZFHD/`, `TenaZR`, `VotX0X`, `zG4DnL`). */
 export const REPORT_TYPES: readonly ReportTypeMeta[] = [
   {
     id: 'insights',
@@ -102,7 +102,7 @@ export const AGGREGATION_LABELS: Record<ReportAggregation, string> = {
   median: 'Median',
 };
 
-/** Aggregations of a numeric metric in the select (Average, Sum, Min, Max, Count; builder §3.1). */
+/** Aggregations of a numeric metric in the select (Average, Sum, Min, Max, Count; builder). */
 export const METRIC_AGGREGATIONS: readonly ReportAggregation[] = ['mean', 'sum', 'min', 'max', 'count'];
 export const TIME_IN_STAGE_AGGREGATIONS = ['mean', 'min', 'max'] as const;
 
@@ -117,7 +117,7 @@ export function isStageAttribute(attr: Pick<AttributeDefinition, 'type' | 'isMul
   return (attr.type === 'pipeline' || attr.type === 'select') && !attr.isMultiselect;
 }
 
-/** Historical "Segment by": status, select, multi-select and actor-reference attributes (builder §7). */
+/** Historical "Segment by": status, select, multi-select and actor-reference attributes (builder). */
 export function isSegmentableAttribute(attr: Pick<AttributeDefinition, 'type'>): boolean {
   return attr.type === 'pipeline' || attr.type === 'select' || attr.type === 'actor-reference';
 }
@@ -138,7 +138,7 @@ export function isTimeGrouping(
 export interface VisualisationOption {
   id: VisualisationType;
   enabled: boolean;
-  /** Tooltip of a disabled option (builder §3.4 table). */
+  /** Tooltip of a disabled option (builder table). */
   reason: string | null;
 }
 
@@ -168,7 +168,7 @@ function lineAllowed(g: ReportGrouping | null, leaf: LeafResolver): boolean {
 
 /**
  * The visualisation select's options for a configuration, enabled ones first in the select's order (Single metric,
- * Bar, Pie, Line, Map for insights), disabled ones last (builder §3.4, §6 "Allowed visualisations per type").
+ * Bar, Pie, Line, Map for insights), disabled ones last (builder, "Allowed visualisations per type").
  */
 export function visualisationOptions(
   reportType: ReportType,
@@ -220,7 +220,7 @@ export function visualisationOptions(
   return [...list.filter((o) => o.enabled), ...list.filter((o) => !o.enabled)];
 }
 
-/** Keeps `current` when still allowed, else the first allowed option (builder §3.4 normaliser). */
+/** Keeps `current` when still allowed, else the first allowed option (builder normaliser). */
 export function normaliseVisualisationChoice(
   reportType: ReportType,
   settings: ReportSettings,
@@ -241,10 +241,10 @@ export const isCountRecords = (m: ReportMetric | null | undefined): boolean => !
 /** Metric changed to Count Records. */
 export const COUNT_METRIC: ReportMetric = { attributePath: null, field: null, aggregation: 'count' };
 
-/** Default aggregation when a numeric attribute is picked (builder §3.1: Sum). */
+/** Default aggregation when a numeric attribute is picked (builder: Sum). */
 export const DEFAULT_NUMERIC_AGGREGATION: ReportAggregation = 'sum';
 
-/** "Sorted by <b>stage order</b>" text parts for the sort button (builder §3.4). */
+/** "Sorted by <b>stage order</b>" text parts for the sort button (builder). */
 export function sortLabel(
   sort: string | null,
   naturalOrder: 'stage order' | 'select option order' | 'alphabetically',

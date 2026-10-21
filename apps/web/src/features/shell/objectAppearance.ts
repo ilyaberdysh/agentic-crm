@@ -1,4 +1,4 @@
-// Object icon tiles (sidebar Records rows, crumbs): colours as in evidence/J/objects-list.png — Companies and People
+// Object icon tile colours: Companies and People use
 // blue, Deals orange, Users cyan, Workspaces purple, custom objects grey.
 import type { Hue, IconName } from '@agentic-crm/ui';
 import type { ObjectSummary } from '../../data/objects';

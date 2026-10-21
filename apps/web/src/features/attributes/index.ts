@@ -1,5 +1,5 @@
-// Public surface of the attributes feature (slice-2 contract C1). Consumers: features/table (cells, clipboard,
-// footers), features/settings/objects (previews, defaults), the record page (fields) in slice 3.
+// Public surface of the attributes feature (contract). Consumers: features/table (cells, clipboard,
+// footers), features/settings/objects (previews, defaults), the record page (fields) in
 
 export { type AttributeEnv, AttributeEnvProvider, useAttributeEnv } from './data/env';
 export {

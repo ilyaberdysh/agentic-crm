@@ -1,4 +1,4 @@
-// Mailbox → General (F settings §2.1; evidence/F/mailbox-general-email-visibility.png): "Email visibility" with the
+// Mailbox → General (F settings): "Email visibility" with the
 // three radio cards, and "Individuals with full access" (Add person, the people who have it, the info alert).
 import { Avatar, Banner, Button, IconButton, toast } from '@agentic-crm/ui';
 import { useState } from 'react';
@@ -58,7 +58,7 @@ function VisibilitySection({ mailbox, isOwner }: { mailbox: Mailbox; isOwner: bo
     <Section
       id="email-visibility"
       title="Email visibility"
-      description="Choose how much of your synced email and calendar your workspace can see by default. You'll always see all your own emails and calendar events in Attio."
+      description="Choose how much of your synced email and calendar your workspace can see by default. You'll always see all your own emails and calendar events in Agentic CRM."
     >
       <RadioCards
         label="Email visibility"

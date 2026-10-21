@@ -1,6 +1,6 @@
-// CodeMirror language for formulas: the @agentic-crm/formula Lezer parser with highlighting tags (formulas.md §4.4):
+// CodeMirror language for formulas: the @agentic-crm/formula Lezer parser with highlighting tags:
 // function names blue, numbers green, strings and true / false / null cyan, operators / brackets / separators and
-// comments tertiary, references purple, `if` orange. Auto-close for ( [ " and `//` line comments.
+// comments tertiary, references purple, `if` orange. Auto-close for ([ " and `//` line comments.
 import { parser } from '@agentic-crm/formula';
 import { vars } from '@agentic-crm/ui';
 import { HighlightStyle, LanguageSupport, LRLanguage, syntaxHighlighting, syntaxTree } from '@codemirror/language';
@@ -27,7 +27,7 @@ export const formulaLanguage = LRLanguage.define({
         Comma: t.separator,
         Dot: t.derefOperator,
         LineComment: t.lineComment,
-        'AttioReference LLMReference': t.special(t.variableName),
+        'RecordReference LLMReference': t.special(t.variableName),
       }),
     ],
   }),
@@ -55,7 +55,7 @@ export function formulaSupport(): LanguageSupport {
   return new LanguageSupport(formulaLanguage, [syntaxHighlighting(formulaHighlightStyle)]);
 }
 
-/** Whether `pos` sits inside a string literal or a comment (no pickers there, §4.4). */
+/** Whether `pos` sits inside a string literal or a comment (no pickers there). */
 export function inStringOrComment(state: EditorState, pos: number): boolean {
   const node = syntaxTree(state).resolveInner(pos, -1);
   for (let n: typeof node | null = node; n; n = n.parent) {

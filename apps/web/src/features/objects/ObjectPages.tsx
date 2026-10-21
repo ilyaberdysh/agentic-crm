@@ -1,6 +1,6 @@
 // Object index and record routes (`/companies`, `/people`, `/<standard>`, `/custom/<slug>`, `/company/<id>`, …).
-// The index page (slice 2, BACKLOG 2.01) opens a view: the bare object URL redirects to the object's first
-// non-archived view (lowest sort order, C1 README §1); an object without views shows "Start with a view"; an unknown
+// The index page (BACKLOG 2.01) opens a view: the bare object URL redirects to the object's first
+// non-archived view (lowest sort order); an object without views shows "Start with a view"; an unknown
 // or archived view id falls back to the first view. Record pages live in features/record. Unknown object slugs
 // redirect to the workspace root like any unknown path.
 import { IconTile } from '@agentic-crm/ui';

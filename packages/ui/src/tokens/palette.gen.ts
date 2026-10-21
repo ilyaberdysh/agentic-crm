@@ -1,4 +1,4 @@
-// Committed design-token snapshot. Source provenance must be resolved before public release.
+// Committed design-token snapshot retained under the maintainer disposition in PROVENANCE.md.
 // 12 hue families (steps 01–09) and the 19-step grey ramp.
 
 export const palette = {

@@ -84,7 +84,7 @@ export const count = style({
   fontVariantNumeric: 'tabular-nums',
 });
 
-// IconTile (components.md §1): coloured square, 30 % radius, hairline border, on-accent glyph.
+// IconTile: coloured square, 30 % radius, hairline border, on-accent glyph.
 export const tile = style({
   boxSizing: 'border-box',
   position: 'relative',

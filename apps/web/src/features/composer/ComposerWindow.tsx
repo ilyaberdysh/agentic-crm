@@ -1,4 +1,4 @@
-// The composer window (F composer §2): header (Minimize · Pin to screen / Expand · Close), From, To (+ Cc / Bcc), Subject
+// The composer window (F composer): header (Minimize · Pin to screen / Expand · Close), From, To (+ Cc / Bcc), Subject
 // and body editors with variables, attachments, footer tools (attachment, image, variable, signature, template),
 // the Mass sending switch (1088 px wide with a recipients panel), Delete draft and Send email / Review. The working
 // copy lives in a `ComposerSession` (autosave per field), so minimising and pinning keep every keystroke.
@@ -200,7 +200,7 @@ function ComposerView({
 
   const onCreateTemplate = async () => {
     try {
-      // An empty template, as in Attio: the composer window switches to the template editor.
+      // An empty template, by default uses the composer window switches to the template editor.
       const created = await createTemplateNow(client, ws);
       setTemplateId(created.id);
       setView('template');
@@ -240,7 +240,7 @@ function ComposerView({
   }
 
   const compact = mode === 'floating';
-  // "…or create a template"; once templates exist the link picks one ("…or pick a template", F composer §2.6a).
+  // "…or create a template"; once templates exist the link picks one ("…or pick a template", F composera).
   const placeholder = (
     <>
       Start typing your email, or{' '}

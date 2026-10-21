@@ -1,0 +1,19 @@
+{
+  "name": "@agentic-crm/runner",
+  "private": true,
+  "type": "module",
+  "description": "Outbound-only paired runner; no database or hosted API credentials",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@agentic-crm/domain": "workspace:*",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15",
+    "vitest": "5.0.3"
+  }
+}

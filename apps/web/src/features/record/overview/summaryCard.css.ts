@@ -1,4 +1,4 @@
-// AI record summary card on the Overview tab (D README §2.5 item 4): a rounded card with the summary text, a muted
+// AI record summary card on the Overview tab (item 4): a rounded card with the summary text, a muted
 // "Generated at …" line and a regenerate button; an empty state with Generate; an out-of-date hint.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

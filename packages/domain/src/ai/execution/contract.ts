@@ -47,6 +47,9 @@ export type ExecutionErrorCode =
   | 'output_limit'
   | 'invalid_output'
   | 'native_tool_denied'
+  | 'sandbox_unavailable'
+  | 'sandbox_conformance_failed'
+  | 'sandbox_cleanup_failed'
   | 'disconnected'
   | 'process_failed';
 

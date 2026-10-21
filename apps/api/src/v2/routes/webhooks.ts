@@ -12,7 +12,7 @@ import {
 } from '@agentic-crm/contracts/v2';
 import type { V2Context } from '../context';
 import { publicErrors, withHints } from '../errors';
-import { attioTimestamp } from '../mappers';
+import { publicTimestamp } from '../mappers';
 import { page, params, parseInput, type RouteSpec } from '../route';
 
 type PublicSubscription = { event_type: string; filter?: unknown };
@@ -23,7 +23,7 @@ function toPublic(webhook: Webhook, secret?: string) {
     subscriptions: webhook.subscriptions.map((s) => ({ event_type: s.eventType, filter: s.filter })),
     id: { workspace_id: webhook.workspaceId, webhook_id: webhook.id },
     status: webhook.status,
-    created_at: attioTimestamp(webhook.createdAt),
+    created_at: publicTimestamp(webhook.createdAt),
     ...(secret !== undefined ? { secret } : {}),
   };
 }
@@ -58,7 +58,7 @@ function requireWorkspaceToken(v2: V2Context): void {
 
 const notFound = (id: string) => publicErrors.notFound(`Webhook with ID "${id}" was not found.`);
 
-/** Domain errors of webhook calls: unknown webhooks get Attio's message; uniqueness conflicts its 409. */
+/** Domain errors of webhook calls: unknown webhooks get the public API's message; uniqueness conflicts its 409. */
 async function onWebhook<T>(id: string | null, fn: () => Promise<T>): Promise<T> {
   try {
     return await withHints({}, fn);
@@ -73,6 +73,7 @@ export const webhookRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/webhooks',
+    operationId: 'listWebhooks',
     scopes: v2Operations.listWebhooks.scopes,
     async handler(v2, request) {
       requireWorkspaceToken(v2);
@@ -84,6 +85,7 @@ export const webhookRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/webhooks',
+    operationId: 'createWebhook',
     scopes: v2Operations.createWebhook.scopes,
     async handler(v2, request) {
       requireWorkspaceToken(v2);
@@ -100,6 +102,7 @@ export const webhookRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/webhooks/:webhook_id',
+    operationId: 'getWebhook',
     scopes: v2Operations.getWebhook.scopes,
     async handler(v2, request) {
       requireWorkspaceToken(v2);
@@ -110,6 +113,7 @@ export const webhookRoutes: RouteSpec[] = [
   {
     method: 'PATCH',
     url: '/webhooks/:webhook_id',
+    operationId: 'updateWebhook',
     scopes: v2Operations.updateWebhook.scopes,
     async handler(v2, request) {
       requireWorkspaceToken(v2);
@@ -128,6 +132,7 @@ export const webhookRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/webhooks/:webhook_id',
+    operationId: 'deleteWebhook',
     scopes: v2Operations.deleteWebhook.scopes,
     async handler(v2, request) {
       requireWorkspaceToken(v2);

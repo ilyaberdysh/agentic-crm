@@ -1,4 +1,4 @@
-// Note body typography (E README §2.2: body 14/500/24, −0.07 px, 12 px between paragraphs; editor.md §3 list
+// Note body typography: body 14/500/24, −0.07 px, 12 px between paragraphs; list
 // indents) for the textarea fallback and the markdown previews (cards clip it with a fade).
 import { text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';

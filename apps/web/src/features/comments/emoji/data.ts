@@ -1,4 +1,4 @@
-// Emoji set of the reaction picker (E README §2.8 "Reactions": categorised grid, search by CLDR name — "thumbs" finds
+// Emoji set of the reaction picker ("Reactions": categorised grid, search by CLDR name — "thumbs" finds
 // 👍 and 👎). A curated subset of Unicode emoji with their CLDR short names, written for this project.
 // Format per category: "emoji name|emoji name|…".
 

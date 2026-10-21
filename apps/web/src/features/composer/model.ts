@@ -1,4 +1,4 @@
-// Pure logic of the composer (F composer.md §2): what makes a draft empty, signature blocks in the body, recipient
+// Pure logic of the composer: what makes a draft empty, signature blocks in the body, recipient
 // parsing and the copy of the mass-send and review states. No React, no network.
 import type { Block } from '@agentic-crm/editor';
 import { isEmptyBlocks, textBlock } from '@agentic-crm/editor';
@@ -46,7 +46,7 @@ export interface DraftLike {
   attachments: readonly unknown[];
 }
 
-/** A draft with nothing in it: closing it deletes it (F composer §2.2). The signature does not count. */
+/** A draft with nothing in it: closing it deletes it (F composer). The signature does not count. */
 export function isDraftEmpty(draft: DraftLike, signature: readonly Block[] | null = null): boolean {
   const body = signature ? stripSignature(draft.body, signature) : draft.body;
   return (
@@ -68,7 +68,7 @@ interface VariableLike {
   path: readonly { attributeDefinitionId: string }[];
 }
 
-/** `{{first_name}}`-style token of a variable (Drafts list and template cards, F composer §3, §6). */
+/** `{{first_name}}`-style token of a variable (Drafts list and template cards, F composer). */
 export function variableToken(v: VariableLike): string {
   const raw = v.field ?? v.label?.split('›').at(-1) ?? v.path.at(-1)?.attributeDefinitionId ?? '';
   return raw

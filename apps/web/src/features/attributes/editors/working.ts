@@ -1,5 +1,5 @@
 // The working set of a multi-value editor. With `liveCommit` every toggle is written at once (`onCommit(ops,
-// {keepOpen: true})`, Attio's behaviour); otherwise toggles change a local set that is shown, broadcast as the draft
+// {keepOpen: true})`, the behaviour); otherwise toggles change a local set that is shown, broadcast as the draft
 // (`onDraftChange`) and committed once when the editor closes — Escape included, since toggles read as done.
 import { useRef, useState } from 'react';
 import { newId } from '../../../lib/ids';

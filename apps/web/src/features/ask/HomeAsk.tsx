@@ -1,6 +1,7 @@
-// Home → Ask AI block (B-shell/home.md §2.2): above the composer a credit-limit warning or a "Recent chat · <title>"
+// Home → Ask AI block: above the composer a credit-limit warning or a "Recent chat · <title>"
 // row; the composer (rotating examples, model chip, Insert prompt, submit) — submitting starts a chat and opens it —
 // and below it suggestion chips. Without an AI key it says so instead of failing.
+import { parseAiTargetModelChoice } from '@agentic-crm/contracts';
 import { Icon, Skeleton } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
@@ -11,6 +12,7 @@ import { sendTurn } from './actions';
 import * as s from './chat.css';
 import { Composer, NEW_CHAT_PLACEHOLDERS } from './composer/Composer';
 import { type ComposerText, EMPTY_COMPOSER, toSendable } from './composer/model';
+import { defaultAskModel } from './composer/modelChoice';
 import { threadTitle, useAiSettings, useCreditsUsage, useModels, useThreads } from './data';
 import { CreditLimitNotice, NotConfigured } from './notices';
 
@@ -30,6 +32,7 @@ export function HomeAsk() {
   const [value, setValue] = useState<ComposerText>(EMPTY_COMPOSER);
   const [model, setModel] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const selectedModel = model ?? defaultAskModel(models.data, settings.data?.defaultModel);
   const recent = threads.data?.threads[0];
 
   const start = async (
@@ -46,7 +49,7 @@ export function HomeAsk() {
       threadId,
       content: text,
       annotations,
-      model: model ?? settings.data?.defaultModel ?? 'auto',
+      model: selectedModel,
       source,
     });
     setBusy(false);
@@ -71,7 +74,7 @@ export function HomeAsk() {
     );
   }
   const configured = models.data.configured;
-  const outOfCredits = usage.data?.outOfCredits === true;
+  const outOfCredits = usage.data?.outOfCredits === true && !parseAiTargetModelChoice(selectedModel);
 
   return (
     <div className={s.homeBlock} data-testid="home-ask">
@@ -97,13 +100,14 @@ export function HomeAsk() {
           <Composer
             value={value}
             onChange={setValue}
-            model={model ?? settings.data?.defaultModel ?? 'auto'}
+            model={selectedModel}
             onModel={setModel}
             context={{}}
             placeholder={NEW_CHAT_PLACEHOLDERS}
             running={false}
             large
-            disabled={outOfCredits || busy}
+            disabled={busy}
+            sendDisabled={outOfCredits}
             onSend={() => {
               const { content, annotations } = toSendable(value);
               if (content) void start(content, annotations, 'composer');

@@ -1,4 +1,5 @@
-// Public REST API contracts. The committed contract snapshot is consumed by the API and its contract tests;
-// tokens.ts holds the API-token scope catalogue.
-export * from './api.gen.ts';
+// Public REST API schemas and the implemented route manifest. OpenAPI is generated from these local sources.
+export * from './api.ts';
+export * from './openapi.ts';
+export * from './operations.ts';
 export * from './tokens.ts';

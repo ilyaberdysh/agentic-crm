@@ -78,6 +78,7 @@ export const tokenPrompt = style({
 
 export const footer = style({ display: 'flex', alignItems: 'center', gap: 4, minHeight: 28, marginTop: 4 });
 export const spacer = style({ flex: 1 });
+export const targetNote = style({ color: c.content.tertiary, fontSize: 11, lineHeight: '16px', marginTop: 4 });
 
 export const modelButton = style({
   height: 28,

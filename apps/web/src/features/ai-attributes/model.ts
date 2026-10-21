@@ -1,4 +1,4 @@
-// AI autofill (ai-attributes.md §2–6), React-free so it is unit-tested: the autofill types (labels, descriptions,
+// AI autofill, React-free so it is unit-tested: the autofill types (labels, descriptions,
 // icons, credits per value, prompt copy), which types each attribute type allows and its default, the prompt ⇄
 // editor document conversion (variables are `_` placeholders with attribute paths), the "Recalculate values" copy and
 // credit math, and the display state of a value from its entity annotation.
@@ -16,7 +16,7 @@ export interface AutofillTypeInfo {
   placeholder: string;
   helper: string;
   promptRequired: boolean;
-  /** Offered in this build (the web agent needs a web-research provider; BACKLOG §10 defer). */
+  /** Offered in this build (the web agent needs a web-research provider;  defer). */
   available: boolean;
 }
 
@@ -75,7 +75,7 @@ export const AUTOFILL_ORDER: readonly AiAutofillType[] = [
   'classify-record',
 ];
 
-/** The dialog's attribute kinds that can carry AI autofill (J attribute-dialogs §3). */
+/** The dialog's attribute kinds that can carry AI autofill (J attribute-dialogs). */
 export type AiCapableType = 'text' | 'number' | 'currency' | 'select' | 'multi-select';
 
 const ALLOWED: Record<AiCapableType, AiAutofillType[]> = {

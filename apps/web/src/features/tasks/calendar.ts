@@ -14,7 +14,7 @@ export type MemberPreferences = RouterOutputs['preferences']['get'];
 export interface Calendar {
   timeZone: string;
   weekStart: WeekDay;
-  /** Locale for formatting dates: Attio's fixed English patterns (the UI language is English; locale.ts X-11). */
+  /** Locale for formatting dates: the fixed English patterns (the UI language is English; locale.ts X-11). */
   locale: string;
   numericOrder: 'mdy' | 'dmy';
   /** Local today 'YYYY-MM-DD' (evaluated on call). */

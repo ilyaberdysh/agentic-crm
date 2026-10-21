@@ -1,4 +1,4 @@
-// Record presence (BACKLOG 3.11; D README §3.12, CROSS-DOMAIN B.9): every tab showing a record joins the room
+// Record presence: every tab showing a record joins the room
 // `record:<workspaceId>:<entityDefinitionId>:<entityInstanceId>`; the top bar shows a facepile of the *other* members
 // in it (one avatar per user, X-04). Ephemeral only (I4b): nothing is stored.
 import type { PresenceMember } from '@agentic-crm/realtime';

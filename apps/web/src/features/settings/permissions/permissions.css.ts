@@ -1,4 +1,4 @@
-// Permissions tab (J permissions §4–5; evidence/J/object-permissions-grants.png measured at 1512 × 945): Members heading,
+// Permissions tab (J permissions;  measured at 1512 × 945): Members heading,
 // the workspace access card (56 px), Teams / Individual members / Automations sections with 40 px grant rows.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
@@ -9,10 +9,10 @@ export const root = style({ display: 'flex', flexDirection: 'column', gap: 24 })
 
 export const block = style({ display: 'flex', flexDirection: 'column', gap: 12 });
 
-/** "Members" heading block: 16 px to the workspace card (Attio), the sections below use 12. */
+/** "Members" heading block: 16 px to the workspace card (the UI), the sections below use 12. */
 export const lead = style({ gap: 16 });
 
-/** Attio leaves 16 px more below the member rows than below the teams. */
+/** the UI leaves 16 px more below the member rows than below the teams. */
 export const roomBelow = style({ marginBottom: 16 });
 
 export const head = style({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 });

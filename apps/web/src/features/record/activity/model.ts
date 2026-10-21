@@ -1,9 +1,9 @@
-// Activity timeline logic (BACKLOG 3.04; D README §3.8, CROSS-DOMAIN B.24, B.26): the "Visible events" filter
+// Activity timeline logic: the "Visible events" filter
 // categories and their persistence, which server events are rendered, period headers ("This week", …) and the
 // Overview preview (3 events, people before automations).
 import type { EventCategory, TimelineEvent, TimelineItem } from '@agentic-crm/contracts';
 
-/** Filter menu categories in menu order (D §3.8; "Logged activity" is flag-gated in Attio and not built). */
+/** Filter menu categories in menu order (D; "Logged activity" is flag-gated in the UI and not built). */
 export const FILTER_CATEGORIES = [
   { id: 'calendar', label: 'Calendar events', icon: 'attrDate' },
   { id: 'tasks', label: 'Task events', icon: 'tasks' },
@@ -16,7 +16,7 @@ export type VisibleCategory = (typeof FILTER_CATEGORIES)[number]['id'];
 
 const ALL: VisibleCategory[] = FILTER_CATEGORIES.map((c) => c.id);
 
-/** Event types behind each category (the table in D §3.8, Attio's `event_type` values). */
+/** Event types behind each category (the table in D, the `event_type` values). */
 export const CATEGORY_EVENT_TYPES: Record<VisibleCategory | 'activity', readonly string[]> = {
   calendar: ['meeting'],
   tasks: ['task-upcoming', 'task-overdue', 'task-completed'],
@@ -26,7 +26,7 @@ export const CATEGORY_EVENT_TYPES: Record<VisibleCategory | 'activity', readonly
   lists: ['list-entry-created', 'list-attribute-values-updated'],
 };
 
-/** Per object, per browser (Attio: `activity-timeline-visible-events:<entityDefinitionId>`). */
+/** Per object, per browser (the UI uses `activity-timeline-visible-events:<entityDefinitionId>`). */
 export const activityFiltersKey = (entityDefinitionId: string) =>
   `activity-timeline-visible-events:${entityDefinitionId}`;
 
@@ -54,7 +54,7 @@ export function requestCategories(visible: readonly VisibleCategory[]): EventCat
   return ALL.filter((c) => visible.includes(c));
 }
 
-/** Returned by the API but not rendered by Attio's feed (D §3.8). */
+/** Returned by the API but not rendered by the feed (D). */
 const HIDDEN_EVENT_TYPES = new Set<TimelineEvent['eventType']>(['comment-added', 'file-added', 'task-added']);
 
 export function isRenderable(event: TimelineEvent): boolean {

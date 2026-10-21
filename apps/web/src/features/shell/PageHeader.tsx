@@ -1,4 +1,4 @@
-// Page header pattern (B README §2.2, layout.md §3): 48 px + 1 px rule; left = Expand sidebar (when floating) +
+// Page header pattern: 48 px + 1 px rule; left = Expand sidebar (when floating) +
 // breadcrumbs (icon + label, non-last secondary, slash separators); right = page actions, e.g. Help.
 import { type BreadcrumbItem, Breadcrumbs, Button, Icon, type IconName, IconTile, Kbd, Tooltip } from '@agentic-crm/ui';
 import type { ReactElement, ReactNode } from 'react';
@@ -13,7 +13,7 @@ export interface Crumb {
   href?: string;
 }
 
-/** `start` replaces the breadcrumbs (e.g. the Notes / Templates tabs of the notes index, E README §2.1). */
+/** `start` replaces the breadcrumbs (e.g. the Notes / Templates tabs of the notes index). */
 export function PageHeader({ crumbs, start, actions }: { crumbs?: Crumb[]; start?: ReactNode; actions?: ReactNode }) {
   const items: BreadcrumbItem[] = (crumbs ?? []).map((c, i) => ({
     id: `${i}:${c.label}`,
@@ -59,7 +59,7 @@ function ExpandSidebarButton() {
   );
 }
 
-/** Settings pages: Help ghost button (B README §2.2: ghost 28, HelpCircle + "Help"). */
+/** Settings pages use a 28 px ghost Help button with a HelpCircle icon. */
 export function HelpButton() {
   return (
     <Tooltip content="Open help drawer" shortcut={['?']}>

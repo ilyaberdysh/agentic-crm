@@ -1,4 +1,4 @@
-// Collapsible sidebar section (sidebar.md §5): header click / Space / Enter toggles; state per section key in
+// Collapsible sidebar section: header click / Space / Enter toggles; state per section key in
 // localStorage (default open); hover reveals the section actions.
 import { Icon } from '@agentic-crm/ui';
 import type { ReactNode } from 'react';

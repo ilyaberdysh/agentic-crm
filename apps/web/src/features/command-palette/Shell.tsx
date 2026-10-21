@@ -1,4 +1,4 @@
-// One page of the palette (command-palette.md §2): optional header with back chevron and breadcrumbs, the input row,
+// One page of the palette: optional header with back chevron and breadcrumbs, the input row,
 // the sectioned result list, the preview pane and the footer with the highlighted row's gesture. Every page — Quick
 // actions, Search, Note templates, Choose list… — is this shell fed with rows.
 //
@@ -60,7 +60,7 @@ export interface ShellProps {
   empty?: ReactNode;
   /** The preview pane for the highlighted row; omit for a single-pane page. */
   preview?: (row: ShellRow | null) => ReactNode;
-  /** The Actions menu of a highlighted record row (⌘K). */
+  /** The Actions menu of a highlighted record row (⌘). */
   menu?: (row: ShellRow) => MenuItem[] | null;
   /** The primary button when there is no row. */
   fallbackGesture?: string;

@@ -1,4 +1,4 @@
-// Select workflow dialog (README §3.8): ⌘K-style panel — search row, grouped options, footer key hints.
+// Select workflow dialog: ⌘K-style panel — search row, grouped options, footer key hints.
 import { text, transitionColors, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

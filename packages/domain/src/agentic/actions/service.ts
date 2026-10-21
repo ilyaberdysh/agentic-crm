@@ -30,9 +30,11 @@ import {
   finishActionAttemptSchema,
   type ProposeTaskActionInput,
   proposeTaskActionSchema,
+  type ReconcileExecutingActionInput,
   type RecordActionActivity,
   type RecordAgentState,
   type RecordAgentStateInput,
+  reconcileExecutingActionSchema,
   recordAgentStateSchema,
   type StartActionAttemptInput,
   startActionAttemptSchema,
@@ -45,7 +47,12 @@ type AttemptRow = ActionAttempt & { executor: unknown };
 const stateOf = (action: Action): ActionState => ({ id: action.id, status: action.status, version: action.version });
 
 /** Durable intent and exact execution records. Execution is supplied only by the trusted domain task broker. */
-export function createActionService(options: { policy: AgenticPolicy; evidence: EvidenceService }) {
+export function createActionService(options: {
+  policy: AgenticPolicy;
+  evidence: EvidenceService;
+  /** Queue projection hook; runs in the same transaction after the authoritative action transition. */
+  onStateChanged?: (tx: Tx, action: Action) => Promise<void>;
+}) {
   async function load(tx: Tx, id: string, lock = false): Promise<Action> {
     uuidSchema.parse(id);
     const { rows } = await sql<Action>`SELECT p.id, p.digest, p.proposal, a.status, a.version
@@ -83,6 +90,7 @@ export function createActionService(options: { policy: AgenticPolicy; evidence: 
     if (updated.rows.length !== 1) throw stale();
     const next = { ...action, status: to, version: action.version + 1 };
     await history(tx, next, action.status, action.version);
+    await options.onStateChanged?.(tx, next);
     return next;
   }
 
@@ -477,6 +485,68 @@ export function createActionService(options: { policy: AgenticPolicy; evidence: 
           version: 1,
         },
       };
+    },
+
+    /**
+     * Crash recovery for the legacy split executor. The trusted runtime may only record the conservative outcome;
+     * it cannot claim success or failure, and the immutable receipt prevents redispatch on replay.
+     */
+    async reconcileExecuting(
+      tx: Tx,
+      input: ReconcileExecutingActionInput,
+    ): Promise<{ action: ActionState; receipt: ActionReceipt }> {
+      if (tx.ctx.actor.type !== 'system') throw forbidden('Only the trusted runtime may reconcile execution');
+      const parsed = reconcileExecutingActionSchema.parse(input);
+      const action = await load(tx, parsed.actionId, true);
+      const receipts = await sql<{
+        id: string;
+        attemptId: string;
+        outcome: string;
+        result: unknown;
+      }>`SELECT id, attempt_id AS "attemptId", outcome, result FROM agentic_action_receipts
+        WHERE workspace_id = ${tx.workspaceId}::uuid AND action_id = ${action.id}::uuid`.execute(tx.db);
+      const existing = receipts.rows[0];
+      if (existing) {
+        if (action.status !== 'OUTCOME_UNKNOWN' || existing.outcome !== 'OUTCOME_UNKNOWN') throw stale();
+        return {
+          action: stateOf(action),
+          receipt: {
+            id: existing.id,
+            actionId: action.id,
+            attemptId: existing.attemptId,
+            proposalDigest: action.digest,
+            outcome: actionOutcomeSchema.parse({ outcome: existing.outcome, result: existing.result }),
+          },
+        };
+      }
+      if (action.status !== 'EXECUTING') throw stale();
+      const attempts = await sql<ActionAttempt>`SELECT id, action_id AS "actionId", decision_id AS "decisionId",
+        status, version FROM agentic_action_attempts WHERE workspace_id = ${tx.workspaceId}::uuid
+          AND action_id = ${action.id}::uuid FOR UPDATE`.execute(tx.db);
+      const current = attempts.rows[0];
+      if (!current || current.status !== 'EXECUTING') throw stale();
+      const outcome = actionOutcomeSchema.parse({
+        outcome: 'OUTCOME_UNKNOWN',
+        result: { reason: 'dispatch-uncertain' },
+      });
+      const updated = await sql`UPDATE agentic_action_attempts
+        SET status = 'OUTCOME_UNKNOWN', version = version + 1, updated_at = ${tx.now}::timestamptz
+        WHERE workspace_id = ${tx.workspaceId}::uuid AND id = ${current.id}::uuid
+          AND status = 'EXECUTING' AND version = ${current.version} RETURNING id`.execute(tx.db);
+      if (updated.rows.length !== 1) throw stale();
+      const receipt: ActionReceipt = {
+        id: newId(),
+        actionId: action.id,
+        attemptId: current.id,
+        proposalDigest: action.digest,
+        outcome,
+      };
+      await sql`INSERT INTO agentic_action_receipts
+        (id, workspace_id, action_id, attempt_id, proposal_digest, outcome, result, created_by)
+        VALUES (${receipt.id}::uuid, ${tx.workspaceId}::uuid, ${action.id}::uuid, ${current.id}::uuid,
+          ${action.digest}, 'OUTCOME_UNKNOWN', ${JSON.stringify(outcome.result)}::jsonb,
+          ${JSON.stringify(tx.ctx.actor)}::jsonb)`.execute(tx.db);
+      return { action: stateOf(await transition(tx, action, 'OUTCOME_UNKNOWN')), receipt };
     },
 
     /** Trusted executor API, not an approval or tool endpoint. No retries are permitted after an unknown outcome. */

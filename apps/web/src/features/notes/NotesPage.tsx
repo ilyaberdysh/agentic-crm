@@ -1,4 +1,4 @@
-// Notes page `/$ws/notes` (BACKLOG 3.12; E README §2.1): header tabs, toolbar (Sorted by Creation date · list / grid ·
+// Notes page `/$ws/notes` (BACKLOG 3.12): header tabs, toolbar (Sorted by Creation date · list / grid ·
 // View settings · + New note), favourites strip, then notes grouped by creation-date buckets in the viewer's zone and
 // week start ("Created today 5") as 395 × 208 cards or as a table. Sort, layout, grouping and "Show favorites" are
 // per user and browser.

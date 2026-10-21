@@ -5,7 +5,7 @@
 // Lead → Qualified → Proposal → Won/Lost (≈ 250k status rows), an amount (30 % changed once), priority, 0–2 tags,
 // close date, signed-at timestamp, owner and a company (2,000 companies). The projection is rebuilt from the EAV and
 // the tables analysed. Every query goes end to end through domain.reporting.dataset (one workspace transaction,
-// permission checks, labels, freshness), after two warm-up runs. Results: research/architecture/decisions/slice9-server.md.
+// permission checks, labels, freshness), after two warm-up runs.
 import type { DatasetInput } from '@agentic-crm/contracts';
 import { sql } from '@agentic-crm/db';
 import { beforeAll, describe, expect, it } from 'vitest';

@@ -1,4 +1,4 @@
-// Task deadlines on the client (E README §2.6 due labels, §2.7 deadline chip; decision X-09): what the row says
+// Task deadlines on the client (due labels, deadline chip; decision X-09): what the row says
 // ("Due yesterday" red, "Due in 5 days" orange, "Due Oct 19, 2026" grey), what the dialog chip says ("Tomorrow",
 // "October 16, 2026"), and the deadline input sent to the server (a date → end of that local day; a typed time →
 // that instant).
@@ -123,7 +123,7 @@ export function zonedInstant(date: string, time: TimeOfDay, timeZone: string): s
   return new Date(instant).toISOString();
 }
 
-/** Deadline presets of the picker (E README §2.7: Today, Tomorrow, Next week, No date). */
+/** Deadline presets: Today, Tomorrow, Next week and No date. */
 export function presetDate(preset: 'today' | 'tomorrow' | 'next-week', today: string, nextWeekStart: string): string {
   if (preset === 'today') return today;
   if (preset === 'tomorrow') return addDays(today, 1);

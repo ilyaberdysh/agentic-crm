@@ -1,4 +1,4 @@
-// Requirement rules (J objects-lists §3.2, raw s40–s49; evidence/J/object-rules-empty.png, object-rules-list.png):
+// Requirement rules:
 // the Rules tab (header + table / empty state) and the Add / Edit rule dialog (Name, Condition "If", Requirement "Then",
 // Applies to).
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';

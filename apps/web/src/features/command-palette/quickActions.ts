@@ -1,4 +1,4 @@
-// The workspace quick-action registry (command-palette.md §3.3): category "Quick Action" unless noted. Visibility 1
+// The workspace quick-action registry: category "Quick Action" unless noted. Visibility 1
 // actions form the default set of the empty state; `searchOnly` ones (navigation, themes, easter eggs) appear only
 // while the query matches. Ask Agentic, Suggestions, email templates and the support links belong to later slices or
 // services this build does not have, so they are not registered.
@@ -142,7 +142,7 @@ export function buildQuickActions(env: QuickActionEnv): { quick: PaletteAction[]
           } satisfies PaletteAction,
         ]
       : []),
-    // Appearance (system-ui §8): only when they would change something; found by search.
+    // Appearance (system-ui): only when they would change something; found by search.
     ...(env.theme.setting !== 'system'
       ? [
           {

@@ -1,4 +1,4 @@
-// "Run workflow" from a record page, a table selection or a list (README §3.8; runs.md §1): the Select workflow command
+// "Run workflow" from a record page, a table selection or a list: the Select workflow command
 // dialog — search "Search workflows...", the group "<Object> workflows" with the live Record action (or List entry
 // action) workflows of that object / list, the group "Actions" → "Create new workflow", footer "↑ ↓ Navigate" and
 // "Select workflow ⏎". Choosing one starts one run per record and toasts "Triggered <workflow>".

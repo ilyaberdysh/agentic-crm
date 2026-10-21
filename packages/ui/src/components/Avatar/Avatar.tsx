@@ -48,7 +48,7 @@ export interface AvatarProps {
   style?: CSSProperties;
 }
 
-/** Avatar with image and coloured initial fallback (components.md §5). */
+/** Avatar with image and coloured initial fallback. */
 export function Avatar({
   name,
   src,
@@ -151,7 +151,7 @@ export interface IconTileProps {
 /** Coloured square with a white glyph: object and list icons (sidebar tiles are 16 × 16). */
 export function IconTile({ icon, size = 16, color = 'blue', className, ...rest }: IconTileProps) {
   const iconSize = TILE_ICON[size] ?? Math.round(size * 0.6);
-  // Attio's tile glyphs are solid; a heavier Lucide stroke keeps them legible on colour.
+  // the tile glyphs are solid; a heavier Lucide stroke keeps them legible on colour.
   const glyph = isValidElement(icon) ? (
     icon
   ) : (

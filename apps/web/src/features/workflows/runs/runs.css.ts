@@ -1,4 +1,4 @@
-// Runs tab (runs.md §3; evidence G/G-run-viewer-false-path.png, G-run-block-detail.png, G-run-failed-retry-menu.png,
+// Runs tab:
 // G-runs-empty.png): run history rows, the last-7-days overview tiles, the empty state, and the run block detail (stats
 // row, error text, outputs).
 import { alpha, insetRing, text, transitionColors, vars } from '@agentic-crm/ui/styles';

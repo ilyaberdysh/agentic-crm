@@ -1,6 +1,6 @@
 // Server-side value formatting for exports — the same rules as the app's formatValue (apps/web
 // features/attributes/format): ONE locale for every number, currency amount and percentage (the user's; X-11, B.25),
-// dates and times in Attio's fixed English patterns in the user's time zone. Exports always use the absolute date
+// dates and times in fixed English patterns in the user's time zone. Exports always use the absolute date
 // patterns ("4 days ago" would go stale in a file). Multiple values are joined with ", ".
 import type { AttributeType } from '@agentic-crm/contracts';
 

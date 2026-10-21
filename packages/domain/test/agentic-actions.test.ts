@@ -39,8 +39,14 @@ async function fixture() {
   const resolver = grantResolver(allowAllResolver);
   const policy = createAgenticPolicy({ resolver, agents });
   const evidence = createEvidenceService(createNoteEvidenceSource({ policy, resolver, agents }));
-  const actions = createActionService({ policy, evidence });
   const queue = createAgentTaskService({ policy });
+  const actions = createActionService({
+    policy,
+    evidence,
+    onStateChanged: async (tx, action) => {
+      await queue.reconcileLinkedAction(tx, action.id);
+    },
+  });
   const capability = createTaskCapability({ actions, collab: { policies: createPolicies(resolver) }, tasks: queue });
   const note = await domain.notes.create(fx.ctx, {
     id: newId(),
@@ -124,12 +130,27 @@ async function fixture() {
 }
 
 describe('durable record-scoped task actions', () => {
+  it('cancels queued work atomically when its linked action is rejected', async () => {
+    const fx = await fixture();
+    const action = await fx.propose();
+    const task = await fx.enqueue(action.id);
+    await fx.decide(action, newId(), fx.ctx, 'REJECT');
+    expect(await runInWorkspace(database, fx.ctx, (tx) => fx.queue.get(tx, task.id))).toMatchObject({
+      status: 'CANCELLED',
+      leaseHolder: null,
+      leaseExpiresAt: null,
+    });
+  });
+
   it('settles only active queue work for the exact successful action, including replay after restart', async () => {
     const fx = await fixture();
     const approved = await fx.decide(await fx.propose());
-    const [blocked, leased, terminalFailure, terminalSuccess] = await Promise.all(
-      Array.from({ length: 4 }, () => fx.enqueue(approved.id)),
-    );
+    const [blocked, leased, terminalFailure, terminalSuccess] = await Promise.all([
+      fx.enqueue(approved.id),
+      fx.enqueue(approved.id),
+      fx.enqueue(null),
+      fx.enqueue(null),
+    ]);
     const claimed = await runInWorkspace(database, fx.sys, (tx) =>
       fx.queue.claimDue(tx, { holder: 'follow-up-worker', leaseDurationMs: 60_000, limit: 4 }),
     );
@@ -171,8 +192,8 @@ describe('durable record-scoped task actions', () => {
         status: 'SUCCEEDED',
         leaseHolder: null,
         leaseExpiresAt: null,
-        reason: 'The linked approved crm.task.create action succeeded; its CRM task was created.',
-        nextEvent: 'No further queue work is scheduled for this action; the CRM task awaits its normal workflow.',
+        reason: 'The linked approved action succeeded.',
+        nextEvent: 'No further queue work is scheduled for this action.',
       });
       expect(settled.finishedAt).not.toBeNull();
       const history = await database.pool.query(
@@ -300,7 +321,7 @@ describe('durable record-scoped task actions', () => {
     expect((await runInWorkspace(database, fx.ctx, (tx) => fx.queue.get(tx, waiting.id))).status).toBe('SUCCEEDED');
   });
 
-  it('leaves linked queue work unchanged when the approved action becomes stale before execution', async () => {
+  it('cancels linked queue work when the approved action becomes stale before execution', async () => {
     const fx = await fixture();
     const approved = await fx.decide(await fx.propose());
     const waiting = await fx.enqueue(approved.id);
@@ -317,7 +338,11 @@ describe('durable record-scoped task actions', () => {
         expectedVersion: approved.version,
       }),
     ).toMatchObject({ action: { status: 'STALE' }, receipt: null });
-    expect(await runInWorkspace(database, fx.ctx, (tx) => fx.queue.get(tx, waiting.id))).toEqual(waiting);
+    expect(await runInWorkspace(database, fx.ctx, (tx) => fx.queue.get(tx, waiting.id))).toMatchObject({
+      id: waiting.id,
+      status: 'CANCELLED',
+      reason: 'The linked action is stale; queued work was cancelled.',
+    });
     await expectCode(domain.tasks.get(fx.ctx, approved.proposal.diff.task.id), 'NOT_FOUND');
   });
 
@@ -789,6 +814,41 @@ describe('durable record-scoped task actions', () => {
     await expect(
       database.pool.query('DELETE FROM agentic_action_receipts WHERE action_id = $1', [approved.id]),
     ).rejects.toMatchObject({ code: '23514' });
+  });
+
+  it('reconciles a stranded execution only to an immutable unknown-outcome receipt', async () => {
+    const fx = await fixture();
+    const approved = await fx.decide(await fx.propose());
+    await runInWorkspace(database, fx.agentCtx, (tx) =>
+      fx.actions.startAttempt(tx, {
+        id: newId(),
+        actionId: approved.id,
+        proposalDigest: approved.digest,
+        expectedVersion: approved.version,
+      }),
+    );
+    await expectCode(
+      runInWorkspace(database, fx.ctx, (tx) => fx.actions.reconcileExecuting(tx, { actionId: approved.id })),
+      'FORBIDDEN',
+    );
+    const first = await runInWorkspace(database, fx.sys, (tx) =>
+      fx.actions.reconcileExecuting(tx, { actionId: approved.id }),
+    );
+    expect(first).toMatchObject({
+      action: { id: approved.id, status: 'OUTCOME_UNKNOWN', version: 4 },
+      receipt: {
+        actionId: approved.id,
+        outcome: { outcome: 'OUTCOME_UNKNOWN', result: { reason: 'dispatch-uncertain' } },
+      },
+    });
+    expect(
+      await runInWorkspace(database, fx.sys, (tx) => fx.actions.reconcileExecuting(tx, { actionId: approved.id })),
+    ).toEqual(first);
+    const receipts = await database.pool.query(
+      'SELECT outcome, result FROM agentic_action_receipts WHERE workspace_id = $1 AND action_id = $2',
+      [fx.workspaceId, approved.id],
+    );
+    expect(receipts.rows).toEqual([{ outcome: 'OUTCOME_UNKNOWN', result: { reason: 'dispatch-uncertain' } }]);
   });
 
   it('requires a real exact task result for success and records terminal failure without a task write', async () => {

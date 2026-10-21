@@ -1,4 +1,4 @@
-// Comment composer (E README §2.8 "Composer", §3.5 "Post"): avatar, "Add comment..." / "Reply...", emoji and "@"
+// Comment composer ("Composer", "Post"): avatar, "Add comment..." / "Reply...", emoji and "@"
 // buttons, primary Comment / Reply disabled while empty; Enter posts, Shift+Enter breaks the line; the editor clears.
 import { Avatar, Button, IconButton } from '@agentic-crm/ui';
 import { useRef, useState } from 'react';

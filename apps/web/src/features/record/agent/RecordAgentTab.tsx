@@ -1,8 +1,17 @@
 import { Button, Icon } from '@agentic-crm/ui';
+import { memberName } from '../../attributes/format/formatValue';
+import type { Member } from '../../attributes/types';
 import type { AgentRecordState, RecordAgentTabProps } from './agentState';
 import * as s from './agentTab.css';
 
-export function RecordAgentTab({ state, onDecision, onExecute, isPending, mutationError }: RecordAgentTabProps) {
+export function RecordAgentTab({
+  state,
+  members = [],
+  onDecision,
+  onExecute,
+  isPending,
+  mutationError,
+}: RecordAgentTabProps) {
   if (state.status === 'loading') {
     return (
       <div className={s.page} aria-label="Loading agent activity" data-testid="agent-state-loading">
@@ -67,6 +76,30 @@ export function RecordAgentTab({ state, onDecision, onExecute, isPending, mutati
 
       {state.evidence && <Evidence evidence={state.evidence} />}
 
+      {(state.assigneeMemberIds?.length || state.reviewerMemberId) && (
+        <section className={s.card} aria-labelledby="agent-people">
+          <div className={s.sectionHeading} id="agent-people">
+            People
+          </div>
+          {state.assigneeMemberIds && state.assigneeMemberIds.length > 0 && (
+            <div className={s.peopleGroup}>
+              <div className={s.muted}>Assignees</div>
+              <ul className={s.peopleList}>
+                {state.assigneeMemberIds.map((id) => (
+                  <li key={id}>{displayMember(id, members)}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {state.reviewerMemberId && (
+            <div className={s.peopleGroup}>
+              <div className={s.muted}>Reviewer</div>
+              <div>{displayMember(state.reviewerMemberId, members)}</div>
+            </div>
+          )}
+        </section>
+      )}
+
       {state.status === 'proposed' && (
         <section className={s.decision} aria-labelledby="agent-pending-decision">
           <div className={s.sectionHeading} id="agent-pending-decision">
@@ -78,7 +111,7 @@ export function RecordAgentTab({ state, onDecision, onExecute, isPending, mutati
               size={28}
               variant="primary"
               isPending={isPending}
-              isDisabled={state.pendingDecision.canDecide === false}
+              isDisabled={isPending || state.pendingDecision.canDecide === false}
               onPress={() => onDecision?.(state.pendingDecision.id, 'approve')}
             >
               Approve
@@ -162,22 +195,42 @@ function Evidence({
 }: {
   evidence: NonNullable<Extract<AgentRecordState, { status: 'proposed' }>['evidence']>;
 }) {
-  const label = {
-    VERIFIED: 'Verified',
-    PROBABLE: 'Probable',
-    CONFLICTED: 'Conflicted',
-    REJECTED: 'Rejected',
-  }[evidence.band];
   return (
     <section className={s.card} aria-labelledby="agent-evidence">
       <div className={s.sectionHeading} id="agent-evidence">
         Evidence
-        <span className={s.evidenceBand} data-band={evidence.band}>
-          {label}
-        </span>
       </div>
-      <blockquote className={s.quote}>“{evidence.quote}”</blockquote>
-      <div className={s.muted}>{evidence.source}</div>
+      <div className={s.evidenceList}>
+        {evidence.map((item, index) => {
+          const label = {
+            VERIFIED: 'Verified',
+            PROBABLE: 'Probable',
+            CONFLICTED: 'Conflicted',
+            REJECTED: 'Rejected',
+          }[item.band];
+          return (
+            <article className={s.evidenceItem} key={`${item.source}-${index}`} data-testid="agent-evidence-item">
+              <div className={s.evidenceMeta}>
+                <span className={s.evidenceBand} data-band={item.band}>
+                  {label}
+                </span>
+                <span className={s.muted}>{item.source}</span>
+              </div>
+              <blockquote className={s.quote}>“{item.quote}”</blockquote>
+            </article>
+          );
+        })}
+      </div>
     </section>
   );
+}
+
+function displayMember(
+  id: string,
+  members: Array<Pick<Member, 'id' | 'firstName' | 'lastName' | 'emailAddress'>>,
+): string {
+  const member = members.find((candidate) => candidate.id === id);
+  if (!member) return id;
+  const name = memberName(member);
+  return name && name !== member.emailAddress ? `${name} · ${member.emailAddress}` : member.emailAddress;
 }

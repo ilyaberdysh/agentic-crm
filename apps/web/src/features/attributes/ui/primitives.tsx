@@ -20,7 +20,7 @@ import * as s from './ui.css';
 
 // ---- options -------------------------------------------------------------------------------------------------------
 
-/** A select option as a 22 px tag in its pastel hue (C1 cells.md: radius 7, padding 0 4). */
+/** A select option as a 22 px tag in its pastel hue (C1: radius 7, padding 0 4). */
 export function OptionTag({ option, title, className }: { option?: SelectOption; title?: string; className?: string }) {
   return (
     <Tag size={22} color={option?.color ?? 'grey'} className={cx(s.tag22, className)}>
@@ -93,7 +93,7 @@ const KIND_ICON: Record<RecordKind, IconName> = {
   object: 'object',
 };
 
-/** Entity placeholder avatar (components.md §5): person round, everything else a 30 % box. */
+/** Entity placeholder avatar: person round, everything else a 30 % box. */
 export function RecordAvatar({ kind, size = 16 }: { kind: RecordKind; size?: number }) {
   const glyph =
     kind === 'person' ? (
@@ -190,7 +190,7 @@ export function MemberChip({ member, className }: { member: Member | undefined; 
   );
 }
 
-/** Non-member actor (API token, workflow, system): purple initial tile + label (evidence/C1/00-2 "Created by"). */
+/** Non-member actor (API token, workflow, system): purple initial tile + label ("Created by"). */
 export function ActorChip({ type, label, className }: { type: string; label?: string; className?: string }) {
   const text = label ?? actorTypeLabel(type);
   return (
@@ -216,7 +216,7 @@ function StarGlyph() {
   );
 }
 
-/** Five 16 px stars, 2 px apart; filled = interactive.primary, empty = surface.tintStrong (components.md Rating). */
+/** Five 16 px stars, 2 px apart; filled = interactive.primary, empty = surface.tintStrong (Rating). */
 export function Stars({
   value,
   onChange,
@@ -285,7 +285,7 @@ export function CheckboxMark({ checked }: { checked: boolean }) {
 // ---- chip rows -------------------------------------------------------------------------------------------------------
 
 /**
- * Multi-value chips in one line. `clip` (table cells): clipped at the edge, no counter (C1 cells.md §1). `count`
+ * Multi-value chips in one line. `clip` (table cells): clipped at the edge, no counter. `count`
  * (record fields, chips): as many as fit, then "+N" (D overview: "[seed] Jane Cooper +1").
  */
 export function ChipRow({ children, overflow }: { children: ReactNode; overflow: 'clip' | 'count' }) {

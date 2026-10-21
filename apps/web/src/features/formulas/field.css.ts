@@ -1,4 +1,4 @@
-// "Formula" block of the attribute dialog (formulas.md §4.1, `EI:formula-create-dialog-filled.png`): label row with
+// "Formula" block of the attribute dialog (`EI:formula-create-dialog-filled.png`): label row with
 // the right-aligned "Output <type>" chip, then "+ Create formula" or the read-only preview button (radius 10, up to
 // 86 px tall with a 32 px bottom fade when it overflows).
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';

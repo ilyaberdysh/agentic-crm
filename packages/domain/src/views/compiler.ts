@@ -399,7 +399,7 @@ export class Compiler {
       } else if (kind === 'boolean') {
         orderBy.push(`coalesce(${ref}, false) ${dir}`);
       } else if (v.field?.member) {
-        // Members sort by name (Attio's field is referenced_actor_id); other actors after them, by id.
+        // Members sort by name (`referenced_actor_id`); other actors after them, by id.
         const m = this.alias('m');
         joins.push(`LEFT JOIN workspace_members ${m} ON ${m}.id = ${ref}`);
         orderBy.push(`norm_key(${m}.first_name || ' ' || ${m}.last_name) COLLATE "C" ${dir} NULLS LAST`);

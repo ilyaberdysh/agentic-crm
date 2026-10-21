@@ -153,7 +153,7 @@ export function useCreditsUsage(period: 'current' | 'previous' = 'current') {
   });
 }
 
-/** "1 000" with a thin non-breaking grouping like the screenshots (Attio shows a space as thousands separator). */
+/** Formats thousands with a thin non-breaking space, for example `1 000`. */
 export function formatCredits(n: number): string {
   return n.toLocaleString('en-US').replace(/,/g, ' ');
 }

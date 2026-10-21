@@ -1,7 +1,7 @@
-// The access level dropdown of the Share popover and of Settings → Dashboards → Permissions (H README §2.6, §3.11): a
+// The access level dropdown of the Share popover and of Settings → Dashboards → Permissions: a
 // button showing the level, a menu with the four levels (each with its one-line explanation, the current one checked)
 // and, for team and member rows, a last "Remove" item. A target that effectively gets more than its own grant shows
-// the effective level with an amber ⚠ and the reason in a tooltip (J permissions §5).
+// the effective level with an amber ⚠ and the reason in a tooltip (J permissions).
 import type { AccessScope } from '@agentic-crm/contracts';
 import { Button, Icon, Menu, MenuItem, MenuSeparator, MenuTrigger, Tooltip } from '@agentic-crm/ui';
 import { DASHBOARD_LEVEL_DESCRIPTION, type Inherited, LEVEL_LABEL, LEVELS } from './levels';

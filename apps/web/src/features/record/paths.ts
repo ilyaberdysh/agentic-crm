@@ -1,4 +1,4 @@
-// Record page URLs (D README §1): `/company/<id>`, `/person/<id>`, `/<deals|users|workspaces>/record/<id>`,
+// Record page URLs: `/company/<id>`, `/person/<id>`, `/<deals|users|workspaces>/record/<id>`,
 // `/custom/<slug>/record/<id>`, each followed by `/<activeTab>`.
 import type { EntityDefinition } from '@agentic-crm/contracts';
 

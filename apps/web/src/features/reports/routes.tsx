@@ -1,13 +1,13 @@
-// Routes of the reports feature (H README §1):
-//   /$ws/reports                                         dashboards index (`?query=` = title search)
-//   /$ws/reports/dashboard/$dashboardId                  one dashboard (grid of report cells)
-//   /$ws/reports/dashboard/$dashboardId/cell/new         report editor, new report (type picker first)
-//   /$ws/reports/dashboard/$dashboardId/cell/$cellId     full-screen report viewer (J / K through the cells)
-//   /$ws/reports/dashboard/$dashboardId/cell/$cellId/edit  report editor, existing report
-//   /$ws/settings/reports/dashboards[/$dashboardId[/reports|/permissions]]  Settings → Dashboards (admin)
-//   /$ws/settings/data/reports                           legacy alias → settings/reports/dashboards
+// Routes of the reports feature:
+// /$ws/reports dashboards index (`?query=` = title search)
+// /$ws/reports/dashboard/$dashboardId one dashboard (grid of report cells)
+// /$ws/reports/dashboard/$dashboardId/cell/new report editor, new report (type picker first)
+// /$ws/reports/dashboard/$dashboardId/cell/$cellId full-screen report viewer (J / K through the cells)
+// /$ws/reports/dashboard/$dashboardId/cell/$cellId/edit  report editor, existing report
+// /$ws/settings/reports/dashboards[/$dashboardId[/reports|/permissions]]  Settings → Dashboards (admin)
+// /$ws/settings/data/reports legacy alias → settings/reports/dashboards
 // The dashboard route renders the page and an <Outlet/> for the editor / viewer overlays, so the grid stays mounted
-// (scroll position, loaded datasets) behind them, as in Attio.
+// (scroll position, loaded datasets) behind them, by default.
 import { type AnyRoute, createRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { lazy } from 'react';
 import { stringSearch } from '../../app/routeGuards';
@@ -117,7 +117,7 @@ export function reportSettingsRoutes(getParentRoute: () => AnyRoute): AnyRoute[]
       return <DashboardSettingsPage dashboardId={p.dashboardId} tab={p.tab} />;
     },
   });
-  /** `/settings/data/reports` → Settings → Dashboards (H README §1). */
+  /** `/settings/data/reports` → Settings → Dashboards. */
   const legacy = createRoute({
     getParentRoute,
     path: 'data/reports',

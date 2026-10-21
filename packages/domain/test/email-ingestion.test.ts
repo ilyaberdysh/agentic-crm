@@ -157,7 +157,7 @@ describe('record creation (acceptance 2)', () => {
     expect(await recordsByValue(f, 'people', `intern@ourco-${f.tag}.io`)).toEqual([]);
     expect(await recordsByValue(f, 'people', `friend.${f.tag}@gmail.com`)).toHaveLength(1);
     expect(await recordsByValue(f, 'companies', 'gmail.com')).toEqual([]);
-    // Switching the internal domain protection off makes colleagues outside Attio regular contacts.
+    // Switching the internal domain protection off makes colleagues regular contacts.
     await domain.workspaceEmail.settings.update(f.ctx, { unprotectedDomains: [`ourco-${f.tag}.io`] });
     const settings = await domain.workspaceEmail.settings.get(f.ctx);
     expect(settings.internalDomains).toEqual([`ourco-${f.tag}.io`]);

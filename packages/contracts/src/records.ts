@@ -113,7 +113,7 @@ export type RestoreRecordInput = z.input<typeof restoreRecordInputSchema>;
 export const DELETE_SELECTION_MAX_ROWS = 500;
 
 /**
- * Bulk soft delete of a selection over a snapshot (C1 README §3.5; Attio `…/mrl/{snapshotId}/delete-records
+ * Bulk soft delete of a selection over a snapshot.
  * {zebra_edges}`): the zebra edges resolve against the frozen snapshot, so exactly the selected rows go, in one
  * transaction (≤ DELETE_SELECTION_MAX_ROWS rows). Rows already deleted are skipped.
  */

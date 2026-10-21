@@ -1,4 +1,4 @@
-// "Add participant" of the New meeting dialog (D README §3.8): workspace members, people records (by their email
+// "Add participant" of the New meeting dialog: workspace members, people records (by their email
 // address) and a typed address ("Add jane@example.com"), in the shared picker list.
 import { Avatar, Icon } from '@agentic-crm/ui';
 import { useQuery } from '@tanstack/react-query';

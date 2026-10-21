@@ -1,4 +1,4 @@
-// Workflow access (README §3.7, internal-api §6; permissions B.12 with resourceKind 'workflow'): the level menu (Full
+// Workflow access (internal-api; permissions B.12 with resourceKind 'workflow'): the level menu (Full
 // access / Read and write / Read only / No access with their descriptions), the workspace row, member rows and the
 // member search + Add — shared by the Share popover and the admin Permissions tab.
 import type { AccessScope } from '@agentic-crm/contracts';

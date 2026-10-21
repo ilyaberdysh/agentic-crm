@@ -1,4 +1,4 @@
-// Natural-language dates for task deadlines (E README §2.7 "Smart parsing", §2.7b; decision X-09): finds a date
+// Natural-language dates for task deadlines ("Smart parsing",b; decision X-09): finds a date
 // phrase in free text ("Send deck tomorrow at 3pm", "next friday", "in 3 days", "Oct 16", "16/10") relative to the
 // viewer's local today and week start. A phrase without a time means "that day" (stored as the end of the local day);
 // a typed time is kept. The phrase stays in the task title; the caller only reads the result.

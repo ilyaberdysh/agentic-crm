@@ -40,7 +40,7 @@ type DraftRow = Selectable<MessageDraftsTable>;
 
 /** Mass send recipient cap (F composer §2.9: 50 outside the Free plan). */
 export const MASS_SEND_MAX_RECIPIENTS = 50;
-/** Attachment limits (U-F9: Attio's exact value is unknown; Gmail's message limit is 25 MB). */
+/** Attachment limits (Gmail's message limit is 25 MB). */
 export const MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
 export const ATTACHMENT_URL_TTL_SECONDS = 15 * 60;
 

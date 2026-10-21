@@ -1,4 +1,4 @@
-// Notes and templates index pages (E README §2.1, §2.4; CROSS-DOMAIN B.19 index-page pattern; evidence
+// Notes and templates index pages:
 // E/notes-page-grid.png, notes-page-list.png, templates-page.png): header tabs, toolbar, favourites strip, date-bucket
 // groups, 395 × 208 cards in a responsive grid (gap 12), or a table with 32 px headers and 52 px rows.
 import { alpha, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';

@@ -1,4 +1,4 @@
-// Dock of detached windows (E README §2.2 "Minimize"; F composer §2.11): 32 px round bubbles at the bottom right, one
+// Dock of detached windows ("Minimize"; F composer): 32 px round bubbles at the bottom right, one
 // per minimised or floating window — the kind's icon (note, template, composer, …), the parent record's object as a
 // corner badge, a small ✕ on hover and the title as a tooltip on the left. Clicking a minimised bubble floats the
 // window; clicking the floating window's bubble minimises it.

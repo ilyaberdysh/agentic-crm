@@ -1,10 +1,10 @@
-// Add a record from the list (C2 README §2.5 A; evidence/C2/add-to-list-choose-record.png, add-to-list-duplicates.png,
+// Add a record from the list:
 // add-to-list-form.png): header "+ Add <Parent>", the stage "+" of a board, ghost "+ Add" of empty columns and `e`.
-//   1. Choose record — "Find record…", RECORDS (avatar, name, object chip), ACTIONS "+ Create new record" /
-//      'Create "<query>" as record', footer "Select record ↵". Records already in the list are still listed.
-//   2. Duplicates — when the record already has entries here: each entry with its status ("Stage: ● Lead") and
-//      "Create new entry"; the primary becomes "Edit entry ↵" (opens the existing entry).
-//   3. Add to list form.
+// 1. Choose record — "Find record…", RECORDS (avatar, name, object chip), ACTIONS "+ Create new record" /
+// 'Create "<query>" as record', footer "Select record ↵". Records already in the list are still listed.
+// 2. Duplicates — when the record already has entries here: each entry with its status ("Stage: ● Lead") and
+// "Create new entry"; the primary becomes "Edit entry ↵" (opens the existing entry).
+// 3. Add to list form.
 import type { AttributeDefinition, RecordRef } from '@agentic-crm/contracts';
 import { Icon, StatusDot, toast } from '@agentic-crm/ui';
 import { useQuery } from '@tanstack/react-query';
@@ -257,7 +257,7 @@ function DuplicatesStep({
 }) {
   const { workspace } = useWorkspace();
   const attributes = useListAttributes(workspace, list.id);
-  // The status context of each duplicate: the list's first status attribute (C2 §2.5 A.2 "Stage: ● Lead").
+  // The status context of each duplicate: the list's first status attribute (C2 A.2 "Stage: ● Lead").
   const status = useMemo(
     () =>
       [...(attributes.data ?? [])]

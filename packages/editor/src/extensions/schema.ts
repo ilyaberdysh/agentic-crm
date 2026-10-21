@@ -1,5 +1,5 @@
 // The document schema shared by the browser editor and the server projection: the exact node and mark set of
-// Attio's note model. The editor adds UI behaviour (collaboration, menus, placeholders, node views) on top of these
+// the note model. The editor adds UI behaviour (collaboration, menus, placeholders, node views) on top of these
 // extensions; the server only needs the ProseMirror schema derived from them (no DOM, no React).
 
 import { type AnyExtension, getSchema } from '@tiptap/core';

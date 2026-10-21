@@ -1,4 +1,4 @@
-// Help drawer (system-ui §7; shortcuts.md §4; evidence/B/help-drawer*.png): a floating panel at the right edge —
+// Help drawer (system-ui): a floating panel at the right edge —
 // x = viewport − 372, y 12, 360 wide, viewport − 24 tall, radius 16, e2 — and the key caps rows it lists.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

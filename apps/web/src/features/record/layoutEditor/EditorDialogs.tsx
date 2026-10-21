@@ -1,4 +1,4 @@
-// Layout editor dialogs (D README §2.8): "Edit section" (Title, "Attributes to show" with drag reorder and
+// Layout editor dialogs: "Edit section" (Title, "Attributes to show" with drag reorder and
 // "Add attribute", the first-5 hint), "Edit tab" (title; relationship columns or email sources) and "Edit widget
 // label". Each returns the next working element list to the editor; nothing is saved until "Save changes".
 import type { AttributeDefinition, EntityDefinition, LayoutElement, Path } from '@agentic-crm/contracts';

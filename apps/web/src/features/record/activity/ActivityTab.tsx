@@ -1,4 +1,4 @@
-// Activity tab (BACKLOG 3.04; D README §3.8): header with Filters ("Visible events", persisted per object, accent dot
+// Activity tab (BACKLOG 3.04): header with Filters ("Visible events", persisted per object, accent dot
 // when not default) and "Add meeting"; "Upcoming" (soonest first, 2 shown, "Show more upcoming events" pages by 3);
 // past events newest first under period headers on a thread line; runs of automation events collapse into
 // "{n} automation events"; the next page loads when the end of the feed scrolls into view.

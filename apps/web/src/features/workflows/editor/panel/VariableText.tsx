@@ -1,4 +1,4 @@
-// Text inputs with inline variable chips (README §3.1, B.11; evidence G/G-variable-inline-brace.png,
+// Text inputs with inline variable chips (B.11; evidence G/G-variable-inline-brace.png,
 // G-update-record-config.png): a contenteditable line (or box) holding text and atomic chips. Typing "{" opens the
 // variable picker at the caret and the chosen variable replaces the brace; the label row's {x} button inserts at the
 // caret (or at the end). Clicking a chip opens its settings (data sources, fallback, remove). Saved as rich text with

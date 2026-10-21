@@ -1,8 +1,8 @@
-// Help drawer (system-ui §7, shortcuts.md §4): a non-modal floating panel at the right edge. "Help" view: title,
+// Help drawer (system-ui): a non-modal floating panel at the right edge. "Help" view: title,
 // "Search help", "Getting started" cards and the footer links (Help center, Support, Community, Shortcuts, Terms and
 // privacy). "Shortcuts" view ("‹ Keyboard shortcuts"): a filter field and every registered binding by section, key
 // caps on the right, the footer links pinned underneath. Article search and chat (Algolia, Intercom) are deferred
-// (BACKLOG §5): the footer links say so instead of leading nowhere.
+//: the footer links say so instead of leading nowhere.
 import { Icon, IconButton, type IconName, SearchField, toast, useThemeClassName } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
@@ -107,7 +107,7 @@ function HelpView({ autoFocusKey }: { autoFocusKey: number }) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    // The search field takes focus on every open (autofocus with the accent ring, system-ui §7).
+    // The search field takes focus on every open (autofocus with the accent ring, system-ui).
     inputRef.current?.focus();
   }, [autoFocusKey]);
   const cards: Card[] = [

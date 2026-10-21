@@ -1,11 +1,11 @@
-// Batching loader (D-03; Attio batches point reads: entity instances 50 ms / ≤1000 ids per workspace + definition,
-// attribute values 50 ms / ≤1337 per workspace + definition + attribute — internal-api-shapes §2).
+// Batching loader (D-03; Batches point reads: entity instances 50 ms / ≤1000 ids per workspace + definition,
+// attribute values 50 ms / ≤1337 per workspace + definition + attribute — internal-api-shapes).
 // Point reads issued within the window are grouped by `groupOf(key)`, de-duplicated by `idOf(key)` and fetched with
-// one `fetchBatch` call per group; each caller gets its own entry. Query functions call `load()` so many cells
+// one `fetchBatch` call per group; each caller gets its own entry. Query functions call `load` so many cells
 // asking for different records within one frame cost one request.
 
 export interface BatchLoaderOptions<K, V> {
-  /** Collect window in ms (Attio: 50; we default to 25, clamped to 20–50). */
+  /** Collect window in ms (the collection window is 50; we default to 25, clamped to 20–50). */
   windowMs?: number;
   /** Flush a group early once it holds this many distinct ids. */
   maxBatchSize?: number;

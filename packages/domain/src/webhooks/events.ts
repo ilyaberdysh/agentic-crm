@@ -1,11 +1,10 @@
-// Webhook events at the write path (B.28; webhooks OpenAPI `research/sources/public-docs/api.attio.com/openapi/
-// webhooks.json`). Services call these producers next to their invalidations; Tx.flush() normalises the events of the
-// transaction, keeps the types some active webhook subscribes to and writes them as one change_log row. The worker
+// Webhook events at the write path. Services call these producers next to their invalidations; Tx.flush() normalises
+// the transaction's events, keeps types subscribed to by active webhooks, and writes them as one change_log row. The worker
 // completes each event (workspace id, actor, parent ids that are cheaper to look up only when someone listens) and
 // fans it out to the matching subscriptions.
 import type { Tx } from '../tx.ts';
 
-/** An event as recorded in change_log: Attio's payload without workspace_id and actor (added at fan-out). */
+/** An event as recorded in change_log, without workspace_id and actor (added at fan-out). */
 export interface DomainEvent {
   event_type: string;
   id: Record<string, string | null>;
@@ -110,7 +109,7 @@ export function workspaceMemberCreatedEvent(tx: Tx, memberId: string): void {
 const keyOf = (e: DomainEvent) => JSON.stringify([e.event_type, e.id, e.duplicate_record_id ?? null]);
 
 /**
- * One transaction's events as Attio sends them: duplicates dropped; a record or entry created (or produced by a merge)
+ * One transaction's events: duplicates dropped; a record or entry created (or produced by a merge)
  * in the transaction does not also report `updated`; notes created in it do not report content updates.
  */
 export function normalizeEvents(events: DomainEvent[]): DomainEvent[] {

@@ -1,4 +1,4 @@
-// Kanban e2e fixtures: a custom object per test run with a "Stage" status attribute (the stages of Attio's
+// Kanban e2e fixtures: a custom object per test run with a "Stage" status attribute (the stages of the
 // "[seed] Project pipeline" study list: Lead, Qualified, Proposal, Negotiation, Won, Lost — Won with confetti), a
 // "Deal value" currency, records spread 2/2/2/2/1/1 over the stages and a kanban view "[seed] Board" that opens first.
 import { expect, type Page } from '@playwright/test';

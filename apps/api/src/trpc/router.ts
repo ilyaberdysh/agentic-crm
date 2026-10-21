@@ -1,4 +1,4 @@
-// Internal API router (D-04): resource-oriented procedures named after Attio's concepts, each a thin adapter over
+// Internal API router: resource-oriented procedures, each a thin adapter over
 // packages/domain (I5) with inputs from packages/contracts. Workspace-scoped procedures take the workspace from the
 // `x-workspace-slug` header. Mutations answer `{<canonical state>, seq}` (see mutation.ts); queries accept
 // `acceptAfter` (input or `x-accept-after`). Send queries as POST (client `methodOverride: 'POST'`): batched value
@@ -46,7 +46,7 @@ import { authedProcedure, router, workspaceProcedure } from './trpc';
 
 export const appRouter = router({
   agentic: agenticRouter,
-  /** The signed-in user and current session (Attio `current_user` / whoami, K sessions.md §1.2–1.3). */
+  /** The signed-in user and current session. */
   me: authedProcedure.query(({ ctx }) => ({
     user: {
       id: ctx.user.id,

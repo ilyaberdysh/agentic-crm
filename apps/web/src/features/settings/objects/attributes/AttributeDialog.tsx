@@ -1,4 +1,4 @@
-// Create / edit attribute dialog (J attribute-dialogs §2–7; raw J s11-dialog, s12-dlg-*, s31-edit-*): 808 px modal,
+// Create / edit attribute dialog (J attribute-dialogs; raw J s11-dialog, s12-dlg-*, s31-edit-*): 808 px modal,
 // "Create attribute" (or the object's plural noun when editing), footer "Cancel ESC" + "Create attribute ⌘↵" /
 // "Save changes ⌘↵". Field order follows the observed screens per type and mode. The AI autofill card
 // (features/ai-attributes) and the Formula field + editor sheet (features/formulas, the sheet replaces this content in
@@ -111,7 +111,7 @@ export function AttributeDialog({
   /** Create mode: the created attribute (before the dialog closes). */
   onCreated?: (attribute: AttributeDefinition) => void;
 }) {
-  // The formula editor sheet replaces the dialog content without dimming the page (formulas.md §4.2 live capture).
+  // The formula editor sheet replaces the dialog content without dimming the page (live capture).
   const [sheetOpen, setSheetOpen] = useState(false);
   return (
     <Modal
@@ -476,7 +476,7 @@ function AttributeForm({
       />
     ) : null;
 
-  // Formula attributes show the display settings of their output type (formulas.md §3.4).
+  // Formula attributes show the display settings of their output type.
   const numericType = type === 'formula' ? (state.formula?.outputType ?? null) : type;
   const configField =
     numericType === 'number' ? (
@@ -754,7 +754,7 @@ function TypePicker({
   isDisabled: boolean;
   target: 'object' | 'list';
   onChange: (type: PickerType) => void;
-  /** "AI Autofill" group (ai-attributes §2): sets the base type and switches autofill on. */
+  /** "AI Autofill" group (ai-attributes): sets the base type and switches autofill on. */
   onAiShortcut?: (type: (typeof PICKER_SHORTCUTS)[number]['type'], base: 'text' | 'multi-select') => void;
 }) {
   const entry = pickerEntry(value);

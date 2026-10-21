@@ -11,6 +11,7 @@ export const objectRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/objects',
+    operationId: 'listObjects',
     scopes: v2Operations.listObjects.scopes,
     async handler(v2) {
       const defs = await v2.allDefinitions();
@@ -25,6 +26,7 @@ export const objectRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/objects/:object',
+    operationId: 'getObject',
     scopes: v2Operations.getObject.scopes,
     async handler(v2, request) {
       return { data: objectToPublic(await v2.object(params(request).object ?? '')) };
@@ -33,6 +35,7 @@ export const objectRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/objects',
+    operationId: 'createObject',
     scopes: v2Operations.createObject.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createObjectBody, request.body, 'request body');
@@ -59,6 +62,7 @@ export const objectRoutes: RouteSpec[] = [
   {
     method: 'PATCH',
     url: '/objects/:object',
+    operationId: 'updateObject',
     scopes: v2Operations.updateObject.scopes,
     async handler(v2, request) {
       const key = params(request).object ?? '';

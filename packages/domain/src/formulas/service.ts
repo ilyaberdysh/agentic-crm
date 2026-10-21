@@ -50,7 +50,7 @@ import { type LoadedSchema, loadFormulaSchema, loadReferenceData } from './conte
 import { dependencyGraph, downDepth, reaches, requestFullRecompute, upDepth } from './recompute.ts';
 import { outputToWriteValue } from './values.ts';
 
-/** Version of the formula language stored on snapshots (Attio's server value, U-F10). */
+/** Version of the formula language stored on snapshots. */
 export const GRAMMAR_VERSION = '0.0.1';
 /** "A formula chain can contain at most three formulas" (§3.6). */
 export const MAX_FORMULA_CHAIN = 3;

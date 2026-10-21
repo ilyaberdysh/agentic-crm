@@ -1,4 +1,4 @@
-// Header row (C1 README §2.4, §3.2; layout.md §4): sticky 40 px; record column header with select-all + singular
+// Header row: sticky 40 px; record column header with select-all + singular
 // noun + "+" (new record); column headers with type icon, label, "not editable" marker, the views feature's column
 // header menu, resize handle (live, saved on release, double-click resets) and drag-to-reorder (dnd-kit, 5 px
 // activation, ghost + 2 px drop line); "+ Add column" (the views feature's picker) fills the rest.

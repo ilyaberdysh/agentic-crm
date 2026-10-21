@@ -1,6 +1,6 @@
-// Session-scoped view drafts (C1 README §3.1, CROSS-DOMAIN B.20): unsaved filter and sort edits per view live in memory
+// Session-scoped view drafts (CROSS-DOMAIN B.20): unsaved filter and sort edits per view live in memory
 // for the lifetime of the tab — they survive in-app navigation, are cleared by "Discard changes" and by saving, and a
-// reload reverts to the saved view (Attio persists drafts nowhere). Column edits are not drafts: they are saved at once,
+// reload reverts to the saved view (the UI persists drafts nowhere). Column edits are not drafts: they are saved at once,
 // and only their in-flight optimistic operations are tracked here so the grid shows them before the server answers.
 // An external store (subscribe / get) consumed through useSyncExternalStore.
 import type { Sort } from '@agentic-crm/contracts';
@@ -83,7 +83,7 @@ export class ViewDraftStore {
     this.update(viewId, (s) => ({ ...s, sorts }));
   }
 
-  /** "Discard changes": drops the filter and sort drafts (no request, no confirmation; C1 §3.1). */
+  /** "Discard changes": drops the filter and sort drafts (no request, no confirmation; C1). */
   discard(viewId: string): void {
     this.update(viewId, (s) => (s.filter || s.sorts || s.focusConditionId ? { columnOps: s.columnOps } : s));
   }

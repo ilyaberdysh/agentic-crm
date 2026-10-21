@@ -1,4 +1,4 @@
-// E3: a record's Notes tab (D README §2.9 "Notes"; E README §2.1 cards): 52 px header "Notes" + "Create note", then
+// E3: a record's Notes tab ("Notes";  cards): 52 px header "Notes" + "Create note", then
 // the record's notes as cards, newest first. Empty: "No notes" / "Create your first note to get started."
 import { Button, Icon, Spinner } from '@agentic-crm/ui';
 import type { RecordRef } from '../overlays/model';

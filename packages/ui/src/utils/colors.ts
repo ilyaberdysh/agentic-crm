@@ -1,5 +1,5 @@
-// Colour keys stored by the data model → utility hues (A README §4: select options use
-// `pastel_*`, pipeline stages `block_*`; mapping per H chart-types §4).
+// Colour keys stored by the data model map to utility hues. Select options use
+// `pastel_*`; pipeline stages use `block_*`.
 import type { Hue } from '../tokens';
 import { hues } from '../tokens';
 
@@ -20,7 +20,7 @@ const KEY_TO_HUE: Record<string, Hue> = {
   yellow: 'yellow',
 };
 
-/** Select-option colours, in Attio's picker order. */
+/** Select-option colours, in the picker order. */
 export const selectOptionColors = [
   'pastel_grey',
   'pastel_red',

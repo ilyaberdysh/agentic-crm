@@ -1,4 +1,4 @@
-// Members and teams → Teams (J permissions §6; evidence/J/teams-list.png): search + "New team", the teams table
+// Members and teams → Teams (J permissions): search + "New team", the teams table
 // (Team · Members · Usage · ⋮ Copy team ID / Delete team), the empty state ("No teams — Keep your workspace organized
 // with teams"), the "New team" dialog and the delete confirmation that lists what the team is used by.
 import type { Team, TeamDetail, TeamIcon } from '@agentic-crm/contracts';

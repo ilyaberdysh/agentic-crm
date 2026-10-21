@@ -1,8 +1,8 @@
-// Lists and entries on the client (BACKLOG 4.01–4.04; C2 README §2, §4; slice4-contracts.md). The ONE module that
+// Lists and entries on the client (BACKLOG 4.01–4.04). The ONE module that
 // talks to the `lists.*` / `entries.*` procedures: every screen of features/lists reads and writes through it, so the
 // UI does not change when the server contract settles. A list is a collection + its `collection-entry` entity
 // definition (same id); entries are entity instances of that definition with the system attribute `parent_record`,
-// so values, views, snapshots and history reuse the slice 1–3 machinery with `entityDefinitionId = listId`.
+// so values, views, snapshots and history reuse the –3 machinery with `entityDefinitionId = listId`.
 // Calls are typed from `AppRouter`; `toList` / `toMemberships` / `toDuplicates` map the server shapes to the client model.
 import type {
   AccessScope,
@@ -28,10 +28,10 @@ export interface List {
   /** Collection id = the id of its collection-entry entity definition. */
   id: string;
   name: string;
-  /** `emoji:<name>` (Attio's format), a raw emoji, or null (📋). */
+  /** `emoji:<name>` (the format), a raw emoji, or null (📋). */
   icon: string | null;
   apiSlug: string;
-  /** Objects whose records can be added (C2 §2.1 "Object"; several = "Mixed"). */
+  /** Objects whose records can be added (C2 "Object"; several = "Mixed"). */
   parentEntityDefinitionIds: string[];
   sortOrder: string | null;
   workspaceAccess: WorkspaceAccess | null;
@@ -181,7 +181,7 @@ export async function checkDuplicates(
 
 // ---- system attributes of the entry definition ------------------------------------------------------------------------
 
-/** The `parent_record` system attribute (C2 §4: required entity-reference, allowlist = parent objects). */
+/** The `parent_record` system attribute (C2: required entity-reference, allowlist = parent objects). */
 export function parentRecordAttribute(
   attributes: readonly AttributeDefinition[],
   attributeId?: string | null,
@@ -195,7 +195,7 @@ export function parentRecordAttribute(
 
 const SYSTEM_ENTRY_SLUGS = new Set(['entry_id', 'parent_record', 'created_at', 'created_by']);
 
-/** List attributes the Add-to-list form and record-page cards show: writable, in attribute order (C2 §2.5 A.3). */
+/** List attributes the Add-to-list form and record-page cards show: writable, in attribute order (C2 A.3). */
 export function writableListAttributes(attributes: readonly AttributeDefinition[]): AttributeDefinition[] {
   return [...attributes]
     .filter(
@@ -268,7 +268,7 @@ export async function updateList(
   }
 }
 
-/** Workspace access level of a list (J permissions §2). */
+/** Workspace access level of a list (J permissions). */
 export async function setListAccess(ws: WorkspaceRef, list: List, workspaceAccess: WorkspaceAccess): Promise<void> {
   writeList(ws, { ...list, workspaceAccess });
   try {
@@ -281,7 +281,7 @@ export async function setListAccess(ws: WorkspaceRef, list: List, workspaceAcces
   }
 }
 
-/** "<name>", "<name> (2)", "<name> (3)" … — first free name, case-insensitive (C2 §2.7). */
+/** "<name>", "<name> (2)", "<name> (3)" … — first free name, case-insensitive (C2). */
 export function duplicateListName(name: string, existing: readonly string[]): string {
   const taken = new Set(existing.map((n) => n.toLowerCase()));
   const base = name.replace(/ \(\d+\)$/, '');
@@ -349,7 +349,7 @@ export async function removeEntries(
 
 export type ListsSort = 'most-relevant' | 'recently-added' | 'alphabetical' | 'custom';
 
-/** Sidebar orders (B sidebar.md §8): custom = rank; recently added = created desc; alphabetical = name. */
+/** Sidebar orders: custom = rank; recently added = created desc; alphabetical = name. */
 export function sortLists(lists: readonly List[], sort: ListsSort, relevance?: (id: string) => number): List[] {
   const out = [...lists];
   if (sort === 'alphabetical') return out.sort((a, b) => a.name.localeCompare(b.name));

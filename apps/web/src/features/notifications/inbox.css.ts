@@ -1,4 +1,4 @@
-// Inbox (notifications.md §1–3; evidence/B/inbox-legacy-empty.png): the legacy popover — 387 px, 580 px tall, radius 12,
+// Inbox: the legacy popover — 387 px, 580 px tall, radius 12,
 // "Notifications" heading, "Notifications (n) | Requests (n)" tabs — holding the v2 rows (32 px avatar with an event
 // badge, eyebrow with the actors, title, snippet, relative time, hover options).
 import { text, vars } from '@agentic-crm/ui/styles';

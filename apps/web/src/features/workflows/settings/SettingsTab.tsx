@@ -1,4 +1,4 @@
-// Settings tab (BACKLOG 8.10; README §3.6; evidence G/G-settings-tab.png): a centred ≈720 px column — General:
+// Settings tab: a centred ≈720 px column — General:
 // "Workflow timezone" with the searchable zone select ("(GMT+0) UTC" while unset); Notifications: "Get notified when
 // this workflow fails" (once a day per unique failure reason).
 import { Icon, Switch, Tooltip } from '@agentic-crm/ui';

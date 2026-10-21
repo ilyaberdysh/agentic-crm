@@ -1,4 +1,4 @@
-// Slice-4 import / export e2e helpers: the seeded CSV (C2 research fixture shape: a comma-decimal budget, an invalid
+//  import / export e2e helpers: the seeded CSV (C2 fixture data: a comma-decimal budget, an invalid
 // number, an invalid checkbox, an out-of-range rating, an unknown status, an unknown select option, a member id and an
 // unknown member, plus a row where every value is invalid) and the Projects schema lookups.
 import type { Page } from '@playwright/test';

@@ -1,4 +1,4 @@
-// CSV import wizard end to end (BACKLOG 4.07, acceptance 4; C2 import.md I1–I8) on the seeded Projects object: a CSV
+// CSV import wizard end to end on the seeded Projects object: a CSV
 // with an unknown select value ("Imported" → "Create 1 missing select option"), invalid values (fixed / left invalid)
 // and a row with only invalid values (listed before the run), through upload → map → review → preview → run →
 // overview, then the records, the new option and the import history. Runs on the imports.* procedures; the stack's

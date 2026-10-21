@@ -1,4 +1,4 @@
-// Page frame of the email and calendar settings (F settings §1–4; evidence/F/workspace-email-record-creation.png and
+// Page frame of the email and calendar settings (F settings;  and
 // the mailbox crops): the 768 px settings column with a 72 px top padding, H1 + subtitle, route tabs 24 px below, 40 px
 // between the tab rule and the first section, sections 40 px apart with a 16 px gap under their header.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
@@ -56,7 +56,7 @@ export const sectionCompact = style({ gap: 12 });
 
 /**
  * Route tabs: the ui Tab keeps a zero-width underline span in its flex row, which adds one `gap` (6 px) after every
- * unselected tab; taking it out of the flow gives Attio's tab spacing (evidence/F/mailbox-blocklist-empty.png).
+ * unselected tab; taking it out of the flow gives the tab spacing.
  */
 export const routeTab = style({});
 globalStyle(`${routeTab} > span[aria-hidden="true"]:last-child`, { position: 'absolute' });

@@ -1,4 +1,4 @@
-// Empty-note template launcher (E README §3.2 "Use a template"; evidence E/note-empty-template-launcher.png,
+// Empty-note template launcher ("Use a template"; evidence E/note-empty-template-launcher.png,
 // note-template-picker.png): FAVORITE TEMPLATES (the member's favourite templates), then ACTIONS: "View all
 // templates" (searchable popover, hover shows a preview on the left) and "Create new template". ↑ / ↓ / Enter work
 // from the empty editor.

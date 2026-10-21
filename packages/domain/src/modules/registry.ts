@@ -20,6 +20,7 @@ export class UnknownProductModuleError extends Error {
 
 export interface ProductModuleRegistry {
   get(moduleId: string): ProductModule | undefined;
+  list(): readonly ProductModule[];
   resolveRequested(moduleIds: readonly string[]): readonly ProductModule[];
 }
 
@@ -34,6 +35,9 @@ export function compileProductModuleRegistry(declarations: readonly ProductModul
   }
 
   return Object.freeze({
+    list() {
+      return [...modules.values()];
+    },
     get(moduleId: string) {
       return modules.get(moduleId);
     },

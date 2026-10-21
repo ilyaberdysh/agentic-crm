@@ -1,6 +1,6 @@
 // Rows and cards of the dashboards index and of Settings → Dashboards: tinted dashboard tile, title link (stretched
 // over the whole row), ⓘ description, report chips, favourite card, the row menu with "Delete dashboard" and its
-// confirmation (H README §2.1, §3.1, §3.10).
+// confirmation.
 import type { DashboardSummary } from '@agentic-crm/contracts';
 import { AlertDialog, Icon, IconButton, Menu, MenuItem, MenuSeparator, MenuTrigger, Tooltip } from '@agentic-crm/ui';
 import { Link } from '@tanstack/react-router';

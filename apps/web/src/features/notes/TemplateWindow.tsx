@@ -1,4 +1,4 @@
-// Note template editor (E README §2.5; evidence E/template-editor.png): note window chrome with the template title as
+// Note template editor: note window chrome with the template title as
 // breadcrumb and only Close, the peach "You are editing a template" banner (ⓘ help, presence, ⋮ Add to favorites |
 // Delete template), title "Untitled Template" (title and header title saved together, debounced) and the body
 // ("Start typing..."), saved continuously through Yjs.

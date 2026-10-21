@@ -1,4 +1,4 @@
-// "Choose record" dialog (E README §2.3; B system-ui §3 modal frame with "↑ ↓ Navigate" footer).
+// "Choose record" dialog: system-ui modal frame with an "↑ ↓ Navigate" footer.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

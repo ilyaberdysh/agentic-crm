@@ -176,7 +176,7 @@ function inlineToBlockText(
           });
         else mentions.push({ type: 'member', start, length: label.length, id });
       }
-      // Mentions carry no marks (as in Attio; Yjs does not keep marks on inline atoms either).
+      // Mentions carry no marks (by default; Yjs does not keep marks on inline atoms either).
       text += label;
     } else if (node.type === 'variable') {
       // A variable occupies one placeholder character (B.11).
@@ -194,7 +194,7 @@ function inlineToBlockText(
         text += VARIABLE_PLACEHOLDER;
       }
     } else if (node.content) {
-      // Unknown inline wrapper (should not happen with our schema): keep its text.
+      // Unknown inline wrapper (should not happen with the schema): keep its text.
       const inner = inlineToBlockText(node.content);
       text += inner.text;
     }

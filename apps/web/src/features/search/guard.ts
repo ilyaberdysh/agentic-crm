@@ -1,4 +1,4 @@
-// The stale-response guard of record search (command-palette.md §5; slice5-contracts "Search ranking & debounce"):
+// The stale-response guard for record search:
 // the client fires a request on every keystroke, tags each with a monotonically increasing `requestSeq`, and drops
 // any response older than the newest one it has applied. A module-level counter keeps sequence numbers unique
 // across every search box of the tab, so two boxes can never confuse each other's responses.

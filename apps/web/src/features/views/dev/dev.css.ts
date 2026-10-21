@@ -1,5 +1,5 @@
-// Dev page chrome: the object toolbar row and a stand-in grid (the real one is features/table, C3) so the views UI can
-// be checked against evidence/C1 screenshots.
+// Dev page chrome: the object toolbar row and a stand-in grid (the real one is features/table) so the views UI can
+// be checked against  visual examples.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

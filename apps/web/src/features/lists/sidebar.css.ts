@@ -1,4 +1,4 @@
-// Sidebar Lists section and the "All lists" flyout (B sidebar.md §5.1, §8): rows reuse the nav item; drag shows a
+// Sidebar Lists section and the "All lists" flyout: rows reuse the nav item; drag shows a
 // 2 px accent drop line; the flyout is 300 px wide, docked at the sidebar's right edge, full height, e2, slide-in
 // from −20 px with a fade (140 ms).
 import { text, vars } from '@agentic-crm/ui/styles';

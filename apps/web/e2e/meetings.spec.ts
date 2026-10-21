@@ -1,4 +1,4 @@
-// Slice 7 — meetings (BACKLOG 7.04): meeting events in the Activity tab (past and upcoming), the meeting modal with
+//  — meetings (BACKLOG 7.04): meeting events in the Activity tab (past and upcoming), the meeting modal with
 // linked records and "Create note", the "New meeting" dialog (two participants needed), the Home Meetings widget and
 // the visibility levels of synced calendars. Events come in through the test connector (`connectors.test.injectEvent`).
 import { randomUUID } from 'node:crypto';
@@ -118,7 +118,7 @@ test('the meeting modal: tile, title, RSVP, time, participants, call intelligenc
   ).toHaveAttribute('href', new RegExp(`/person/${jane}`));
   await expect(m.getByRole('button', { name: 'Ask AI' })).toBeVisible();
   await m.getByRole('button', { name: 'Ask AI' }).click();
-  // Ask AI (slice 10): the side panel opens with the meeting as its context.
+  // Ask AI: the side panel opens with the meeting as its context.
   await expect(page.getByTestId('ask-panel')).toBeVisible();
   await expect(page.getByTestId('ask-context-chip')).toBeVisible();
   await context.close();

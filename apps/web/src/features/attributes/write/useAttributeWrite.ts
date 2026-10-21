@@ -1,6 +1,6 @@
-// Optimistic attribute writes through the slice-1 mutation queue (D-03, B.2): a commit becomes one `values.set`
+// Optimistic attribute writes through the mutation queue: a commit becomes one `values.set`
 // write per record × attribute (the coalescing unit), shown immediately as optimistic rows, diffed at send time into
-// `values.put` / `values.retire` / `values.reorder` with client UUIDv7 value ids (I3, I6), reconciled from the
+// `values.put` / `values.retire` / `values.reorder` with client UUIDv7 value ids (I3), reconciled from the
 // responses, rolled back with a "Failed to save your change" toast + Retry on a final failure (data/mutations).
 import { valueInputSchemas } from '@agentic-crm/contracts';
 import { toast } from '@agentic-crm/ui';
@@ -25,7 +25,7 @@ function isRow(v: unknown): v is AttributeValue {
 }
 
 /**
- * The overlay value of a record × attribute key as rows: `values.set` writes store the optimistic rows; slice-1
+ * The overlay value of a record × attribute key as rows: `values.set` writes store the optimistic rows;
  * `putValue` writes store a single write-form value, shown as one row.
  */
 export function overlayRows(value: unknown, attribute: AttributeDefinition, recordRef: RecordRef): AttributeValue[] {
@@ -51,7 +51,7 @@ export function overlayRows(value: unknown, attribute: AttributeDefinition, reco
 export interface AttributeValuesState {
   /** Current values, optimistic writes applied. */
   values: AttributeValue[];
-  /** A write for this record × attribute is queued, in flight or retrying ("Validating change" spinner, D §2.3). */
+  /** A write for this record × attribute is queued, in flight or retrying ("Validating change" spinner, D). */
   isPending: boolean;
   /** A requirement rule refused the write: it is held (shown here) until the user retries or discards it. */
   isHeld: boolean;
@@ -160,7 +160,7 @@ export function useAttributeWrite(
 }
 
 /**
- * Values to show for a record x attribute given its overlay entry (`appQueue().get(valueOverlayKey(...))?.value`) and
+ * Values to show for a record x attribute given its overlay entry (`appQueue.get(valueOverlayKey(...))?.value`) and
  * the cached server values, for hosts that read the overlay themselves (the table's virtualised cells).
  */
 export function overlayValues(entry: unknown, server: AttributeValue[] | undefined): AttributeValue[] {

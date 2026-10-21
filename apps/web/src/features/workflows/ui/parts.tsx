@@ -1,5 +1,5 @@
 // Shared workflow pieces: tinted tiles for workflows and blocks, the status chip of the index / admin / header, the
-// credit pill and the run status glyph (README §2.1, §2.5; runs.md §3).
+// credit pill and the run status glyph.
 import type { RunStatus } from '@agentic-crm/contracts';
 import { CheckCircleFilled, Icon, type IconName, Spinner } from '@agentic-crm/ui';
 import type { CSSProperties } from 'react';

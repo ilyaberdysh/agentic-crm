@@ -11,7 +11,7 @@ export const group = style({
   fontFamily: 'inherit',
 });
 
-// Key caps (components.md §4): Inter, +0.02em, square for single characters.
+// Key caps: Inter, +0.02em, square for single characters.
 export const kbd = recipe({
   base: {
     boxSizing: 'border-box',

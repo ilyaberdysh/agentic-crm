@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [react(), vanillaExtractPlugin()],
   server: {
     port: 5173,
-    // Playwright writes traces and screenshots under e2e/out: they must not reload the page under test.
+    // Playwright writes traces and visual examples under e2e/out: they must not reload the page under test.
     watch: { ignored: ['**/e2e/out/**', '**/e2e/.auth/**'] },
     proxy: {
       '/trpc': api,

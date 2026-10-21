@@ -1,4 +1,4 @@
-// Variable chips (README §3.1): "{ Record action › … › Headcount }" in blue (amber when the data source no longer
+// Variable chips: "{ Record action › … › Headcount }" in blue (amber when the data source no longer
 // resolves). Clicking one opens its settings: the data sources in order (first non-empty wins) with "Add data source",
 // a "Fallback" switch with a static value, and Remove.
 import type { VariableExpr, WfType } from '@agentic-crm/contracts';

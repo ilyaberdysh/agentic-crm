@@ -179,7 +179,7 @@ export async function mappableGroups(tx: Tx, root: DefInfo): Promise<MappableGro
 const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, ' ');
 
 /**
- * Auto-mapping (computed client-side by Attio: exact title match): a header equal to an attribute title maps to it;
+ * Auto-mapping uses exact title matches: a header equal to an attribute title maps to it;
  * "First name" / "Last name" / "Full name" map to the parts of a name attribute; a header "A › B" maps to the path
  * through reference A (our export writes such headers). Lists prefer list attributes, then the parent's.
  */

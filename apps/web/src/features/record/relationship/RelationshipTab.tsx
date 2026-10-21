@@ -1,6 +1,6 @@
-// Relationship tab (BACKLOG 3.05; D README §3.7): the records referenced by one relationship attribute of this record,
+// Relationship tab (BACKLOG 3.05): the records referenced by one relationship attribute of this record,
 // with the configured attributes of the related object right-aligned. "Add {Singular}" searches records and adds a
-// reference (the inverse side follows, A §4.8); selecting rows shows the floating bar "[n] Selected ×" · Add to
+// reference (the inverse side follows, A); selecting rows shows the floating bar "[n] Selected ×" · Add to
 // list · Send email · Run workflow · (Enroll in sequence) · More ⌄ → "Unassociate {Singular}", "Delete {Singular}".
 // Single-value relationships (person → Company) get a ⋮ menu per row instead of checkboxes.
 import type { AttributeDefinition, AttributeValue } from '@agentic-crm/contracts';

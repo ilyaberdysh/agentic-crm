@@ -47,7 +47,7 @@ export interface SelectProps<T extends object>
   placeholder?: string;
   /** Leading icon in the trigger. */
   icon?: IconName | IconGlyph;
-  /** Searchable (Attio's SelectCombobox): a filter row on top of the list. */
+  /** Searchable (the SelectCombobox): a filter row on top of the list. */
   searchable?: boolean;
   searchPlaceholder?: string;
   /** Popover width: matches the trigger by default. */

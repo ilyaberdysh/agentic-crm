@@ -1,6 +1,6 @@
-// The workflow canvas on @xyflow/react (README §2.3, §3): blocks as cards, paths as edges, drag to connect (drop on a
+// The workflow canvas on @xyflow/react: blocks as cards, paths as edges, drag to connect (drop on a
 // card: dashed blue outline), drag to move (committed on drop as one batch move), click / Shift+click / marquee to
-// select, edges selectable for Delete. Pointer mode (V): scroll pans, drag selects; hand mode (H): drag pans;
+// select, edges selectable for Delete. Pointer mode: scroll pans, drag selects; hand mode: drag pans;
 // ⌘ + scroll zooms. The same component renders read-only versions and the run viewer (status tags, green paths).
 import type { ExecutionStatus, Position as XY } from '@agentic-crm/contracts';
 import {
@@ -83,7 +83,7 @@ export function Canvas(props: CanvasProps) {
     [selectedEdge, props.onSelectPath],
   );
   const editable = mode === 'edit';
-  // Opens at 100 % centred on the blocks left of the side panel (README §2.3); a canvas that starts empty is centred
+  // Opens at 100 % centred on the blocks left of the side panel; a canvas that starts empty is centred
   // once its first block has been measured.
   const fitToArea = useFitToArea(props.inset);
   const fitted = useRef(false);

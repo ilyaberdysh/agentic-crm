@@ -1,6 +1,6 @@
-// Slice-9 e2e fixtures for the dashboard grid, editor and charts: a custom "[seed] Projects" object with the shape of
-// the Attio captures (Budget currency, Phase status Discovery / Build / Review / Done, Priority select, Start date),
-// twelve records with the budgets of evidence/H (Build 470 000, Discovery 200 000, Review 43 000, Done 21 000), and
+//  e2e fixtures for the dashboard grid, editor and charts: a custom "[seed] Projects" object with the shape of
+// the captured layout (Budget currency, Phase status Discovery / Build / Review / Done, Priority select, Start date),
+// twelve records with these phase budgets (Build 470 000, Discovery 200 000, Review 43 000, Done 21 000), and
 // dashboards with reports created through the procedures.
 import { type Page } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';
@@ -33,7 +33,7 @@ export interface ProjectsFixture {
   records: { id: string; name: string; phase: keyof ProjectsFixture['stages']; budget: number }[];
 }
 
-/** [phase, budget, priority, start date] of the twelve projects (evidence/H contributing-data-table.png). */
+/** [phase, budget, priority, start date] of the twelve projects (contributing-data-table.png). */
 const PROJECTS: [keyof ProjectsFixture['stages'], number, keyof ProjectsFixture['options'], string][] = [
   ['Build', 250_000, 'High', '2026-03-12'],
   ['Done', 12_000, 'Low', '2025-12-05'],
@@ -162,7 +162,7 @@ export const hop = (f: ProjectsFixture, attribute: string) => [
   { entityDefinitionId: f.objectId, attributeDefinitionId: attribute },
 ];
 
-/** Insight: sum of Budget grouped by Phase (bar), as in evidence/H/editor-insight-bar-grouped-status.png. */
+/** Insight: sum of Budget grouped by Phase, shown as a bar chart. */
 export function budgetByPhase(f: ProjectsFixture): Record<string, unknown> {
   return {
     primaryMetric: { attributePath: hop(f, f.budget), field: null, aggregation: 'sum' },

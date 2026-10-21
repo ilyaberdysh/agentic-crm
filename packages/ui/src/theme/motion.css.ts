@@ -1,4 +1,4 @@
-// Shared keyframes and floating-layer motion (motion.md §2–3).
+// Shared keyframes and floating-layer motion.
 import { keyframes, style } from '@vanilla-extract/css';
 import { scales } from '../tokens/scales.gen';
 

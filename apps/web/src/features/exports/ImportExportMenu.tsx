@@ -1,7 +1,7 @@
-// "Import / Export ▾" of object and list pages (C1 README §3.8; C2 README §2.2; evidence C2/import-export-menu.png):
+// "Import / Export ▾" menu on object and list pages:
 // Migrate CRM · Import CSV · Export view as CSV · Export view as Excel · Learn about imports and exports. Import opens
 // the wizard as an overlay over the page (closing returns here); CSV export runs the export job with its toast. Excel
-// is deferred (BACKLOG §4: CSV only).
+// Import currently supports CSV files only.
 import { Button, Menu, MenuItem, MenuSeparator, MenuTrigger, toast } from '@agentic-crm/ui';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { beginOverlaySession } from '../imports/wizard/destination';

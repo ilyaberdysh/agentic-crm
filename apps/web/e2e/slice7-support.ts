@@ -1,4 +1,4 @@
-// Slice-7 e2e helpers (email and calendar): test mailboxes, injected mail and meetings, a second member whose mailbox
+//  e2e helpers (email and calendar): test mailboxes, injected mail and meetings, a second member whose mailbox
 // shares at a given visibility level. Everything goes through the public tRPC procedures of the test connector
 // (`connectors.test.*`), exactly like the dev tools; nothing is delivered anywhere.
 import { randomUUID } from 'node:crypto';

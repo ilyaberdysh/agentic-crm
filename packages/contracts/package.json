@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Shared Zod schemas: internal API + generated public v2",
+  "description": "Shared Zod schemas and Agentic CRM public REST contract",
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "generate:v2": "node scripts/generate-v2.ts",
+    "check:v2": "node scripts/generate-v2.ts --check"
   },
   "dependencies": {
     "zod": "4.6.5"

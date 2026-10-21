@@ -1,7 +1,7 @@
 // The Ask composer (ask-agentic §2): text box with @-mentions and /-prompts, the page-context chip bottom left, and
 // bottom right the model picker, Insert prompt and the round submit button — which becomes Stop while an answer runs
 // (and "Interrupt and send" when there is text to send).
-import type { AiContext } from '@agentic-crm/contracts';
+import { type AiContext, parseAiTargetModelChoice } from '@agentic-crm/contracts';
 import { Icon, Tooltip } from '@agentic-crm/ui';
 import { type RefObject, useEffect, useRef, useState } from 'react';
 import { Button as AriaButton } from 'react-aria-components';
@@ -47,6 +47,8 @@ export interface ComposerProps {
   /** The taller variant of the new-chat page and the Home block. */
   large?: boolean;
   disabled?: boolean;
+  /** Keep model selection available when CRM credits are exhausted. */
+  sendDisabled?: boolean;
   autoFocus?: boolean;
   inputRef?: RefObject<HTMLTextAreaElement | null>;
 }
@@ -63,6 +65,7 @@ export function Composer({
   onStop,
   large,
   disabled,
+  sendDisabled,
   autoFocus,
   inputRef,
 }: ComposerProps) {
@@ -97,7 +100,7 @@ export function Composer({
         value={value}
         onChange={onChange}
         onSubmit={() => {
-          if (!empty && !disabled) onSend();
+          if (!empty && !disabled && !sendDisabled) onSend();
         }}
         placeholder={rotating}
         autoFocus={autoFocus}
@@ -114,7 +117,7 @@ export function Composer({
           <AriaButton
             className={`${s.submit} ${stopMode ? s.stop : ''}`}
             aria-label={label}
-            isDisabled={disabled || (!stopMode && empty)}
+            isDisabled={disabled || (!stopMode && (empty || sendDisabled))}
             data-testid={stopMode ? 'ask-stop' : 'ask-send'}
             onPress={() => (stopMode ? onStop() : onSend())}
           >
@@ -122,6 +125,11 @@ export function Composer({
           </AriaButton>
         </Tooltip>
       </div>
+      {parseAiTargetModelChoice(model) && (
+        <div className={s.targetNote} role="note" data-testid="ask-target-mode">
+          Text answers from attached context · No tools · Provider or local usage, no CRM credits
+        </div>
+      )}
     </div>
   );
 }

@@ -40,7 +40,7 @@ function useFocusEnd(ref: RefObject<HTMLInputElement | HTMLTextAreaElement | nul
   }, [ref, select]);
 }
 
-/** Textarea height follows its content (up to 200 px, layout.md §4). */
+/** Textarea height follows its content (up to 200 px). */
 function useAutoGrow(ref: RefObject<HTMLTextAreaElement | null>, value: string) {
   useLayoutEffect(() => {
     const el = ref.current;
@@ -122,7 +122,7 @@ function NumericEditor({ props, kind }: { props: EditorProps; kind: 'number' | '
         ? read.number(current.value)
         : null;
   const base = amount === null || amount === undefined ? '' : rawNumber(amount);
-  // Typing on a selected currency cell appends to the amount (C1 cells.md §2); numbers start over.
+  // Typing on a selected currency cell appends to the amount; numbers start over.
   const initial = initialKey !== undefined ? (kind === 'currency' ? base + initialKey : initialKey) : base;
   const [text, setText] = useState(initial);
   const [invalid, setInvalid] = useState(false);
@@ -201,7 +201,7 @@ export function CurrencyEditor(props: EditorProps) {
 
 // ---- personal name -----------------------------------------------------------------------------------------------
 
-/** Cells: one textarea with the full name, split into first/last on save. Fields: First / Last inputs (D §2.2). */
+/** Cells: one textarea with the full name, split into first/last on save. Fields: First / Last inputs (D). */
 export function PersonalNameEditor({
   values,
   onCommit,
@@ -300,7 +300,7 @@ const FIELD_KEYS: Record<string, string> = {
   line_4: 'line4',
 };
 
-/** A location column edits one component (City / State / Country code) as text (C1 cells.md §2). */
+/** A location column edits one component (City / State / Country code) as text. */
 export function LocationFieldEditor({
   values,
   onCommit,

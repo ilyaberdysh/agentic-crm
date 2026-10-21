@@ -1,4 +1,4 @@
-// The insight template editor `/$ws/calls/templates/$templateId` (BACKLOG 10.13; I calls §4.2; evidence/I/
+// The insight template editor `/$ws/calls/templates/$templateId` (BACKLOG 10.13; I calls;
 // calls-template-editor-*.png): breadcrumb, inline title, Publish / Discard changes, the sections (rich-text title and
 // prompt, List or Text, reorder, duplicate, delete), "Add section" / "Start with a template", and the preview pane.
 // The editor always works on the template's draft; publishing makes it the active version.

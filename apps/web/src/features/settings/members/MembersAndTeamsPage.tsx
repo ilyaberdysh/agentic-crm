@@ -1,5 +1,5 @@
-// Settings → Members and teams (J workspace-admin §3; admin only): the page header with its Members | Teams tabs
-// (evidence/J/teams-list.png). Non-admins get the read-only members page instead (§4).
+// Settings → Members and teams (J workspace-admin; admin only): the page header with its Members | Teams tabs
+//. Non-admins get the read-only members page instead.
 import type { MemberSummary } from '@agentic-crm/contracts';
 import { Button, EmptyState, ErrorState, Icon, SearchField, Skeleton } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';

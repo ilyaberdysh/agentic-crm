@@ -27,6 +27,9 @@
     "vitest": "5.0.3"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./runner/sandbox": "./src/ai/execution/codex-container.ts",
+    "./runner/inference": "./src/ai/adapters/openai-compatible.ts",
+    "./runner/inference-contract": "./src/ai/inference.ts"
   }
 }

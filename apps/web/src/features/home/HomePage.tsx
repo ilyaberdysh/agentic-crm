@@ -1,4 +1,4 @@
-// Home (BACKLOG 5.07, 7.04, 10.01; B-shell/home.md §2): the greeting, the Ask AI block, the Meetings widget (slice 7), the
+// Home (BACKLOG 5.07, 7.04, 10.01): the greeting, the Ask AI block, the Meetings widget, the
 // Tasks block (up to 5 tasks assigned to me, ordered today → tomorrow → overdue → later → no date; checkbox, title,
 // due label; the row opens the task) and recently updated records. One `home.summary` query feeds it.
 

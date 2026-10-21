@@ -1,4 +1,4 @@
-// Object settings page `/settings/data/objects/$apiSlug/<tab>` (J objects-lists §3; evidence/J/object-configuration-
+// Object settings page `/settings/data/objects/$apiSlug/<tab>` (J objects-lists;
 // custom.png, object-attributes-tab.png): crumb "Objects / <tile> <plural>", "← Back", 56 px tile + plural noun + type
 // pill + subtitle, tabs Configuration · Permissions · Attributes <n> · Rules <n> · Templates · "+2 more" (Notifications,
 // Imports). Unknown slug → "Object Not Found".
@@ -64,7 +64,7 @@ export function ObjectSettingsPage({ apiSlug, tab }: { apiSlug: string; tab: Obj
   const attributes = useAttributes(workspace, object?.id ?? null);
   const rules = useRules(workspace, object?.id ?? null);
   const access = useEntityAccess(object?.id);
-  // Tabs follow the member's resolved policy (J permissions §3): Configuration needs update_entity_definition,
+  // Tabs follow the member's resolved policy (J permissions): Configuration needs update_entity_definition,
   // Permissions administrate (admins always, OQ-067), Attributes create_attribute_definition.
   const allowed: ObjectTabId[] = [
     ...(access.canUpdateDefinition ? (['general', 'rules', 'templates', 'app'] as const) : []),

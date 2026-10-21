@@ -1,5 +1,5 @@
-// Styles of the views feature: pickers (components.md §7 PopoverMenu), filter/sort chip groups (§6 DynamicGroup),
-// the advanced filter editor, view switcher, view settings and the "Start with a view" empty state (C1 README §2.2).
+// Styles of the views feature: pickers (PopoverMenu), filter/sort chip groups ( DynamicGroup),
+// the advanced filter editor, view switcher, view settings and the "Start with a view" empty state.
 import { alpha, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';
 

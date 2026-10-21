@@ -1,4 +1,4 @@
-// The client-side formula schema (formulas.md §3: the editor type-checks with the same package as the server): attribute
+// The client-side formula schema lets the editor type-check with the same package as the server: attribute
 // lookups over the cached attribute lists of the formula's object and of every object its reference paths reach.
 import type { AttributeDefinition } from '@agentic-crm/contracts';
 import {

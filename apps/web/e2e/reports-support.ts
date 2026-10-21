@@ -1,4 +1,4 @@
-// Slice-9 e2e helpers for the dashboards index, Settings → Dashboards and the Share popover: dashboards, reports,
+//  e2e helpers for the dashboards index, Settings → Dashboards and the Share popover: dashboards, reports,
 // grants and teams created through the tRPC procedures (dashboards.*, reports.*, permissions.*, teams.*), a sign-in
 // that reads this database's credentials file, and a few direct database writes for what the API cannot do
 // (backdating dashboards).
@@ -112,7 +112,7 @@ export interface DashboardRow {
   reports: { id: string; title: string; reportType: string; visualisationType: string }[];
 }
 
-/** A dashboard (workspace and creator get Full access, as the UI's "New dashboard" does). */
+/** A dashboard (workspace and creator get Full access, as the "New dashboard" does). */
 export async function createDashboard(page: Page, title: string, description = ''): Promise<string> {
   const id = uuid();
   await trpc(page, 'dashboards.create', { id, title, description });

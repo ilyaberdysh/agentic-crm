@@ -6,7 +6,7 @@ import { cx } from '../../utils/cx';
 export type { TextVariant } from '../../theme/typography.css';
 
 export interface TextProps extends Omit<HTMLAttributes<HTMLElement>, 'color'> {
-  /** Named text style (tokens.md §6). Default `body.standard` (14/20 500). */
+  /** Named text style. Default `body.standard` (14/20 500). */
   variant?: t.TextVariant;
   /** Named colour or any CSS colour. Body and text12/11 styles default to `secondary`, headings to `primary`. */
   color?: TextColor | (string & {});

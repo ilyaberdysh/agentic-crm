@@ -1,4 +1,4 @@
-// Settings shell (`/$workspaceSlug/settings/*`, B README §2.8): the settings nav replaces the main sidebar (same
+// Settings shell (`/$workspaceSlug/settings/*`): the settings nav replaces the main sidebar (same
 // width, background and floating behaviour). Header "‹ Settings" (back to the workspace), "Search settings..."
 // filtering sections and their subsections ("theme" → Appearance › Theme), then the groups.
 import { IconButton, NavItem, NavSectionLabel, SearchField } from '@agentic-crm/ui';

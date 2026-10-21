@@ -1,4 +1,4 @@
-// "↻ New data" (H README §3.7; evidence cell-new-data-pill.png, cell-new-data-hover.png): shown on a cell header when
+// "↻ New data" is shown on a cell header when
 // a `report-stale` message made its dataset stale; the tooltip says when the data was last refreshed; clicking
 // refetches with `acceptAfter`.
 import { Icon, Tooltip } from '@agentic-crm/ui';

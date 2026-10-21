@@ -1,4 +1,4 @@
-// Slice 10 calls UI, part 2 (BACKLOG 10.13–10.15): insight templates (list, editor, presets gallery, preview, publish and
+//  calls UI, part 2 (BACKLOG 10.13–10.15): insight templates (list, editor, presets gallery, preview, publish and
 // discard), insights on a call (choose, generate, Update, outdated), Settings → Call intelligence, and calls on record
 // pages (Calls tab, activity meeting card, live updates). Same stack as calls.spec.ts (AGENTIC_CRM_LLM=fake).
 import { expect, type Page, test } from '@playwright/test';
@@ -30,7 +30,7 @@ interface PresetOut {
   sections: { title: string; type: string; prompt: string }[];
 }
 
-/** A published template made from one of our presets, through the API (the editor flows have their own test). */
+/** A published template made from one of the presets, through the API (the editor flows have their own test). */
 async function publishedTemplate(page: Page, title: string, presetId = 'sales-discovery'): Promise<string> {
   const id = crypto.randomUUID();
   await trpc(page, 'insightTemplates.create', { id, presetId });

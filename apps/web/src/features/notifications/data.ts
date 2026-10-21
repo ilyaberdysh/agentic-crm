@@ -1,4 +1,4 @@
-// Notifications on the client (BACKLOG 5.05–5.06; slice5-server.md "Procedures"): the inbox list (rows = groups, 25 per
+// Notifications on the client (BACKLOG 5.05–5.06;  "Procedures"): the inbox list (rows = groups, 25 per
 // page), the unread badge, read / unread / archive writes and the preferences. Everything lives under
 // ['ws', ws, 'notification'] / ['ws', ws, 'notification-preferences'], the realtime vocabulary, so a `notification`
 // invalidation (a new row for me, or a read / archive from another tab) refetches the list and the count.
@@ -54,7 +54,7 @@ export function useUnreadCount() {
   });
 }
 
-/** "99+" from 100 (notifications §1). */
+/** "99+" from 100 (notifications). */
 export function badgeLabel(count: number): string {
   return count >= 100 ? '99+' : String(count);
 }
@@ -122,7 +122,7 @@ const markedRead = (group: NotificationGroup): NotificationGroup => ({
   entries: group.entries.map((e) => ({ ...e, readAt: e.readAt ?? new Date().toISOString() })),
 });
 
-/** Opening a row marks it read (notifications §3, acceptance 4). */
+/** Opening a row marks it read (notifications, acceptance 4). */
 export function useMarkRead() {
   const ws = useWs();
   const client = useQueryClient();

@@ -1,4 +1,4 @@
-// Webhooks (BACKLOG 6.07; Attio docs rest-api/guides/webhooks, webhooks OpenAPI): settings CRUD with uniqueness,
+// Webhooks: settings CRUD with uniqueness,
 // events from the write path fanned out of change_log into signed deliveries, filters, retries with back-off and the
 // degraded state, and "Test subscription".
 import { createHmac } from 'node:crypto';
@@ -50,7 +50,7 @@ async function pump(
     .map((s) => ({ body: JSON.parse(s.body) as Record<string, unknown>, headers: s.headers, raw: s.body }))
     .filter((s) => s.body.webhook_id === webhookId)
     .map((s) => {
-      // Attio-Signature = hex HMAC-SHA256 of the raw body under the webhook secret (checked by the caller).
+      // Legacy signature headers carry hex HMAC-SHA256 of the raw body under the webhook secret.
       return { body: s.body, headers: { ...s.headers, raw: s.raw } };
     });
 }
@@ -126,7 +126,7 @@ describe('webhook settings', () => {
 });
 
 describe('webhook deliveries', () => {
-  it('a record created by a member is delivered once, signed, with Attio’s payload; filters narrow events', async () => {
+  it('a record created by a member is delivered once, signed, with the webhook payload; filters narrow events', async () => {
     const ws = await createWorkspace();
     const people = await domain.schema.getObject(ws.ctx, 'people');
     const hook = await domain.webhooks.create(ws.ctx, {
@@ -167,6 +167,7 @@ describe('webhook deliveries', () => {
     const signature = createHmac('sha256', hook.secret)
       .update(request.headers.raw as string)
       .digest('hex');
+    expect(request.headers['agentic-crm-signature']).toBe(signature);
     expect(request.headers['attio-signature']).toBe(signature);
     expect(request.headers['x-attio-signature']).toBe(signature);
     expect(request.headers['idempotency-key']).toMatch(/^[0-9a-f-]{36}$/);

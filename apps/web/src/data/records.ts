@@ -1,7 +1,7 @@
 // Record headers and attribute values as normalised point reads (D-03): every cell / record page asks for its own
 // key; the batching loaders merge the asks of one frame into `records.batchGet` (≤ 1000 ids per workspace +
-// definition) and `values.list` (≤ 1337 ids per workspace + definition + attribute), like Attio's batchers
-// (internal-api-shapes §2). Tables (slice 2) and record pages (slice 3) build on these query options.
+// definition) and `values.list` (≤ 1337 ids per workspace + definition + attribute), like the batchers
+// (internal-api-shapes). Tables  and record pages  build on these query options.
 import { queryOptions } from '@tanstack/react-query';
 import { BatchLoader } from './batchLoader';
 import { keys } from './keys';

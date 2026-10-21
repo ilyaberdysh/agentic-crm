@@ -1,4 +1,4 @@
-# Production stand for Coolify (revenue.mymeet.ai). Images are built on the developer's Mac and pushed to GHCR:
+# Production stack for Coolify. Images are built locally and pushed to GHCR:
 #   docker buildx build --platform linux/amd64 -f docker/Dockerfile --target app -t ghcr.io/ilyaberdysh/agentic-crm-app:<tag> --push .
 #   docker buildx build --platform linux/amd64 -f docker/Dockerfile --target web -t ghcr.io/ilyaberdysh/agentic-crm-web:<tag> --push .
 # Coolify fills SERVICE_* variables (passwords, the web URL). The VM is shared (8 GB): every service has a memory cap.

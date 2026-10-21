@@ -1,4 +1,4 @@
-// Synced email on the client (BACKLOG 7.03; F README §2.2–2.3): the record's threads (paged), one message, a thread
+// Synced email on the client (BACKLOG 7.03): the record's threads (paged), one message, a thread
 // and sharing grants. Reads are TanStack queries under the realtime resources of `emailKeys` (an `email-thread-list`
 // or `email-grant-list` invalidation refetches them); writes answer the canonical item plus a change seq (the next
 // reads are not served older than it) and refresh the affected prefixes.

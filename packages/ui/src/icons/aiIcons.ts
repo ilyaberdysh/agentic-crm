@@ -1,4 +1,4 @@
-// Formula editor and AI attribute icons (slice 10, I formulas §4, ai-attributes §2–5) → Lucide glyphs.
+// Formula editor and AI attribute icons (I formulas, ai-attributes) → Lucide glyphs.
 // Kept in their own map (spread into iconMap) so parallel slices add icons without touching the same lines.
 import {
   Braces,

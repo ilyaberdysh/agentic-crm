@@ -71,7 +71,7 @@ export interface GoogleSettings {
   fetch?: typeof fetch;
   /** Transport for downloading outgoing attachments from object storage (default global fetch). */
   download?: typeof fetch;
-  /** Initial mail sync window in days; null = every message that was not deleted (Attio: "All emails … are synced"). */
+  /** Initial mail sync window in days; null = every message that was not deleted. */
   mailSyncDays?: number | null;
   calendarWindow?: Partial<CalendarWindow>;
   retry?: Partial<GoogleRetryPolicy>;

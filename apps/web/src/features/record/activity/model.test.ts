@@ -47,7 +47,7 @@ describe('visible event categories', () => {
     expect(requestCategories(fewer)).not.toContain('updates');
   });
 
-  it('maps the five menu categories to Attio event types (D §3.8)', () => {
+  it('maps the five menu categories to event types', () => {
     expect(FILTER_CATEGORIES.map((c) => c.label)).toEqual([
       'Calendar events',
       'Task events',

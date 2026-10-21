@@ -1,5 +1,4 @@
-// Workspaces: picker/switcher list, creation with handle availability, and "last workspace" recency (BACKLOG 1.03;
-// K legacy-welcome §1, §6.5, §10; sessions §8).
+// Workspaces: picker/switcher list, creation with handle availability, and "last workspace" recency.
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { readRaw, writeRaw } from '../lib/storage';
 import { keys } from './keys';
@@ -39,7 +38,7 @@ export function useWorkspaces(): WorkspaceSummary[] {
   return useQuery(workspacesQuery()).data ?? [];
 }
 
-// ---- recency (browser-local, like Attio's agentic-crm:recent-workspaces) -------------------------------------------
+// ---- recency (browser-local, like the agentic-crm:recent-workspaces) -------------------------------------------
 
 const RECENT_KEY = 'recent-workspaces';
 const PREFERRED_KEY = 'preferred-workspace-id';
@@ -70,7 +69,7 @@ export function relevanceSorted(workspaces: WorkspaceSummary[]): WorkspaceSummar
 }
 
 /**
- * Root redirect (legacy-welcome §1): exactly one workspace → it; else the last one opened in this browser; else
+ * Root redirect (legacy-welcome): exactly one workspace → it; else the last one opened in this browser; else
  * the picker. Null = no workspaces (→ create one).
  */
 export function pickWorkspace(workspaces: WorkspaceSummary[]): WorkspaceSummary | 'picker' | null {
@@ -87,7 +86,7 @@ export function pickWorkspace(workspaces: WorkspaceSummary[]): WorkspaceSummary 
 
 export type SlugAvailability = 'available' | 'taken' | 'invalid';
 
-/** Handle check while typing (Attio `GET …/slugs/{slug}`): reserved and taken handles are unavailable. */
+/** Handle check while typing: reserved and taken handles are unavailable. */
 export async function checkSlugAvailability(slug: string): Promise<SlugAvailability> {
   const result = await api.workspaces.checkSlug.query({ slug });
   if (!result.valid) return 'invalid';
@@ -103,7 +102,7 @@ export class SlugTakenError extends Error {
 
 /**
  * Creates a workspace (the creator becomes admin). The id is minted once per form so a retried submit replays the
- * same create (I3). 409 SLUG_IN_USE / 400 RESERVED_SLUG surface as SlugTakenError.
+ * same create. 409 SLUG_IN_USE / 400 RESERVED_SLUG surface as SlugTakenError.
  */
 export async function createWorkspace(input: { id: string; name: string; slug: string }): Promise<WorkspaceSummary> {
   let created: RouterOutputs['workspaces']['create'];

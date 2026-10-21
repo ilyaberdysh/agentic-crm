@@ -1,6 +1,6 @@
-// The review step (F composer §2.10, evidence/F/composer-review-mass-send.png): "Review email · Previewing" — the same
+// The review step (F composer): "Review email · Previewing" — the same
 // window with every email as it will be sent (variables merged for the selected recipient, fallbacks applied), the
-// recipients panel to switch the preview, "‹ Back to editor" and "Send emails (N)". An email with a variable that
+// recipients panel to switch the preview, "‹ Back to editor" and "Send emails ". An email with a variable that
 // has no value and no fallback stops here: the recipient is flagged, and sending asks for confirmation.
 import { AlertDialog, Button, Icon, IconButton, Skeleton, toast } from '@agentic-crm/ui';
 import { useQuery } from '@tanstack/react-query';

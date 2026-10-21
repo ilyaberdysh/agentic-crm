@@ -1,4 +1,4 @@
-// Insight templates (I calls §4; evidence/I/calls-templates-empty.png, calls-template-editor-*.png,
+// Insight templates:
 // calls-template-presets.png, calls-template-preset-preview.png): the templates table, the editor (sections on the left,
 // the preview pane on the right), the presets gallery and its preview.
 import { alpha, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';

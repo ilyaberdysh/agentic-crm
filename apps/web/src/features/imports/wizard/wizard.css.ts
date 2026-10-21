@@ -1,4 +1,4 @@
-// Import wizard (C2 import.md §I1–I6; evidence/C2/import-*.png): 48 + 1 header, 52 + 1 stepper, step body, 48 + 1
+// Import wizard: 48 + 1 header, 52 + 1 stepper, step body, 48 + 1
 // footer. Measurements from the curated captures at 1236 × 945 (the main panel).
 import { insetRing, scales, text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style, styleVariants } from '@vanilla-extract/css';

@@ -1,4 +1,4 @@
-// New note flow (E README §3.1 "Create"): with a record (record page "New note", Notes tab "Create note") the note is
+// New note flow ("Create"): with a record (record page "New note", Notes tab "Create note") the note is
 // created on it at once; without one (Notes page "+ New note", `n`, a favourite template) "Choose record" asks
 // first. The note then opens in the modal at `?modal=note&id=…`.
 import { toast } from '@agentic-crm/ui';

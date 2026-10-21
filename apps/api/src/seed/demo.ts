@@ -1,6 +1,5 @@
-// Demo data (ARCHITECTURE D-23, BACKLOG 1.01): team accounts and a `mymeet` workspace mirroring the research seed
-// of Attio's test workspace (research/tools/seed/seed.mjs): 8 companies on example.com domains, 16 people, a custom
-// object "Projects" with 15 attribute types and 12 records, Deals activated with a few deals, and default views.
+// Demo data (ARCHITECTURE D-23, BACKLOG 1.01): team accounts and an `agentic-crm` workspace with 8 companies on example.com
+// domains, 16 people, a custom "Projects" object with 15 attribute types and 12 records, deals, and default views.
 //
 // Every write goes through the domain services (I1) acting as the first team member. Ids are derived from the
 // workspace id and a stable key, so re-running is a no-op for anything that exists (PUT-idempotent creates, I3):
@@ -39,8 +38,8 @@ export interface SeedResult {
 
 /** Default team accounts; override with SEED_USERS="email:Name,email:Name". */
 export const DEFAULT_SEED_USERS: SeedUserSpec[] = [
-  { email: 'ilya@mymeet.ai', name: 'Ilya' },
-  { email: 'team@mymeet.ai', name: 'Team Mymeet' },
+  { email: 'admin@example.com', name: 'Admin' },
+  { email: 'team@example.com', name: 'Team' },
 ];
 
 export function parseSeedUsers(raw: string | undefined): SeedUserSpec[] {
@@ -260,7 +259,7 @@ const identityOf = (user: SeededUser, spec: SeedUserSpec) => {
 
 export async function seedDemo(deps: { domain: Domain; auth: Auth }, options: SeedOptions): Promise<SeedResult> {
   const { domain, auth } = deps;
-  const slug = options.workspaceSlug ?? 'mymeet';
+  const slug = options.workspaceSlug ?? 'agentic-crm';
   if (options.users.length === 0) throw new Error('at least one seed user is required');
   const users = await ensureUsers(auth, options.users);
   const [owner, ...others] = users as [SeededUser, ...SeededUser[]];
@@ -273,7 +272,10 @@ export async function seedDemo(deps: { domain: Domain; auth: Auth }, options: Se
     throw new Error(`workspace "${slug}" exists and ${owner.email} is not an active member of it; refusing to seed`);
   }
   if (resolution.status === 'not-found') {
-    await domain.workspaces.create(identityOf(owner, ownerSpec), { name: options.workspaceName ?? 'mymeet', slug });
+    await domain.workspaces.create(identityOf(owner, ownerSpec), {
+      name: options.workspaceName ?? 'Agentic CRM',
+      slug,
+    });
     created = true;
     resolution = await domain.workspaces.resolveForUser(owner.userId, { slug });
   }

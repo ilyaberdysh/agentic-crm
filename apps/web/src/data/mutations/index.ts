@@ -1,7 +1,7 @@
 // The app's mutation queue: one per tab, persisted in sessionStorage per user, failures surfaced as toasts with
 // Retry (D-03, CROSS-DOMAIN B.2/B.15). Kinds for record values are registered here; each reconciles the overlay with
 // the canonical state of the mutation response and marks it covered up to the response seq, so the realtime echo of
-// our own write does not refetch.
+// custom write does not refetch.
 import type { PutValueInput, RetireValueInput } from '@agentic-crm/contracts';
 import { toast } from '@agentic-crm/ui';
 import { newId } from '../../lib/ids';
@@ -49,7 +49,7 @@ export function createAppQueue(userId: string): MutationQueue {
     isRetryable,
     isOnline: () => typeof navigator === 'undefined' || navigator.onLine !== false,
     newId,
-    // A requirement rule refused the write (422): keep it held and show "Updates required" (slice 6, J §7).
+    // A requirement rule refused the write (422): keep it held and show "Updates required".
     shouldHold: (error) => errorEnvelopeOf(error).code === RULE_VIOLATION_CODE,
     onHold: (write, error, ctx) => holdHandler?.(write, error, ctx),
     onFailure: (write, error, ctx) => {
@@ -140,9 +140,9 @@ export interface DesiredValue {
 /**
  * The desired current values of one attribute on one record. Coalescing keeps only the newest set (the queue's
  * newest-wins rule fits set semantics). At send time it is diffed against the cached server values into
- * `values.retire` / `values.put` / `values.reorder` calls (I6: retire + insert, client value ids, I3):
+ * `values.retire` / `values.put` / `values.reorder` calls (I6: retire + insert, client value ids):
  * - values in `known` (ids the user could see when committing) but not desired are retired — values someone else
- *   added meanwhile are not in `known` and survive;
+ * added meanwhile are not in `known` and survive;
  * - desired ids that are not current are put (a single-value put replaces the current value server-side);
  * - kept values of a multi-value attribute whose rank changed are reordered.
  */
@@ -237,7 +237,7 @@ export interface ValueRef {
 }
 
 /**
- * Optimistically sets a single-value attribute (client-minted value id, I3/I6). `previous` is what the UI showed
+ * Optimistically sets a single-value attribute (client-minted value id, I3/). `previous` is what the UI showed
  * before, captured for Undo. Returns the write id.
  */
 export function putValue(queue: MutationQueue, ref: ValueRef, value: unknown, previous?: { value: unknown }): string {

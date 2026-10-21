@@ -1,4 +1,4 @@
-// Relative comment times as Attio shows them ("less than a minute ago", "about 6 hours ago"; E README §2.8): the
+// Relative comment times use labels such as "less than a minute ago" and "about 6 hours ago": the
 // usual distance-in-words thresholds.
 export function timeAgo(iso: string, now: number = Date.now()): string {
   const seconds = Math.max(0, (now - Date.parse(iso)) / 1000);

@@ -687,7 +687,7 @@ const DECLS: Record<FunctionName, DeclInput> = {
       ['value'],
       'Returns the number of characters in a text.',
       ['size', 'count', 'length'],
-      [['length("attio")', '5']],
+      [['length("acme")', '4']],
     ),
   },
   replace: {
@@ -733,8 +733,8 @@ const DECLS: Record<FunctionName, DeclInput> = {
       'True when the text starts with the search text (case-sensitive).',
       ['starts', 'begins', 'prefix', 'prefixed'],
       [
-        ['startsWith("attio.com", "attio")', 'true'],
-        ['startsWith("attio.com", "Attio")', 'false'],
+        ['startsWith("acme.test", "acme")', 'true'],
+        ['startsWith("acme.test", "Acme")', 'false'],
       ],
     ),
   },
@@ -761,7 +761,7 @@ const DECLS: Record<FunctionName, DeclInput> = {
       ['subject', 'count'],
       'Returns the first characters of a text.',
       ['substring', 'prefix', 'truncate', 'first', 'start'],
-      [['left("Attio", 3)', 'Att']],
+      [['left("Acme", 3)', 'Acm']],
     ),
   },
   right: {
@@ -774,7 +774,7 @@ const DECLS: Record<FunctionName, DeclInput> = {
       ['subject', 'count'],
       'Returns the last characters of a text.',
       ['substring', 'suffix', 'truncate', 'last', 'end'],
-      [['right("Attio", 2)', 'io']],
+      [['right("Acme", 2)', 'me']],
     ),
   },
   lower: {
@@ -830,7 +830,7 @@ const DECLS: Record<FunctionName, DeclInput> = {
       'Splits a text and returns the part at a zero-based position (empty when out of range).',
       ['split', 'delimiter', 'separator', 'part', 'nth', 'index'],
       [
-        ['splitPart("hello@attio.com", "@", 1)', 'attio.com'],
+        ['splitPart("hello@acme.test", "@", 1)', 'acme.test'],
         ['splitPart("a,b", ",", 0)', 'a'],
       ],
     ),

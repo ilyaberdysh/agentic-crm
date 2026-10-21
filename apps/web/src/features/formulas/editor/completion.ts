@@ -1,6 +1,6 @@
-// Editor popups (formulas.md §4.4, shown only while the helper panel is collapsed): (a) function autocomplete —
-// typing letters lists the functions whose name starts with the prefix (240 px list, `name()`, first row selected,
-// Enter / Tab insert `name()` with the cursor inside); (b) attribute picker — `{` lists attributes (related objects
+// Editor popups (shown only while the helper panel is collapsed): (a) function autocomplete —
+// typing letters lists the functions whose name starts with the prefix (240 px list, `name`, first row selected,
+// Enter / Tab insert `name` with the cursor inside); (b) attribute picker — `{` lists attributes (related objects
 // as "Parent › Child"), picking inserts a chip. Pickers never open inside strings or comments.
 import type { PathHop } from '@agentic-crm/contracts';
 import {
@@ -51,7 +51,7 @@ export function insertVariable(
   });
 }
 
-/** Inserts `name()` over [from, to) with the cursor between the parentheses. */
+/** Inserts `name` over [from, to) with the cursor between the parentheses. */
 export function insertFunction(view: EditorView, name: string, from: number, to: number): void {
   const text = `${name}()`;
   view.dispatch({

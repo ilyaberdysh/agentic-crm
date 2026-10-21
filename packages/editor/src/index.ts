@@ -1,4 +1,4 @@
-// @agentic-crm/editor — the note editor (contract E1, research/architecture/decisions/slice3-contracts.md).
+// @agentic-crm/editor — the note editor package.
 //   <RichTextEditor documentId docType collabUrl user readOnly? placeholder? onReady? autofocus? mentionSearch?
 //                   uploadImage? onAwarenessChange? />  TipTap + Yjs via HocuspocusProvider (apps/collab)
 //   <RichTextPreview blocks />                           read-only render of the flat blocks projection

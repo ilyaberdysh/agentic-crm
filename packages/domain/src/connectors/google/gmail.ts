@@ -158,7 +158,7 @@ export class GmailApi {
           retry: false,
         });
       }
-      const boundary = `attio_re_upload_${Date.now().toString(36)}`;
+      const boundary = `crm_re_upload_${Date.now().toString(36)}`;
       const body = [
         `--${boundary}`,
         'Content-Type: application/json; charset=UTF-8',

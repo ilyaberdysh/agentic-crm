@@ -1,4 +1,4 @@
-// "AI autofill" card of the create / edit attribute dialog (ai-attributes.md §3, `EI:ai-attribute-create-summarize.png`):
+// "AI autofill" card of the create / edit attribute dialog (`EI:ai-attribute-create-summarize.png`):
 // header "Set up AI autofill" + switch; when on: "Autofill type" select (icon + label, entries with descriptions),
 // "Prompt" / "Prompt (optional)" editor with variable chips and a "{ } Use variable" footer button, the helper line,
 // and for select attributes "Allow AI to generate new options". Without an LLM the card says AI is not configured.

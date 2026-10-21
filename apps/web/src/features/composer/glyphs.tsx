@@ -1,5 +1,5 @@
 // Small glyphs the composer footer needs and the icon set lacks, drawn here on a 16 px grid in the same 1.5 px stroke
-// (not derived from Attio's artwork): the variable braces, an envelope with a pen (compose), stacked envelopes
+// (not derived from the artwork): the variable braces, an envelope with a pen (compose), stacked envelopes
 // (email templates).
 import type { IconGlyph } from '@agentic-crm/ui';
 import type { ComponentProps } from 'react';

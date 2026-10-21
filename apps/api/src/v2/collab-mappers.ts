@@ -1,8 +1,8 @@
-// Internal slice-3 shapes → Attio's public /v2 shapes (E README §6, D README §6; OpenAPI note, task, comment,
-// thread, file and folder components).
+// Notes, tasks, comments, threads, files and folders mapped from domain entities to public REST responses.
 import type { Comment, Note, StorageEntry, Task, WorkspaceMember } from '@agentic-crm/contracts';
+import { BUILTIN_STORAGE_PROVIDER } from '@agentic-crm/contracts/v2';
 import type { V2Context } from './context';
-import { attioTimestamp, publicActor } from './mappers';
+import { publicActor, publicTimestamp } from './mappers';
 
 /** api_slug of a definition (public `parent_object`, `object_slug`); falls back to the id. */
 export async function slugOf(v2: V2Context, entityDefinitionId: string): Promise<string> {
@@ -15,8 +15,8 @@ type Tag =
 
 /**
  * Mentions in a note body (`tags`): members and records referenced by the flat blocks. The block shape belongs to
- * packages/editor, so this walks the JSON for the reference shapes Attio and our editor use (camelCase or
- * snake_case): `{memberId | workspaceMemberId | referenced_actor_id}` and `{entityDefinitionId, entityInstanceId}`.
+ * packages/editor, so this walks the supported camelCase and snake_case reference shapes:
+ * `{memberId | workspaceMemberId | referenced_actor_id}` and `{entityDefinitionId, entityInstanceId}`.
  */
 export async function noteTags(v2: V2Context, blocks: unknown[] | null): Promise<Tag[]> {
   if (!blocks) return [];
@@ -55,7 +55,7 @@ export async function noteToPublic(v2: V2Context, note: Note) {
     content_markdown: note.content?.markdown ?? '',
     tags: await noteTags(v2, note.content?.blocks ?? null),
     created_by_actor: publicActor(note.createdBy),
-    created_at: attioTimestamp(note.createdAt),
+    created_at: publicTimestamp(note.createdAt),
   };
 }
 
@@ -63,9 +63,9 @@ export function taskToPublic(task: Task) {
   return {
     id: { workspace_id: task.workspaceId, task_id: task.id },
     content_plaintext: task.content.text,
-    deadline_at: task.deadlineAt === null ? null : attioTimestamp(task.deadlineAt),
+    deadline_at: task.deadlineAt === null ? null : publicTimestamp(task.deadlineAt),
     is_completed: task.isCompleted,
-    completed_at: task.completedAt === null ? null : attioTimestamp(task.completedAt),
+    completed_at: task.completedAt === null ? null : publicTimestamp(task.completedAt),
     linked_records: task.linkedRecords.map((r) => ({
       target_object_id: r.entityDefinitionId,
       target_record_id: r.entityInstanceId,
@@ -75,7 +75,7 @@ export function taskToPublic(task: Task) {
       referenced_actor_id: id,
     })),
     created_by_actor: publicActor(task.createdBy),
-    created_at: attioTimestamp(task.createdAt),
+    created_at: publicTimestamp(task.createdAt),
   };
 }
 
@@ -113,9 +113,9 @@ export function commentToPublic(comment: Comment, lookups: CommentContextLookups
           object_id: parent?.entityDefinitionId ?? comment.target.entityDefinitionId,
         }
       : { record_id: comment.target.entityInstanceId, object_id: comment.target.entityDefinitionId },
-    resolved_at: comment.resolvedAt === null ? null : attioTimestamp(comment.resolvedAt),
+    resolved_at: comment.resolvedAt === null ? null : publicTimestamp(comment.resolvedAt),
     resolved_by: publicActor(comment.resolvedBy),
-    created_at: attioTimestamp(comment.createdAt),
+    created_at: publicTimestamp(comment.createdAt),
     author: publicActor(comment.author),
   };
 }
@@ -126,9 +126,10 @@ export async function fileToPublic(v2: V2Context, entry: StorageEntry, options: 
     object_id: entry.entityDefinitionId,
     object_slug: await slugOf(v2, entry.entityDefinitionId),
     record_id: entry.entityInstanceId,
-    storage_provider: entry.storageProvider,
+    // Storage is owned by this service; persisted provider identifiers are an internal implementation detail.
+    storage_provider: BUILTIN_STORAGE_PROVIDER,
     created_by_actor: publicActor(entry.createdBy),
-    created_at: attioTimestamp(entry.createdAt),
+    created_at: publicTimestamp(entry.createdAt),
   };
   if (entry.entryType === 'folder') {
     return {

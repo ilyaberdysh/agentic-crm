@@ -1,4 +1,4 @@
-// Footer calculations (BACKLOG 2.08 UI; filters-sorts-calcs §8; C1 README §2.4–2.6): "{total} count" under the
+// Footer calculations (BACKLOG 2.08 UI; filters-sorts-calcs): "{total} count" under the
 // record column; per column "+ Add calculation" or "{value} {suffix}" right-aligned. The picker ("Aggregations")
 // offers per-type kinds, checks the current one and adds "None"; choosing saves on the view column immediately and
 // the value comes from `snapshots.aggregate` over the shown snapshot (the server derives counts and percentages and

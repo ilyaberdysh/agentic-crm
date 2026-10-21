@@ -1,4 +1,4 @@
-// The "Formula" block of the create / edit attribute dialog (formulas.md §4.1): "Formula" label with the "Output
+// The "Formula" block of the create / edit attribute dialog: "Formula" label with the "Output
 // <type>" chip once a formula exists; below it "+ Create formula" or the read-only formula (same chips and colours as
 // the editor) which re-opens the editor on click.
 import type { FormulaAnnotation } from '@agentic-crm/formula';

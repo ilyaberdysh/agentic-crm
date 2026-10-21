@@ -1,8 +1,8 @@
-// Meetings on the client (slice 7; F README §2.4–2.5). Public surface:
-//   <NewMeetingDialog record/>          "Add meeting" of the Activity tab (D §3.8)
-//   <HomeMeetings/>                     the Home Meetings widget (B-shell/home.md §2.3)
-//   useMeetingsById(ids)                meetings of timeline events (cached under the meeting's own key)
-//   timelineVerb / rsvpOf …             the event sentence and the status pill
+// Meetings on the client. Public surface:
+// <NewMeetingDialog record/> "Add meeting" of the Activity tab (D)
+// <HomeMeetings/> the Home Meetings widget
+// useMeetingsById(ids) meetings of timeline events (cached under the meeting's own key)
+// timelineVerb / rsvpOf … the event sentence and the status pill
 // Importing this module registers the meeting modal (`?modal=meeting&id=<meetingId>`) with the overlay host.
 import { registerWindowContent } from '../overlays';
 import { MeetingModal } from './MeetingModal';

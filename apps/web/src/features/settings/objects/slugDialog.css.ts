@@ -1,4 +1,4 @@
-// Type-to-confirm alert (components.md §7 AlertDialog metrics: 440 px, radius 12, e2, overlay 25 % / 55 %).
+// Type-to-confirm alert (AlertDialog metrics: 440 px, radius 12, e2, overlay 25 % / 55 %).
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

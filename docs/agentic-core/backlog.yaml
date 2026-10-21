@@ -14,6 +14,7 @@ items:
 
   - id: B002
     title: Persist workspace ProductModule enable and disable state
+    status: done
     why_deferred: The first packet only needs a static built-in manifest and compiled registry.
     revisit_when: Before a second module or workspace-selectable module ships.
 
@@ -25,60 +26,88 @@ items:
 
   - id: B004
     title: Add endpoint registration and SSRF policy for OpenAI-compatible connections
+    status: done
     why_deferred: The bounded W4 packet proves wire compatibility only; safe endpoint ownership is separate.
     revisit_when: Before accepting user-configured URLs or enabling hosted calls to private endpoints.
 
   - id: B005
-    title: Add production paired-runner enrollment and enforceable sandbox
+    title: Add paired-runner enrollment and enforceable sandbox primitives
+    status: done
     why_deferred: W5 is an explicitly bounded local experiment and cannot claim production isolation.
-    revisit_when: Before any CLI receives real CRM data or mutation capabilities.
+    revisit_when: Completed as foundations; B016 and B017 track packaging and live conformance.
 
   - id: B006
     title: Represent unknown provider cost in persistent usage accounting
+    status: done
     why_deferred: Neutral inference now preserves unknown cost, while legacy billing fails closed.
     revisit_when: Before a BYO connection with unknown pricing can be selected in production.
 
   - id: B007
     title: Materialize provider credentials only inside a scoped adapter invocation
+    status: done
     why_deferred: W3 deliberately stores and validates encrypted keys but exposes no plaintext resolver.
     revisit_when: Before provider connection selection is wired to Anthropic or OpenAI-compatible execution.
 
   - id: B008
-    title: Certify Codex native-tool denial and dedicated auth-profile lifecycle
+    title: Add dedicated Codex auth-profile metadata and fixture-level native-tool denial
+    status: done
     why_deferred: W5 uses fake processes and rejects tool events, which does not prove prevention before execution.
-    revisit_when: Before a live Codex profile or any CRM data is allowed into the runner.
+    revisit_when: Completed at the contract and fixture level; B017 tracks live certification.
 
   - id: B009
     title: Add authenticated MCP host transport and enrollment
+    status: done
     why_deferred: W9 proves one curated MCP-shaped tool adapter without introducing a generic server or SDK.
     revisit_when: Before a CLI or external model connects to CRM capabilities over MCP.
 
   - id: B010
     title: Reconcile split EXECUTING action attempts before redispatch
+    status: done
     why_deferred: The first local task-create broker commits the CRM write and receipt atomically; older split attempts fail closed.
     revisit_when: Before remote executors or retries can leave an action in EXECUTING across transactions.
 
   - id: B011
     title: Reconcile and resume blocked agent tasks through the action owner
+    status: done
     why_deferred: W8 conservatively blocks expired tasks linked to actions; choosing an outcome or retry is outside the dispatch queue.
     revisit_when: Before a worker dispatches consequential actions or a product surface offers resume after lease expiry.
 
   - id: B012
     title: Add an explicit cancelled queue outcome for rejected or stale actions
+    status: done
     why_deferred: W9 shows the persisted mismatch and prevents treating it as authority; adding a new durable terminal status requires a separate queue state-machine migration.
     revisit_when: Before queued action work is dispatched automatically or terminal queue analytics ship.
 
   - id: B013
     title: Add a self-hosted installation doctor command
+    status: done
     why_deferred: The first milestone proves the local demo with repository checks; a stable diagnostic contract depends on the public packaging and supported deployment shape.
     revisit_when: Before the first public self-hosted preview or external installation guide ships.
 
   - id: B014
     title: Inventory provenance and distributable public inputs
+    status: done
     why_deferred: The repository contains inherited research, mirrored public documentation, screenshots and generated artifacts that require legal and privacy review before public export.
     revisit_when: Before repository visibility changes from private or an open-source license is selected.
 
   - id: B015
     title: Show every evidence reference and exact assignee identity in the approval surface
+    status: done
     why_deferred: The first seeded vertical slice proposes one evidence-backed unassigned task; the persisted contract already permits multiple evidence references and assignees, while the current Agent tab summarizes those shapes too aggressively.
     revisit_when: Before agents propose assigned tasks or actions supported by more than one evidence item.
+
+  - id: B016
+    title: Ship a standalone paired-runner daemon and authenticated MCP relay
+    status: done
+    why_deferred: The standalone runner now connects enrollment, grants, local-model dispatch, authenticated MCP transport, and the sandbox adapter in one operator process.
+    revisit_when: Before calling Codex CLI execution turnkey or documenting it as a one-command production path.
+
+  - id: B017
+    title: Complete authenticated Codex acceptance on each supported Linux runner host
+    why_deferred: GitHub CI now passes the credential-free live rootless-Podman kernel-boundary probe. Authenticated generation and native-tool denial still require operator-host acceptance with the exact CLI, image, profile, and egress policy that will handle CRM data.
+    revisit_when: Before enabling the standalone runner for sensitive CRM data or publishing a runner image.
+
+  - id: B018
+    title: Complete the final public-ref provenance and privacy scan
+    why_deferred: The 2026-10-20 technical audit and maintainer attestation are recorded in PROVENANCE.md. The UI implementation is retained under the maintainer's lawful reverse-engineering and authorship disposition, and the historical generated API snapshot is being replaced by a product-owned contract. The remaining gate is technical: finish and test the replacement, remove stale product-specific comments, then scan every ref intended for publication and the relevant GitHub metadata.
+    revisit_when: Before changing the personal repository from private to public.

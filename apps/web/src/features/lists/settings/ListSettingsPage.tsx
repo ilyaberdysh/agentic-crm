@@ -1,11 +1,11 @@
-// List settings `/settings/data/lists/$listId/<tab>` (J objects-lists §4.2; evidence/J/list-configuration-parent-
+// List settings `/settings/data/lists/$listId/<tab>` (J objects-lists;
 // object.png): crumb "Lists / <emoji> <name>", "‹ Back", 56 px emoji tile + name + "Manage attributes, permissions and
 // other relevant settings" + "↗ Go to list"; tabs Configuration · Permissions · Attributes <n> · Templates ·
 // Notifications <n> · Imports.
-//   Configuration  General (emoji button + List name, saved on blur; Parent object select → "Change parent object"
-//                  confirmation) and Danger zone (Delete list)
-//   Permissions    workspace access level (Full access / Read and write / Read only / No access)
-//   Attributes     the object attribute admin (features/settings) on the list's entry definition
+// Configuration  General (emoji button + List name, saved on blur; Parent object select → "Change parent object"
+// confirmation) and Danger zone (Delete list)
+// Permissions workspace access level (Full access / Read and write / Read only / No access)
+// Attributes the object attribute admin (features/settings) on the list's entry definition
 import type { EntityDefinition } from '@agentic-crm/contracts';
 import {
   AlertDialog,
@@ -102,7 +102,7 @@ export function ListSettingsPage({ listId, tab }: { listId: string; tab: ListTab
   } else if (!list.data) {
     body = <ContentSpinner />;
   } else if (access.known && !access.canAdministrate && !isAdmin) {
-    // List settings need administrate_entity_definition_permissions (J permissions §3).
+    // List settings need administrate_entity_definition_permissions (J permissions).
     body = (
       <EmptyState
         icon="lock"

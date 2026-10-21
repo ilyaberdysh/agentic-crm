@@ -1,4 +1,4 @@
-// "Recalculate values" (ai-attributes.md §5, `EI:ai-attribute-recalc-confirm.png`): every run path — one value, a
+// "Recalculate values" (`EI:ai-attribute-recalc-confirm.png`): every run path — one value, a
 // cell selection, a whole column — asks first: "By confirming the recalculation, {n} record(s) will be updated." and a
 // bordered row "{n} credit(s) will be used" (from `aiAttributes.estimate`); Cancel / Confirm. Confirm calls
 // `aiAttributes.run`, writes the returned annotations into the cache ("AI is thinking...") and toasts the outcome.

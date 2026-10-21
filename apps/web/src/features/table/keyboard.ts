@@ -1,4 +1,4 @@
-// Table keyboard model (BACKLOG 2.10; C1 README §3.6; shortcuts.md §2 "Table view"): arrows move the active cell,
+// Table keyboard model: arrows move the active cell,
 // ⌘↑/⌘↓ jump to top/bottom, Home/End to the first/last column (⌘ also to the first/last row), PageUp/PageDown by a
 // screen, Tab/⇧Tab next/previous cell (wrapping rows), ⇧␣ toggles the row, ⇧↑/⇧↓ group-select rows, ⌘⇧↑/⌘⇧↓ select to
 // top/bottom, ⌘A selects all, ⌘↩ opens the record, ↩ edits, a printable key opens the editor with that key, ⌫/Del

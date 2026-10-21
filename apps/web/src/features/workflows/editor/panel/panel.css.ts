@@ -1,4 +1,4 @@
-// Side panel (README §2.3 "Side panel", block-catalog §7; evidence G/G-trigger-config.png, G-panel-create-record.png,
+// Side panel ("Side panel", block-catalog; evidence G/G-trigger-config.png, G-panel-create-record.png,
 // G-update-record-config.png, G-select-next-step.png, G-version-history.png): 400 px card, 12 px from the right, 10 px
 // below the tab bar; block header (32 px tile, title, category, ⋮), "Add a description...", alerts, Configuration with
 // one field per input (label row with the {x} button, red issue text under the control), Cost, Next step rows.

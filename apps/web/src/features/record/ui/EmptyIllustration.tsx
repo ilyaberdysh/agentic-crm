@@ -1,5 +1,5 @@
 // Empty-state illustration of record tabs (Files, Tasks, Calls…): a dotted tile with corner marks and a framed
-// glyph. Drawn for this project (Attio's illustrations are not reused).
+// glyph. Drawn for this project (the illustrations are not reused).
 import { Icon, type IconName } from '@agentic-crm/ui';
 import * as s from './ui.css';
 

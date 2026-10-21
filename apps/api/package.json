@@ -10,6 +10,7 @@
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "user:create": "tsx src/cli/user-create.ts",
+    "doctor": "tsx src/cli/doctor.ts",
     "auth:schema": "tsx scripts/auth-schema.ts",
     "token:create": "tsx src/cli/token-create.ts",
     "calls:import-sample": "tsx src/cli/import-mymeet-sample.ts"

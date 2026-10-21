@@ -1,4 +1,4 @@
-// Dashboard grid layout operations (H README §3.3): cells in rank order are packed into rows of 12 columns (min 4,
+// Dashboard grid layout operations: cells in rank order are packed into rows of 12 columns (min 4,
 // the last cell of a row stretches); a drop beside a cell re-splits that row evenly, a drop between rows makes a new
 // full-width row, a resize moves whole columns between two neighbours. Pure functions over `{id, sortOrder, width}`;
 // the result is the full layout the `setLayout` mutation (`cells/shuffle`) takes.

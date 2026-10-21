@@ -223,11 +223,15 @@ describe('worker', () => {
       to: [{ emailAddress: 'kim@client-worker.io' }],
     });
     const { outbox } = await worker.domain.email.drafts.send(ctx, { draftId });
-    await until(
-      () => worker.domain.connectors.test.sent(ctx, mailbox.id),
-      (sent) => sent.length === 1,
+    const delivered = await until(
+      async () => ({
+        sent: await worker.domain.connectors.test.sent(ctx, mailbox.id),
+        pending: await worker.domain.email.outbox.list(ctx),
+      }),
+      ({ sent, pending }) => sent.length === 1 && pending.length === 0,
     );
-    expect(await worker.domain.email.outbox.list(ctx)).toEqual([]);
+    expect(delivered.sent).toHaveLength(1);
+    expect(delivered.pending).toEqual([]);
     expect(outbox).toHaveLength(1);
   });
 

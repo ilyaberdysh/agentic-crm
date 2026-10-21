@@ -1,8 +1,8 @@
-// Routes under `/$workspaceSlug/settings` for objects administration (J README §1, objects-lists §3):
-//   data/objects                     objects list
-//   data/objects/$apiSlug            → …/general
-//   data/objects/$apiSlug/$tab       object settings (appearance → general, integrations → app)
-//   record/$apiSlug                  legacy alias → data/objects/$apiSlug/general
+// Routes under `/$workspaceSlug/settings` for objects administration (objects-lists):
+// data/objects objects list
+// data/objects/$apiSlug → …/general
+// data/objects/$apiSlug/$tab object settings (appearance → general, integrations → app)
+// record/$apiSlug legacy alias → data/objects/$apiSlug/general
 import { type AnyRoute, createRoute, redirect } from '@tanstack/react-router';
 import { OBJECT_TAB_IDS, ObjectSettingsPage, type ObjectTabId } from './ObjectSettingsPage';
 import { ObjectsListPage } from './ObjectsListPage';

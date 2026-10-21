@@ -1,6 +1,6 @@
-// Helper panel list (formulas.md §4.3): "Attributes" (the object's attributes, first 5 + "Show more"; record
+// Helper panel list: "Attributes" (the object's attributes, first 5 + "Show more"; record
 // references drill into the related object's attributes with a "Back" row) and "Functions" (every function with a
-// help entry, `name()`). A query (typed in the search box or driven by the word at the editor cursor) filters both
+// help entry, `name`). A query (typed in the search box or driven by the word at the editor cursor) filters both
 // groups; an attribute query (`{…`) lists attributes only.
 import type { AttributeDefinition, PathHop } from '@agentic-crm/contracts';
 import { type FunctionDecl, HELP_FUNCTIONS } from '@agentic-crm/formula';
@@ -40,7 +40,7 @@ export interface DrillLevel {
 }
 
 /**
- * Attributes a formula may reference: active and visible (plus the system "Next due task", which Attio offers), of a
+ * Attributes a formula may reference: active and visible (plus the system "Next due task"), of a
  * kind the language knows, not the formula itself (list memberships are not attribute values).
  */
 export function referenceableAttributes(

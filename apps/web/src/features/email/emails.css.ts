@@ -1,4 +1,4 @@
-// Record Emails tab (F README §2.2; D README §2.9): 52 px header row, 86 px thread rows (32 px sender avatar, subject
+// Record Emails tab: 52 px header row, 86 px thread rows (32 px sender avatar, subject
 // 14/600, grey 12 px participants and snippet lines), the Filters and Manage access popovers.
 import { scales, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

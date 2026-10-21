@@ -1,4 +1,4 @@
-// Workflow editor icons (slice 8, G README §2–3, block-catalog §3–4): one glyph per block of the catalogue, the canvas
+// Workflow editor icons (block-catalog): one glyph per block of the catalogue, the canvas
 // toolbar, the run viewer and the index. Kept in their own map (spread into iconMap) so parallel slices add icons
 // without touching the same lines. Names describe the role; glyphs are Lucide's.
 import {

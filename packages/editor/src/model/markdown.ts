@@ -1,7 +1,7 @@
-// Flat blocks ↔ markdown, matching Attio's public API mapping (E README §6, editor.md §6):
-//   BOLD → **x**, ITALIC → *x*, STRIKETHROUGH → ~~x~~, HIGHLIGHTED → ==x== (colour lost), COLORED → dropped,
-//   LINK → [text](url), headings → # / ## / ###, list items → "- " / "1. " with 2 spaces of indentation per level,
-//   one block per line (single newline separators), images omitted, mentions as plain `@Name`.
+// Flat blocks ↔ markdown, matching the public API mapping:
+// BOLD → **x**, ITALIC → *x*, STRIKETHROUGH → ~~x~~, HIGHLIGHTED → ==x== (colour lost), COLORED → dropped,
+// LINK → [text](url), headings → # / ## / ###, list items → "- " / "1. " with 2 spaces of indentation per level,
+// one block per line (single newline separators), images omitted, mentions as plain `@Name`.
 // Markdown input accepts #/##/###, -/*/+ and "1." lists (indented by 2 or 4 spaces per level), **/__ bold, */_
 // italic, ~~ strike, == highlight and [text](url); `>`, backticks, `1)` and #### stay literal text.
 // The serializer escapes markdown-significant characters so that blocksToMarkdown → markdownToBlocks is lossless for
@@ -368,7 +368,7 @@ export function parseInlineMarkdown(src: string): ParsedInline {
           length: text.length - start,
           style: piece.style,
           ...(piece.link !== undefined ? { link: piece.link } : {}),
-          // `==x==` carries no colour (Attio drops it on output); input gets the default highlighter yellow.
+          // `==x==` carries no colour (the UI drops it on output); input gets the default highlighter yellow.
           ...(piece.style === 'HIGHLIGHTED' ? { color: DEFAULT_HIGHLIGHT } : {}),
         });
     }

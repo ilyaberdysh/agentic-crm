@@ -1,4 +1,4 @@
-// Editor writes (README §3 "Every edit autosaves immediately (one PUT per change)"): a serial queue of draft edits per
+// Editor writes ("Every edit autosaves immediately (one PUT per change)"): a serial queue of draft edits per
 // workflow. Each op applies an optimistic patch to the draft at once (canvas and panel read the cached draft with the
 // pending patches on top), then runs its requests in order; the server's answer is written into the cache and, when
 // the queue drains, the draft is refetched for the canonical issues, outcomes and checklist. A failed op is dropped
@@ -270,7 +270,7 @@ export function editorActions(ws: WorkspaceRef, workflowId: string, versionId: s
       );
     },
 
-    /** "Replace trigger / step": same block id, new slug, config reset (README §3.5). */
+    /** "Replace trigger / step": same block id, new slug, config reset. */
     replaceBlock(block: Pick<WorkflowBlock, 'id' | 'slug' | 'position'>, slug: string) {
       return q.run(
         upsertBlock(optimisticBlock(versionId, block.id, slug, block.position)),

@@ -1,4 +1,4 @@
-// "Edit entry" (C2 README §9 U-C2-12, §2.5 A.2 "Edit entry ↵"; raw C2 s89-edit-entry): breadcrumb "<record> / Edit
+// "Edit entry" (U-C2-12, A.2 "Edit entry ↵"; raw C2 s89-edit-entry): breadcrumb "<record> / Edit
 // list entry", the record's avatar and name, "Added to <list> <time ago>", then every writable list attribute as a
 // labelled field edited in place (each change saves at once through the normal value write path), footer "Finished
 // editing ⌘↵".

@@ -1,4 +1,4 @@
-// Preview panes (command-palette.md §3.2, §3.5): the right half of the palette for the highlighted row — an object's
+// Preview panes: the right half of the palette for the highlighted row — an object's
 // details and views, a list's, a record's (header link, status chip, identifiers, list memberships).
 import type { SearchRecordHit } from '@agentic-crm/contracts';
 import { Icon, type IconName, IconTile } from '@agentic-crm/ui';

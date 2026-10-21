@@ -2,7 +2,7 @@
 // banner when the member is out of credits, a not-configured card when the server has no AI key. A new chat (no
 // thread yet) shows "What can I help with?" with the composer in the middle of the page. The same component serves
 // the full page and the side panel.
-import type { AiContext, AiTurn } from '@agentic-crm/contracts';
+import { type AiContext, type AiTurn, parseAiTargetModelChoice } from '@agentic-crm/contracts';
 import { Icon, Spinner } from '@agentic-crm/ui';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { httpStatusOf } from '../../data/trpc';
@@ -15,6 +15,7 @@ import { ApprovalTray, type PendingApproval } from './approval/ApprovalTray';
 import * as s from './chat.css';
 import { Composer, NEW_CHAT_PLACEHOLDERS } from './composer/Composer';
 import { type ComposerText, EMPTY_COMPOSER, toSendable } from './composer/model';
+import { defaultAskModel } from './composer/modelChoice';
 import { useAiSettings, useCreditsUsage, useModels, useThread } from './data';
 import { CreditLimitNotice, NotConfigured } from './notices';
 import { askStore } from './store';
@@ -63,13 +64,13 @@ export function ChatView({ variant, threadId, newChatId, context, onStarted }: C
   const model =
     modelChoice ??
     (lastAssistant?.modelMode === 'manual' && lastAssistant.model ? lastAssistant.model : null) ??
-    settings.data?.defaultModel ??
-    'auto';
+    defaultAskModel(models.data, settings.data?.defaultModel);
 
   const executing = path.some((t) => t.role === 'assistant' && t.status === 'executing');
   const pending = useMemo(() => pendingOf(path), [path]);
   const configured = models.data?.configured ?? true;
-  const outOfCredits = usage.data?.outOfCredits === true;
+  const outOfCredits = usage.data?.outOfCredits === true && !parseAiTargetModelChoice(model);
+  const hasSavedTarget = models.data?.models.some((m) => !m.isUnavailable && parseAiTargetModelChoice(m.id));
   const startedRef = useRef(false);
 
   const send = async (
@@ -130,22 +131,26 @@ export function ChatView({ variant, threadId, newChatId, context, onStarted }: C
     <NotConfigured />
   ) : pending.length > 0 ? (
     <ApprovalTray items={pending} />
-  ) : outOfCredits ? (
+  ) : outOfCredits && !hasSavedTarget ? (
     <CreditLimitNotice />
   ) : (
-    <Composer
-      value={value}
-      onChange={keepDraft}
-      model={model}
-      onModel={setModelChoice}
-      context={context}
-      placeholder={showingThread ? 'Reply...' : NEW_CHAT_PLACEHOLDERS}
-      running={executing}
-      onSend={submit}
-      onStop={stop}
-      large={!showingThread && variant === 'page'}
-      autoFocus
-    />
+    <>
+      {outOfCredits && <CreditLimitNotice />}
+      <Composer
+        value={value}
+        onChange={keepDraft}
+        model={model}
+        onModel={setModelChoice}
+        context={context}
+        placeholder={showingThread ? 'Reply...' : NEW_CHAT_PLACEHOLDERS}
+        running={executing}
+        onSend={submit}
+        onStop={stop}
+        large={!showingThread && variant === 'page'}
+        autoFocus
+        sendDisabled={outOfCredits}
+      />
+    </>
   );
 
   if (notFound) {

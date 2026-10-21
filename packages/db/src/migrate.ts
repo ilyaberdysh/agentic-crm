@@ -18,9 +18,40 @@ export interface MigrationResult {
   skipped: string[];
 }
 
+export interface MigrationInspection {
+  missing: string[];
+  changed: string[];
+}
+
 async function listFiles(): Promise<string[]> {
   const files = await readdir(MIGRATIONS_DIR);
   return files.filter((f) => /^\d{4}_[a-z0-9_]+\.sql$/.test(f)).sort();
+}
+
+/** Read-only check that every committed migration is applied with its original checksum. */
+export async function inspectMigrations(connectionString: string = config.databaseUrl): Promise<MigrationInspection> {
+  return withClient(connectionString, async (client) => {
+    const table = await client.query<{ name: string | null }>("SELECT to_regclass('public.schema_migrations') AS name");
+    if (!table.rows[0]?.name) {
+      return { missing: await listFiles(), changed: [] };
+    }
+
+    const done = new Map<string, string>(
+      (await client.query<{ name: string; checksum: string }>('SELECT name, checksum FROM schema_migrations')).rows.map(
+        (row) => [row.name, row.checksum],
+      ),
+    );
+    const missing: string[] = [];
+    const changed: string[] = [];
+    for (const file of await listFiles()) {
+      const body = await readFile(`${MIGRATIONS_DIR}${file}`, 'utf8');
+      const expected = createHash('sha256').update(body).digest('hex');
+      const recorded = done.get(file);
+      if (recorded === undefined) missing.push(file);
+      else if (recorded !== expected) changed.push(file);
+    }
+    return { missing, changed };
+  });
 }
 
 async function withClient<T>(connectionString: string, fn: (client: pg.Client) => Promise<T>): Promise<T> {

@@ -69,7 +69,7 @@ export interface EditorOverlayProps {
 }
 
 /**
- * The cell editor surface (layout.md §4): over the anchor, 1 px higher than the cell (covers the row rule above),
+ * The cell editor surface: over the anchor, 1 px higher than the cell (covers the row rule above),
  * at least `minWidth` wide, growing downward with its content. Field density: the anchor's box with an accent ring.
  * Without an anchor it renders in place.
  */
@@ -152,7 +152,7 @@ export interface EditorPopoverProps {
 
 /**
  * Popover editors cover the cell they edit: the panel's top-left sits at the cell's top-left (3 px above, 1 px to
- * the left; evidence/C1/25, 28–31) and flips upward near the bottom of the window.
+ * the left and flips upward near the bottom of the window.
  */
 export function EditorPopover({
   anchor,
@@ -279,7 +279,7 @@ export function OptionCheckbox({ checked }: { checked: boolean }) {
 
 /**
  * Search row + listbox with keyboard navigation (↑/↓, Home/End, Enter picks, typing filters). The caller filters
- * and orders the items; the active row follows the pointer like Attio's menus.
+ * and orders the items; the active row follows the pointer like the menus.
  */
 export function PickerPanel({
   placeholder,

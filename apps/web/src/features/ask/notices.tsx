@@ -37,8 +37,8 @@ export function NotConfigured() {
       <Icon icon="askAi" size={20} />
       <span className={s.notConfiguredTitle}>Ask AI isn't set up yet</span>
       <span>
-        {brand.name} needs an Anthropic API key to answer. Ask a workspace admin to set <code>ANTHROPIC_API_KEY</code>{' '}
-        on the server.
+        Add a saved API or local model target for {brand.name}, or ask a workspace admin to set{' '}
+        <code>ANTHROPIC_API_KEY</code> on the server.
       </span>
     </div>
   );

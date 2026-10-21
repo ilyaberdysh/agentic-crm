@@ -1,4 +1,4 @@
-// Mention input (reduced editor: text + member / record mention tokens; editor.md §9) and its typeahead.
+// Mention input (reduced editor: text + member / record mention tokens) and its typeahead.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, style } from '@vanilla-extract/css';
 

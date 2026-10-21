@@ -1,4 +1,4 @@
-// Record Emails tab (BACKLOG 7.03; F README §2.2): header "Emails" + Filters + Manage access, thread rows (86 px) that
+// Record Emails tab (BACKLOG 7.03): header "Emails" + Filters + Manage access, thread rows (86 px) that
 // open the email modal, loading skeletons, empty and error states, infinite scroll by the server's cursor. What a row
 // shows follows the viewer's access: full → everything, subject-line → subject and participants only, metadata-only →
 // "Private subject line".
@@ -25,7 +25,7 @@ import { useTimeZone } from './time';
 export interface RecordEmailsTabProps {
   recordRef: RecordRefInput;
   title: string;
-  /** The tab has sources in the page layout (Attio: "-" and no Overview section without them). */
+  /** The tab has sources in the page layout (the tab shows "-" and no Overview section without them). */
   hasSources: boolean;
   /** "Person email access" / "Company email access". */
   accessTitle: string;
@@ -244,7 +244,7 @@ function ThreadRow({ thread }: { thread: ThreadSummary }) {
   );
 }
 
-/** "Request access from {member}" on a row whose content the viewer cannot read (D §2.9). */
+/** "Request access from {member}" on a row whose content the viewer cannot read (D). */
 function RestrictedHint({ thread }: { thread: ThreadSummary }) {
   const members = useMembers();
   const owner = thread.viaMemberIds.length === 1 ? members.find((m) => m.id === thread.viaMemberIds[0]) : undefined;

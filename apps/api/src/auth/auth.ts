@@ -1,5 +1,5 @@
-// Better Auth (D-15): email + password only, sessions in an HttpOnly cookie modelled on Attio's
-// `agentic-crm-session` cookie (HttpOnly, SameSite=Lax, Secure on https, ~180 days; K sessions.md §1.1).
+// Better Auth: email/password login and the `agentic-crm-session` cookie.
+// Sessions are HttpOnly, SameSite=Lax, Secure on HTTPS, and expire after the configured lifetime.
 // Tables: packages/db/migrations/0010_auth.sql (users, sessions, accounts, verifications; uuid ids, snake_case).
 import { betterAuth } from 'better-auth';
 import type { FastifyBaseLogger } from 'fastify';

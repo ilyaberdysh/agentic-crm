@@ -1,4 +1,4 @@
-// Block appearance and palette grouping (block-catalog §2–4, README §2.3): a glyph per catalogue slug, a tint per
+// Block appearance and palette grouping (block-catalog): a glyph per catalogue slug, a tint per
 // category (icon tiles are light tinted squares with a coloured glyph), palette groups in category order with triggers
 // before steps, and the catalogue lookups the editor needs. Pure.
 import {
@@ -125,7 +125,7 @@ export interface PaletteGroup {
 export type PaletteFilter = 'all' | 'triggers' | 'steps';
 
 /**
- * Palette groups (README §2.3): categories in enum order, triggers before steps inside a category; flag-gated and
+ * Palette groups: categories in enum order, triggers before steps inside a category; flag-gated and
  * internal blocks are hidden. `query` matches titles and keywords (case-insensitive).
  */
 export function paletteGroups(

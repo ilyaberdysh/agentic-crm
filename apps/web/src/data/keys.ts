@@ -49,7 +49,7 @@ export const keys = {
   /** A rich-text document's projections (blocks / markdown) — note bodies, template bodies. */
   document: (workspaceId: string, documentId: string) => ['ws', workspaceId, 'document', documentId] as const,
 
-  // Record page (slice 3). Everything derived from a record's history and children (timeline pages, tab counters,
+  // Record page. Everything derived from a record's history and children (timeline pages, tab counters,
   // the Overview's notes / tasks rows) lives below its timeline key: every child write emits `record-timeline`.
   recordTimeline: (workspaceId: string, definitionId: string, recordId: string) =>
     ['ws', workspaceId, 'record-timeline', definitionId, recordId] as const,
@@ -59,7 +59,7 @@ export const keys = {
     ['ws', workspaceId, 'storage-entry-list', definitionId, recordId] as const,
   memberPreferences: (workspaceId: string) => ['ws', workspaceId, 'member-preferences'] as const,
 
-  // Slice 6 (settings): teams, requirement rules, developer tokens and webhooks (packages/realtime slice-6 resources).
+  //  (settings): teams, requirement rules, developer tokens and webhooks (packages/realtime  resources).
   teams: (workspaceId: string) => ['ws', workspaceId, 'workspace-team-list'] as const,
   team: (workspaceId: string, teamId: string) => ['ws', workspaceId, 'workspace-team', teamId] as const,
   rules: (workspaceId: string, definitionId: string) =>

@@ -1,6 +1,5 @@
-// Note body typography and blocks (E README §2.2 "Body", editor.md §3–5, §10.5; measured against
-// research/evidence/E: body 14/24/500 −0.07px, paragraph gap 12 px, list items 4 px apart and 36 px per indent
-// level, mentions and links in the accent colour). Shared by the editor (ProseMirror root) and <RichTextPreview>.
+// Note body typography and blocks: 14/24 px at weight 500, −0.07 px tracking, 12 px paragraph gaps, 4 px list gaps,
+// 36 px per indent level, and accent-colour mentions and links. Shared by the editor and <RichTextPreview>.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { globalStyle, keyframes, style } from '@vanilla-extract/css';
 import { MAX_INDENT } from '../model/blocks.ts';
@@ -102,7 +101,7 @@ globalStyle(sel('.agentic-crm-note-mention'), {
 });
 globalStyle(sel('.agentic-crm-note-mention:hover'), { backgroundColor: c.interactive.selectedSubtle });
 
-// ---- placeholder variables (F composer §2.6): chips "{ Name › First }", yellow without a fallback, blue with ------
+// ---- placeholder variables (F composer): chips "{ Name › First }", yellow without a fallback, blue with ------
 globalStyle(sel('.agentic-crm-variable'), {
   display: 'inline-block',
   boxSizing: 'border-box',
@@ -156,7 +155,7 @@ globalStyle(sel('.agentic-crm-slash-query.is-empty::after'), {
 globalStyle(sel('.ProseMirror-selectednode'), { outline: 'none' });
 globalStyle(`${content}.ProseMirror-focused .ProseMirror-gapcursor:after`, { borderTopColor: c.content.primary });
 
-// Remote carets (editor.md §10.5): 2 px caret in the peer colour with a name pill above it.
+// Remote carets: 2 px caret in the peer colour with a name pill above it.
 globalStyle(sel('.collaboration-carets__caret'), {
   position: 'relative',
   marginLeft: -1,

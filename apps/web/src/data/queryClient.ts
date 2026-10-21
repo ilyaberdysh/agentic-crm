@@ -1,6 +1,6 @@
 // TanStack Query client (D-03). Freshness comes from realtime invalidations, so server data stays fresh until told
 // otherwise; failures are retried for network/5xx only. A 401 from any call starts the session re-check
-// (K sessions.md §1.5).
+//.
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 import { isRetryable, isUnauthorized } from './trpc';
 

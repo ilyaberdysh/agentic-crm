@@ -1,4 +1,4 @@
-// The sort/filter row of the object page (C1 README §2.1): [Sort pill] | [filter pills …] [+] … [Discard changes]
+// The sort/filter row of the object page: [Sort pill] | [filter pills …] [+] … [Discard changes]
 // [Save for everyone ⌄]. 48 px + 1 px rule; pills scroll horizontally when they overflow.
 import type { ViewDraft } from '../useViewDraft';
 import * as s from '../views.css';

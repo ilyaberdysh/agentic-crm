@@ -3,6 +3,7 @@ import { sql } from '@agentic-crm/db';
 import { conflict, forbidden, notFound } from '../../errors.ts';
 import { newId } from '../../ids.ts';
 import { productModuleRegistry } from '../../modules/registry.ts';
+import { assertProductModuleEnabled } from '../../modules/service.ts';
 import type { Tx } from '../../tx.ts';
 import {
   actionProposalSchema,
@@ -21,10 +22,14 @@ import {
   enqueueAgentTaskSchema,
   type FinishAgentTaskInput,
   finishAgentTaskSchema,
+  type HeartbeatAgentTaskInput,
+  heartbeatAgentTaskSchema,
   listAgentTasksSchema,
   type RecheckAgentTaskInput,
+  type ResumeAgentTaskInput,
   recheckAgentTaskSchema,
   recoverAgentTasksSchema,
+  resumeAgentTaskSchema,
 } from './contracts.ts';
 
 const columns = sql`id, workspace_id AS "workspaceId",
@@ -75,7 +80,7 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
   }
 
   /** Check time after acquiring the row lock: a lock wait must not preserve a lease that expired during the wait. */
-  async function assertLease(tx: Tx, input: AgentTaskLease): Promise<void> {
+  async function assertLease(tx: Tx, input: AgentTaskLease): Promise<AgentTask> {
     runtime(tx);
     const parsed = agentTaskLeaseSchema.parse(input);
     const locked = await sql`SELECT id FROM agentic_tasks WHERE workspace_id = ${tx.workspaceId}::uuid
@@ -85,6 +90,8 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
     const { rows } = await sql<{ live: boolean }>`SELECT lease_expires_at > clock_timestamp() AS live
       FROM agentic_tasks WHERE workspace_id = ${tx.workspaceId}::uuid AND id = ${parsed.taskId}::uuid`.execute(tx.db);
     if (!rows[0]?.live) throw stale();
+    await assertProductModuleEnabled(tx, 'record-follow-up');
+    return load(tx, parsed.taskId);
   }
 
   async function settle(
@@ -95,7 +102,26 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
   ): Promise<AgentTask> {
     runtime(tx);
     const parsed = finishAgentTaskSchema.parse(input);
-    await assertLease(tx, { taskId: parsed.taskId, holder: parsed.holder, generation: parsed.generation });
+    const observed = await sql<{ actionId: string | null }>`SELECT action_id AS "actionId" FROM agentic_tasks
+      WHERE workspace_id = ${tx.workspaceId}::uuid AND id = ${parsed.taskId}::uuid`.execute(tx.db);
+    const actionId = observed.rows[0]?.actionId;
+    if (actionId === undefined) throw stale();
+    if (actionId !== null) {
+      // Linked queue state is owned by the action/receipt state machine. A worker may only yield an approved,
+      // not-yet-dispatched action; it can never declare the linked effect successful or terminally failed.
+      if (status !== 'QUEUED') throw conflict('ID_CONFLICT', 'Linked action tasks settle through the action owner');
+      // Keep the global lock order action -> queue row; action transitions reconcile queue state in that order.
+      const action = await sql<{ status: string }>`SELECT status FROM agentic_actions
+        WHERE workspace_id = ${tx.workspaceId}::uuid AND id = ${actionId}::uuid FOR SHARE`.execute(tx.db);
+      if (action.rows[0]?.status !== 'APPROVED')
+        throw conflict('ID_CONFLICT', 'Linked action is no longer safe to return to the queue');
+    }
+    const task = await assertLease(tx, {
+      taskId: parsed.taskId,
+      holder: parsed.holder,
+      generation: parsed.generation,
+    });
+    if (task.actionId !== actionId) throw stale();
     const { rows } = await sql<AgentTask>`UPDATE agentic_tasks SET status = ${status}, reason = ${parsed.reason},
       next_event = ${parsed.nextEvent}, due_at = ${dueAt ? sql`${dueAt}::timestamptz` : sql`due_at`},
       lease_holder = NULL, lease_expires_at = NULL, updated_at = clock_timestamp(),
@@ -106,6 +132,72 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
     if (!rows[0]) throw stale();
     await record(tx, rows[0]);
     return rows[0];
+  }
+
+  /**
+   * Action-owner reconciliation. The caller supplies only an identity: the queue outcome is derived from the
+   * locked action row and its immutable receipt. This deliberately cannot turn EXECUTING/OUTCOME_UNKNOWN into a
+   * retry. Lock order is action first, then queue rows, matching action execution and avoiding lock inversion.
+   */
+  async function reconcileLinkedAction(tx: Tx, actionId: string): Promise<AgentTask[]> {
+    uuidSchema.parse(actionId);
+    const action = await sql<{ status: string; hasReceipt: boolean }>`SELECT a.status,
+      EXISTS (SELECT 1 FROM agentic_action_receipts r
+        WHERE r.workspace_id = a.workspace_id AND r.action_id = a.id) AS "hasReceipt"
+      FROM agentic_actions a WHERE a.workspace_id = ${tx.workspaceId}::uuid AND a.id = ${actionId}::uuid
+      FOR UPDATE`.execute(tx.db);
+    const current = action.rows[0];
+    if (!current) throw notFound('Linked action not found');
+
+    let status: 'QUEUED' | 'SUCCEEDED' | 'FAILED_TERMINAL' | 'BLOCKED' | 'CANCELLED' | null = null;
+    let reason = '';
+    let nextEvent = '';
+    if (current.status === 'APPROVED') {
+      status = 'QUEUED';
+      reason = 'The linked action is approved and has not crossed the dispatch boundary.';
+      nextEvent = 'A worker may claim the task and dispatch the approved action.';
+    } else if (current.status === 'REJECTED' || current.status === 'STALE') {
+      status = 'CANCELLED';
+      reason = `The linked action is ${current.status.toLowerCase()}; queued work was cancelled.`;
+      nextEvent = 'No further queue work is scheduled for this action.';
+    } else if (current.status === 'SUCCEEDED' || current.status === 'FAILED_TERMINAL') {
+      if (!current.hasReceipt) throw conflict('ID_CONFLICT', 'Terminal action is missing its immutable receipt');
+      status = current.status;
+      reason =
+        current.status === 'SUCCEEDED'
+          ? 'The linked approved action succeeded.'
+          : 'The linked approved action failed terminally.';
+      nextEvent = 'No further queue work is scheduled for this action.';
+    } else if (current.status === 'OUTCOME_UNKNOWN') {
+      status = 'BLOCKED';
+      reason = 'The linked action outcome is unknown; automatic redispatch is unsafe.';
+      nextEvent = 'An operator must reconcile the external effect before any further work.';
+    }
+
+    // PROPOSED, EXECUTING and OUTCOME_UNKNOWN remain blocked. None proves that redispatch is safe.
+    if (status === null) {
+      const blocked = await sql<AgentTask>`SELECT ${columns} FROM agentic_tasks
+        WHERE workspace_id = ${tx.workspaceId}::uuid AND action_id = ${actionId}::uuid AND status = 'BLOCKED'
+        ORDER BY created_at, id FOR UPDATE`.execute(tx.db);
+      return blocked.rows;
+    }
+
+    const resumable =
+      status === 'QUEUED'
+        ? sql`status = 'BLOCKED'`
+        : status === 'BLOCKED'
+          ? sql`status IN ('QUEUED', 'LEASED')`
+          : sql`status IN ('QUEUED', 'LEASED', 'BLOCKED')`;
+    const { rows } = await sql<AgentTask>`UPDATE agentic_tasks SET status = ${status},
+      lease_generation = lease_generation + 1, lease_holder = NULL, lease_expires_at = NULL,
+      due_at = ${status === 'QUEUED' ? sql`clock_timestamp()` : sql`due_at`},
+      updated_at = clock_timestamp(),
+      finished_at = ${status === 'QUEUED' || status === 'BLOCKED' ? sql`NULL` : sql`clock_timestamp()`},
+      reason = ${reason}, next_event = ${nextEvent}
+      WHERE workspace_id = ${tx.workspaceId}::uuid AND action_id = ${actionId}::uuid AND ${resumable}
+      RETURNING ${columns}`.execute(tx.db);
+    for (const task of rows) await record(tx, task);
+    return rows;
   }
 
   return {
@@ -130,6 +222,7 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
       const parsed = enqueueAgentTaskSchema.parse(input);
       const module = productModuleRegistry.get(parsed.moduleId);
       if (!module?.agentTaskTypes.includes(parsed.taskType)) throw forbidden('Undeclared agent task type');
+      await assertProductModuleEnabled(tx, parsed.moduleId);
       const digest = canonicalDigest(parsed);
       await sql`SELECT pg_advisory_xact_lock(hashtextextended(${`${tx.workspaceId}:agent-task:${parsed.id}`}, 0))`.execute(
         tx.db,
@@ -168,9 +261,23 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
     async claimDue(tx: Tx, input: ClaimAgentTasksInput): Promise<AgentTask[]> {
       runtime(tx);
       const parsed = claimAgentTasksSchema.parse(input);
-      const selected = await sql<{ id: string }>`SELECT id FROM agentic_tasks
-        WHERE workspace_id = ${tx.workspaceId}::uuid AND status = 'QUEUED' AND due_at <= clock_timestamp()
-        ORDER BY due_at, id LIMIT ${parsed.limit} FOR UPDATE SKIP LOCKED`.execute(tx.db);
+      const enabled = await tx.db
+        .selectFrom('workspace_product_modules')
+        .select('enabled')
+        .where('workspace_id', '=', tx.workspaceId)
+        .where('module_id', '=', 'record-follow-up')
+        .forShare()
+        .executeTakeFirst();
+      if (!enabled?.enabled) return [];
+      const selected = await sql<{ id: string }>`SELECT task.id FROM agentic_tasks AS task
+        WHERE task.workspace_id = ${tx.workspaceId}::uuid AND task.status = 'QUEUED'
+          AND task.due_at <= clock_timestamp()
+          AND (NOT ${parsed.approvedActionsOnly} OR task.action_id IS NULL OR EXISTS (
+            SELECT 1 FROM agentic_actions AS action
+            WHERE action.workspace_id = task.workspace_id AND action.id = task.action_id
+              AND action.status = 'APPROVED'
+          ))
+        ORDER BY task.due_at, task.id LIMIT ${parsed.limit} FOR UPDATE OF task SKIP LOCKED`.execute(tx.db);
       const tasks: AgentTask[] = [];
       for (const { id } of selected.rows) {
         const { rows } =
@@ -190,6 +297,21 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
 
     /** Lock and validate immediately before a local dispatch, in that dispatch's transaction. No effect is authorized. */
     assertLease,
+
+    async heartbeat(tx: Tx, input: HeartbeatAgentTaskInput): Promise<AgentTask> {
+      runtime(tx);
+      const parsed = heartbeatAgentTaskSchema.parse(input);
+      await assertLease(tx, parsed);
+      const { rows } = await sql<AgentTask>`UPDATE agentic_tasks
+        SET lease_expires_at = clock_timestamp() + ${parsed.leaseDurationMs} * interval '1 millisecond',
+          updated_at = clock_timestamp()
+        WHERE workspace_id = ${tx.workspaceId}::uuid AND id = ${parsed.taskId}::uuid AND status = 'LEASED'
+          AND lease_holder = ${parsed.holder} AND lease_generation = ${parsed.generation}::bigint
+          AND lease_expires_at > clock_timestamp() RETURNING ${columns}`.execute(tx.db);
+      if (!rows[0]) throw stale();
+      await record(tx, rows[0]);
+      return rows[0];
+    },
 
     /**
      * Action-owner settlement only: the bounded task capability calls this in its effect transaction, including
@@ -237,6 +359,18 @@ export function createAgentTaskService(options: { policy: AgenticPolicy }) {
           AND status IN ('QUEUED', 'LEASED', 'BLOCKED') RETURNING ${columns}`.execute(tx.db);
       for (const task of settled.rows) await record(tx, task);
       return settled.rows;
+    },
+
+    reconcileLinkedAction,
+
+    async resumeBlocked(tx: Tx, input: ResumeAgentTaskInput): Promise<AgentTask> {
+      runtime(tx);
+      const parsed = resumeAgentTaskSchema.parse(input);
+      const task = await load(tx, parsed.taskId);
+      if (task.status !== 'BLOCKED') throw conflict('ID_CONFLICT', 'Only a blocked task can be resumed');
+      if (task.actionId === null) throw conflict('ID_CONFLICT', 'Blocked task has no linked action to reconcile');
+      const changed = await reconcileLinkedAction(tx, task.actionId);
+      return changed.find((candidate) => candidate.id === task.id) ?? load(tx, task.id);
     },
 
     complete: (tx: Tx, input: FinishAgentTaskInput) => settle(tx, input, 'SUCCEEDED'),

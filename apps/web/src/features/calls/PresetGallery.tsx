@@ -1,5 +1,5 @@
-// "Start with a template" (I calls §4.3; evidence/I/calls-template-presets.png, calls-template-preset-preview.png): the
-// gallery of our own presets — use-case chips in Attio's fixed order, a search over title and description, cards with a
+// "Start with a template": the
+// gallery of custom presets — use-case chips in the fixed order, a search over title and description, cards with a
 // scaled-down section preview — and the preset preview (read-only sections, a side panel, "Use this template").
 import { Button, Checkbox, DialogHeader, Icon, IconButton, Modal } from '@agentic-crm/ui';
 import { useEffect, useMemo, useState } from 'react';

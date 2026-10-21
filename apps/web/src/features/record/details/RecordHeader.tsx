@@ -1,4 +1,4 @@
-// Record header (D README §2.2, §3.3): avatar (company squircle, person circle, object tile), the title as a ghost
+// Record header: avatar (company squircle, person circle, object tile), the title as a ghost
 // button that renames inline (Enter saves, Esc cancels; people get First / Last fields), "Edit record" and the
 // favorite star; below, the layout's action buttons — as many with labels as fit, the rest icon-only with tooltips.
 import type { LayoutElement } from '@agentic-crm/contracts';
@@ -85,7 +85,7 @@ function TitleRow() {
   );
 }
 
-/** Inline rename (D §2.2): a text box with "Enter {noun} name..." or First / Last name fields for people. */
+/** Inline rename (D): a text box with "Enter {noun} name..." or First / Last name fields for people. */
 function RenameField({ onDone }: { onDone: () => void }) {
   const { object, recordRef, titleAttribute } = useRecordPage();
   const attribute = titleAttribute as NonNullable<typeof titleAttribute>;
@@ -208,7 +208,7 @@ function ActionButtons({ actions, recordRef }: { actions: LayoutElement[]; recor
   );
 }
 
-/** Labels and icons of the layout's header actions, in layout order (D §2.2 table). */
+/** Labels and icons of the layout's header actions, in layout order (D table). */
 export function actionItems(actions: readonly LayoutElement[]): (FittedAction & { type: LayoutElement['type'] })[] {
   return actions.flatMap((a) => {
     const meta = ACTIONS[a.type];

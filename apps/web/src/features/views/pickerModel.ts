@@ -1,4 +1,4 @@
-// Items of the attribute path picker (CROSS-DOMAIN B.7; C1 README §3.2 Add column, filters-sorts-calcs §1, §5, §7):
+// Items of the attribute path picker (CROSS-DOMAIN B.7;  Add column, filters-sorts-calcs):
 // the attributes of an object in picker order, relationship drill-downs (count + chevron, first option = the
 // relationship itself, ≤ 5 hops), sub-field drill-downs (location parts for columns; multi-field types for filters;
 // stage order / active from for status sorts) and the search across one nested level ("Client › Created at").
@@ -52,14 +52,14 @@ const NEVER = new Set(['avatar-url', 'list-entries', 'workspace-avatar-url']);
 export function isOfferable(attr: AttributeDefinition): boolean {
   if (attr.isArchived) return false;
   if (attr.systemAttributeType && NEVER.has(attr.systemAttributeType)) return false;
-  // Hidden system attributes stay hidden, except "Next due task" which drills into its due date (C1 §3.2).
+  // Hidden system attributes stay hidden, except "Next due task" which drills into its due date (C1).
   if (attr.isHidden && attr.systemAttributeType !== 'next-due-task') return false;
   return true;
 }
 
 const rankOf = (a: AttributeDefinition) => a.sortOrder;
 
-/** System attributes first, then custom ones, each in attribute-definition order (C1 §3.2). */
+/** System attributes first, then custom ones, each in attribute-definition order (C1). */
 export function orderedAttributes(attrs: readonly AttributeDefinition[]): AttributeDefinition[] {
   return attrs
     .filter(isOfferable)
@@ -132,7 +132,7 @@ export function levelItems(index: SchemaIndex, level: PickerLevel, purpose: Pick
     });
   }
   let candidates = orderedAttributes(attrs);
-  // "Next due task" offers only the task's due date (C1 §3.2).
+  // "Next due task" offers only the task's due date (C1).
   if (via?.systemAttributeType === 'next-due-task') {
     candidates = candidates.filter((a) => a.systemAttributeType === 'task-deadline');
   }

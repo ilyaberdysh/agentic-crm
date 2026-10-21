@@ -1,5 +1,5 @@
-// List visits for the sidebar "Most relevant" order (B sidebar.md §8): per list the last ≤ 10 visit times, kept in
-// localStorage (`ar:list-visits`, Attio `agentic-crm:agentic-crm:list-visits`). Score = visit count × mean recency weight of the
+// List visits for the sidebar "Most relevant" order: per list the last ≤ 10 visit times, kept in
+// localStorage (`ar:list-visits`). Score = visit count × mean recency weight of the
 // visits (< 4 h 100, < 1 d 80, < 3 d 60, < 1 w 40, < 30 d 20, < 90 d 10, else 0).
 import { readJson, writeJson } from '../../lib/storage';
 

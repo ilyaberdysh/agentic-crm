@@ -1,4 +1,4 @@
-// Output types of the "Output" menu (formulas.md §3.4, §4.7): "Auto" (the inferred type in secondary text) and the 8
+// Output types of the "Output" menu: "Auto" (the inferred type in secondary text) and the 8
 // overrides; labels and icons per output kind for the menu button, the dialog's "Output" chip and the settings row.
 import type { OutputKind, OutputOverride } from '@agentic-crm/formula';
 import type { IconName } from '@agentic-crm/ui';
@@ -31,7 +31,7 @@ export const OUTPUT_ICONS: Record<OutputKind, IconName> = {
   'phone-number': 'attrPhone',
 };
 
-/** Menu order of the overrides (§4.7). */
+/** Menu order of the overrides. */
 export const OVERRIDE_ORDER: readonly OutputOverride[] = [
   'text',
   'number',

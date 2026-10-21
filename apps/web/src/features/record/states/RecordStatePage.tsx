@@ -1,4 +1,4 @@
-// Record states without a page (BACKLOG 3.11; D README §2.6): not found / deleted ("Go back"), merged away ("Go to
+// Record states without a page (BACKLOG 3.11): not found / deleted ("Go back"), merged away ("Go to
 // record" → the record it was merged into, "Learn more about merging"), merge in progress, and no access. A centred
 // 270 px column, no top bar. The illustration is drawn for this project (a dashed box and a question mark).
 import { Button, Spinner, toast } from '@agentic-crm/ui';

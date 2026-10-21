@@ -1,4 +1,4 @@
-// The focused table row's record actions in the palette (command-palette.md §3.2 context categories, §3.4): while a
+// The focused table row's record actions in the palette (context categories): while a
 // row of an object table has the active cell, ⌘K lists Open record, Open in a new tab, Copy domain / email address,
 // Create task, Create note, Merge… in a section named after the record. The record's name and identifiers come from
 // the search index (a record id finds its record), looked up once the focus has rested for a moment.

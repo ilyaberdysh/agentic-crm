@@ -1,4 +1,4 @@
-// Device-local persisted client state (B-shell README §4). Every key is prefixed `ar:` (Attio prefixes `agentic-crm:`);
+// Device-local persisted client state. Every key is prefixed `ar:`;
 // reads and writes never throw (private mode, quota, disabled storage).
 import { useCallback, useEffect, useState } from 'react';
 
@@ -46,7 +46,7 @@ export function writeJson(key: string, value: unknown): void {
 }
 
 /**
- * `useState` persisted as JSON under `ar:<key>`, kept in sync across tabs through `storage` events (Attio's
+ * `useState` persisted as JSON under `ar:<key>`, kept in sync across tabs through `storage` events (the
  * JSON-state hook behaves the same way).
  */
 export function usePersistentState<T>(key: string, fallback: T): [T, (next: T | ((prev: T) => T)) => void] {

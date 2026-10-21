@@ -44,7 +44,7 @@ import {
 
 export { DOCUMENT_STATE_CHANNEL };
 
-/** Hard limit of a stored Yjs state (Attio answers 413 "YDoc exceeded hard size limit"). */
+/** Hard limit of a stored Yjs state. */
 export const MAX_DOCUMENT_STATE_BYTES = 8 * 1024 * 1024;
 
 export const DOC_TYPES = ['note', 'note-template', 'email-template', 'email-signature', 'insight-section'] as const;

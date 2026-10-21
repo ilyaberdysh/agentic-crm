@@ -1,5 +1,5 @@
-// The 16 px round completion checkbox of task rows and the edit dialog (E README §2.6: completed = filled blue circle
-// with ✓; motion.md checkbox 200 ms).
+// The 16 px round completion checkbox for task rows and the edit dialog: completed = filled blue circle
+// with ✓;  checkbox 200 ms).
 import * as s from './tasks.css';
 
 export function TaskCheckbox({

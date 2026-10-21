@@ -1,10 +1,10 @@
-// The shortcut engine (B-shell shortcuts.md §1): combinations (`mod+.`) and key sequences separated by a space
+// The shortcut engine (B-shell): combinations (`mod+.`) and key sequences separated by a space
 // (`g h` = G, then H within ~1 s). Shortcuts do not fire while typing in a field or inside a dialog / menu / listbox
 // unless that container has `data-allow-global-shortcuts`. When several components bind the same keys, the most
 // recently mounted binding wins; a longer sequence beats a shorter one that ends the same way (`g t` over `t`).
 //
 // This is the one registry: every feature binds through `useShortcut` (or `useAction`, which looks the keys up in the
-// catalog of features/shortcuts), the registry knows every live binding (`registered()`), and the help drawer's
+// catalog of features/shortcuts), the registry knows every live binding (`registered`), and the help drawer's
 // Shortcuts view lists them all — the catalog supplies descriptions, anything registered without an entry is
 // listed under "Other".
 import { useEffect, useRef, useSyncExternalStore } from 'react';

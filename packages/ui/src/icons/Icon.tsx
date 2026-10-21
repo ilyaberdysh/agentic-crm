@@ -5,7 +5,7 @@ import { iconBase } from './Icon.css';
 import { type IconName, iconMap } from './iconMap';
 import type { IconGlyph } from './types';
 
-/** Attio draws icons on three grids (icons.md §1): small 12, standard 16, large 18. */
+/** Icons use three optical grids: small 12, standard 16, large 18. */
 export type IconOpticalSize = 'small' | 'standard' | 'large';
 
 export function opticalSize(size: number): IconOpticalSize {
@@ -15,9 +15,9 @@ export function opticalSize(size: number): IconOpticalSize {
 }
 
 /**
- * Lucide draws on a 24 grid. Attio's glyphs keep a 1 px stroke at their native grid, so the
+ * Lucide draws on a 24 px grid. Glyphs use a 1 px stroke at their native grid, so the
  * stroke width is chosen per optical size: 24/12 = 2 (small), 1.5 at 16 (standard), 24/18 (large).
- * A 14 px icon from the small set therefore renders slightly heavier, as Attio's scaled glyphs do.
+ * A 14 px icon from the small set therefore renders slightly heavier, as the scaled glyphs do.
  */
 export const STROKE_BY_OPTICAL_SIZE: Record<IconOpticalSize, number> = {
   small: 2,

@@ -1,4 +1,4 @@
-// Variable picker model (README §3.1, internal-api §4, B.7): levels of the picker over `workflows.variables` (accessible
+// Variable picker model (internal-api, B.7): levels of the picker over `workflows.variables` (accessible
 // blocks nearest first → a block's outputs → attributes of a record / sub-fields of composite values, drilling through
 // references), the type of a data source after its operations (mirrors the server's applyOperationTypes), greying
 // with `isAssignable`, and the chip label "{ Record action › … › Headcount }". Pure.
@@ -281,7 +281,7 @@ function pathLabels(
 export interface ChipLabel {
   /** Full path, for the tooltip. */
   segments: string[];
-  /** Shown: first › ⋯ › last when longer than two (README §3.1 "middle segments collapse to ⋯"). */
+  /** Shown: first › ⋯ › last when longer than two ("middle segments collapse to ⋯"). */
   shown: string[];
   /** The data source no longer resolves (deleted block / attribute). */
   broken: boolean;

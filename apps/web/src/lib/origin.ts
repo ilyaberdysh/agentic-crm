@@ -1,4 +1,4 @@
-// Return-to handling for logged-out deep links (K README §2.1, sessions §2): `origin` is a same-origin path + query.
+// Return-to handling for logged-out deep links (sessions): `origin` is a same-origin path + query.
 
 /** The current location as an `origin` value (path + search, no hash). */
 export function currentOrigin(): string {

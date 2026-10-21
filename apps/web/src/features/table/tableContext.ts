@@ -32,7 +32,7 @@ export interface TableActions {
   cellContextMenu(event: MouseEvent, row: number, col: number): void;
   toggleRow(event: MouseEvent, row: number): void;
   openRecord(recordId: string): void;
-  /** "Open preview": the record preview drawer (no URL change, D README §2.7). */
+  /** "Open preview": the record preview drawer (no URL change). */
   openPreview(recordId: string): void;
   /** An editor or a keyboard action wrote values (author freeze, presence draft clear). */
   committed(recordId: string): void;

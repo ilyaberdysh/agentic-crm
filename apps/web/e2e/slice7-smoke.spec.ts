@@ -1,4 +1,4 @@
-// Slice 7 seed smoke test: the support helpers create mailboxes and mail that the record threads can see.
+//  seed smoke test: the support helpers create mailboxes and mail that the record threads can see.
 import { expect, test } from '@playwright/test';
 import { trpc } from './slice3-support.ts';
 import { signedInAs } from './slice5-support.ts';

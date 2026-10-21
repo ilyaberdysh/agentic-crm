@@ -1,4 +1,4 @@
-// Debounced autosave of a text field (E README §3.1: note titles PATCH ~500 ms after typing stops). Local state is
+// Debounced autosave of a text field: note titles PATCH about 500 ms after typing stops. Local state is
 // the source of truth while dirty; a server value arriving later only replaces an untouched field. Pending saves
 // flush on blur and on unmount.
 import { useCallback, useEffect, useRef, useState } from 'react';

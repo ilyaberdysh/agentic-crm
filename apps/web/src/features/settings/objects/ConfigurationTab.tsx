@@ -1,4 +1,4 @@
-// Configuration tab (J objects-lists §3.1; evidence/J/object-configuration-custom.png): General (plural/singular nouns
+// Configuration tab (J objects-lists): General (plural/singular nouns
 // with the icon button, slug read-only + pencil "Change slug"), Appearance (record image / text + preview; custom
 // objects only), Record page layout, Danger zone (custom: delete; activatable standard: deactivate; system: none).
 // Fields save on blur / Enter, one PATCH per field.
@@ -131,7 +131,7 @@ export function ConfigurationTab({ object, canEdit }: { object: EntityDefinition
         onSave={async (slug) => {
           try {
             const next = await updateObject(workspace, { entityDefinitionId: object.id, apiSlug: slug });
-            // The URL follows the new slug (J objects-lists §3.1).
+            // The URL follows the new slug (J objects-lists).
             void navigate({ href: href(`settings/data/objects/${next.apiSlug}/general`), replace: true });
           } catch (error) {
             throw writeErrorOf(error);

@@ -1,6 +1,6 @@
 // Slice 2 server procedures over HTTP: search.records / search.members, snapshots.query with time zones, history
 // ("was") and path filters, snapshots.aggregate kinds, saved filters keeping dynamic values, and limit errors in
-// the Attio envelope (BACKLOG §2: 2.06–2.08, B.8, C.4 #7).
+// the public API envelope (BACKLOG §2: 2.06–2.08, B.8, C.4 #7).
 import { randomUUID } from 'node:crypto';
 import type { inferRouterOutputs } from '@trpc/server';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -253,7 +253,7 @@ describe('filters, sorts and calculations', () => {
 });
 
 describe('limits', () => {
-  it('answers OVER_USAGE_LIMIT in the Attio envelope', async () => {
+  it('answers OVER_USAGE_LIMIT in the public API envelope', async () => {
     await h.db.query(
       `UPDATE workspaces SET settings = jsonb_set(settings, '{capabilities}', '{"quotas":{"views_per_object_hard":1}}')
        WHERE id = $1`,

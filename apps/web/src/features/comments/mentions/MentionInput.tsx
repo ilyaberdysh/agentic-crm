@@ -1,4 +1,4 @@
-// Text input with @mentions (editor.md §9 reduced configurations: the task title "task-input" and the comment
+// Text input with @mentions (reduced configurations: the task title "task-input" and the comment
 // composer). A transparent textarea over a mirror that paints mention tokens in the accent colour; typing "@" opens
 // a typeahead of members ("Users") and records ("Records"); ↑ / ↓ / Enter / Tab pick, Esc closes; Backspace at the
 // end of a token removes it whole.

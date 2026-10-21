@@ -20,9 +20,9 @@ export interface ModalProps
   children?: ReactNode | ((opts: { close: () => void }) => ReactNode);
   /** Optional trigger; without it, control `isOpen` yourself. */
   trigger?: ReactElement;
-  /** small 440 · medium 720 · large 808 (create record) · palette 748 (⌘K); or a px width. */
+  /** small 440 · medium 720 · large 808 (create record) · palette 748 (⌘); or a px width. */
   size?: ModalSize | number;
-  /** Dim the page with surface.overlay (Attio uses it for e.g. Invite members; ⌘K has none). */
+  /** Dim the page with surface.overlay (the UI uses it for e.g. Invite members; ⌘K has none). */
   overlay?: boolean;
   /** `top` (default) sits 14vh from the top; `center` centres vertically. */
   alignment?: 'top' | 'center';
@@ -60,7 +60,7 @@ export function Modal({
 }: ModalProps) {
   // The modal is a floating layer: elevated surfaces (e.g. a selected tab reads #f6f7f7, not #fbfbfb).
   const themeClass = useThemeClassName({ surfaceMode: 'elevated' });
-  // Sizes are the outer frame width (Attio: create record 808, ⌘K 748), frame included.
+  // Sizes are the outer frame width (the UI uses create record 808, ⌘K 748), frame included.
   const frameStyle: CSSProperties | undefined = typeof size === 'number' ? { width: size } : undefined;
   const modal = (
     <ModalOverlay

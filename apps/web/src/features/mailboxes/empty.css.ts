@@ -1,5 +1,5 @@
-// Empty states of the mailbox tabs (evidence/F/mailbox-blocklist-empty.png, mailbox-signatures-empty.png): our own
-// dotted tile with corner marks and a framed glyph (Attio's illustrations are not reused), title, description and a
+// Empty states of the mailbox tabs (mailbox-signatures-empty.png): custom
+// dotted tile with corner marks and a framed glyph (the illustrations are not reused), title, description and a
 // primary button, centred in the 768 px column.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';

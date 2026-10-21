@@ -1,4 +1,4 @@
-// Kanban board styles (C2 kanban.md K2 measured at 1512×945; evidence C2/kanban-*.png): 268 px columns on
+// Kanban board styles: 268 px columns on
 // surface.secondary with radius 16 and 8 px gaps, 12 px above the board; 36 px header (10 px stage dot, 14/20 600
 // title, count pill, "+" and ⋮⋮); 246 px cards (radius 12, 1 px ring, 8 px apart, inset 11); the calculation line
 // under each column; 52 px collapsed strips; the drag placeholder, overlay and drop tint.
@@ -272,7 +272,7 @@ export const footerButton = style({
 export const footerValue = style({ color: c.content.primary, fontVariantNumeric: 'tabular-nums' });
 export const footerSuffix = style({ color: c.content.secondary });
 
-// ---- collapsed strip (K3) ---------------------------------------------------------------------------------------------------
+// ---- collapsed strip  ---------------------------------------------------------------------------------------------------
 
 export const strip = style({
   boxSizing: 'border-box',
@@ -308,7 +308,7 @@ export const stripTitle = style({
   maxHeight: '100%',
 });
 
-// ---- add stage (K3) ---------------------------------------------------------------------------------------------------------
+// ---- add stage  ---------------------------------------------------------------------------------------------------------
 
 export const addStage = style({
   boxSizing: 'border-box',
@@ -354,7 +354,7 @@ export const stageInput = style({
 
 export const stageError = style({ ...text.text12.standard, color: c.content.critical, paddingLeft: 4 });
 
-// ---- card (K2, K5) ----------------------------------------------------------------------------------------------------------
+// ---- card (K2) ----------------------------------------------------------------------------------------------------------
 
 export const card = style({
   position: 'relative',
@@ -379,7 +379,7 @@ export const card = style({
   },
 });
 
-/** The dragged card's slot: an empty grey placeholder of the card's size (K8). */
+/** The dragged card's slot: an empty grey placeholder of the card's size. */
 export const cardPlaceholder = style({
   boxSizing: 'border-box',
   width: '100%',
@@ -562,7 +562,7 @@ export const timeChip = style({
   selectors: { '&[data-over]': { color: c.content.critical, backgroundColor: c.surface.critical } },
 });
 
-// ---- stage menu (K3) ----------------------------------------------------------------------------------------------------------
+// ---- stage menu  ----------------------------------------------------------------------------------------------------------
 
 export const menuPanel = style({ width: 276, padding: 0, overflow: 'hidden' });
 
@@ -723,7 +723,7 @@ export const menuItem = style({
   },
 });
 
-// ---- toolbar toggles (K6) ------------------------------------------------------------------------------------------------------
+// ---- toolbar toggles  ------------------------------------------------------------------------------------------------------
 
 export const toggles = style({ display: 'flex', alignItems: 'center', gap: 8, flex: 'none' });
 
@@ -764,7 +764,7 @@ export const toggleButton = style({
   },
 });
 
-// ---- view settings (K4) -----------------------------------------------------------------------------------------------------
+// ---- view settings  -----------------------------------------------------------------------------------------------------
 
 export const settingsPanel = style({ width: 270, maxHeight: '60vh' });
 export const settingsTrailing = style({

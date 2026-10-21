@@ -22,7 +22,7 @@ export function collabUrl(): string {
   return `${window.location.origin.replace(/^http/, 'ws')}/collab`;
 }
 
-/** Members first ("Users"), then records ("Records"), 10 each (editor.md §5). */
+/** Members first ("Users"), then records ("Records"), 10 each. */
 export function useMentionSearch(): MentionSearch {
   const { workspace } = useWorkspace();
   const objects = useObjects(workspace).data;

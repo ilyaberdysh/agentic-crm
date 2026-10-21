@@ -1,7 +1,7 @@
-// Record page layout model (BACKLOG 3.01, 3.10; D README §2.2–2.5, §2.8, §4.1). The server stores one flat element
+// Record page layout model (BACKLOG 3.01, 3.10). The server stores one flat element
 // list per object: six locked groups, their elements and child elements, each ordered by a fractional `sortOrder`
 // among its siblings. This module resolves that list into what the page renders (tabs, highlight widgets, header
-// actions, sidebar sections) and implements the layout editor's store rules (ConfigureRecordPageStore, D §4.1):
+// actions, sidebar sections) and implements the layout editor's store rules (ConfigureRecordPageStore, D):
 // system elements only move, locked/system elements cannot be removed, removing an element removes its children, at
 // least one Record Details section, at most 6 widgets, unique tab slugs ("-N"). "Save changes" sends the full list.
 import {
@@ -140,7 +140,7 @@ export function findTab(layout: ResolvedLayout, slug: string | undefined): Resol
   return layout.allTabs.find((t) => t.slug === slug) ?? null;
 }
 
-/** ⌥→ / ⌥←: the next / previous tab, wrapping around (D §3.11). */
+/** ⌥→ / ⌥←: the next / previous tab, wrapping around (D). */
 export function adjacentTab(layout: ResolvedLayout, slug: string, delta: 1 | -1): ResolvedTab | null {
   const tabs = layout.allTabs;
   if (tabs.length === 0) return null;
@@ -330,7 +330,7 @@ export function widgetCount(elements: readonly LayoutElement[]): number {
   return groupChildren(elements, 'widgets-v2').filter((e) => e.type === 'value-widget-v2').length;
 }
 
-/** The save payload: the full element list (removed elements are simply omitted, D §5). */
+/** The save payload: the full element list (removed elements are simply omitted, D). */
 export function toSaveElements(elements: readonly LayoutElement[]): LayoutElementInput[] {
   return [...elements].sort(bySortOrder).map((e) => ({
     elementId: e.elementId,

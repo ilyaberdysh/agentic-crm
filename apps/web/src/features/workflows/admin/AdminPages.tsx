@@ -1,5 +1,5 @@
-// Workspace settings → Workflows (BACKLOG 8.10; README §2.5, §3.7; evidence G/G-admin-workflows.png,
-// G-admin-permissions.png) and Billing → Credits usage (README §2.6; G-credits-usage.png). The admin list shows every
+// Workspace settings → Workflows:
+// Billing → Credits usage. The admin list shows every
 // workflow (workspace admins), whatever their own access; a row opens the workflow's Permissions tab: Workspace access,
 // Teams, Individual members.
 import { Button, Icon, IconButton, Spinner } from '@agentic-crm/ui';
@@ -235,7 +235,7 @@ const USAGE_ENTRY: SettingsEntry = {
   description: 'View your workspace credit usage over time',
 };
 
-/** Billing → Credits usage (README §2.6): credits consumed this period, a daily bar chart and the per-type table. */
+/** Billing → Credits usage: credits consumed this period, a daily bar chart and the per-type table. */
 export function CreditUsagePage() {
   const usage = useUsage();
   const data = usage.data;

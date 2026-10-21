@@ -5,9 +5,9 @@ import { vars } from '../../theme/vars.css';
 
 const c = vars.color;
 
-// Sidebar navigation item (layout.md §2): 28 px, radius 9, padding 0 4 0 8, gap 6, 16 px icon
+// Sidebar navigation item: 28 px, radius 9, padding 0 4 0 8, gap 6, 16 px icon
 // in content.secondary (content.primary when active), label Body.Standard content.primary.
-// Hover black 2 %, active (aria-current=page) black 4 %; opacity transition .16s.
+// Hover black 2 %, active (aria-current=page) black 4 %; opacity transition.16s.
 export const item = style({
   boxSizing: 'border-box',
   display: 'flex',
@@ -63,7 +63,7 @@ export const sectionLabel = style({
 });
 
 // Accent swatches (Appearance settings): 24 px round radios, 8 px apart, each showing an 18 px
-// colour dot (Attio draws a 22 px swatch with a 2 px surface ring); selected = 1 px inset accent ring.
+// colour dot (Icons use a 22 px swatch with a 2 px surface ring); selected = 1 px inset accent ring.
 export const swatches = style({ display: 'flex', alignItems: 'center', gap: 8 });
 
 export const swatch = style({

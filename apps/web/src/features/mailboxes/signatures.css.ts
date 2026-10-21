@@ -1,4 +1,4 @@
-// Mailbox signatures (evidence/F/mailbox-signature-editor.png, measured on the 790 px crop): a 231 px list of
+// Mailbox signatures (measured on the 790 px crop): a 231 px list of
 // signature pills and "+ New signature" on the left, 58 px gap, the title input and a bordered editor box with a
 // footer "+" on the right.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';

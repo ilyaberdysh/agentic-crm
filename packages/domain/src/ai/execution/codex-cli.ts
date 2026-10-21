@@ -42,8 +42,8 @@ const defaults: ExecutionLimits = {
 };
 
 /** Fixed manifest, not user-configurable argv. Future CLI versions require conformance review. */
-const supportedVersion = '0.163.0';
-const disabledFeatures = [
+export const supportedCodexVersion = '0.163.0';
+export const disabledCodexFeatures = [
   'shell_tool',
   'shell_snapshot',
   'view_image',
@@ -67,10 +67,10 @@ const disabledFeatures = [
 ];
 
 const tokenCount = z.number().int().nonnegative().nullable().optional();
-const itemSchema = z.object({
-  type: z.enum(['agent_message', 'reasoning']),
-  text: z.string().optional(),
-});
+const itemSchema = z.union([
+  z.object({ type: z.enum(['agent_message', 'reasoning']), text: z.string().optional() }),
+  z.object({ type: z.literal('mcp_tool_call'), server: z.literal('crm'), tool: z.string().min(1) }),
+]);
 const eventSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('thread.started'), thread_id: z.string().min(1).max(200) }),
   z.object({ type: z.literal('turn.started') }),
@@ -96,7 +96,7 @@ function providerError(text: string): ExecutionError {
 }
 
 /** Strict JSONL framing and state machine; raw event payloads never become domain state. */
-class CodexEvents {
+export class CodexEvents {
   private decoder = new TextDecoder('utf-8', { fatal: true });
   private pending = '';
   private started = false;
@@ -106,7 +106,10 @@ class CodexEvents {
   inputTokens: number | null = null;
   outputTokens: number | null = null;
 
-  constructor(private readonly emit: (event: ExecutionEvent) => void) {}
+  constructor(
+    private readonly emit: (event: ExecutionEvent) => void,
+    private readonly allowScopedMcp = false,
+  ) {}
 
   push(chunk: Buffer): boolean {
     this.pending += this.decoder.decode(chunk, { stream: true });
@@ -143,7 +146,10 @@ class CodexEvents {
       throw new ExecutionError('invalid_output', 'CLI emitted malformed JSONL.');
     }
     const envelope = z.object({ type: z.string(), item: z.object({ type: z.string() }).optional() }).safeParse(raw);
-    if (envelope.success && envelope.data.item && !['agent_message', 'reasoning'].includes(envelope.data.item.type)) {
+    const permittedItems = this.allowScopedMcp
+      ? ['agent_message', 'reasoning', 'mcp_tool_call']
+      : ['agent_message', 'reasoning'];
+    if (envelope.success && envelope.data.item && !permittedItems.includes(envelope.data.item.type)) {
       throw new ExecutionError('native_tool_denied', 'CLI emitted a forbidden tool or artifact event.');
     }
     const parsed = eventSchema.safeParse(raw);
@@ -232,8 +238,8 @@ export class CodexCliExperiment implements ExecutionAdapter {
           ...extra,
         });
       const version = await run(['--version']);
-      if (version.exitCode !== 0 || version.stdout.trim() !== `codex-cli ${supportedVersion}`) {
-        throw new ExecutionError('incompatible_cli', `CLI experiment requires codex-cli ${supportedVersion}.`);
+      if (version.exitCode !== 0 || version.stdout.trim() !== `codex-cli ${supportedCodexVersion}`) {
+        throw new ExecutionError('incompatible_cli', `CLI experiment requires codex-cli ${supportedCodexVersion}.`);
       }
       const help = await run(['exec', '--help']);
       if (
@@ -275,7 +281,7 @@ export class CodexCliExperiment implements ExecutionAdapter {
         'cli_auth_credentials_store="file"',
         '-c',
         'shell_environment_policy.inherit="none"',
-        ...disabledFeatures.flatMap((feature) => ['--disable', feature]),
+        ...disabledCodexFeatures.flatMap((feature) => ['--disable', feature]),
         '-',
       ];
       const result = await run(args, {
@@ -288,7 +294,7 @@ export class CodexCliExperiment implements ExecutionAdapter {
       onEvent({ type: 'completed', inputTokens: events.inputTokens, outputTokens: events.outputTokens });
       return {
         adapter: 'codex-cli-experiment-v1',
-        executableVersion: supportedVersion,
+        executableVersion: supportedCodexVersion,
         sessionId: events.sessionId,
         text: events.text,
         inputTokens: events.inputTokens,

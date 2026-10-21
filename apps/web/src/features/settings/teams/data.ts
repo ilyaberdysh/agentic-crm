@@ -1,5 +1,5 @@
-// Teams data (BACKLOG 6.03; J permissions §6): `teams.*`. Reads are open to every member (pickers, member detail);
-// create / update / delete / membership are admin writes. Team ids are client-minted (PUT-style, I3).
+// Teams data (BACKLOG 6.03; J permissions): `teams.*`. Reads are open to every member (pickers, member detail);
+// create / update / delete / membership are admin writes. Team ids are client-minted (PUT-style).
 import type { CreateTeamInput, Team, TeamDetail, UpdateTeamInput } from '@agentic-crm/contracts';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { keys } from '../../../data/keys';
@@ -74,7 +74,7 @@ export async function removeTeamMembers(ws: WorkspaceRef, teamId: string, member
 
 // ---- team icons ------------------------------------------------------------------------------------------------
 
-/** The picker's icons and colours (Attio: "random icon/colour preselected"); `icon.id` is one of our icon names. */
+/** The picker's icons and colours (the UI uses "random icon/colour preselected"); `icon.id` is one of the icon names. */
 export const TEAM_ICONS = [
   'bookmark',
   'favorite',

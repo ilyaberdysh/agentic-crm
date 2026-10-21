@@ -1,4 +1,4 @@
-// Slice 7 — record Emails tab and the email modal (BACKLOG 7.03; acceptance 3). Runs against the e2e stack with two
+//  — record Emails tab and the email modal (BACKLOG 7.03; acceptance 3). Runs against the e2e stack with two
 // members (Ada: full-access mailbox with the thread "Pilot for Northwind"; Grace: subject-line mailbox with "Secret
 // pricing", both from/to the seeded person Jane Cooper). Every test restores what it changes (Grace's visibility,
 // grants) so the next test sees the seeded state.

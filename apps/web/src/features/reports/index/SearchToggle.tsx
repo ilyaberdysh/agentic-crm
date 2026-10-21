@@ -1,4 +1,4 @@
-// The index search (H README §2.1, §3.9): an icon-only button that expands to a "Search dashboards" field. Typing sets
+// The index search: an icon-only button that expands to a "Search dashboards" field. Typing sets
 // `?query=` (debounced; the route passes `onQueryChange`); Escape clears it and leaving the empty field collapses it.
 import { IconButton, SearchField } from '@agentic-crm/ui';
 import { useEffect, useRef, useState } from 'react';

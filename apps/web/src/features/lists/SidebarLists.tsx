@@ -1,4 +1,4 @@
-// Sidebar Lists section (B sidebar.md §5, §5.1, §8): rows = list emoji + name → `/collection/<id>` (a visit is
+// Sidebar Lists section: rows = list emoji + name → `/collection/<id>` (a visit is
 // recorded for "Most relevant"); hover actions (with ≥ 1 list) Cog "List options" (Sort: Most relevant · Recently
 // added · Alphabetical · Custom; "Show all lists" when over the limit) and "+" ("Create a list"). No lists → "+ New
 // list". More than 6 lists → 5 + "All lists" opening the 300 px flyout (title "Lists" + "+", "Search lists...",
@@ -32,7 +32,7 @@ import { ListIcon } from './icon';
 import * as s from './sidebar.css';
 import { readVisits, recordListVisit, relevanceOf, subscribeVisits } from './visits';
 
-/** sidebar.md §5: ≤ 6 → all, else 5 + "All lists". */
+/**: ≤ 6 → all, else 5 + "All lists". */
 export const ITEM_LIMIT = 6;
 
 export function visibleLists<T>(lists: readonly T[], showAll: boolean): { rows: T[]; overLimit: boolean } {
@@ -211,7 +211,7 @@ export function SidebarLists() {
   );
 }
 
-/** "All lists" flyout (sidebar.md §5.1): docked at the sidebar's right edge, search + keyboard highlight. */
+/** "All lists" flyout: docked at the sidebar's right edge, search + keyboard highlight. */
 function AllListsPanel({ lists, onClose }: { lists: List[]; onClose: () => void }) {
   const { href } = useWorkspace();
   const navigate = useNavigate();

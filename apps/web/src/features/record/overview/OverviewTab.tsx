@@ -1,4 +1,4 @@
-// Overview tab (BACKLOG 3.03; D README §2.5): Highlights, the Activity card (3 newest events, people before
+// Overview tab (BACKLOG 3.03): Highlights, the Activity card (3 newest events, people before
 // automations, "View all" → Activity), then Emails / Notes / Tasks sections in the order of their tabs, each with a
 // count, "View all" and "+". Notes show up to 3 rows (title + preview + time), Tasks up to 3 open tasks (checkbox,
 // title, assignee, due chip); completing a task here is optimistic.
@@ -255,7 +255,7 @@ function TaskLine({ task }: { task: TaskRow }) {
   const key = [...recordKeys.tasks(workspace.id, recordRef.entityDefinitionId, recordRef.entityInstanceId), 'open'];
   const overdue = task.deadlineAt ? Date.parse(task.deadlineAt) < Date.now() : false;
   const complete = async () => {
-    // Optimistic: the row goes at once and comes back on error (E README §3.3).
+    // Optimistic: the row goes at once and comes back on error.
     const prev = client.getQueryData<{ tasks: TaskRow[]; total: number }>(key);
     if (prev) client.setQueryData(key, { tasks: prev.tasks.filter((t) => t.id !== task.id), total: prev.total - 1 });
     try {

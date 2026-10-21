@@ -1,4 +1,4 @@
-// Formula editor sheet (formulas.md §4.2–4.7, live geometry `EI:formula-editor-*.png`): replaces the attribute
+// Formula editor sheet (live geometry `EI:formula-editor-*.png`): replaces the attribute
 // dialog's content inside the same 808 px frame, 600 px tall — header, CodeMirror editor, AI composer card, helper
 // header (output · diagnostics + Fix or record preview · toggle), helper body (list 258 px | detail), footer.
 import { fontFamily, insetRing, text, vars } from '@agentic-crm/ui/styles';

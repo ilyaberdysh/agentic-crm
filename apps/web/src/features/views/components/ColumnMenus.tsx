@@ -1,7 +1,7 @@
-// Column menus that belong to views (C1 README §3.2; evidence C1/13, 14):
-//   - FormattingSubmenu: per-type display overrides saved on the column (date/timestamp/interaction, number, currency);
-//   - ColumnHeaderMenu: the menu under a column header (sort, move, formatting, label, hide, edit attribute);
-//   - ColumnSettingsMenu: the "⋮" of a View settings row (edit attribute, change label, formatting, remove).
+// Column menus for views:
+// - FormattingSubmenu: per-type display overrides saved on the column (date/timestamp/interaction, number, currency);
+// - ColumnHeaderMenu: the menu under a column header (sort, move, formatting, label, hide, edit attribute);
+// - ColumnSettingsMenu: the "⋮" of a View settings row (edit attribute, change label, formatting, remove).
 import type { AttributeDefinition, ViewColumn } from '@agentic-crm/contracts';
 import {
   CheckCircleFilled,
@@ -208,7 +208,7 @@ export function FormattingSubmenu({
 }
 
 function isEditableAttribute(attribute: AttributeDefinition, column: ViewColumn): boolean {
-  // Not for system attributes (Created at/by, Record ID) or path columns (C1 §3.2 item 7).
+  // Not for system attributes (Created at/by, Record ID) or path columns (C1 item 7).
   return column.path.length === 1 && !attribute.isSystem;
 }
 
@@ -221,11 +221,11 @@ export interface ColumnHeaderMenuProps {
   onOpenChange: (open: boolean) => void;
   /** "Edit attribute" (attribute admin dialog); hidden when absent or not editable. */
   onEditAttribute?: (attribute: AttributeDefinition) => void;
-  /** Extra items beyond Attio's set (off by default to match evidence C1/14): "Filter", "Insert left/right". */
+  /** Extra items beyond the set (off by default to match evidence C1/14): "Filter", "Insert left/right". */
   extraItems?: { filter?: boolean; insert?: boolean };
   /** Called after "Filter" so the page can scroll the filter bar into view. */
   onFilter?: () => void;
-  /** AI autofill columns: "Run AI autofill" over every record of the view (ai-attributes §5). */
+  /** AI autofill columns: "Run AI autofill" over every record of the view (ai-attributes). */
   onRunAi?: (attribute: AttributeDefinition) => void;
 }
 

@@ -1,4 +1,4 @@
-// Preset gallery of insight templates ("Start with a template", I calls §4.3, §10). Our own content: Attio ships 22
+// Preset gallery of insight templates ("Start with a template"). Our own content: 22
 // presets across the same eight use cases; the methodology names (BANT, MEDDPICC, SPICED, ChAMP …) are industry
 // terms, every description, section title and prompt here is written for this product (mymeet calls first).
 import type { InsightPreset } from '@agentic-crm/contracts';

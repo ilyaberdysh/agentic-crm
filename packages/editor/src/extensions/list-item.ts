@@ -1,13 +1,13 @@
-// Flat list items (E editor.md §3): Attio's server model stores each list item as its own block with a list type
+// Flat list items: the server model stores each list item as its own block with a list type
 // (`ul`/`ol`) and an `indent` depth, so the editor uses the same flat structure — one textblock per item — instead of
 // nested <ul><li> trees. Behaviour:
-//   - `- `, `* `, `+ ` start a bulleted item and `1. ` a numbered one (`1) ` is not recognised);
-//   - Enter in a non-empty item creates a sibling; Enter in an empty item outdents one level, and at level 0 leaves
-//     the list (paragraph);
-//   - Tab at the start of an item (or over a multi-block selection) indents, Shift+Tab outdents; Tab elsewhere inserts
-//     a tab character;
-//   - Backspace at the start of an item outdents, and at level 0 turns it into a paragraph;
-//   - adjacent items of the same type form one list (numbering continues across deeper items).
+// - `- `, `* `, `+ ` start a bulleted item and `1. ` a numbered one (`1) ` is not recognised);
+// - Enter in a non-empty item creates a sibling; Enter in an empty item outdents one level, and at level 0 leaves
+// the list (paragraph);
+// - Tab at the start of an item (or over a multi-block selection) indents, Shift+Tab outdents; Tab elsewhere inserts
+// a tab character;
+// - Backspace at the start of an item outdents, and at level 0 turns it into a paragraph;
+// - adjacent items of the same type form one list (numbering continues across deeper items).
 import { mergeAttributes, Node, textblockTypeInputRule } from '@tiptap/core';
 import type { Node as PMNode } from '@tiptap/pm/model';
 import { type EditorState, Plugin, PluginKey, TextSelection, type Transaction } from '@tiptap/pm/state';
@@ -32,7 +32,7 @@ declare module '@tiptap/core' {
 
 export const LIST_ITEM = 'listItem';
 
-const numberingKey = new PluginKey<DecorationSet>('attioListNumbering');
+const numberingKey = new PluginKey<DecorationSet>('agenticCrmListNumbering');
 
 function numberDecorations(doc: PMNode): DecorationSet {
   const items: Array<{ type: string; indent: number; pos: number; size: number }> = [];

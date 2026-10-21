@@ -533,8 +533,8 @@ function SecretDialog({
       <DialogHeader title="Webhook signing secret" icon={<Icon icon="key" size={16} />} onClose={onClose} />
       <div className={d.dialogBody}>
         <p className={os.sectionDescription} style={{ margin: 0 }}>
-          Deliveries to <b>{target?.webhook.targetUrl}</b> are signed with this secret: the <code>Attio-Signature</code>{' '}
-          header holds the HMAC-SHA256 of the request body.
+          Deliveries to <b>{target?.webhook.targetUrl}</b> are signed with this secret: the{' '}
+          <code>Agentic-CRM-Signature</code> header holds the HMAC-SHA256 of the request body.
         </p>
         <div className={d.secretRow}>
           <div className={d.secretBox}>

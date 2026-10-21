@@ -1,4 +1,4 @@
-// Inline-editable text (H README §3.2): a button that becomes an input on click; Enter or blur commits, Escape
+// Inline-editable text: a button that becomes an input on click; Enter or blur commits, Escape
 // cancels. Empty values show the placeholder (dashboard "Enter dashboard title...", report "Enter report title...").
 import { useEffect, useRef, useState } from 'react';
 import * as s from './reports.css';

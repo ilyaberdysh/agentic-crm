@@ -1,4 +1,4 @@
-// "▷ Trigger workflow" (runs.md §1): live workflows with a Manual run trigger start a run at once; a Record action
+// "▷ Trigger workflow": live workflows with a Manual run trigger start a run at once; a Record action
 // trigger opens "Search records ({object plural})" and runs on the picked record. The UI then opens the new run.
 import { Button, PopoverPanel, Tooltip } from '@agentic-crm/ui';
 import { useRef, useState } from 'react';
@@ -47,7 +47,7 @@ export function TriggerButton({
       </Button>
     );
   }
-  // Only manual-run and record-action triggers start from the header (README §3.3); list entry and note actions start
+  // Only manual-run and record-action triggers start from the header; list entry and note actions start
   // from their entry points.
   if (!recordTrigger || !objectId) {
     if (!w.triggerSlugs.some((slug) => slug === 'on-list-entry-action' || slug === 'on-note-action')) return null;

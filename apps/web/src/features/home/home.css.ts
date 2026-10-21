@@ -1,4 +1,4 @@
-// Home (B-shell/home.md §2; layout.md §7): a centred column, max 716 px, padding 0 24 56; blocks 40 px apart.
+// Home: a centred column, max 716 px, padding 0 24 56; blocks 40 px apart.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 

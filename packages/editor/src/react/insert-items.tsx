@@ -1,5 +1,5 @@
-// Items of the slash menu and the "+" insert menu (E editor.md §8): same seven items, same order, fuzzy filter by
-// name that keeps the order. Icons are Lucide glyphs (D-17), not Attio's.
+// Items of the slash menu and the "+" insert menu: same seven items, same order, fuzzy filter by
+// Names preserve the menu order. Icons are Lucide glyphs.
 import type { Editor } from '@tiptap/core';
 import { Heading1, Heading2, Heading3, Image, List, ListOrdered, type LucideIcon, Type } from 'lucide-react';
 import type { InsertItemId } from './types.ts';

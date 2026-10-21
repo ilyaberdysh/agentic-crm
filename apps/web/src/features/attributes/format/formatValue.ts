@@ -1,5 +1,5 @@
 // Value formatting (CROSS-DOMAIN B.25): one module keyed by attribute type + column overrides, one locale (X-11, see
-// ./locale.ts). Cells, record fields, chips, clipboard text and the table's footer calculations all format here.
+//./locale.ts). Cells, record fields, chips, clipboard text and the table's footer calculations all format here.
 import type { AggregateOutput, AggregationKind } from '@agentic-crm/contracts';
 import type { AttributeDefinition, AttributeValue, DisplayConfiguration, ValueField, ValueLookup } from '../types';
 import { currentValues, read } from '../values/shapes';
@@ -205,7 +205,7 @@ export function formatTimestampAbsolute(iso: string, settings = getFormatSetting
   }`;
 }
 
-/** Edit-history timestamps: "9 Oct 2026 5:06 PM" (C1 README §3.6). */
+/** Edit-history timestamps: "9 Oct 2026 5:06 PM". */
 export function formatHistoryTimestamp(iso: string, settings = getFormatSettings()): string {
   const ms = Date.parse(iso);
   if (Number.isNaN(ms)) return iso;
@@ -304,7 +304,7 @@ export function locationField(l: NonNullable<ReturnType<typeof read.location>>, 
 export interface FormatValueOptions {
   field?: ValueField;
   format?: DisplayConfiguration;
-  /** Resolves option, stage, member and record titles (default: the app's query cache). */
+  /** Resolves option, stage, member and record titles (default: the query cache). */
   lookup?: ValueLookup;
   now?: Date;
   settings?: FormatSettings;
@@ -414,7 +414,7 @@ export function actorTypeLabel(type: string): string {
       return 'Import';
     case 'app':
       return 'App';
-    // Slice 10: values computed by a formula ("Formula", formulas.md §4.8) or written by AI autofill.
+    //: values computed by a formula ("Formula") or written by AI autofill.
     case 'formula-attribute':
       return 'Formula';
     case 'ai-autofill-attribute':
@@ -440,7 +440,7 @@ export function formatValue(
     .join(options.separator ?? ', ');
 }
 
-// ---- footer calculations (filters-sorts-calcs §8) ------------------------------------------------------------------
+// ---- footer calculations (filters-sorts-calcs) ------------------------------------------------------------------
 
 /** Every kind `snapshots.aggregate` answers (contracts `aggregationKinds`). */
 export type { AggregationKind } from '@agentic-crm/contracts';

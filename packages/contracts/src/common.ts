@@ -1,5 +1,5 @@
 // Shared primitives for every internal contract. Internal contracts use camelCase keys (ARCHITECTURE D-04:
-// Attio's internal shapes define semantics, not the wire format); /v2 adapters map to Attio's snake_case.
+// Internal shapes define semantics, not the wire format); /v2 adapters map to snake_case.
 import { z } from 'zod';
 import { isValidRank } from './rank.ts';
 

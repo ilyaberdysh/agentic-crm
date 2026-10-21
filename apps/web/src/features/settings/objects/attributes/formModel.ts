@@ -1,7 +1,7 @@
-// Create/edit attribute form logic (J attribute-dialogs §2–7), kept free of React so it is unit-tested:
+// Create/edit attribute form logic (J attribute-dialogs), kept free of React so it is unit-tested:
 // the form state per picker type, validation, the create input (one PUT: relationship pair, options and stages
 // inline), the edit diff (one attribute PATCH + option/stage writes), relationship cardinality ↔ is_multiselect
-// flags, "time in status" durations and default-value encoding (static JSON arrays of write forms, A §4.6).
+// flags, "time in status" durations and default-value encoding (static JSON arrays of write forms, A).
 import {
   type AttributeDefinition,
   type CreateAttributeInput,
@@ -62,7 +62,7 @@ export const CARDINALITIES: ReadonlyArray<{
   },
 ];
 
-/** J attribute-dialogs §6: this side is multi for One-to-many / Many-to-many, the other for Many-to-one / Many-to-many. */
+/** J attribute-dialogs: this side is multi for One-to-many / Many-to-many, the other for Many-to-one / Many-to-many. */
 export function cardinalityFlags(c: Cardinality): { thisMulti: boolean; otherMulti: boolean } {
   return {
     thisMulti: c === 'one-to-many' || c === 'many-to-many',
@@ -191,7 +191,7 @@ export function nextColor(kind: 'option' | 'stage', used: readonly string[]): st
   return rotation.find((c) => !used.includes(c)) ?? (rotation[used.length % rotation.length] as string);
 }
 
-/** Per-row errors: "Stage name is required" / "This name is already in use" (J attribute-dialogs §5). */
+/** Per-row errors: "Stage name is required" / "This name is already in use" (J attribute-dialogs). */
 export function optionErrors(drafts: readonly OptionDraft[], kind: 'option' | 'stage'): Record<string, string> {
   const errors: Record<string, string> = {};
   const seen = new Set<string>();
@@ -483,7 +483,7 @@ export function hasErrors(errors: FormErrors): boolean {
   return Object.keys(errors).length > 0;
 }
 
-/** Formula needs a formula before it can be created (submit disabled; J attribute-dialogs §2). */
+/** Formula needs a formula before it can be created (submit disabled; J attribute-dialogs). */
 export function canSubmit(state: AttributeFormState): boolean {
   return state.pickerType !== 'formula' || state.formula !== null;
 }
@@ -530,7 +530,7 @@ export interface CreateIds {
   snapshotId?: string;
 }
 
-/** The single create call (J attribute-dialogs §7, adapted: options, stages and default go in the same PUT). */
+/** The single create call (J attribute-dialogs, adapted: options, stages and default go in the same PUT). */
 export function toCreateInput(state: AttributeFormState, ids: CreateIds): CreateAttributeInput {
   const entry = pickerEntry(state.pickerType);
   const allowed = constraintsFor(state.pickerType);
@@ -552,7 +552,7 @@ export function toCreateInput(state: AttributeFormState, ids: CreateIds): Create
     };
   }
   if (state.pickerType === 'formula' && state.formula) {
-    // The attribute's type is the formula's output type (formulas.md §5.1); its display settings follow that type.
+    // The attribute's type is the formula's output type; its display settings follow that type.
     const formula: CreateAttributeInput = {
       id: ids.id,
       entityDefinitionId: ids.entityDefinitionId,

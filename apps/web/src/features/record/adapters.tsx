@@ -1,12 +1,12 @@
-// The one seam between the record page and the slice-3 features built beside it (slice3-contracts.md):
-//   E3 tab content    features/notes RecordNotesTab, features/tasks RecordTasksTab, features/comments
-//                     RecordCommentsPanel (320 px, focus on a deep-linked thread);
-//   E4 overlays       features/overlays (note window, create-task dialog, record overlay, edit-task dialog);
-//   favourites        features/favorites FavoriteStar / toggle;
-//   lists (slice 4)   features/lists RecordListsSection (Lists section) and AddRecordToListDialog (Add to list).
-//   calls (slice 10)  features/calls RecordCallsTab (Calls tab), the tab count and the activity call card;
-//   email / meetings  (slice 7) features/email RecordEmailsTab, thread previews, "Compose email"; features/meetings
-//                     NewMeetingDialog and the meetings behind timeline events.
+// The one seam between the record page and its supporting features:
+// E3 tab content features/notes RecordNotesTab, features/tasks RecordTasksTab, features/comments
+// RecordCommentsPanel (320 px, focus on a deep-linked thread);
+// E4 overlays features/overlays (note window, create-task dialog, record overlay, edit-task dialog);
+// favourites features/favorites FavoriteStar / toggle;
+// lists features/lists RecordListsSection (Lists section) and AddRecordToListDialog (Add to list).
+// calls features/calls RecordCallsTab (Calls tab), the tab count and the activity call card;
+// email / meetings features/email RecordEmailsTab, thread previews, "Compose email"; features/meetings
+// NewMeetingDialog and the meetings behind timeline events.
 // Everything else in features/record imports these features only through this file.
 import { useCallback } from 'react';
 import { useRecordTitle } from '../attributes';

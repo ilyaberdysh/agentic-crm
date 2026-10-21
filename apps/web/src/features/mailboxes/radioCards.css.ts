@@ -1,4 +1,4 @@
-// Radio cards (components.md RadioCard; evidence/F/mailbox-general-email-visibility.png and
+// Radio cards (RadioCard;  and
 // workspace-email-record-creation.png): 1 px border + 8 px padding around a 40 px icon tile, title + description,
 // an 18 px indicator at the right; the selected card gets an accent border, a 2 px halo and a selected tint.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';

@@ -25,9 +25,9 @@ import type { V2Context } from '../context';
 import { PublicApiError, publicErrors, toPublicError, withHints } from '../errors';
 import { FilterTranslator } from '../filters';
 import {
-  attioTimestamp,
   loadValueLookups,
   publicActor,
+  publicTimestamp,
   type ValueLookups,
   valueToPublic,
   visibleAttributes,
@@ -54,7 +54,7 @@ function entryIdParam(raw: string | undefined): string {
   return raw.toLowerCase();
 }
 
-/** Domain errors of list calls: unknown lists and entries get Attio's messages. */
+/** Domain errors of list calls: unknown lists and entries get the public API's messages. */
 async function onList<T>(key: string, fn: () => Promise<T>, entryId?: string): Promise<T> {
   try {
     return await fn();
@@ -84,11 +84,11 @@ async function listToPublic(v2: V2Context, list: List) {
       return level ? [{ workspace_member_id: m.memberId, level }] : [];
     }),
     created_by_actor: publicActor(list.createdBy),
-    created_at: attioTimestamp(list.createdAt),
+    created_at: publicTimestamp(list.createdAt),
   };
 }
 
-/** `parent_object` (slug or id) of a new list; Attio answers 400 value_not_found for unknown objects. */
+/** `parent_object` (slug or id) of a new list; the public API answers 400 value_not_found for unknown objects. */
 async function parentObject(v2: V2Context, key: string): Promise<EntityDefinition> {
   try {
     return await v2.object(key);
@@ -110,7 +110,7 @@ async function rendering(v2: V2Context, list: EntityDefinition): Promise<EntryRe
   return { attrs, lookups: await loadValueLookups(v2, attrs), parentAttr };
 }
 
-/** An entry (a record of the list's definition) → Attio's entry object. */
+/** An entry (a record of the list's definition) → the public API's entry object. */
 function entryToPublic(v2: V2Context, list: EntityDefinition, entry: RecordWithValues, r: EntryRendering) {
   const parent = entry.values[r.parentAttr.id]?.[0]?.value as
     | { entityDefinitionId: string; entityInstanceId: string }
@@ -124,7 +124,7 @@ function entryToPublic(v2: V2Context, list: EntityDefinition, entry: RecordWithV
     id: { workspace_id: v2.workspaceId, list_id: list.id, entry_id: entry.record.entityInstanceId },
     parent_record_id: parent?.entityInstanceId ?? '',
     parent_object: parent ? (r.lookups.objectSlugs.get(parent.entityDefinitionId) ?? parent.entityDefinitionId) : '',
-    created_at: attioTimestamp(entry.record.createdAt),
+    created_at: publicTimestamp(entry.record.createdAt),
     entry_values: entryValues,
   };
 }
@@ -201,6 +201,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/lists',
+    operationId: 'listLists',
     scopes: v2Operations.listLists.scopes,
     async handler(v2) {
       const lists = await withHints({}, () => v2.domain.lists.list(v2.ctx));
@@ -210,6 +211,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/lists',
+    operationId: 'createList',
     scopes: v2Operations.createList.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createListBody, request.body, 'request body');
@@ -237,6 +239,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/lists/:list',
+    operationId: 'getList',
     scopes: v2Operations.getList.scopes,
     async handler(v2, request) {
       const key = params(request).list ?? '';
@@ -248,6 +251,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'PATCH',
     url: '/lists/:list',
+    operationId: 'updateList',
     scopes: v2Operations.updateList.scopes,
     async handler(v2, request) {
       const key = params(request).list ?? '';
@@ -298,6 +302,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/lists/:list/entries/query',
+    operationId: 'queryEntries',
     scopes: v2Operations.queryEntries.scopes,
     kind: 'read',
     async handler(v2, request) {
@@ -348,6 +353,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/lists/:list/entries',
+    operationId: 'createEntry',
     scopes: v2Operations.createEntry.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createEntryBody, request.body, 'request body');
@@ -364,6 +370,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'PUT',
     url: '/lists/:list/entries',
+    operationId: 'assertEntry',
     scopes: v2Operations.assertEntry.scopes,
     async handler(v2, request) {
       const { data } = parseInput(assertEntryBody, request.body, 'request body');
@@ -398,6 +405,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/lists/:list/entries/:entry_id',
+    operationId: 'getEntry',
     scopes: v2Operations.getEntry.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -410,6 +418,7 @@ export const listRoutes: RouteSpec[] = [
     (method): RouteSpec => ({
       method,
       url: '/lists/:list/entries/:entry_id',
+      operationId: method === 'PATCH' ? 'updateEntry' : 'replaceEntry',
       scopes: method === 'PATCH' ? v2Operations.updateEntry.scopes : v2Operations.replaceEntry.scopes,
       async handler(v2, request) {
         const p = params(request);
@@ -431,6 +440,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/lists/:list/entries/:entry_id',
+    operationId: 'deleteEntry',
     scopes: v2Operations.deleteEntry.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -446,6 +456,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/lists/:list/entries/:entry_id/attributes/:attribute/values',
+    operationId: 'listEntryAttributeValues',
     scopes: v2Operations.listEntryAttributeValues.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -487,6 +498,7 @@ export const listRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/objects/:object/records/:record_id/entries',
+    operationId: 'listRecordEntries',
     scopes: v2Operations.listRecordEntries.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -504,7 +516,7 @@ export const listRoutes: RouteSpec[] = [
           list_id: m.listId,
           list_api_slug: m.list.apiSlug,
           entry_id: m.entryId,
-          created_at: attioTimestamp(m.entry.createdAt),
+          created_at: publicTimestamp(m.entry.createdAt),
         })),
       };
     },

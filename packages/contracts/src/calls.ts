@@ -8,7 +8,7 @@ import { createdBuckets } from './dates.ts';
 import { emailAccessSchema } from './email.ts';
 import { meetingSchema } from './meetings.ts';
 
-/** Public (Attio API) status of a recording: processing until transcript-derived work (summaries) finished. */
+/** Recording remains processing until transcript-derived work (such as summaries) finishes. */
 export const callRecordingStatusSchema = z.enum(['processing', 'completed', 'failed']);
 export type CallRecordingStatus = z.infer<typeof callRecordingStatusSchema>;
 

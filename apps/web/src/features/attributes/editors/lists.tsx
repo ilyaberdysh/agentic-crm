@@ -1,6 +1,6 @@
-// Value-list editors for emails, domains and phone numbers (C1 cells.md §2; evidence/C1/32, 33): the current values
+// Value-list editors for emails, domains and phone numbers: the current values
 // (drag handle to reorder, remove on hover) and an "Add …" row. Invalid input raises the spec's error toast and
-// writes nothing. Also the full location form (record pages, D §3.2).
+// writes nothing. Also the full location form (record pages, D).
 
 import { rankBetween } from '@agentic-crm/contracts';
 import { FilterableMenu, Icon, MenuItem, MenuTrigger, TextInput, toast } from '@agentic-crm/ui';
@@ -51,7 +51,7 @@ export function defaultCountry(): string {
   }
 }
 
-/** Masked placeholder per country (evidence/C1/33 shows RU "+7 _ (___) ___-__-__"). */
+/** Masked placeholder per country (shows RU "+7 _ (___) ___-__-__"). */
 export function phonePlaceholder(country: string): string {
   const masks: Record<string, string> = {
     RU: '+7 _ (___) ___-__-__',

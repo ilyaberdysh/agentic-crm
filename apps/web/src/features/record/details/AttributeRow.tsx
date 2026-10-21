@@ -1,4 +1,4 @@
-// One attribute of the details panel (D README §2.3, §3.2): label (type icon + title) and the value drawn by the
+// One attribute of the details panel: label (type icon + title) and the value drawn by the
 // attribute registry in `field` density. Click edits in place (the registry's editor anchored to the value), a
 // checkbox / rating toggles in place, record chips navigate. A spinner "Validating change" shows while a write of
 // this attribute is queued or in flight. Right-click: Copy · Paste · View edit history · Clear value.
@@ -215,7 +215,7 @@ export function AttributeRow({ attribute, recordRef, variant = 'row', onSettled 
       ) : (
         <div className={s.row} data-attribute={attribute.apiSlug} data-testid="attribute-row">
           <div className={s.label} title={attribute.title}>
-            {/* Formula attributes show their output type's icon and an fx marker (formulas.md §4.8). */}
+            {/* Formula attributes show their output type's icon and an fx marker. */}
             <Icon
               icon={attributeIcon({ ...attribute, formulaConfiguration: null })}
               size={16}

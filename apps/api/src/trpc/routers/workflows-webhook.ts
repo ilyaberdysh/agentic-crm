@@ -1,6 +1,5 @@
-// "Webhook received" trigger (block-catalog §3 `on-inbound-webhook`; README §6): Attio's hook URL is
-// `https://hooks.attio.com/w/{workspace_id}/{workflow_id}`; ours is `POST /hooks/w/{workspaceId}/{workflowId}` on the
-// API. The body (any content type, ≤ 1 MB) is passed to the run as the raw string `request_body`. No session: the
+// "Webhook received" trigger: POST /hooks/w/{workspaceId}/{workflowId} on the API.
+// The body (any content type, ≤ 1 MB) is passed to the run as the raw string `request_body`. No session: the
 // unguessable workflow id is the capability. 202 when a run started; 404 for unknown workflows; 409 when the workflow
 // is not live or has no webhook trigger.
 import type { Domain } from '@agentic-crm/domain';

@@ -1,4 +1,4 @@
-// Realtime invalidation → TanStack Query (BACKLOG 1.08 client side, realtime.md §4, ARCHITECTURE I4a).
+// Realtime invalidation → TanStack Query (BACKLOG 1.08 client side, ARCHITECTURE I4a).
 // A message says *what is stale* ({resource, resourceId, scope, seq}); we record `seq` as the workspace's accept-after
 // watermark (sent as `x-accept-after` on the refetch) and invalidate the matching key prefixes. Active queries refetch
 // at once; inactive ones refetch when next used. Continuity loss invalidates everything cached for the workspace.
@@ -20,7 +20,7 @@ function byIdAt(workspaceId: string, resource: string, index: number, id: string
   };
 }
 
-/** Resolved policies / permission rows below any entity-definition key (slice 6, ['ws', ws, 'entity-definition', id, 'policy' | 'permissions']). */
+/** Resolved policies / permission rows below any entity-definition key (['ws', ws, 'entity-definition', id, 'policy' | 'permissions']). */
 function accessQueries(workspaceId: string): QueryFilters {
   return {
     predicate: (q) =>
@@ -32,7 +32,7 @@ function accessQueries(workspaceId: string): QueryFilters {
 }
 
 // ---- raw message taps ---------------------------------------------------------------------------------------------
-// Some resources are not invalidations of a cache key but signals a feature reads itself (slice 9: `report-stale`
+// Some resources are signals consumed directly by a feature rather than cache invalidations, such as `report-stale`.
 // marks dashboard cells "New data" instead of refetching them). Features register a tap; every message reaches it.
 
 type MessageTap = (message: InvalidationMessage) => void;
@@ -112,7 +112,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
     case 'attribute-value-list': {
       const attr = str(scope.attributeDefinitionId) ?? id;
       const records = strList(scope.entityInstanceIds);
-      // Value changes are activity too (record page timeline, D §3.8).
+      // Value changes are activity too (record page timeline, D).
       if (def && attr && records.length > 0)
         return records.flatMap((r) => [prefix(keys.values(ws, def, attr, r)), prefix(keys.recordTimeline(ws, def, r))]);
       if (def && attr)
@@ -176,7 +176,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
       ];
     case 'collection-list':
       return [prefix(keys.collections(ws))];
-    // Slice 3 notes / tasks / comments (features/{notes,tasks,comments}): every query of the resource lives under
+    //  notes / tasks / comments (features/{notes,tasks,comments}): every query of the resource lives under
     // ['ws', ws, <resource>, …] and the domain emits the item and its list together, so a prefix per resource is
     // enough. Favorites change the `favoriteId` carried by note and template reads.
     case 'note':
@@ -217,12 +217,12 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
       }
       return filters;
     }
-    // Slice 5: a notification for me arrived, or rows were read / unread / archived (my other tabs): the inbox list and
+    //: a notification for me arrived, or rows were read / unread / archived (my other tabs): the inbox list and
     // the unread count live under the resource prefix; preferences are their own resource.
     case 'notification':
     case 'notification-preferences':
       return [prefix(keys.resource(ws, message.resource))];
-    // Slice 6 (settings, packages/realtime): teams, requirement rules, developer tokens and webhooks.
+    //  (settings, packages/realtime): teams, requirement rules, developer tokens and webhooks.
     case 'workspace-team':
       return [
         ...(id ? [prefix(keys.team(ws, id))] : [prefix(keys.resource(ws, 'workspace-team'))]),
@@ -243,7 +243,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
       ];
     case 'webhook-list':
       return [prefix(keys.webhooks(ws))];
-    // Slice 7 (features/{email,mailboxes,meetings,composer}): every query of a resource lives under
+    //  (features/{email,mailboxes,meetings,composer}): every query of a resource lives under
     // ['ws', ws, <resource>, …]. Synced mail and meetings are invalidated per record (scope.entityInstanceIds) or per
     // thread / mailbox; the cached lists are few, so a prefix per resource is enough. Meetings are timeline events.
     case 'mailbox':
@@ -272,7 +272,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
           : [prefix(keys.resource(ws, 'record-timeline'))];
       return [prefix(keys.resource(ws, 'meeting')), prefix(keys.resource(ws, 'meeting-list')), ...timelines];
     }
-    // Slice 10 (features/calls): one call (resourceId = recording id: detail, transcript, speakers), its insights, one
+    //  (features/calls): one call (resourceId = recording id: detail, transcript, speakers), its insights, one
     // insight template (also shown in the templates index), the index, and the member's default template.
     case 'call-recording':
     case 'call-insight-list':
@@ -287,7 +287,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
     case 'insight-template-list':
     case 'member-call-settings':
       return [prefix(keys.resource(ws, message.resource))];
-    // Slice 10 Ask AI (features/ask): threads and turns share the `ai-thread` / `ai-thread-list` prefixes (the thread
+    //  Ask AI (features/ask): threads and turns share the `ai-thread` / `ai-thread-list` prefixes (the thread
     // detail carries its turns); prompts, settings, credits and record summaries each own a prefix.
     case 'ai-thread':
     case 'ai-thread-list':
@@ -305,7 +305,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
     case 'credit-usage':
     case 'record-ai-summary':
       return [prefix(keys.resource(ws, message.resource))];
-    // Slice 8 workflows (features/workflows/data.ts): one workflow's reads live under ['ws', ws, 'workflow', id, …];
+    //  workflows (features/workflows/data.ts): one workflow's reads live under ['ws', ws, 'workflow', id, …];
     // the index under 'workflow-list'; runs of a workflow under ['ws', ws, 'workflow-run-list', workflowId, …] (run
     // counts and "Last failed run" show in the index too); one run under ['ws', ws, 'workflow-run', runId].
     case 'workflow':
@@ -331,7 +331,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
     case 'workflow-broadcast':
       return [prefix(keys.resource(ws, 'workflow-broadcast'))];
     case 'workflow-events':
-    // Slice 9 (features/reports). Everything about one dashboard (detail with cells and reports, grants, the editor's
+    //  (features/reports). Everything about one dashboard (detail with cells and reports, grants, the editor's
     // report read) lives under ['ws', ws, 'reporting-dashboard', <dashboardId>, …]; the index under
     // 'reporting-dashboard-list'. Datasets are never refetched by an invalidation: `report-stale` only marks them
     // ("New data" pill, tap below), and a changed report gets a new dataset key.
@@ -345,7 +345,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
       return [prefix(keys.resource(ws, 'reporting-dashboard-list'))];
     case 'report-stale':
       return [];
-    // Slice 10 formula and AI attributes (features/formulas, features/ai-attributes): per-record annotations of one
+    //  formula and AI attributes (features/formulas, features/ai-attributes): per-record annotations of one
     // attribute ("Calculating...", "AI is thinking...", errors), AI composer requests, AI runs.
     case 'entity-annotation': {
       const attr = str(scope.attributeDefinitionId) ?? id;
@@ -369,7 +369,7 @@ export function invalidationFilters(message: InvalidationMessage): QueryFilters[
 
 // ---- writes already reflected in the cache ---------------------------------------------------------------------
 // A mutation response carries the canonical state and its change seq. Once that state is written into a key, an
-// invalidation of exactly that key with seq ≤ the response seq is already reflected (our own write echoing back) and
+// invalidation of exactly that key with seq ≤ the response seq is already reflected (custom write echoing back) and
 // needs no refetch; anything newer is refetched. Snapshots are never marked: they always refetch.
 
 const covered = new Map<string, string>();

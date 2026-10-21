@@ -1,4 +1,4 @@
-// The preview pane of the template editor (I calls §4.2; evidence/I/calls-template-editor-preview-ready.png,
+// The preview pane of the template editor:
 // calls-template-preview-generated.png): "Previewing [call] ▾" with the 10 most recent completed calls, "Generate preview",
 // the generating state, and the sections of the preview as the call page renders them.
 import { Button, Icon, IconButton, Popover, Tooltip } from '@agentic-crm/ui';

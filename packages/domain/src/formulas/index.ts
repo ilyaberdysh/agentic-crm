@@ -157,7 +157,7 @@ export function createFormulaServices(wiring: FormulaWiring) {
       run: guarded('update_attribute_value', (tx, input: AiRunInput & { entityDefinitionId: string }) =>
         startRun(tx, input, aiDeps),
       ),
-      /** Same as run (Attio "Recalculate with AI"). */
+      /** Same as run, with AI recalculation enabled. */
       recalculate: guarded('update_attribute_value', (tx, input: AiRunInput & { entityDefinitionId: string }) =>
         startRun(tx, input, aiDeps),
       ),

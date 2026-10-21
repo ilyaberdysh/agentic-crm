@@ -11,6 +11,7 @@ import {
   type AllowWebSearchInput,
   type ApproveAiToolInput,
   aiPromptTargets,
+  aiTargetModelChoice,
   type CreateAiThreadInput,
   type CreatePromptInput,
   type CreditsLedgerInput,
@@ -19,6 +20,7 @@ import {
   type DenyAiToolInput,
   type ListAiThreadsInput,
   type ListPromptsInput,
+  parseAiTargetModelChoice,
   type RecordSummaryInput,
   type RenameAiThreadInput,
   type RetryAiTurnInput,
@@ -32,6 +34,7 @@ import type { Database } from '@agentic-crm/db';
 import { actingMemberId, type ServiceContext } from '../context.ts';
 import { DomainError, forbidden } from '../errors.ts';
 import { newId } from '../ids.ts';
+import type { ModelGateway } from '../model-gateway/gateway.ts';
 import type { Policies } from '../permissions.ts';
 import { runInWorkspace, type Tx } from '../tx.ts';
 import { AiTurnHub } from './chat/hub.ts';
@@ -59,6 +62,7 @@ export interface AiWiring {
   database: Database;
   policies: Policies;
   llm: LlmClient;
+  modelGateway: ModelGateway;
   /** Stream fan-out (apps/api forwards it to SSE and the thread rooms); defaults to a private hub. */
   hub?: AiTurnHub;
 }
@@ -84,10 +88,10 @@ const PROMPT_ICONS = [
 const PROMPT_COLORS = ['blue', 'cyan', 'green', 'yellow', 'orange', 'red', 'pink', 'purple'] as const;
 
 export function createAiServices(wiring: AiWiring) {
-  const { database, policies, llm } = wiring;
+  const { database, policies, llm, modelGateway } = wiring;
   const hub = wiring.hub ?? new AiTurnHub();
   const running: RunnerDeps['running'] = new Map();
-  const runnerDeps: RunnerDeps = { database, policies, llm, hub, running };
+  const runnerDeps: RunnerDeps = { database, policies, llm, modelGateway, hub, running };
   const run = <T>(ctx: ServiceContext, fn: (tx: Tx) => Promise<T>) => runInWorkspace(database, ctx, fn);
   /**
    * The same caller without the transport's receipt: follow-up reads and best-effort writes after the main write
@@ -186,12 +190,12 @@ export function createAiServices(wiring: AiWiring) {
       threads: {
         list: (ctx: ServiceContext, input?: ListAiThreadsInput) => run(ctx, (tx) => chatOps.listThreads(tx, input)),
         get: (ctx: ServiceContext, threadId: string) =>
-          run(ctx, (tx) => chatOps.getThread(tx, threadId, (id) => running.has(id))),
+          run(ctx, (tx) => chatOps.getThread(tx, threadId, (id) => running.has(id), modelGateway)),
         create: (ctx: ServiceContext, input: CreateAiThreadInput = {}) =>
           run(ctx, (tx) => chatOps.createThread(tx, input)),
         rename: (ctx: ServiceContext, input: RenameAiThreadInput) => run(ctx, (tx) => chatOps.renameThread(tx, input)),
         delete: async (ctx: ServiceContext, threadId: string) => {
-          const result = await run(ctx, (tx) => chatOps.deleteThread(tx, threadId));
+          const result = await run(ctx, (tx) => chatOps.deleteThread(tx, threadId, modelGateway));
           for (const id of result.canceled) running.get(id)?.abort.abort();
           return { id: result.id };
         },
@@ -199,7 +203,7 @@ export function createAiServices(wiring: AiWiring) {
       turns: {
         /** Creates the user turn and the executing assistant turn; the answer streams (SSE / room / hub). */
         send: async (ctx: ServiceContext, input: SendAiTurnInput) => {
-          const result = await run(ctx, (tx) => chatOps.send(tx, policies, input));
+          const result = await run(ctx, (tx) => chatOps.send(tx, policies, input, modelGateway));
           await apply(ctx, result);
           return { threadId: result.threadId, userTurnId: result.userTurnId, turnId: result.turnId };
         },
@@ -219,12 +223,12 @@ export function createAiServices(wiring: AiWiring) {
           return result.turn;
         },
         retry: async (ctx: ServiceContext, input: RetryAiTurnInput) => {
-          const result = await run(ctx, (tx) => chatOps.retry(tx, input));
+          const result = await run(ctx, (tx) => chatOps.retry(tx, input, modelGateway));
           await apply(ctx, result);
           return { turnId: result.turnId };
         },
         cancel: async (ctx: ServiceContext, turnId: string): Promise<AiTurn> => {
-          const result = await run(ctx, (tx) => chatOps.cancel(tx, turnId));
+          const result = await run(ctx, (tx) => chatOps.cancel(tx, turnId, modelGateway));
           await apply(ctx, result);
           return run(quiet(ctx), (tx) => loadTurnView(tx, turnId));
         },
@@ -237,7 +241,12 @@ export function createAiServices(wiring: AiWiring) {
             return turn;
           });
           if (state.reply_suggestions) return { turnId, suggestions: state.reply_suggestions as string[] };
-          if (state.role !== 'assistant' || state.status !== 'completed' || !llm.configured) {
+          if (
+            state.role !== 'assistant' ||
+            state.status !== 'completed' ||
+            !llm.configured ||
+            parseAiTargetModelChoice(state.model)
+          ) {
             return { turnId, suggestions: [] };
           }
           const view = await run(ctx, (tx) => loadTurnView(tx, turnId));
@@ -292,8 +301,9 @@ export function createAiServices(wiring: AiWiring) {
         },
       },
       models: {
-        list: (ctx: ServiceContext): Promise<AiModelsOutput> =>
-          run(ctx, async (tx) => {
+        list: async (ctx: ServiceContext): Promise<AiModelsOutput> => {
+          const targets = await modelGateway.targets.list(ctx);
+          const legacy = await run(ctx, async (tx) => {
             const auto = await workspaceModelFor(tx, 'ask');
             return {
               configured: llm.configured,
@@ -305,7 +315,19 @@ export function createAiServices(wiring: AiWiring) {
                 isUnavailable: !llm.configured,
               })),
             };
-          }),
+          });
+          const saved = targets.map((target) => ({
+            id: aiTargetModelChoice(target.id, target.version),
+            label: `${target.name} · ${target.kind === 'runner-local' ? 'Local' : 'API'}`,
+            brand: target.provider,
+            isAuto: false,
+            isUnavailable: !target.enabled,
+          }));
+          return {
+            configured: legacy.configured || saved.some((m) => !m.isUnavailable),
+            models: [...legacy.models, ...saved],
+          };
+        },
       },
       toolLabels: () => AI_TOOL_LABELS,
       settings: {

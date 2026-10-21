@@ -1,4 +1,4 @@
-// Grants of a dashboard and the members and teams they can name (H README §2.6, §3.11; api §1.5): one cached list per
+// Dashboard grants and their member or team targets: one cached list per
 // dashboard under ['ws', ws, 'reporting-dashboard', <id>, 'permissions'] (realtime `reporting-dashboard` refreshes it),
 // level changes / additions / removals that show at once and are confirmed by the server's answer, and the member and
 // team pickers. Used by the Share popover and by Settings → Dashboards → Permissions.

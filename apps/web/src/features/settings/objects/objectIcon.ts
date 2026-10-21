@@ -1,15 +1,15 @@
-// Object icons (J objects-lists §2): an icon from our set plus one of nine colours, chosen in the create dialog
+// Object icons (J objects-lists): an icon from the set plus one of nine colours, chosen in the create dialog
 // (random preselection) and on the Configuration tab. Stored in `entity_definitions.icon` as `icon:<name>:<colour>`
-// (Attio stores `{type:"attio", id, color}`; we keep one string). Standard objects keep their fixed tiles.
+// Stored as `icon:<name>:<colour>`; standard objects keep their fixed tiles.
 import type { Hue, IconName } from '@agentic-crm/ui';
 import type { ObjectSummary } from '../../../data/objects';
 import { objectAppearance } from '../../shell/objectAppearance';
 
-/** Swatch order of the colour menu (J objects-lists §2). */
+/** Swatch order of the colour menu (J objects-lists). */
 export const OBJECT_COLORS = ['blue', 'green', 'grey', 'pink', 'orange', 'purple', 'red', 'cyan', 'yellow'] as const;
 export type ObjectColor = (typeof OBJECT_COLORS)[number];
 
-/** Icons offered by the picker, with search keywords (our own glyph set; Attio's icons are never copied). */
+/** Icons offered by the picker, with search keywords (custom glyph set; the icons are never copied). */
 export const OBJECT_ICONS: ReadonlyArray<{ name: IconName; keywords: string }> = [
   { name: 'object', keywords: 'box cube package product' },
   { name: 'objects', keywords: 'boxes inventory stock' },

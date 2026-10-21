@@ -1,4 +1,4 @@
-// Autocomplete and helper filtering (formulas.md §4.3–4.4): the word at the cursor drives the helper panel
+// Autocomplete and helper filtering: the word at the cursor drives the helper panel
 // (`{…` searches attributes only; true/false/null/and/or never filter); function completion lists every function
 // callable by name whose name *starts with* the typed prefix, alphabetically; attributes rank exact → prefix →
 // word start → substring, keeping the object's attribute order within a rank.

@@ -13,6 +13,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  sandbox-conformance:
+    name: Rootless Podman sandbox conformance
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.11.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Preload the digest-pinned sandbox image
+        run: podman pull docker.io/library/node@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+
+      - name: Probe the live rootless kernel boundary
+        env:
+          CRM_CODEX_SANDBOX_PODMAN: /usr/bin/podman
+          CRM_CODEX_SANDBOX_IMAGE: docker.io/library/node@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+          CRM_CODEX_SANDBOX_CONFORMANCE_DIAGNOSTICS: '1'
+        run: pnpm --filter @agentic-crm/domain exec vitest run --config vitest.execution.config.ts test/ai-container-live.test.ts
+
   checks:
     name: Lint, typecheck, test, and build
     runs-on: ubuntu-latest
@@ -61,10 +94,14 @@ jobs:
         run: |
           docker run --detach --rm --name agentic-crm-s3 \
             --publish 8333:8333 \
-            chrislusf/seaweedfs:latest \
-            server -s3 -s3.port=8333 -dir=/data -volume.max=0
+            chrislusf/seaweedfs@sha256:4e61d15fd35994cb1e43e1e553dff106794841fd9a99ade2fc8c8bfce4d7872d \
+            server -s3 -s3.port=8333 -dir=/data -master.volumeSizeLimitMB=100 -volume.max=32
           for attempt in {1..30}; do
-            if curl --silent --show-error http://127.0.0.1:8333/ >/dev/null; then
+            if curl --fail --silent --show-error --request PUT http://127.0.0.1:8333/agentic-crm >/dev/null &&
+              curl --fail --silent --show-error --request PUT --data smoke \
+                http://127.0.0.1:8333/agentic-crm/ci-ready >/dev/null; then
+              curl --fail --silent --show-error --request DELETE \
+                http://127.0.0.1:8333/agentic-crm/ci-ready >/dev/null
               exit 0
             fi
             sleep 1

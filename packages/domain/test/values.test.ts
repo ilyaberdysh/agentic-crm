@@ -413,7 +413,7 @@ describe('history, point-in-time and value operations', () => {
 });
 
 describe('uniqueness', () => {
-  it('answers 409 UNIQUE_CONSTRAINT_VIOLATION with the Attio envelope', async () => {
+  it('answers 409 UNIQUE_CONSTRAINT_VIOLATION with the public error envelope', async () => {
     const ws = await createWorkspace();
     const a = await newRecord(ws, 'people', { email_addresses: [{ value: 'dup@example.com' }] });
     const err = await expectCode(

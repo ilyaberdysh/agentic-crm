@@ -1,4 +1,4 @@
-// Settings shell and page template (B README §2.8, layout.md §6; evidence/B/settings-appearance-*.png).
+// Settings shell and page template.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 
@@ -20,7 +20,7 @@ export const navTitle = style({ ...text.heading.small, color: c.content.primary,
 export const navSearch = style({ padding: '11px 12px 12px', flex: 'none' });
 
 export const navScroll = style({
-  // Overlay-style scrollbar: invisible until the area is hovered (Attio fades its scrollbars in).
+  // Overlay-style scrollbar: invisible until the area is hovered (the UI fades its scrollbars in).
   scrollbarWidth: 'thin',
   scrollbarColor: 'transparent transparent',
   flex: 1,

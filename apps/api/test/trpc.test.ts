@@ -1,4 +1,4 @@
-import { memberContext } from '@agentic-crm/domain';
+import { memberContext, newId } from '@agentic-crm/domain';
 import { TRPCError } from '@trpc/server';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Context } from '../src/trpc/trpc';
@@ -66,8 +66,89 @@ async function query(path: string, opts: { cookie?: string; slug?: string; input
   });
 }
 
+async function mutate(path: string, opts: { cookie: string; slug: string; input: unknown }) {
+  return fetch(`${h.baseUrl}/trpc/${path}`, {
+    method: 'POST',
+    headers: {
+      cookie: opts.cookie,
+      'x-workspace-slug': opts.slug,
+      'content-type': 'application/json',
+      origin: WEB_ORIGIN,
+    },
+    body: JSON.stringify(opts.input),
+  });
+}
+
+describe('product module administration', () => {
+  it('lists and toggles only in the admin workspace', async () => {
+    const before = await query('agentic.modules.list', { cookie: admin.cookie, slug });
+    expect(before.status).toBe(200);
+    expect((await before.json()) as unknown).toMatchObject({
+      result: { data: [{ module: { id: 'record-follow-up' }, enabled: true }] },
+    });
+    expect((await query('agentic.modules.list', { cookie: member.cookie, slug })).status).toBe(403);
+    expect(
+      (
+        await mutate('agentic.modules.update', {
+          cookie: member.cookie,
+          slug,
+          input: { moduleId: 'record-follow-up', enabled: false },
+        })
+      ).status,
+    ).toBe(403);
+    const changed = await mutate('agentic.modules.update', {
+      cookie: admin.cookie,
+      slug,
+      input: { moduleId: 'record-follow-up', enabled: false },
+    });
+    expect(changed.status).toBe(200);
+    expect((await changed.json()) as unknown).toMatchObject({
+      result: { data: { module: { module: { id: 'record-follow-up' }, enabled: false } } },
+    });
+    expect((await h.domain.productModules.list(memberContext(workspaceId, adminMemberId)))[0]?.enabled).toBe(false);
+    await mutate('agentic.modules.update', {
+      cookie: admin.cookie,
+      slug,
+      input: { moduleId: 'record-follow-up', enabled: true },
+    });
+  });
+});
+
+describe('agent execution reconciliation', () => {
+  it('permits only admins and accepts only an action identity', async () => {
+    const actionId = newId();
+    expect(
+      (
+        await mutate('agentic.reconcileExecuting', {
+          cookie: member.cookie,
+          slug,
+          input: { actionId },
+        })
+      ).status,
+    ).toBe(403);
+    expect(
+      (
+        await mutate('agentic.reconcileExecuting', {
+          cookie: admin.cookie,
+          slug,
+          input: { actionId, outcome: 'SUCCEEDED' },
+        })
+      ).status,
+    ).toBe(400);
+    expect(
+      (
+        await mutate('agentic.reconcileExecuting', {
+          cookie: admin.cookie,
+          slug,
+          input: { actionId },
+        })
+      ).status,
+    ).toBe(404);
+  });
+});
+
 describe('me', () => {
-  it('requires a session: 401 with the Attio envelope', async () => {
+  it('requires a session: 401 with the public API envelope', async () => {
     const response = await query('me');
     expect(response.status).toBe(401);
     const body = (await response.json()) as TrpcErrorBody;

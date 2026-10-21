@@ -1,4 +1,4 @@
-// Deadline popover of the task dialogs (E README §2.7; evidence E/task-deadline-picker.png): natural-language field
+// Deadline popover of the task dialogs: natural-language field
 // "Next Tuesday..." (⏎ applies), a month calendar starting on the viewer's week start (today = dot, selected = blue),
 // and presets Today · Tomorrow · Next week · No date.
 import { addDays, addMonths, startOfWeek, type WeekDay } from '@agentic-crm/contracts';

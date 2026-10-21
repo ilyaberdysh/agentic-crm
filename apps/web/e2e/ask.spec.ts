@@ -1,4 +1,4 @@
-// Ask AI e2e (BACKLOG 10.01, 10.03, 10.04, 10.07, 10.16; slice 10 acceptance 4): the full-page chat and the side panel
+// Ask AI e2e (BACKLOG 10.01, 10.03, 10.04, 10.07, 10.16;  acceptance 4): the full-page chat and the side panel
 // (⌘J, page context), streamed answers with tool rows, record chips and embeds, approval cards, web search permission,
 // reply suggestions, try again, feedback, history, prompts, settings, the record summary and the Home block — against
 // the scripted fake LLM (AGENTIC_CRM_LLM=fake, packages/domain src/ai/fixtures/e2e).
@@ -116,7 +116,7 @@ test.describe('Ask AI chat', () => {
     // The embed's checkbox completes the task in place.
     await embed.getByTestId('task-checkbox').click();
     await expect(embed.getByTestId('task-checkbox')).toHaveAttribute('aria-checked', 'true');
-    // The thread keeps what ran: the approved (edited) input.
+    // Keep the submitted input on the thread, including edits made before sending.
     const tool = (await threadDetail(page, threadIdOf(page))).turns
       .flatMap((t) => t.steps)
       .flatMap((s) => s.parts)

@@ -10,7 +10,7 @@
 // Every record contributes ranges (segment, metric value, first bucket, end bucket): segment ranges from the grouping
 // attribute's history intersected with the metric attribute's history. Additive metrics (count, sum, mean = sum ÷
 // count) are summed as +/- deltas at the range bounds and accumulated with a window SUM per segment (O(value rows +
-// buckets × segments)); min, max and median unwind each range into its buckets (Attio's Unwind) and aggregate.
+// buckets × segments)); min, max and median unwind each range into its buckets and aggregate.
 // The null segment (records without a value at that time) is "all records − Σ segments" for single-value attributes
 // and additive metrics, otherwise the gaps between a record's value ranges ("islands").
 import {

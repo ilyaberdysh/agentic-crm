@@ -1,4 +1,4 @@
-// Task table (E README §2.6; evidence E/tasks-page.png): 32 px header (Task · Due date · Record · Assigned to), 32 px
+// Task table: 32 px header (Task · Due date · Record · Assigned to), 32 px
 // group rows with counts, 52 px rows — round checkbox, title, due label (red overdue / orange soon / grey later),
 // first linked record, assignee chips, hover ⋮ (Select · Delete task). Completed rows fade to 50 %. ⌘-click toggles a
 // row into the selection, ⇧-click selects a range; a plain click opens the edit dialog.

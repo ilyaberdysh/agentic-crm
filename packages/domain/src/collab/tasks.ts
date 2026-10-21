@@ -1,5 +1,5 @@
 // Tasks (BACKLOG 3.15; E README §2.6–2.7b, §3.3, §4.3; decisions X-09 deadlines, X-10 week start).
-// A task is visible to every member (tasks have no own permissions in Attio); linked records must be readable to be
+// A task is visible to every member; linked records must be readable to be
 // linked, and a task linked only to records the caller cannot read is hidden from them.
 import {
   type BulkSetTasksCompletedInput,
@@ -484,7 +484,7 @@ export const taskOps = {
     };
     if (data.groupBy === 'deadline') {
       for (const bucket of taskBuckets) {
-        // Buckets are sorted by deadline ascending (Attio: each bucket is a query sorted by deadline asc).
+        // Buckets are sorted by deadline ascending.
         const items = sorted.filter((t) => taskBucketOf(t, bounds) === bucket);
         push(bucket, null, data.sort.field === 'deadline' ? items : items.sort(byDeadline(1)));
       }

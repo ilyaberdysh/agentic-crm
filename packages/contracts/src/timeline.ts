@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { acceptAfterSchema, actorSchema, idOrSlugSchema, timestampSchema, uuidSchema } from './common.ts';
 import { attributeValueSchema } from './values.ts';
 
-/** Filter categories (D §3.8 "Visible events") plus comments and files, which Attio returns but does not render. */
+/** Filter categories, including comments and files. */
 export const eventCategories = [
   'calendar',
   'tasks',

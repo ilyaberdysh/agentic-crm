@@ -1,4 +1,4 @@
-// Unsaved filter/sort changes (C1 README §2.1, §3.1; evidence C1/17, 18): "Discard changes" (instant, no request) and
+// Unsaved filter/sort changes: "Discard changes" (instant, no request) and
 // a blue split button "Save for everyone" + ⌄ → "Save as new view" (modal with the de-duplicated title, Create view ↵).
 // Renders nothing while the view has no unsaved changes.
 import type { View } from '@agentic-crm/contracts';

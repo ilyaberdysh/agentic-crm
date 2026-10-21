@@ -1,4 +1,4 @@
-// The command palette host (command-palette.md §1–2), mounted once per workspace layout: the global shortcuts (⌘K,
+// The command palette host, mounted once per workspace layout: the global shortcuts (⌘K,
 // `/`, `e`), the frosted modal with the page on top of the stack, and the dialogs the palette launches when it closes.
 import { Modal } from '@agentic-crm/ui';
 import { NewRecordDialog } from '../attributes';

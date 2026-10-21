@@ -117,9 +117,9 @@ function currencyConfig(code: 'EUR' | 'USD') {
 }
 
 describe('dates and times (English patterns, user time zone)', () => {
-  it('formats absolute dates and timestamps like Attio cells', () => {
+  it('formats absolute dates and timestamps in table cells', () => {
     expect(formatDateAbsolute('2026-03-01')).toBe('Mar 1, 2026');
-    // The research seed stores 09:30Z; the reference browser (Europe/Moscow) shows 12:30pm.
+    // The fixture data stores 09:30Z; the reference browser (Europe/Moscow) shows 12:30pm.
     expect(formatTimestampAbsolute('2026-03-01T09:30:00.000000Z')).toBe('Mar 1st 2026, 12:30pm');
     expect(formatTimestampAbsolute('2026-10-22T21:05:00Z', US)).toBe('Oct 22nd 2026, 5:05pm');
     expect(formatHistoryTimestamp('2026-10-09T14:06:00Z')).toBe('9 Oct 2026 5:06 PM');

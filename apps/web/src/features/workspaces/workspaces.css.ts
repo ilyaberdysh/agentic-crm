@@ -1,4 +1,4 @@
-// `/workspaces` (K README §2.6; evidence/K/workspaces-page-redacted.png): 400 px column, rows 388 × 62 with a
+// `/workspaces`: 400 px column, rows 388 × 62 with a
 // 1 px stroke.primary ring and radius 12, faint dividers, "Add new workspace" ghost row at the bottom.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
@@ -9,7 +9,7 @@ export const column = style({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  // Attio: title at the top, "Add new workspace" at the bottom of a ~530 px column centred in the page.
+  // Title at the top, "Add new workspace" at the bottom of a ~530 px column centred in the page.
   height: 528,
   maxHeight: '100%',
   minHeight: 0,

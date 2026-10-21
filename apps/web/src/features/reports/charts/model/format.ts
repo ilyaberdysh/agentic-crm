@@ -1,5 +1,5 @@
-// Number formatting of charts (chart-types §2 "Number formatting"): full values in tooltips and tables ("€470,000.00",
-// "3hr 25m 7s", "44 %"), compact values on axes ("€500k", "€0k", "1hr"). Locale and grouping follow the app's single
+// Number formatting of charts (chart-types "Number formatting"): full values in tooltips and tables ("€470,000.00",
+// "3hr 25m 7s", "44 %"), compact values on axes ("€500k", "€0k", "1hr"). Locale and grouping follow the single
 // formatting locale (attributes/format).
 import { formatCurrency, formatNumber } from '../../../attributes/format/formatValue';
 import { getFormatSettings } from '../../../attributes/format/locale';
@@ -129,7 +129,7 @@ export function durationAxisUnit(step: number): { div: number; suffix: string } 
 
 /**
  * Formatter of the tick labels of a y axis ("€500k", "12", "6hr"). Durations leave the zero tick unlabelled (the
- * baseline), as Attio does.
+ * baseline), by design.
  */
 export function axisTickFormatter(format: ValueFormat, ticks: readonly number[]): (value: number) => string {
   if (format.kind === 'duration') {

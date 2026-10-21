@@ -1,4 +1,4 @@
-// Mailboxes, signatures and workspace email settings on the client (BACKLOG 7.08; F settings §1–4). Reads are TanStack
+// Mailboxes, signatures and workspace email settings on the client (BACKLOG 7.08; F settings). Reads are TanStack
 // queries under the realtime resources of `emailKeys`; writes answer the canonical item plus a change seq (the next
 // reads are not served older than it) and refresh the affected prefixes.
 import type {
@@ -138,8 +138,8 @@ export function useMailboxProviders() {
 // ---- writes: mailboxes ----------------------------------------------------------------------------------------
 
 /**
- * "Connect Google Account" / "Reconnect" (slice 7b): asks the server for the start URL of Google's consent and leaves
- * the app for it; Google sends the browser back to the accounts page with `?google=…` (see googleReturnMessage).
+ * "Connect Google Account" / "Reconnect": asks the server for the start URL of Google's consent and leaves
+ * the UI for it; Google sends the browser back to the accounts page with `?google=…` (see googleReturnMessage).
  */
 export function useConnectGoogle() {
   const ws = useWs();

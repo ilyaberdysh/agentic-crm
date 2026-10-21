@@ -1,4 +1,4 @@
-// Workflows index (README §2.1; evidence G/G-list-rows.png, G-list-empty.png): 32 px column header with icons, 32 px
+// Workflows index: 32 px column header with icons, 32 px
 // group rows on the secondary surface, 52 px rows (24 px tile + title), hover star and ⋮; the empty state with the
 // cubes illustration and the academy card.
 import { alpha, text, transitionColors, vars } from '@agentic-crm/ui/styles';

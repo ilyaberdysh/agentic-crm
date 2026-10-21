@@ -1,4 +1,4 @@
-// Workspace API tokens for the public REST API (/v2): Attio's scope catalogue (`<resource>:<read|read-write>`,
+// Workspace API tokens for the public REST API (/v2): scopes use `<resource>:<read|read-write>`,
 // 18 resources × 2 levels, documented in api.json securitySchemes; labels in K oauth-consent §2.8) and the domain
 // contracts for creating, listing, editing and revoking tokens (J workspace-admin §6 "Access tokens").
 import { z } from 'zod';
@@ -64,7 +64,7 @@ export const createApiTokenInputSchema = z.object({
   /** Who authorised the token; only system callers (CLI, seed) may set it, members authorise their own tokens. */
   authorizedByMemberId: uuidSchema.nullable().optional(),
   /**
-   * `user` tokens act with the permissions of `authorizedByMemberId` (Attio: only OAuth tokens are user-level, so only
+   * `user` tokens act with the permissions of `authorizedByMemberId`; only
    * system callers may mint them); the settings page creates workspace-level tokens.
    */
   tokenLevel: tokenLevelSchema.optional(),

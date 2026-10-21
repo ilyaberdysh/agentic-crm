@@ -61,6 +61,7 @@ export const noteRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/notes',
+    operationId: 'listNotes',
     scopes: v2Operations.listNotes.scopes,
     async handler(v2, request) {
       const query = parseInput(listNotesQuery, request.query, 'query parameters');
@@ -85,11 +86,12 @@ export const noteRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/notes',
+    operationId: 'createNote',
     scopes: v2Operations.createNote.scopes,
     async handler(v2, request) {
       const { data } = parseInput(createNoteBody, request.body, 'request body');
       const def = await v2.object(data.parent_object);
-      // A note can belong to a meeting (slice 7); unknown meetings are Attio's 404.
+      // A note can belong to a meeting (slice 7); unknown meetings are the public API's 404.
       const meetingId = data.meeting_id ? data.meeting_id.toLowerCase() : null;
       if (meetingId) {
         await v2.domain.meetings.get(v2.ctx, meetingId).catch(() => {
@@ -122,6 +124,7 @@ export const noteRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/notes/:note_id',
+    operationId: 'getNote',
     scopes: v2Operations.getNote.scopes,
     async handler(v2, request) {
       const id = noteId(params(request), getNotePathParams);
@@ -131,6 +134,7 @@ export const noteRoutes: RouteSpec[] = [
   {
     method: 'PATCH',
     url: '/notes/:note_id',
+    operationId: 'updateNote',
     scopes: v2Operations.updateNote.scopes,
     async handler(v2, request) {
       const id = noteId(params(request), updateNotePathParams);
@@ -152,6 +156,7 @@ export const noteRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/notes/:note_id',
+    operationId: 'deleteNote',
     scopes: v2Operations.deleteNote.scopes,
     async handler(v2, request) {
       const id = noteId(params(request), getNotePathParams);

@@ -1,4 +1,4 @@
-// New-record dialog and edit-history popover (C1 README §3.6–3.7; evidence/C1/36, 40, ds-modal-create-record).
+// New-record dialog and edit-history popover styles.
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 
@@ -78,7 +78,7 @@ export const historyTitle = style({
   flex: 'none',
 });
 
-/** Entries 56 px, no gap; text column at x 38, hover card from x 28 to 308 (evidence/C1/36). */
+/** Entries 56 px, no gap; text column at x 38, hover card from x 28 to 308. */
 export const historyList = style({
   position: 'relative',
   display: 'flex',

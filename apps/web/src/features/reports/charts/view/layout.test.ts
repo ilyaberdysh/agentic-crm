@@ -31,7 +31,7 @@ function layout(f: fx.Fixture, width: number, height: number, size: 'canvas' | '
   });
 }
 
-describe('cartesian layout (measured from the Attio screenshots)', () => {
+describe('cartesian layout geometry', () => {
   it('puts the editor plot at x ≈ 155, y 38 and leaves 97 px on the right', () => {
     const l = layout(fx.barGrouped, 830, 790);
     expect(l.plot.x).toBeGreaterThan(145);

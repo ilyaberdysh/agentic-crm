@@ -1,14 +1,14 @@
-// Routes of the workflows feature (README §1 route table):
-//   /$ws/automations/workflows                                   index
-//   /$ws/automations/workflows/new                               → a new transient workflow's editor
-//   /$ws/automations/workflows/$id                               → /editor
-//   /$ws/automations/workflows/$id/editor                        canvas editor
-//   /$ws/automations/workflows/$id/runs                          → the latest run (or "No runs yet")
-//   /$ws/automations/workflows/$id/runs/$versionId/$runId        run viewer
-//   /$ws/automations/workflows/$id/settings                      settings tab
-//   /$ws/settings/automations/workflows                          admin list
-//   /$ws/settings/automations/workflows/$id/permissions          admin permissions
-//   /$ws/settings/billing/automation-credit-usage                credits usage (workflow-credit-usage redirects)
+// Routes of the workflows feature (route table):
+// /$ws/automations/workflows index
+// /$ws/automations/workflows/new → a new transient workflow's editor
+// /$ws/automations/workflows/$id → /editor
+// /$ws/automations/workflows/$id/editor canvas editor
+// /$ws/automations/workflows/$id/runs → the latest run (or "No runs yet")
+// /$ws/automations/workflows/$id/runs/$versionId/$runId run viewer
+// /$ws/automations/workflows/$id/settings settings tab
+// /$ws/settings/automations/workflows admin list
+// /$ws/settings/automations/workflows/$id/permissions admin permissions
+// /$ws/settings/billing/automation-credit-usage credits usage (workflow-credit-usage redirects)
 import { type AnyRoute, createRoute, lazyRouteComponent, redirect, useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
 import { ContentSpinner } from '../shell/AppShell';

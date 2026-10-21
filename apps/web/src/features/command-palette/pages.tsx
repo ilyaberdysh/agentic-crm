@@ -660,7 +660,7 @@ export function ChooseListPage({ page, nested }: { page: PalettePage; nested: bo
   );
 }
 
-// ---- Upcoming meetings (today and tomorrow, the viewer's own; F README §2.4) -------------------------------------------
+// ---- Upcoming meetings (today and tomorrow, the viewer's own) -------------------------------------------
 
 export function UpcomingMeetingsPage({ page }: { page: PalettePage }) {
   const { timeZone } = useCalendar();

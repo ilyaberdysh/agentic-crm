@@ -131,6 +131,7 @@ export const recordRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/objects/:object/records/query',
+    operationId: 'queryRecords',
     scopes: v2Operations.queryRecords.scopes,
     kind: 'read',
     async handler(v2, request) {
@@ -167,6 +168,7 @@ export const recordRoutes: RouteSpec[] = [
   {
     method: 'POST',
     url: '/objects/:object/records',
+    operationId: 'createRecord',
     scopes: v2Operations.createRecord.scopes,
     async handler(v2, request) {
       const body = parseInput(createRecordBody, request.body, 'request body');
@@ -181,6 +183,7 @@ export const recordRoutes: RouteSpec[] = [
   {
     method: 'PUT',
     url: '/objects/:object/records',
+    operationId: 'assertRecord',
     scopes: v2Operations.assertRecord.scopes,
     async handler(v2, request) {
       const query = parseInput(assertRecordQuery, request.query, 'query parameters');
@@ -241,6 +244,7 @@ export const recordRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/objects/:object/records/:record_id',
+    operationId: 'getRecord',
     scopes: v2Operations.getRecord.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -256,6 +260,7 @@ export const recordRoutes: RouteSpec[] = [
     (method): RouteSpec => ({
       method,
       url: '/objects/:object/records/:record_id',
+      operationId: method === 'PATCH' ? 'updateRecord' : 'replaceRecord',
       scopes: method === 'PATCH' ? v2Operations.updateRecord.scopes : v2Operations.replaceRecord.scopes,
       async handler(v2, request) {
         const p = params(request);
@@ -288,6 +293,7 @@ export const recordRoutes: RouteSpec[] = [
   {
     method: 'DELETE',
     url: '/objects/:object/records/:record_id',
+    operationId: 'deleteRecord',
     scopes: v2Operations.deleteRecord.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -304,6 +310,7 @@ export const recordRoutes: RouteSpec[] = [
   {
     method: 'GET',
     url: '/objects/:object/records/:record_id/attributes/:attribute/values',
+    operationId: 'listRecordAttributeValues',
     scopes: v2Operations.listRecordAttributeValues.scopes,
     async handler(v2, request) {
       const p = params(request);
@@ -333,7 +340,7 @@ export const recordRoutes: RouteSpec[] = [
           if (batch.values.length < 500) break;
           before = batch.values.at(-1)?.activeFrom;
         }
-        // History is read newest first; Attio returns it oldest to newest by active_from.
+        // History is read newest first; the public API returns it oldest to newest by active_from.
         rows.reverse();
       } else {
         const result = await withHints(hints, () =>

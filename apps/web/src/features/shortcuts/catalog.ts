@@ -1,8 +1,8 @@
-// The shortcut catalog (B-shell shortcuts.md §2): every binding of the app with its section, description and keys.
+// The shortcut catalog lists each binding with its section, description and keys.
 // Features bind through `useAction(id, handler)` (keys come from here, so a tooltip, the help drawer and the binding
 // can never disagree) or through `useShortcut(keys, …)`; the source-scan test (catalog.test.ts) keeps literal
 // bindings and this list in step. Keys use the engine's names: `mod` (⌘ / Ctrl), `shift`, `alt`, `up`, `down`,
-// `left`, `right`, `enter`, `tab`, `space`; a space separates the steps of a sequence (`g h` = G, then H).
+// `left`, `right`, `enter`, `tab`, `space`; a space separates the steps of a sequence (`g h` = G, then).
 import { canonicalShortcut, useShortcut } from '../../lib/shortcuts';
 
 export const SHORTCUT_SECTIONS = ['General', 'Record page', 'Table view', 'Views', 'Dialogs', 'Help'] as const;
@@ -33,7 +33,7 @@ const t = (id: string, description: string, keys: string): CatalogEntry => ({
   contextual: true,
 });
 
-/** Order = the order of the help view (shortcuts.md §2; "Go to reports page" is registered but unlisted in Attio). */
+/** Entries follow the order shown in the shortcut help view. */
 export const SHORTCUT_CATALOG: readonly CatalogEntry[] = [
   g('quick-actions', 'Open quick actions', 'mod+k'),
   g('search', 'Open search', '/'),

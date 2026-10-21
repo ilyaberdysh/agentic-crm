@@ -1,5 +1,5 @@
 // /v2 permission enforcement (BACKLOG 6.04, §6 acceptance 2): user-level tokens act with their member's grants — writes
-// on a Read only object answer Attio's 403 (`auth_error` / `unauthorized` with the endpoint's message), objects and
+// on a Read only object answer the public API's 403 (`auth_error` / `unauthorized` with the endpoint's message), objects and
 // lists with No access disappear (404 like unknown ones, left out of GET /objects and /lists) — while workspace-level
 // tokens are governed by their scopes only.
 import { randomUUID } from 'node:crypto';
@@ -60,7 +60,7 @@ afterAll(async () => {
 const as = (token: string) => ({ token });
 
 describe('Read only', () => {
-  it('reads work; record writes answer 403 with Attio’s messages; the workspace token is unaffected', async () => {
+  it('reads work; record writes answer 403 with the public API’s messages; the workspace token is unaffected', async () => {
     expectOk('getRecord', await f.call('GET', `/objects/${objectSlug}/records/${recordId}`, as(bobToken)));
     expectOk(
       'queryRecords',

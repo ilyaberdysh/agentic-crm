@@ -1,4 +1,4 @@
-// Emoji picker popover (E README §2.8 "Reactions"; components.md EmojiPicker: 290 wide, radius 8, e2, 8 per row,
+// Emoji picker popover ("Reactions";  EmojiPicker: 290 wide, radius 8, e2, 8 per row,
 // 32 px rows, sticky 12 px category headers, "Search Emojis").
 import { PopoverPanel } from '@agentic-crm/ui';
 import { type RefObject, useState } from 'react';
@@ -74,7 +74,7 @@ export function EmojiPickerPopover({
   triggerRef: RefObject<Element | null>;
   onPick: (emoji: string) => void;
   onClose: () => void;
-  /** List icons open below-left aligned (evidence/C2/list-icon-picker.png). */
+  /** List icons open below-left aligned. */
   placement?: 'bottom end' | 'bottom start';
 }) {
   return (

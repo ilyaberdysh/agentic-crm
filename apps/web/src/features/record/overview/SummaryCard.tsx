@@ -1,4 +1,4 @@
-// AI record summary (BACKLOG 10.07; D README §2.5 item 4): "{Noun} summary" with "Generated at {time}" and a
+// AI record summary (BACKLOG 10.07;  item 4): "{Noun} summary" with "Generated at {time}" and a
 // regenerate button, from `records.summary.get` (never calls the model) and `regenerate` (the bulk model over the
 // record's values, recent notes and open tasks). Shows Generate when none exists, "Out of date" when a value changed
 // after generation, and a note instead of a button when the server has no AI key.
@@ -19,7 +19,8 @@ export function SummaryCard() {
   const ws = useWorkspaceRef();
   const client = useQueryClient();
   const models = useModels();
-  const configured = models.data?.configured ?? true;
+  // Saved targets currently power Ask text answers; summaries still require the server's configured LLM.
+  const configured = models.data?.models.some((m) => m.isAuto && !m.isUnavailable) ?? true;
   const summary = useRecordSummary(recordRef.entityDefinitionId, recordRef.entityInstanceId);
   useSummaryFreshness(ws.id, recordRef.entityDefinitionId, recordRef.entityInstanceId);
   const [busy, setBusy] = useState(false);

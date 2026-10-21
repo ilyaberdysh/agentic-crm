@@ -87,6 +87,7 @@ function attributeRoutes(target: Target): RouteSpec[] {
     {
       method: 'GET',
       url: base,
+      operationId: 'listAttributes',
       scopes: scopes(target, 'read'),
       async handler(v2, request) {
         const query = parseInput(listAttributesQuery, request.query, 'query parameters');
@@ -100,6 +101,7 @@ function attributeRoutes(target: Target): RouteSpec[] {
     {
       method: 'GET',
       url: `${base}/:attribute`,
+      operationId: 'getAttribute',
       scopes: scopes(target, 'read'),
       async handler(v2, request) {
         const p = params(request);
@@ -111,6 +113,7 @@ function attributeRoutes(target: Target): RouteSpec[] {
     {
       method: 'POST',
       url: base,
+      operationId: 'createAttribute',
       scopes: scopes(target, 'read-write'),
       async handler(v2, request) {
         const { data: d } = parseInput(createAttributeBody, request.body, 'request body');
@@ -180,6 +183,7 @@ function attributeRoutes(target: Target): RouteSpec[] {
     {
       method: 'PATCH',
       url: `${base}/:attribute`,
+      operationId: 'updateAttribute',
       scopes: scopes(target, 'read-write'),
       async handler(v2, request) {
         const p = params(request);
@@ -252,6 +256,7 @@ function optionRoutes(target: Target, kind: 'options' | 'statuses'): RouteSpec[]
     {
       method: 'GET',
       url: base,
+      operationId: isStatus ? 'listStatuses' : 'listSelectOptions',
       scopes: scopes(target, 'read'),
       async handler(v2, request) {
         const query = parseInput(
@@ -267,6 +272,7 @@ function optionRoutes(target: Target, kind: 'options' | 'statuses'): RouteSpec[]
     {
       method: 'POST',
       url: base,
+      operationId: isStatus ? 'createStatus' : 'createSelectOption',
       scopes: scopes(target, 'read-write'),
       async handler(v2, request) {
         const attr = await resolveAttr(v2, params(request));
@@ -293,6 +299,7 @@ function optionRoutes(target: Target, kind: 'options' | 'statuses'): RouteSpec[]
     {
       method: 'PATCH',
       url: `${base}/:option`,
+      operationId: isStatus ? 'updateStatus' : 'updateSelectOption',
       scopes: scopes(target, 'read-write'),
       async handler(v2, request) {
         const p = params(request);

@@ -1,4 +1,4 @@
-// "New data" (BACKLOG 9.10; H api §4.6, README §3.7; slice9-server.md "New data rule"). The server emits `report-stale`
+// The server emits `report-stale` when a saved report may have newer source data.
 // (resourceId = entity definition, scope.attributeDefinitionIds = the changed attributes or null) for definitions some
 // saved report depends on. A dataset is stale when such a message has seq > its `freshness.seq`, names a definition
 // in `freshness.entityDefinitionIds` and (null attributes, or an intersection with `freshness.attributeDefinitionIds`).

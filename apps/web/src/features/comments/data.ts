@@ -1,4 +1,4 @@
-// Comments, threads and reactions on the client (BACKLOG 3.16; E README §2.8, §3.5). Thread lists live under
+// Comments, threads and reactions on the client (BACKLOG 3.16). Thread lists live under
 // ['ws', ws, 'comment-thread-list', params], one thread under ['ws', ws, 'comment-thread', threadId] (realtime: one
 // prefix per resource). Posting appends optimistically; reactions and resolve toggle optimistically and revert on
 // error.

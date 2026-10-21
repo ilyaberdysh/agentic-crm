@@ -4,7 +4,7 @@
 // identities (apps/api) and every data write must go through the domain services (I1), which depend on this
 // package — so this entry only migrates and hands over, without a package dependency cycle.
 //   DATABASE_URL   target database (default: the local dev database `agentic_crm`)
-//   SEED_USERS     "email:Name,email:Name" team accounts (default: ilya@mymeet.ai, team@mymeet.ai)
+//   SEED_USERS     "email:Name,email:Name" team accounts (default: admin@example.com, team@example.com)
 import { spawnSync } from 'node:child_process';
 import { config } from '@agentic-crm/config';
 import { migrateUp } from './migrate.ts';

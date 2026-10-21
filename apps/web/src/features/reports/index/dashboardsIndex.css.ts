@@ -1,4 +1,4 @@
-// Dashboards index (H README §2.1, §3.9; evidence H/dashboards-index-favorites.png, 1512 × 945): page header 48 px,
+// Dashboards index: page header 48 px,
 // toolbar 49 px, favourites strip (12 px padding, cards 275 × 150), table header 32 px, group rows 32 px, dashboard
 // rows 52 px with columns Dashboard | Reports | Created at at 32 / 46 / 22 % of the width.
 import { alpha, insetRing, scales, text, vars } from '@agentic-crm/ui/styles';
@@ -231,7 +231,7 @@ export const tint = styleVariants({
   amber: { backgroundColor: u.surface.amberSubtle, color: u.content.onAmberSubtle },
 });
 
-/** The title is the row's link; its ::after stretches over the whole row (the star and the menu sit above it). */
+/** The title is the row's link; its::after stretches over the whole row (the star and the menu sit above it). */
 export const titleLink = style({
   overflow: 'hidden',
   textOverflow: 'ellipsis',

@@ -1,4 +1,4 @@
-// Palette state (command-palette.md §1–2): one per tab, outside React so any feature can open it. The modal is a
+// Palette state: one per tab, outside React so any feature can open it. The modal is a
 // stack of pages ("Mimir" pages): the root Quick actions page, the Search records page and the pages pushed from them
 // (Note templates, Choose record, Choose list, Upcoming meetings, Choose object). The stack remembers each page's
 // query and highlight while the user navigates back.
@@ -112,7 +112,7 @@ export function setHighlightKey(highlightKey: string | null): void {
 
 /**
  * ⌘K while the palette is open: the frame may claim it (open the Actions menu of the highlighted record);
- * otherwise it closes the modal (command-palette.md §1).
+ * otherwise it closes the modal.
  */
 let modKClaim: (() => boolean) | null = null;
 export function claimModK(handler: (() => boolean) | null): void {

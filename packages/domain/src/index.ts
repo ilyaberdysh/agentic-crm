@@ -102,11 +102,13 @@ import {
   zebraClamp,
   zebraSize,
 } from '@agentic-crm/contracts';
-import type { Database } from '@agentic-crm/db';
+import { type Database, sql } from '@agentic-crm/db';
+import { systemActor } from './actors.ts';
 import {
   type DecideActionInput,
   type ExecuteTaskCreateInput,
   type ProposeTaskActionInput,
+  type ReconcileExecutingActionInput,
   type RecordAgentState,
   type RecordAgentStateInput,
   recordAgentStateSchema,
@@ -116,6 +118,7 @@ import type { CaptureEvidenceInput } from './agentic/evidence/contracts.ts';
 import { createNoteEvidenceSource } from './agentic/evidence/note-source.ts';
 import { createEvidenceService } from './agentic/evidence/service.ts';
 import { type AgentAuthoritySource, createAgenticPolicy } from './agentic/policy.ts';
+import { createRunnerService, runnerAuthoritySource, runnerTokenWorkspace } from './agentic/runners/service.ts';
 import { createTaskCapability } from './agentic/task-capability.ts';
 import type { AgentTask, EnqueueAgentTaskInput } from './agentic/tasks/contracts.ts';
 import { createAgentTaskService } from './agentic/tasks/service.ts';
@@ -125,12 +128,13 @@ import { apiTokenOps } from './api-tokens/service.ts';
 import { createCallServices } from './calls/index.ts';
 import { capabilityOps } from './capabilities.ts';
 import { createCollabServices } from './collab/index.ts';
+import { resolveEncryptionKey } from './connectors/google/crypto.ts';
 import { type GoogleSettings, googleSettingsFromEnv } from './connectors/google/settings.ts';
 import type { ConnectorRegistry } from './connectors/types.ts';
-import { memberContext, type ServiceContext } from './context.ts';
+import { memberContext, type ServiceContext, systemContext } from './context.ts';
 import { documentsApi } from './documents/service.ts';
 import { createEmailServices } from './email/index.ts';
-import { badRequest, notFound } from './errors.ts';
+import { badRequest, forbidden, notFound } from './errors.ts';
 import { createExportServices } from './exports/index.ts';
 import {
   createAttributeWithExtensions,
@@ -145,6 +149,20 @@ import { kanbanOps } from './lists/kanban.ts';
 import { listOps } from './lists/service.ts';
 import { profileOps } from './members/profile.ts';
 import { memberAdminOps } from './members/service.ts';
+import {
+  type CreateProviderConnectionInput,
+  createProviderConnections,
+  type DisableProviderConnectionInput,
+  type RotateProviderConnectionInput,
+} from './model-gateway/connections.ts';
+import {
+  type CompleteRunnerInvocationInput,
+  type ConfigureModelTargetInput,
+  type CreateModelTargetInput,
+  type InvokeModelTargetInput,
+} from './model-gateway/contracts.ts';
+import { createModelGateway } from './model-gateway/gateway.ts';
+import { type UpdateProductModuleInput, workspaceProductModuleOps } from './modules/service.ts';
 import { memberGrantsOf, notifyListShared } from './notifications/producers.ts';
 import { drainEmailDeliveries, notificationOps } from './notifications/service.ts';
 import { grantResolver } from './permissions/resolver.ts';
@@ -180,6 +198,13 @@ export {
   type AgenticPolicyOptions,
   createAgenticPolicy,
 } from './agentic/policy.ts';
+export {
+  createRunnerService,
+  type RunnerService,
+  type RunnerTaskRuntime,
+  runnerAuthoritySource,
+  runnerTokenWorkspace,
+} from './agentic/runners/service.ts';
 export { createTaskCapability } from './agentic/task-capability.ts';
 export * from './agentic/tasks/contracts.ts';
 export { type AgentTaskService, createAgentTaskService } from './agentic/tasks/service.ts';
@@ -291,12 +316,24 @@ export {
   type RotateProviderConnectionInput,
 } from './model-gateway/connections.ts';
 export {
+  configureModelTargetSchema,
+  createModelTargetSchema,
+  localFeaturesSchema,
+  type ModelInvocationResult,
+  type ModelTargetMetadata,
+} from './model-gateway/contracts.ts';
+export {
   compileProductModuleRegistry,
   DuplicateProductModuleError,
   type ProductModuleRegistry,
   productModuleRegistry,
   UnknownProductModuleError,
 } from './modules/registry.ts';
+export {
+  type UpdateProductModuleInput,
+  updateProductModuleSchema,
+  type WorkspaceProductModule,
+} from './modules/service.ts';
 export { isAdminCaller } from './permissions/admin.ts';
 export { effectiveAccess, kindOfDefinition } from './permissions/resolve.ts';
 export { grantResolver } from './permissions/resolver.ts';
@@ -324,6 +361,8 @@ export interface DomainOptions {
   database: Database;
   /** Trusted runtime authentication/grants; never supplied through a product request. Missing integration denies agents. */
   agentAuthority?: AgentAuthoritySource;
+  /** Test seam; production uses AGENTIC_CRM_ENCRYPTION_KEY from shared config. */
+  modelEncryptionKey?: Buffer;
   /** Defaults to the allow-all resolver of slice 1. */
   policyResolver?: PolicyResolver;
   /** Object storage for record files and exports (defaults to S3 at config.s3 — SeaweedFS locally). */
@@ -367,13 +406,61 @@ export function createDomain(options: DomainOptions) {
   // Objects and lists honour their grants (workspace, teams, member; slice 6) on top of the configured resolver.
   const resolver = grantResolver(options.policyResolver ?? allowAllResolver);
   const policies = createPolicies(resolver);
-  const policy = createAgenticPolicy({ resolver, agents: options.agentAuthority });
-  const evidence = createEvidenceService(
-    createNoteEvidenceSource({ policy, resolver, agents: options.agentAuthority }),
-  );
-  const actions = createActionService({ policy, evidence });
+  const agents: AgentAuthoritySource = {
+    principalOf: async (tx) => {
+      if (tx.ctx.agentRuntime) return runnerAuthoritySource.principalOf(tx);
+      return (await options.agentAuthority?.principalOf(tx)) ?? null;
+    },
+    loadGrant: async (tx, grantId) => {
+      if (tx.ctx.agentRuntime) return runnerAuthoritySource.loadGrant(tx, grantId);
+      return (await options.agentAuthority?.loadGrant(tx, grantId)) ?? null;
+    },
+  };
+  const policy = createAgenticPolicy({ resolver, agents });
+  const evidence = createEvidenceService(createNoteEvidenceSource({ policy, resolver, agents }));
   const agentTasks = createAgentTaskService({ policy });
+  const actions = createActionService({
+    policy,
+    evidence,
+    onStateChanged: async (tx, action) => {
+      await agentTasks.reconcileLinkedAction(tx, action.id);
+    },
+  });
   const taskCapability = createTaskCapability({ actions, tasks: agentTasks, collab: { policies } });
+  const runners = createRunnerService({
+    tasks: {
+      ...agentTasks,
+      assertLease: async (tx, input) => {
+        await agentTasks.assertLease(tx, input);
+      },
+    },
+    executeTaskCreate: (tx, input) => taskCapability.execute(tx, input),
+  });
+  const encryptionKey =
+    options.modelEncryptionKey ??
+    resolveEncryptionKey(config.encryptionKey, config.authSecret, { production: config.isProduction });
+  const providerConnections = createProviderConnections({ database, encryptionKey });
+  const modelGateway = createModelGateway({
+    database,
+    encryptionKey,
+    authorizeRunner: async (tx, identity) => {
+      const { rows } = await sql<{ id: string }>`SELECT r.id FROM agentic_runners r
+        JOIN workspace_members m ON m.workspace_id = r.workspace_id AND m.id = r.member_id
+        WHERE r.workspace_id = ${tx.workspaceId}::uuid AND r.id = ${identity.runnerId}::uuid
+          AND r.member_id = ${identity.memberId}::uuid AND r.revoked_at IS NULL
+          AND m.removed_at IS NULL AND m.access_level IN ('admin', 'member') FOR SHARE OF r, m`.execute(tx.db);
+      if (!rows[0]) throw forbidden('The runner is unavailable to this member');
+    },
+    authenticateRunnerCompletion: async (proof) => {
+      if (typeof proof !== 'string') throw forbidden('An authenticated runner session is required');
+      const workspaceId = runnerTokenWorkspace(proof, 'run');
+      if (!workspaceId) throw forbidden('An authenticated runner session is required');
+      const runner = await runInWorkspace(database, systemContext(workspaceId, 'runner-model-usage'), (tx) =>
+        runners.authenticate(tx, proof),
+      );
+      return { workspaceId: runner.workspaceId, runnerId: runner.id, memberId: runner.memberId };
+    },
+  });
   const permissions = permissionOps(policies);
   const rules = ruleOps(policies);
   const webhookSender = options.webhookSender ?? fetchSender;
@@ -415,7 +502,13 @@ export function createDomain(options: DomainOptions) {
     ...(options.workflowHttp ? { http: options.workflowHttp } : {}),
   });
   const reportServices = createReportServices({ database, policies });
-  const aiServices = createAiServices({ database, policies, llm, ...(options.aiHub ? { hub: options.aiHub } : {}) });
+  const aiServices = createAiServices({
+    database,
+    policies,
+    llm,
+    modelGateway,
+    ...(options.aiHub ? { hub: options.aiHub } : {}),
+  });
   const formulaServices = createFormulaServices({
     database,
     policies,
@@ -427,7 +520,63 @@ export function createDomain(options: DomainOptions) {
   const callServices = createCallServices({ database, policies, jobs: options.jobs, llm });
 
   return {
+    productModules: {
+      list: (ctx: ServiceContext) => run(ctx, (tx) => workspaceProductModuleOps.list(tx)),
+      update: (ctx: ServiceContext, input: UpdateProductModuleInput) =>
+        run(ctx, (tx) => workspaceProductModuleOps.update(tx, input)),
+    },
     agentic: {
+      providerConnections: {
+        create: (ctx: ServiceContext, input: CreateProviderConnectionInput) => providerConnections.create(ctx, input),
+        get: (ctx: ServiceContext, id: string) => providerConnections.get(ctx, id),
+        list: (ctx: ServiceContext) => providerConnections.list(ctx),
+        rotate: (ctx: ServiceContext, input: RotateProviderConnectionInput) => providerConnections.rotate(ctx, input),
+        disable: (ctx: ServiceContext, input: DisableProviderConnectionInput) =>
+          providerConnections.disable(ctx, input),
+      },
+      models: {
+        targets: {
+          create: (ctx: ServiceContext, input: CreateModelTargetInput) => modelGateway.targets.create(ctx, input),
+          configure: (ctx: ServiceContext, input: ConfigureModelTargetInput) =>
+            modelGateway.targets.configure(ctx, input),
+          get: (ctx: ServiceContext, id: string) => modelGateway.targets.get(ctx, id),
+          list: (ctx: ServiceContext) => modelGateway.targets.list(ctx),
+          disable: (ctx: ServiceContext, input: { id: string; expectedVersion: number }) =>
+            modelGateway.targets.disable(ctx, input),
+        },
+        invoke: (ctx: ServiceContext, input: InvokeModelTargetInput) => modelGateway.invoke(ctx, input),
+        claimRunnerInvocations: (bearer: string, limit?: number) => modelGateway.claimRunnerInvocations(bearer, limit),
+        heartbeatRunnerInvocation: (input: { invocationId: string; leaseGeneration: string }, bearer: string) =>
+          modelGateway.heartbeatRunnerInvocation(input, bearer),
+        getRunnerInvocation: (ctx: ServiceContext, invocationId: string) =>
+          modelGateway.getRunnerInvocation(ctx, invocationId),
+        completeRunnerInvocation: (input: CompleteRunnerInvocationInput, bearer: string) =>
+          modelGateway.completeRunnerInvocation(input, bearer),
+      },
+      runners: {
+        createEnrollment: (ctx: ServiceContext) => run(ctx, (tx) => runners.createEnrollment(tx)),
+        enroll: (ctx: ServiceContext, input: Parameters<typeof runners.enroll>[1]) =>
+          run(ctx, (tx) => runners.enroll(tx, input)),
+        list: (ctx: ServiceContext) => run(ctx, (tx) => runners.list(tx)),
+        revoke: (ctx: ServiceContext, runnerId: string) => run(ctx, (tx) => runners.revoke(tx, runnerId)),
+        authenticate: (ctx: ServiceContext, bearer: string) => run(ctx, (tx) => runners.authenticate(tx, bearer)),
+        claim: (ctx: ServiceContext, bearer: string, input: Parameters<typeof runners.claim>[2]) =>
+          run(ctx, (tx) => runners.claim(tx, bearer, input)),
+        heartbeat: (ctx: ServiceContext, bearer: string, input: Parameters<typeof runners.heartbeat>[2]) =>
+          run(ctx, (tx) => runners.heartbeat(tx, bearer, input)),
+        finish: (
+          ctx: ServiceContext,
+          bearer: string,
+          kind: Parameters<typeof runners.finish>[2],
+          input: Parameters<typeof runners.finish>[3],
+        ) => run(ctx, (tx) => runners.finish(tx, bearer, kind, input)),
+        recoverExpired: (ctx: ServiceContext, bearer: string, input: Parameters<typeof runners.recoverExpired>[2]) =>
+          run(ctx, (tx) => runners.recoverExpired(tx, bearer, input)),
+        resumeBlocked: (ctx: ServiceContext, bearer: string, input: Parameters<typeof runners.resumeBlocked>[2]) =>
+          run(ctx, (tx) => runners.resumeBlocked(tx, bearer, input)),
+        executeTool: (ctx: ServiceContext, bearer: string, grant: string, input: ExecuteTaskCreateInput) =>
+          run(ctx, (tx) => runners.executeTool(tx, bearer, grant, input)),
+      },
       recordState: (ctx: ServiceContext, input: RecordAgentStateInput): Promise<RecordAgentState> =>
         run(ctx, async (tx) => {
           const parsed = recordAgentStateSchema.parse(input);
@@ -442,6 +591,8 @@ export function createDomain(options: DomainOptions) {
         /** Trusted seed/worker entry point. Product transports intentionally expose only record reads. */
         enqueue: (ctx: ServiceContext, input: EnqueueAgentTaskInput): Promise<AgentTask> =>
           run(ctx, (tx) => agentTasks.enqueue(tx, input)),
+        resumeBlocked: (ctx: ServiceContext, taskId: string): Promise<AgentTask> =>
+          run(ctx, (tx) => agentTasks.resumeBlocked(tx, { taskId })),
       },
       evidence: {
         capture: (ctx: ServiceContext, input: CaptureEvidenceInput) => run(ctx, (tx) => evidence.capture(tx, input)),
@@ -450,6 +601,30 @@ export function createDomain(options: DomainOptions) {
         get: (ctx: ServiceContext, id: string) => run(ctx, (tx) => actions.get(tx, id)),
         propose: (ctx: ServiceContext, input: ProposeTaskActionInput) => run(ctx, (tx) => actions.propose(tx, input)),
         decide: (ctx: ServiceContext, input: DecideActionInput) => run(ctx, (tx) => actions.decide(tx, input)),
+        reconcileExecuting: (ctx: ServiceContext, input: ReconcileExecutingActionInput) =>
+          run(ctx, (tx) => actions.reconcileExecuting(tx, input)),
+        reconcileExecutingAsOperator: (ctx: ServiceContext, input: ReconcileExecutingActionInput) =>
+          run(ctx, async (tx) => {
+            if (tx.ctx.actor.type !== 'workspace-member' || !tx.ctx.actor.id)
+              throw forbidden('Workspace admin required');
+            const operatorId = tx.ctx.actor.id;
+            const member = await tx.db
+              .selectFrom('workspace_members')
+              .select('id')
+              .where('workspace_id', '=', tx.workspaceId)
+              .where('id', '=', operatorId)
+              .where('access_level', '=', 'admin')
+              .where('removed_at', 'is', null)
+              .forShare()
+              .executeTakeFirst();
+            if (!member) throw forbidden('Workspace admin required');
+            tx.ctx.actor = systemActor(`operator-reconcile:${operatorId}`);
+            try {
+              return await actions.reconcileExecuting(tx, input);
+            } finally {
+              tx.ctx.actor = { type: 'workspace-member', id: operatorId };
+            }
+          }),
       },
       taskCreate: {
         execute: (ctx: ServiceContext, input: ExecuteTaskCreateInput) =>

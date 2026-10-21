@@ -1,10 +1,10 @@
-// Routes of the lists feature (C2 README §1; J objects-lists §4):
-//   /$ws/collection/$listId                        → the list's first view (or "Start with a view")
-//   /$ws/collection/$listId/view/$viewId           the list page
-//   /$ws/collection/$listId/entry/$entryId         → the entry's parent record page (there is no entry page)
-//   /$ws/collection/$listId/entry/$entryId/comments → the list's default view with that entry's comments open
-//   /$ws/settings/data/lists                       lists in settings
-//   /$ws/settings/data/lists/$listId[/$tab]        list settings (general · permissions · attributes · …)
+// Routes of the lists feature:
+// /$ws/collection/$listId → the list's first view (or "Start with a view")
+// /$ws/collection/$listId/view/$viewId the list page
+// /$ws/collection/$listId/entry/$entryId → the entry's parent record page (there is no entry page)
+// /$ws/collection/$listId/entry/$entryId/comments → the list's default view with that entry's comments open
+// /$ws/settings/data/lists lists in settings
+// /$ws/settings/data/lists/$listId[/$tab] list settings (general · permissions · attributes · …)
 import type { RecordRef } from '@agentic-crm/contracts';
 import { useQuery } from '@tanstack/react-query';
 import { type AnyRoute, createRoute, Navigate, redirect } from '@tanstack/react-router';
@@ -55,7 +55,7 @@ export function listRoutes(getParentRoute: () => AnyRoute): AnyRoute[] {
   return [index, view, entry, entryComments];
 }
 
-/** `/collection/<list>/entry/<entry>` → the parent record's overview (C2 README §1, observed L:s45). */
+/** `/collection/<list>/entry/<entry>` → the parent record's overview (observed L:s45). */
 function EntryRedirect({ listId, entryId }: { listId: string; entryId: string }) {
   const { workspace, href } = useWorkspace();
   const list = useList(workspace, listId);

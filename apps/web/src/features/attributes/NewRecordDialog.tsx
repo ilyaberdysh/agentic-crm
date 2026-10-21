@@ -1,7 +1,7 @@
-// "Create {Object}" dialog (BACKLOG 2.12, C1 README §3.7; evidence/C1/40, ds-modal-create-record): one field per
+// "Create {Object}" dialog: one field per
 // writable attribute in attribute order, "(optional)" unless required, per-type controls (text inputs, pickers in
 // popovers, inline checkbox and stars), defaults prefilled; footer "Create more" + "Create record ⌘↵". The record is
-// created with a client-minted id (I3) in one `records.put`.
+// created with a client-minted id  in one `records.put`.
 import type { ValuesMap } from '@agentic-crm/contracts';
 import {
   Button,
@@ -63,14 +63,14 @@ export const TEXT_TYPES = new Set<AttributeType>([
   'phone-number',
 ]);
 
-/** Attributes the dialog offers: writable, not archived/hidden, not computed (C1 README §3.7). */
+/** Attributes the dialog offers: writable, not archived/hidden, not computed. */
 export function creatableAttributes(attributes: AttributeDefinition[]): AttributeDefinition[] {
   return attributes.filter(
     (a) => !a.isArchived && !a.isHidden && !a.isReadOnly && a.type !== 'interaction' && a.systemAttributeType !== 'id',
   );
 }
 
-/** Default value rows of an attribute (A §4.6: static JSON arrays; dynamic PT… durations and current-user). */
+/** Default value rows of an attribute (A: static JSON arrays; dynamic PT… durations and current-user). */
 export function defaultInputs(attribute: AttributeDefinition, memberId: string | null, now = new Date()): ValueInput[] {
   const def = attribute.defaultValue;
   if (!def) return [];

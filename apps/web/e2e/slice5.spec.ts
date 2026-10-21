@@ -1,6 +1,6 @@
-// Slice 5 — command palette, search, shortcuts, notifications, home (BACKLOG §5 acceptance 2–4; items 5.02–5.07).
-// Runs against the e2e stack with seed-slice3 data and a second member (Grace Hopper); every test restores what it
-// changes so the other specs and the parity run see the seeded state.
+//  — command palette, search, shortcuts, notifications, home (acceptance 2–4; items 5.02–5.07).
+// Runs against the e2e stack with seed- data and a second member (Grace Hopper); every test restores what it
+// changes so the other specs and the visual review run see the seeded state.
 import { expect, type Locator, type Page, test } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';
 import { addEntry, createList, deleteList, findRecord } from './lists-support.ts';
@@ -266,7 +266,7 @@ test('nested pages: Note templates (breadcrumb, back), Create task, Add to list,
   await expect(page.getByTestId('task-dialog')).toContainText('Create task');
   await page.keyboard.press('Escape');
 
-  // Upcoming meetings (slice 7 fills it).
+  // Upcoming meetings (fills it).
   await openPalette(page);
   await page.getByTestId('palette-input').fill('upcoming');
   await page.keyboard.press('Enter');

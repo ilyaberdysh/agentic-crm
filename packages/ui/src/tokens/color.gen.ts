@@ -1,4 +1,4 @@
-// Committed design-token snapshot. Source provenance must be resolved before public release.
+// Committed design-token snapshot retained under the maintainer disposition in PROVENANCE.md.
 // Semantic colour tokens per theme identity (accent blue, surface mode base).
 
 export const colorTokens = {

@@ -1,4 +1,4 @@
-// Record table metrics (layout.md §4, components.md §9, C1 README §2.4–2.6, motion.md "Table"): header 40, rows 36
+// Record table metrics ("Table"): header 40, rows 36
 // (35 + 1 px border), cell padding 8 12 0, 1 px right/bottom `stroke.primary`, Body.Standard; record column sticky
 // with a frozen shadow once scrolled; footer 36 + 1 px top border; overlays fade 140 ms ease-in-out.
 import { alpha, scales, text, vars } from '@agentic-crm/ui/styles';
@@ -281,7 +281,7 @@ export const recordAction = style({
   selectors: { '&:hover': { color: c.content.primary, backgroundColor: c.surface.primaryHover } },
 });
 
-/** Row checkbox: 16 × 16, radius 6? (layout §4: radius 6, 1 px `stroke.secondaryTransparent`). */
+/** Row checkbox: 16 × 16, radius 6? (layout: radius 6, 1 px `stroke.secondaryTransparent`). */
 export const checkbox = style({
   flex: 'none',
   width: 16,

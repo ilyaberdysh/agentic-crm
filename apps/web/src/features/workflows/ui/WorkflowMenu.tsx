@@ -1,4 +1,4 @@
-// Workflow menu (README §3.4): header ⋮ and index row ⋮. Duplicate workflow (confirm → "Copy of …" draft, the editor
+// Workflow menu: header ⋮ and index row ⋮. Duplicate workflow (confirm → "Copy of …" draft, the editor
 // opens on the copy), Archive / Restore workflow, Add to / Remove from favorites (header only), Delete workflow (red;
 // disabled once the workflow has run or while it is live) or Discard workflow for an untouched transient draft.
 

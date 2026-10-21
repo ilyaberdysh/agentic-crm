@@ -1,0 +1,9 @@
+# Supply an independently trusted, digest-pinned official Node 22+ image.
+# No default base is chosen and builds/publication are an explicit operator step.
+ARG NODE_IMAGE
+FROM ${NODE_IMAGE}
+RUN npm install --global --omit=dev --ignore-scripts @openai/codex@0.163.0 \
+    && mkdir -p /workspace /state/codex /relay \
+    && npm cache clean --force
+WORKDIR /workspace
+ENTRYPOINT ["/usr/local/bin/node"]

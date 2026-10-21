@@ -1,4 +1,4 @@
-// Slice 9 procedures over HTTP (BACKLOG §9): dashboards.* / reports.* / reporting.* through tRPC with the Attio
+// Slice 9 procedures over HTTP (BACKLOG §9): dashboards.* / reports.* / reporting.* through tRPC with the public API
 // error envelope, dashboard grants through permissions.* (resourceKind 'dashboard'), and acceptance 3 end to end:
 // a stage change made by one member reaches another member's data channel as a `report-stale` invalidation whose seq
 // is newer than the freshness token of the cell's dataset (the "New data" pill), and a refetch clears it.

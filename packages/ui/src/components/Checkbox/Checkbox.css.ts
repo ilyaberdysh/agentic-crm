@@ -20,7 +20,7 @@ export const root = style({
   },
 });
 
-// Checkbox (components.md §3): 1 px black-9 % border on surface.primary; checked = accent fill
+// Checkbox: 1 px black-9 % border on surface.primary; checked = accent fill
 // with an accent border and a white 1.5 px check revealed by a circular clip-path (200 ms ease-in).
 export const box = style({
   boxSizing: 'border-box',
@@ -64,7 +64,7 @@ export const mark = style({
   },
 });
 
-// Radio (components.md §3): inset ring when off; accent with a white dot when on.
+// Radio: inset ring when off; accent with a white dot when on.
 export const radioGroup = style({ display: 'flex', flexDirection: 'column', gap: 8 });
 export const radioGroupHorizontal = style({ flexDirection: 'row', gap: 16 });
 
@@ -100,7 +100,7 @@ export const radioSize = styleVariants({
   20: { width: 20, height: 20, selectors: { '&::after': { width: 8, height: 8 } } },
 });
 
-// Switch (components.md §3).
+// Switch.
 export const track = style({
   boxSizing: 'border-box',
   position: 'relative',

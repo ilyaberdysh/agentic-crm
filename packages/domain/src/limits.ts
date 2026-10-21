@@ -1,5 +1,5 @@
 // Data-model limits (CROSS-DOMAIN C.4 #7): options/stages per attribute, attributes per object, views per object.
-// Values: contracts quotaDefaults, overridable per workspace through capabilities; Attio's error codes
+// Values: contracts quotaDefaults, overridable per workspace through capabilities; public error codes
 // (ATTRIBUTE_SELECT_OPTIONS_LIMIT_EXCEEDED, OVER_USAGE_LIMIT; A internal-api-shapes §1.2).
 import type { QuotaKey } from '@agentic-crm/contracts';
 import { capabilityOps } from './capabilities.ts';

@@ -1,5 +1,5 @@
 // Record page e2e helpers: tRPC calls with the page's session, lookups of the seeded demo records and idempotent
-// fixtures (values, notes, tasks, files) that the record parity frames and specs rely on.
+// fixtures (values, notes, tasks, files) that the record visual review frames and specs rely on.
 import { randomUUID } from 'node:crypto';
 import type { Page } from '@playwright/test';
 import { WORKSPACE_SLUG } from './env.ts';

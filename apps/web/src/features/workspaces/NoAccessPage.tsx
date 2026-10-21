@@ -1,4 +1,4 @@
-// Unknown or inaccessible workspace slug (B README §2.6; evidence/B/no-access-page.png): standalone page, no
+// Unknown or inaccessible workspace slug: standalone page, no
 // sidebar — logo, red warning triangle + "You don't have access to this workspace!", footer with Sign out.
 import { Icon } from '@agentic-crm/ui';
 import { useDocumentTitle } from '../../lib/useDocumentTitle';

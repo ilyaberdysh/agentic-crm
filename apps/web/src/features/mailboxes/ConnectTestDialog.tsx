@@ -1,5 +1,5 @@
 // "Connect test account" (dev builds and e2e only): connects a mailbox of the test connector by address, so email and
-// calendar demos work without Gmail (the Gmail connector is slice 7b). Nothing is delivered anywhere.
+// calendar demos work without Gmail (the Gmail connector is). Nothing is delivered anywhere.
 import { Banner, Button, DialogBody, DialogFooter, DialogHeader, Modal, TextInput, toast } from '@agentic-crm/ui';
 import { type FormEvent, useState } from 'react';
 import { useConnectMailbox } from './data';

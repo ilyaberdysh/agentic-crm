@@ -1,4 +1,4 @@
-// Variable picker and chips (README §3.1; evidence G/G-variable-picker-attributes.png, G-variable-inline-brace.png,
+// Variable picker and chips:
 // G-update-record-config.png): "Accessible blocks" rows with output counts, greyed "no data" outcomes, a breadcrumb
 // header with a back chevron, attribute rows with type icons, disabled / ⚠ incompatible rows; blue inline chips
 // "{ Record action › … › Headcount }".

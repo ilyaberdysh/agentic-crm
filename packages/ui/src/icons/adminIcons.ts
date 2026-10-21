@@ -1,4 +1,4 @@
-// Settings administration icons (slice 6: teams, members, permissions, rules, developers) → Lucide glyphs. Kept in
+// Settings administration icons for teams, members, permissions, rules and developers → Lucide glyphs. Kept in
 // their own map (spread into iconMap) so parallel slices add icons without touching the same lines.
 import { Bookmark, Briefcase, Camera, Flag, Gauge, Layers, Lightbulb, Rocket, Shield, Webhook } from 'lucide-react';
 import type { IconGlyph } from './types';

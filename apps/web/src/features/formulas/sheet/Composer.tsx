@@ -1,4 +1,4 @@
-// AI composer under the editor (formulas.md §4.5): rounded input "Describe the formula you want … to create..."
+// AI composer under the editor: rounded input "Describe the formula you want … to create..."
 // (empty editor) / "Refine your formula"; undo / redo once history exists; 28 px submit (ArrowUp); Enter submits,
 // Shift+Enter is a newline. While a request is open: shimmering "Thinking" and a stop button ("Cancel generation"
 // only forgets the request locally). Failures show a warning banner above the input. Without an LLM the composer

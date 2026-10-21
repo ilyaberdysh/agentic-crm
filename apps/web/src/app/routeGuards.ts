@@ -1,5 +1,5 @@
-// Shared beforeLoad logic: the logged-out routing matrix (K README §2.1) and the post-auth workspace pick
-// (legacy-welcome §1).
+// Shared beforeLoad logic: the logged-out routing matrix  and the post-auth workspace pick
+// (legacy-welcome).
 import type { QueryClient } from '@tanstack/react-query';
 import { type ParsedLocation, redirect } from '@tanstack/react-router';
 import { type Me, meQuery } from '../data/session';

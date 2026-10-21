@@ -1,4 +1,4 @@
-// Rules tab of an object (J objects-lists §3.2; evidence/J/object-rules-empty.png, object-rules-list.png): the empty
+// Rules tab of an object: the empty
 // state ("Requirement rules — Set requirements for updating records", "+ Add rule") and the list (header, table
 // Rule · Applies to · ⋮ Edit / Delete). Rows open the editor; deleting asks "Delete rule?".
 import type { EntityDefinition, Rule } from '@agentic-crm/contracts';

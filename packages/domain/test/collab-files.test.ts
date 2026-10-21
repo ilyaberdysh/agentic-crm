@@ -35,7 +35,7 @@ describe('files', () => {
       contentSize: 11,
       parentFolderId: null,
       rootEntryId: entry.id,
-      storageProvider: 'attio',
+      storageProvider: 'agentic-crm',
       hasChildren: null,
       createdBy: { type: 'workspace-member', id: f.memberId },
     });

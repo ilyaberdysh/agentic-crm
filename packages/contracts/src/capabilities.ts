@@ -1,5 +1,5 @@
 // Capabilities: feature flags and quotas (CROSS-DOMAIN B.13, J README §4.3, K sessions §1.2). For our internal
-// product every feature is on and every quota unlimited; the keys keep Attio's names so gated features can be
+// product every feature is on and every quota unlimited; the keys retain compatibility names so gated features can be
 // switched per workspace later.
 import { z } from 'zod';
 
@@ -58,23 +58,23 @@ export const quotaKeys = [
 export type QuotaKey = (typeof quotaKeys)[number];
 
 /**
- * Data-model limits (CROSS-DOMAIN C.4 #7; Attio's values are unknown, A U-11, so these are ours). Every other quota
+ * Data-model limits. Every other quota
  * defaults to unlimited. A workspace override in settings.capabilities.quotas replaces the default (null = default).
- *   • 500 options or stages per attribute — 409 ATTRIBUTE_SELECT_OPTIONS_LIMIT_EXCEEDED (Attio's code).
+ *   • 500 options or stages per attribute — 409 ATTRIBUTE_SELECT_OPTIONS_LIMIT_EXCEEDED.
  *   • 500 attributes per object, archived ones included: each keeps up to three projection columns and Postgres
  *     caps a table at 1,600 columns, so overrides are clamped to 500 — 409 OVER_USAGE_LIMIT.
  *   • 500 views per object — 409 OVER_USAGE_LIMIT.
  * Filters: 6 levels, 200 conditions, `in` lists of 1,000; sorts: 5; paths: 5 hops (contracts and compiler).
  */
 export const quotaDefaults: Partial<Record<QuotaKey, number>> = {
-  /** Requirement rules per object (Attio Pro: 8; J permissions §7, BACKLOG 6.06). */
+  /** Requirement rules per object: 8. */
   particle_gates_per_object_hard: 8,
   select_options_per_attribute_hard: 500,
   attributes_per_object_hard: 500,
   views_per_object_hard: 500,
   /**
    * Credits as a cost guard (C.4 #14; slice 10): monthly Ask Agentic seat credits per member and the monthly workspace
-   * pool shared by workflows, AI attributes and members over their seat credits (Attio Pro values, ask-agentic §11.4).
+   * pool shared by workflows, AI attributes and members over their seat credits.
    * 1 credit = $0.01 of provider cost. Exhausted → 402 CREDITS_EXHAUSTED.
    */
   workspace_membership_credits_per_month_hard: 1000,

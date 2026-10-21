@@ -83,6 +83,11 @@ describe('webhook loop', () => {
         .update(request?.body as string)
         .digest('hex'),
     );
+    expect(request?.headers['agentic-crm-signature']).toBe(
+      createHmac('sha256', hook.secret)
+        .update(request?.body as string)
+        .digest('hex'),
+    );
 
     status = 503;
     await worker.domain.records.create(ctx, {

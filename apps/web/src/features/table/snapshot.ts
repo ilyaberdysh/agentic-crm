@@ -1,12 +1,12 @@
-// Which snapshot the table shows (C1 README §3.5, §5; internal-api-shapes §3; ARCHITECTURE §5 "Cell edit").
+// Tracks which snapshot the table currently shows.
 // The query layer always holds the newest snapshot of (view, filter, sorts); the controller decides when the table
 // switches to it:
-//   - while rows are selected the shown snapshot is frozen (selections are index intervals over it); a newer
-//     snapshot of *different* params raises "View has changed. Clear selection to update.";
-//   - after the author's own edits the row order is frozen until refresh: a realtime refresh whose row set differs
-//     from the shown one only by rows this tab edited is not applied;
-//   - a refresh of the same params is applied once the chunks covering the visible rows are loaded, so scrolled
-//     tables never flash skeletons; new params apply at once.
+// - while rows are selected the shown snapshot is frozen (selections are index intervals over it); a newer
+// snapshot of *different* params raises "View has changed. Clear selection to update.";
+// - after the author's own edits the row order is frozen until refresh: a realtime refresh whose row set differs
+// from the shown one only by rows this tab edited is not applied;
+// - a refresh of the same params is applied once the chunks covering the visible rows are loaded, so scrolled
+// tables never flash skeletons; new params apply at once.
 // Rows past the first 1000 come from `snapshots.chunk` as they scroll into view.
 import { CHUNK_SIZE, type SnapshotPage } from './data';
 

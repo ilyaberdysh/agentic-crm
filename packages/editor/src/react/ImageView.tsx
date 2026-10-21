@@ -1,4 +1,4 @@
-// Image block node view (E editor.md §7 "Display", "Image options"): natural size up to the column width, aligned
+// Image block node view ("Display", "Image options"): natural size up to the column width, aligned
 // centre by default; side handles resize with the aspect ratio kept (min 100 px); a hover "⋯" button opens
 // Duplicate, Download, Replace, Add caption, Align ▸, Delete. Enter adds a paragraph after a selected image, Shift+Enter
 // before; Backspace/Delete remove it.

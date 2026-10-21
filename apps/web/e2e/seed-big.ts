@@ -1,7 +1,7 @@
-// Seeds a large custom object for table tests and performance runs (BACKLOG §2 acceptance 2; S2-TABLE perf notes):
-// `<count>` records with 10 attribute types and a table view, written through the domain services (I1) with a few
+// Seeds a large custom object for table tests and performance runs (acceptance 2; S2-TABLE perf notes):
+// `<count>` records with 10 attribute types and a table view, written through the domain services  with a few
 // parallel transactions. Idempotent per slug (stable record ids; re-runs only fill what is missing).
-//   pnpm --filter @agentic-crm/api exec tsx ../web/e2e/seed-big.ts --db agentic_crm_test_s2table --slug big_records --count 12000
+// pnpm --filter @agentic-crm/api exec tsx../web/e2e/seed-big.ts --db agentic_crm_test_s2table --slug big_records --count 12000
 import { createHash } from 'node:crypto';
 import { parseArgs } from 'node:util';
 import type { AttributeDefinition, CreateAttributeInput, ValuesMap } from '@agentic-crm/contracts';

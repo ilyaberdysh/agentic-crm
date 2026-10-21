@@ -1,4 +1,4 @@
-// Files tab (D README §3.9; evidence D-company-files, D-person-files-empty): header with New folder / Upload file /
+// Files tab: header with New folder / Upload file /
 // ⋮, rows (icon, name, "(28 bytes)", date, ⋮), folders first and expandable inline, a whole-tab drop zone and a
 // dark full-screen lightbox.
 import { scales, text, vars } from '@agentic-crm/ui/styles';

@@ -1,4 +1,4 @@
-// Attribute values (A §4.7, attribute-types §3 and §5). Value shapes are Attio's internal shapes with camelCase keys.
+// Attribute value shapes use camelCase keys.
 // Write forms are what clients send in `value`; read forms are what the server returns.
 import { z } from 'zod';
 import { actorSchema, actorTypeSchema, rankSchema, timestampSchema, uuidSchema } from './common.ts';

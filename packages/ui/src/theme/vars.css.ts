@@ -14,7 +14,7 @@ export const vars = createGlobalThemeContract(
 export type ThemeVars = typeof vars;
 
 /**
- * Values Attio computes in code rather than as tokens, kept per identity: the standalone
+ * Values Computed in code rather than as tokens, kept per identity: the standalone
  * dialog frame (lighten(surface.primary, 2 %) at 60 % alpha, observed live as
  * rgba(255,255,255,.6) light / rgba(28,29,31,.6) dark) and the inner panel's 7 % ring.
  */

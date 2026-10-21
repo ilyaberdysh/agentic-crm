@@ -1,4 +1,4 @@
-// Run block detail (runs.md §3; evidence G/G-run-block-detail.png, G-run-failed-retry-menu.png): back to run history,
+// Run block detail: back to run history,
 // header (tile, title, category), the description, stats Status · Credits used · Runtime · Executions, the failure text
 // with "Troubleshooting workflows", the read-only Configuration, Outputs (or "This block has no outputs") and Next step.
 import { BLOCK_CATEGORY_LABELS, blockDefinition, FAILURE_REASON_LABELS, type WfType } from '@agentic-crm/contracts';

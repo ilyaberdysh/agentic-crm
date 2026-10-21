@@ -1,4 +1,4 @@
-// "Choose list" (C2 README §2.5 B.1 / C.1; D README §3.6; raw C2 s46-record-addtolist, s52-bulk-choose): "Search
+// "Choose list": "Search
 // lists...", section **Lists** — only lists whose parent object matches, each with its emoji and, from a record page,
 // the number of this record's entries in it — then "Create new list"; footer "↑ ↓ Navigate" · "Select list ↵".
 import type { RecordRef } from '@agentic-crm/contracts';

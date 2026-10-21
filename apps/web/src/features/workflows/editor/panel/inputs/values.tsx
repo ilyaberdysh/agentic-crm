@@ -1,4 +1,4 @@
-// Value inputs of the configuration panel (block-catalog §7): record / entry pickers with variables, linked records,
+// Value inputs of the configuration panel (block-catalog): record / entry pickers with variables, linked records,
 // members, variable-only inputs ("No value selected"), numbers, dates, durations (number + unit), enums, day toggles,
 // time, timezone, cron, JSON and HTTP headers. Each takes the input's config expression and answers a new one.
 import type { ConfigExpr, VariableExpr } from '@agentic-crm/contracts';
@@ -681,7 +681,7 @@ export function CronInput(props: InputProps) {
   return <TextLine {...props} mono />;
 }
 
-/** "(GMT+3) Europe/Moscow" (README §3.6). */
+/** "(GMT+3) Europe/Moscow". */
 export function timezoneLabel(zone: string, at: Date = new Date()): string {
   try {
     const part = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'shortOffset' })

@@ -1,4 +1,4 @@
-// The seam between the table/object page and the other slice-2 features (slice2-contracts.md): C1 attribute registry
+// The seam between the table/object page and the other  features: C1 attribute registry
 // (features/attributes) and C2 view draft + view components (features/views).
 export {
   type AttributeUi,

@@ -61,13 +61,15 @@ export function JoinWorkspacePage({ workspaceSlug, inviteId }: { workspaceSlug: 
   return (
     <AuthLayout signOut wide>
       <h1 className={s.title}>Almost there!</h1>
-      <p className={s.subtitle}>
-        By accepting this invite, you agree to
-        <br />
-        <a className={s.link} href={brand.acceptableUseUrl} target="_blank" rel="noreferrer">
-          {brand.name}'s acceptable use terms
-        </a>
-      </p>
+      {brand.acceptableUseUrl && (
+        <p className={s.subtitle}>
+          By accepting this invite, you agree to
+          <br />
+          <a className={s.link} href={brand.acceptableUseUrl} target="_blank" rel="noreferrer">
+            {brand.name}'s acceptable use terms
+          </a>
+        </p>
+      )}
       <div className={s.inviteCard}>
         <Avatar
           kind="workspace"

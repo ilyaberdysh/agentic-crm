@@ -1,4 +1,4 @@
-// The table of the Preview and Overview steps (C2 import.md §I5–I6; evidence import-4-preview, import-5-overview-*):
+// The table of the Preview and Overview steps (C2; evidence import-4-preview, import-5-overview-*):
 // a narrow outcome column (green + create, blue ↻ update, grey ⊘ skip; overview: red ⚠ failed with the reason on
 // hover), then one column per attribute the strategy writes, values drawn with the attribute Views.
 import type { AttributeDefinition, PathHop } from '@agentic-crm/contracts';

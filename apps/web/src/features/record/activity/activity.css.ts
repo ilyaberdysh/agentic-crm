@@ -1,4 +1,4 @@
-// Activity feed (D README §3.8; evidence D-project-activity*): header 52 px, "Upcoming" (amber) and period headers,
+// Activity feed: 52 px header, "Upcoming" (amber) and period headers,
 // event rows on a thread line (dashed for upcoming) with 16 px actor avatars, sentence + relative time, note and
 // task cards, the "{n} automation events" toggle, the attribute-change popover table and the Filters menu.
 import { scales, text, vars } from '@agentic-crm/ui/styles';

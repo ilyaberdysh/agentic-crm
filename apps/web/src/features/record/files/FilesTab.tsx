@@ -1,4 +1,4 @@
-// Files tab (BACKLOG 3.06; D README §3.9, §4.4): folders first, then files; folders expand inline (children load
+// Files tab (BACKLOG 3.06): folders first, then files; folders expand inline (children load
 // lazily); the whole tab is a drop zone; "Upload file" accepts several files; "New folder" adds an inline row (Enter
 // creates, Esc cancels); file / folder options (rename, download, upload into, subfolder, delete with confirm); a
 // click opens the dark lightbox (images and PDFs preview, other files show icon, name, size and Download).

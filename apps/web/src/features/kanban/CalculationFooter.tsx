@@ -1,4 +1,4 @@
-// "+ Add calculation" under each column (C2 kanban.md K7; evidence kanban-calculation-footer.png): one board-wide
+// "+ Add calculation" under each column: one board-wide
 // calculation (`view.kanban.calculation`), shown per column as "US$100,000.00 sum". The menu lists Count empty /
 // Count filled / Percent empty / Percent filled (with the number of eligible attributes) and Sum / Average / Max / Min
 // (numeric attributes); each drills into a searchable attribute list ("Parent Record ›" reaches the parent object's

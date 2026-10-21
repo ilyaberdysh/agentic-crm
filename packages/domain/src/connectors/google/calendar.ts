@@ -3,7 +3,7 @@
 //   - one meeting per iCalUID across mailboxes: an instance of a recurring series gets `<iCalUID>#<original start in
 //     UTC>`, which every attendee's calendar computes alike
 //   - cancelled events, and events that turned private / non-meeting, become deletions
-//   - private events are never synced (Attio: "Private Google Calendar events are not synced"), nor working-location,
+//   - private events are never synced, nor working-location,
 //     focus-time, out-of-office and birthday entries
 import type {
   CalendarChange,

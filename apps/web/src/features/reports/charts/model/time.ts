@@ -1,5 +1,5 @@
 // Time buckets: labels ("Oct", "Dec 2025", "Week commencing 5 Oct 2026"), the in-progress bucket, and the client-side
-// window / comparison of Insight reports that group by a date or timestamp (builder §3.6: Insight fetches every bucket;
+// window / comparison of Insight reports that group by a date or timestamp (builder: Insight fetches every bucket;
 // the duration and the comparison are applied on the client).
 import {
   bucketStartOf,
@@ -91,7 +91,7 @@ export interface InsightTimeWindow {
 
 /**
  * Applies the duration and the comparison of an Insight's time config to the fetched buckets. "All" keeps every
- * bucket; a range draws every bucket of the window (empty ones included, as Attio) and aligns the comparison window's
+ * bucket; a range draws every bucket of the window (empty ones included, by design) and aligns the comparison window's
  * buckets to them by position.
  */
 export function insightTimeWindow(

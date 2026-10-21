@@ -1,4 +1,4 @@
-// Note window body (E README §2.2, §3.1–3.2): top bar (parent record breadcrumb or "Note" when floating; Minimize ·
+// Note window body: top bar (parent record breadcrumb or "Note" when floating; Minimize ·
 // Pin to screen / Expand · Close), header row (presence, "Copy link", ⋮ Note options), the 704 px document column
 // (title with debounced autosave, parent-record chips, "Link a meeting"), the body editor (E1 adapter) with the empty
 // note's template launcher, and the "+" insert button. Delete asks "Are you sure?" and has no undo.

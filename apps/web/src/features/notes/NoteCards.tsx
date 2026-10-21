@@ -1,4 +1,4 @@
-// Note card (395 × 208) and list row of the notes index, record Notes tab and favourites strip (E README §2.1;
+// Note card (395 × 208) and list row of the notes index, record Notes tab and favourites strip:
 // evidence E/notes-page-grid.png, notes-page-list.png): parent-record chip, ⋮ "Note options" on hover (Create template
 // from note · Copy link · Run workflow · Delete note), title, clipped rich preview with a fade, divider, creator and a
 // relative date. Rows: title + first line, Created by, Record, Meeting, Created at, hover ★ and ⋮.

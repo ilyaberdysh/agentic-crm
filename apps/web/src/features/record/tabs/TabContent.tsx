@@ -1,6 +1,6 @@
-// Tab bodies by kind (D README §2.9): Overview, Activity, Files and relationship tabs are the record page's own;
+// Tab bodies by kind: Overview, Activity, Files and relationship tabs are the record page's own;
 // Notes and Tasks come from the notes/tasks features (contract E3, through adapters.tsx), Emails from the email feature
-// (slice 7); Calls comes from the calls feature (slice 10, through adapters.tsx).
+//; Calls comes from the calls feature (through adapters.tsx).
 import { ActivityTab } from '../activity/ActivityTab';
 import { RecordCallsTab, RecordEmailsTab, RecordNotesTab, RecordTasksTab } from '../adapters';
 import type { RecordAgentTabProps } from '../agent/agentState';

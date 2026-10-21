@@ -1,5 +1,5 @@
-// <KanbanBoard> — the board of a kanban view, for objects and lists (BACKLOG 4.05, 4.06; C2 kanban.md K2–K9).
-//   <KanbanBoard definition={object | list entry definition} draft={useViewDraft(viewId)} />
+// <KanbanBoard> renders an object's or list's kanban view.
+// <KanbanBoard definition={object | list entry definition} draft={useViewDraft(viewId)} />
 // Columns = the grouping attribute's live stages (own status/select, or the parent record's through `parent_record`),
 // "No stage" first and "Add stage" last; cards drag between columns with dnd-kit (pointer: 4 px to start; keyboard:
 // Space/Enter to pick up, ←/→ between columns, Space/Enter to drop, Esc to cancel; live-region announcements; edge
@@ -443,7 +443,7 @@ function ColumnGhost({ board, stageKey }: { board: Board; stageKey: StageKey }) 
   );
 }
 
-/** "Add stage" after the last column (K3): an inline draft column with "New stage name". */
+/** "Add stage" after the last column: an inline draft column with "New stage name". */
 function AddStage({ board, compact }: { board: Board; compact: boolean }) {
   const [draft, setDraft] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -526,7 +526,7 @@ function AddStage({ board, compact }: { board: Board; compact: boolean }) {
   );
 }
 
-/** Selected cards (hover checkbox, shift-click ranges): count, move hint, clear (bulk actions bar, C1). */
+/** Selected cards (hover checkbox, shift-click ranges): count, move hint, clear (bulk actions bar). */
 function SelectionBar({ board }: { board: Board }) {
   return (
     <div className={s.bulkBar} role="toolbar" aria-label="Selected cards" data-testid="kanban-selection-bar">

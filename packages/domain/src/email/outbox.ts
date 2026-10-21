@@ -1,4 +1,4 @@
-// Outbox (F composer §5; BACKLOG 7.07 server): one row per email to deliver (Attio's email instance). Sending a draft
+// Outbox: one row per email to deliver. Sending a draft
 // queues its emails (mass sends spaced MASS_SEND_SPACING_SECONDS apart); the outbox job hands due emails to the
 // sender mailbox's connector, outside any transaction:
 //   claim (tx: lease the row, count an attempt, per-mailbox hourly / daily caps) → connector.sendMessage (no tx) →

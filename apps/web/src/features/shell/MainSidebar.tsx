@@ -1,4 +1,4 @@
-// Main sidebar (B sidebar.md §1–8, §12): header, Search row, main nav, Records (objects from the API), Lists, footer.
+// Main sidebar: header, Search row, main nav, Records (objects from the API), Lists, footer.
 import {
   Icon,
   IconButton,
@@ -35,7 +35,7 @@ import { useSidebar } from './sidebarState';
 import { SidebarHeader } from './WorkspaceMenu';
 import { useWorkspace } from './workspaceContext';
 
-/** Items shown before the "All …" row (sidebar.md §5: ≤ 6 → all, else 5 + All). */
+/** Show every item up to six; otherwise show five and an "All …" row. */
 const ITEM_LIMIT = 6;
 
 function useIsCurrent(): (href: string) => boolean {

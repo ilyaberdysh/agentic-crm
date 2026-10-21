@@ -1,4 +1,4 @@
-// Chip ⇄ text serialization of the formula editor (formulas.md §1.6). The editor holds *editor text* where every
+// Chip ⇄ text serialization of the formula editor. The editor holds *editor text* where every
 // reference is a token `_{<uuid>}` bound to its annotation through a token map; the stored form (and everything sent
 // to the API) is `plaintext` with one `_` per reference plus annotations pointing at those placeholders. Token ids
 // are ephemeral: fresh UUIDs on every load. Copying a selection that contains chips puts
@@ -100,8 +100,8 @@ export function sameSource(a: FormulaSource | null, b: FormulaSource | null): bo
 }
 
 /**
- * An entity-variable annotation for an attribute path. Currency references use the numeric amount (`raw_value`, as
- * Attio stores them, §live observation); everything else the value itself.
+ * An entity-variable annotation for an attribute path. Currency references use the numeric amount (`raw_value`);
+ * other attribute types use the value itself.
  */
 export function variableAnnotation(
   path: { entityDefinitionId: string; attributeDefinitionId: string }[],

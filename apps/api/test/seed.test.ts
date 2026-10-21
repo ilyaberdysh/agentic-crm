@@ -18,7 +18,7 @@ afterAll(async () => {
 
 describe('seed', () => {
   it('parses SEED_USERS with defaults', () => {
-    expect(parseSeedUsers(undefined).map((u) => u.email)).toEqual(['ilya@mymeet.ai', 'team@mymeet.ai']);
+    expect(parseSeedUsers(undefined).map((u) => u.email)).toEqual(['admin@example.com', 'team@example.com']);
     expect(parseSeedUsers(' A@Example.com:Ann Lee , b@example.com ')).toEqual([
       { email: 'a@example.com', name: 'Ann Lee' },
       { email: 'b@example.com', name: 'b' },

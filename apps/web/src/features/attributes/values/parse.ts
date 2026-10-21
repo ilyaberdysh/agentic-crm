@@ -123,7 +123,7 @@ export function parseTimeText(text: string): number | null {
 }
 
 /**
- * Wall-clock date + minutes in a time zone → the UTC instant (ISO). Uses the zone's offset at that moment (two
+ * Wall-clock date + minutes in a time zone → the UTC instant. Uses the zone's offset at that moment (two
  * passes settle DST transitions).
  */
 export function zonedToInstant(isoDate: string, minutes: number, timeZone: string): string {
@@ -171,7 +171,7 @@ export function parseTimestampText(text: string, today: string, timeZone: string
   return zonedToInstant(date, minutes, timeZone);
 }
 
-/** Full name → first (first word) + last (the rest), as Attio splits a typed name on save. */
+/** Full name → first (first word) + last (the rest), by design splits a typed name on save. */
 export function splitName(full: string): { firstName: string; lastName: string; fullName: string } {
   const clean = full.trim().replace(/\s+/g, ' ');
   if (!clean) return { firstName: '', lastName: '', fullName: '' };

@@ -1,4 +1,4 @@
-// Bulk action bar (BACKLOG 2.09; C1 README §3.5; components.md FloatingActionBar): floating pill centred at the
+// Bulk action bar: floating pill centred at the
 // bottom of the table — "[n] Selected ×" · Add to list · Send email · Run workflow · More ⌄ (Export as CSV, Delete
 // records). Delete confirms ("Delete {n} {plural}"), resolves the selection to the exact snapshot ids and deletes them
 // with a progress toast. While rows are selected the snapshot is frozen; a view change shows the banner.

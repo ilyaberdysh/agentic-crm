@@ -1,4 +1,4 @@
-// Developers → access tokens and webhooks (J workspace-admin §6; raw s73, s74).
+// Developers → access tokens and webhooks (J workspace-admin; raw s73, s74).
 import { insetRing, text, vars } from '@agentic-crm/ui/styles';
 import { style } from '@vanilla-extract/css';
 import { formDialogBody } from '../admin/admin.css';
@@ -91,7 +91,7 @@ export const scopeDescription = style({ ...text.text12.standard, color: c.conten
 
 export const dialogBody = formDialogBody;
 
-/** New webhook: the body keeps room for the event list the picker fills (Attio: 190 px between rules). */
+/** New webhook: the body keeps room for the event list the picker fills (the UI uses 190 px between rules). */
 export const webhookBody = style([formDialogBody, { minHeight: 190 }]);
 
 export const dialogError = style({ ...text.text12.standard, color: c.content.critical, margin: 0 });

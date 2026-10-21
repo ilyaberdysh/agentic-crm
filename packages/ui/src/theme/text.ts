@@ -1,5 +1,5 @@
-// Text styles as plain style objects so any .css.ts file can spread them, plus the named
-// text-colour variants (tokens.md §6). Sizes are px; line heights are px strings.
+// Text styles are plain objects so any `.css.ts` file can spread them, plus the named
+// text-colour variants. Sizes are px; line heights are px strings.
 import { scales } from '../tokens/scales.gen';
 import { vars } from './vars.css';
 
@@ -52,7 +52,7 @@ export const text = {
   },
 } as const;
 
-/** Named text colours (Attio's `variant` names for Text and Icon). */
+/** Named text colours (the `variant` names for Text and Icon). */
 export const textColor = {
   primary: vars.color.content.primary,
   secondary: vars.color.content.secondary,

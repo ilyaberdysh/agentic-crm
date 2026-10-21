@@ -4,7 +4,6 @@
 // people with name, email, phone, description) — the write path would take minutes — and indexed with the same
 // search_index_refresh() the write path calls. Latency is measured end to end through domain.search.records (one
 // workspace transaction per query, list memberships included) for a mix of query shapes, after one warm-up round.
-// Results: research/architecture/decisions/slice5-server.md.
 import { sql } from '@agentic-crm/db';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { createWorkspace, database, domain, type TestWorkspace } from './support/harness.ts';

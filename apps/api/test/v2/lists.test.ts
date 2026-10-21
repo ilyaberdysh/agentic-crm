@@ -1,7 +1,7 @@
 // /v2 contract tests (BACKLOG 4.10): lists (list, create, get, update with access levels), list attributes and
 // statuses, entries (create, assert by parent, get, PATCH append, PUT overwrite, delete, query with filters and sorts
 // through parent_record, attribute values with history) and a record's entries. Every 200 is validated against
-// Attio's OpenAPI response schema and the generated Zod schema.
+// the public API's OpenAPI response schema and the generated Zod schema.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { type Harness, startHarness } from '../support/harness';
 import { expectError, expectOk, type V2Fixture, v2Fixture } from './support';
@@ -228,7 +228,6 @@ describe('entries', () => {
       }),
       400,
       'validation_type',
-      { deviation: 'parent of another object than the list allows' },
     );
     expectError(
       'createEntry',
@@ -237,7 +236,6 @@ describe('entries', () => {
       }),
       400,
       'system_edit_unauthorized',
-      { deviation: 'createEntry declares only value_not_found for 400' },
     );
   });
 
@@ -348,7 +346,6 @@ describe('entries', () => {
       await f.call('POST', '/lists/sales/entries/query', { body: { filter: { nope: 1 } } }),
       400,
       'filter_error',
-      { deviation: 'queryEntries declares no 400' },
     );
   });
 

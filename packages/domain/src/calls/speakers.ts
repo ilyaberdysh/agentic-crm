@@ -1,8 +1,8 @@
 // Speakers of imported transcripts (X-28; I calls §6.1, §11.2, §3.7): one speaker per distinct address (else per
 // name) of a recording, mapped to a meeting participant by email; the member behind the participant (or the address)
-// renders with the member's name and avatar — never the raw email, unlike Attio; person participants render as
+// renders with the member's name and avatar — never the raw email; person participants render as
 // their record; unknown speakers keep the name the importer sent. Speakers mapped to the same participant / member
-// merge into one (the first by appearance), as Attio's Speakers tab does.
+// merge into one (the first by appearance).
 import type { CallSpeaker } from '@agentic-crm/contracts';
 import { sql } from '@agentic-crm/db';
 import { recordLabels } from '../collab/common.ts';

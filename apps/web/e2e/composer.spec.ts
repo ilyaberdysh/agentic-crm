@@ -1,4 +1,4 @@
-// Composer (BACKLOG 7.06–7.07; F composer.md; acceptance 4): opening and closing, autosave per field, variables and
+// Composer (BACKLOG 7.06–7.07; F; acceptance 4): opening and closing, autosave per field, variables and
 // fallbacks, window modes (minimise, pin, expand), attachments, mass sending with the review step (an unfilled variable
 // stops there), the outbox (cancel), drafts list, templates, signature, and the table's "Send email".
 import { expect, type Page, test } from '@playwright/test';

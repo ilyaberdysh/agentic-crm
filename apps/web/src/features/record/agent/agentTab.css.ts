@@ -82,6 +82,11 @@ export const evidenceBand = style({
   color: c.content.secondary,
   background: c.surface.tint,
 });
+export const evidenceList = style({ display: 'grid', gap: 10 });
+export const evidenceItem = style({ display: 'grid', gap: 6 });
+export const evidenceMeta = style({ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8 });
+export const peopleGroup = style({ display: 'grid', gap: 4 });
+export const peopleList = style({ display: 'grid', gap: 4, padding: 0, margin: 0, listStyle: 'none' });
 export const nextEvent = style({
   ...text.text12.standard,
   display: 'flex',

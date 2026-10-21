@@ -1,4 +1,4 @@
-// Comments panel (E README §2.8; evidence E/record-comments-panel.png, comment-thread-view.png,
+// Comments panel:
 // comments-resolved-filter.png, comment-reaction-tooltip.png, comment-emoji-picker.png, comment-deeplink-view.png):
 // 320 px panel, "All comments" header with a filter button (blue dot when active), thread cards (1 px border,
 // radius 12, hover action pill), resolved cards, the composer (blue focus border), the thread view with its replies

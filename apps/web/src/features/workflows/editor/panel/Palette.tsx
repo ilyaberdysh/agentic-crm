@@ -1,4 +1,4 @@
-// Block palette (README §2.3 "Palette", §3.5 Replace; evidence G/G-select-next-step.png, G-trigger-picker.png): search,
+// Block palette ("Palette", Replace; evidence G/G-select-next-step.png, G-trigger-picker.png): search,
 // All | Triggers | Steps, groups by category (triggers before steps), 40 px rows with the block tile; blocks this build
 // cannot run yet are shown disabled with the reason; plan-gated ones carry the "Enterprise" badge. "Select next step"
 // lists steps under "Pick a step to add after this block"; Replace keeps the block's kind.

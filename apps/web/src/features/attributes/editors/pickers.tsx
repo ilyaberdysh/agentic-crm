@@ -1,4 +1,4 @@
-// Picker editors (C1 cells.md §2; evidence/C1/28–31, D-project-tags-editor): status, select / multi-select with
+// Picker editors: status, select / multi-select with
 // inline option creation, record reference (RecordPicker, B.8) and workspace members (MemberPicker). Single-value
 // pickers commit on pick; multi-value pickers write each toggle immediately and stay open.
 import type { EntityDefinition } from '@agentic-crm/contracts';
@@ -377,7 +377,7 @@ export interface MemberPickerProps {
   multiple?: boolean;
   onSelect: (member: PickedMember, isSelected: boolean) => void;
   initialQuery?: string;
-  /** "Search people..." in cells, "Find someone..." on record pages (D §3.2). */
+  /** "Search people..." in cells, "Find someone..." on record pages (D). */
   placeholder?: string;
   label?: string;
 }

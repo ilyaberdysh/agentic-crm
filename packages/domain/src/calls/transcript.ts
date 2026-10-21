@@ -12,11 +12,11 @@ export interface Utterance {
 }
 
 /**
- * Silence that starts a new block even when the same speaker continues (Attio: > 20 s, I calls §3.5).
+ * Silence that starts a new block even when the same speaker continues.
  */
 export const BLOCK_GAP_SECONDS = 20;
 /**
- * Pause that starts a new paragraph inside a block. Attio extends each utterance to the next one's start and splits
+ * Pause that starts a new paragraph inside a block. Each utterance extends to the next one's start and splits
  * at > 0.25 s, which in practice never splits consecutive segments (§11.4: a 0.84 s gap rendered as one running
  * paragraph); our rule keeps that and only breaks at real pauses.
  */

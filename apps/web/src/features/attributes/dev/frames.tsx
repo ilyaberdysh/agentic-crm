@@ -1,4 +1,4 @@
-// Parity frames: fixed-geometry reconstructions of the curated evidence/C1 screenshots (cells at the measured column
+// visual review frames: fixed-geometry reconstructions of the curated  visual examples (cells at the measured column
 // and row positions, the editor open on the same cell) for apps/web/e2e/attributes-parity.spec.ts. Only the
 // attribute-owned parts are drawn (cells, editors, history, new-record dialog); headers and footers are the table's.
 import { cx } from '@agentic-crm/ui';
@@ -163,11 +163,11 @@ export interface FrameSpec {
   render: () => ReactNode;
 }
 
-/** Editor crops (evidence/C1/27–31): rows 3–11 of the Budget-desc order, row SEED-012 at y=184. */
+/** Editor crops: rows 3–11 of the Budget-desc order, row SEED-012 at y=184. */
 const cropRows = () => projectRows(byBudget, 4 - 36 * 4, 0, 12);
 
 export const FRAMES: Record<string, FrameSpec> = {
-  // evidence/C1/00-table-populated-columns-1.png: 12 rows in record-id order from y=186.
+  //: 12 rows in record-id order from y=186.
   'cells-projects': {
     viewport: { width: 2000, height: 660 },
     render: () => (
@@ -189,7 +189,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/C1/00-table-populated-columns-2.png (the path column "Next … › Due date" is the table's).
+  //  (the path column "Next … › Due date" is the table's).
   'cells-related': {
     viewport: { width: 2000, height: 660 },
     render: () => (
@@ -208,7 +208,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/C1/26-deals-table.png.
+  //
   'cells-deal': {
     viewport: { width: 1237, height: 945 },
     render: () => (
@@ -310,7 +310,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/C1/32–33: people, Jane Cooper's row at y=234.
+  //: people, Jane Cooper's row at y=234.
   'editor-email': {
     viewport: { width: 1000, height: 700 },
     render: () => (
@@ -343,7 +343,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/C1/25: the popover is pushed left by the window edge (8 px collision padding).
+  //: the popover is pushed left by the window edge (8 px collision padding).
   'editor-date': {
     viewport: { width: 1237, height: 945 },
     render: () => (
@@ -354,7 +354,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/C1/51: the Summary of SEED-012 being edited.
+  //: the Summary of SEED-012 being edited.
   'editor-text': {
     viewport: { width: 1237, height: 945 },
     render: () => (
@@ -372,7 +372,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/C1/36 (dark): "View edit history" beside the selected Summary cell.
+  //  (dark): "View edit history" beside the selected Summary cell.
   history: {
     viewport: { width: 1237, height: 945 },
     render: () => (
@@ -392,7 +392,7 @@ export const FRAMES: Record<string, FrameSpec> = {
       />
     ),
   },
-  // evidence/ds/ds-modal-create-record-* (Companies) and evidence/C1/40 ([seed] Projects, dark).
+  // Companies and [seed] Projects in dark mode.
   'new-record-companies': {
     viewport: { width: 1512, height: 945 },
     render: () => <NewRecordDialog entityDefinitionId={OBJ.companies} onClose={() => {}} />,

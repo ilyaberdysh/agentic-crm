@@ -1,7 +1,7 @@
-// Record route component (BACKLOG 3.01, 3.11; D README §1, §2.6): resolves the object from the route, the record's
+// Record route component (BACKLOG 3.01, 3.11): resolves the object from the route, the record's
 // state (live / merged / deleted / unknown) and the page layout, then renders the record. A missing or unknown
 // `$activeTab` is replaced by `overview` (replace-navigation). The record overlay opened from views (features/overlays,
-// E4) renders the same body through `RecordBody` with the tab kept in component state.
+//) renders the same body through `RecordBody` with the tab kept in component state.
 import { Skeleton } from '@agentic-crm/ui';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
 import { type ReactNode, useCallback, useEffect, useMemo } from 'react';

@@ -1,4 +1,4 @@
-// Slice 8 workflows e2e (BACKLOG §8 acceptance 2, 4, 5): build "Record created → If amount > 10 → Create task" in the
+//  workflows e2e (acceptance 2, 4, 5): build "Record created → If amount > 10 → Create task" in the
 // canvas editor, publish, create records and check one run per record with the right path in the run viewer; edit the
 // live workflow (unpublished changes banner, publish confirmation), then restore the first version from the version
 // history (a new draft forks from it); a failed run is retried from the failed block.

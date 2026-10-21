@@ -1,6 +1,6 @@
-// Settings → Notifications (BACKLOG 5.06; notifications.md §5; evidence/B/settings-notifications.png): "Daily digest"
+// Settings → Notifications (BACKLOG 5.06): "Daily digest"
 // with one switch, and "Collaboration notifications" as a table of preference groups × channels (Email, App). Every
-// change saves at once; a failure reverts and toasts. "App" is our in-app channel: the rows of the inbox.
+// change saves at once; a failure reverts and toasts. "App" is the in-app channel: the rows of the inbox.
 import { Checkbox, Icon, Spinner, Switch } from '@agentic-crm/ui';
 import { SettingsPage, SettingsSection } from '../settings/SettingsPage';
 import { findSettingsEntry } from '../settings/settingsNav';

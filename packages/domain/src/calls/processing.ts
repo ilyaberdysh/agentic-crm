@@ -107,7 +107,7 @@ export async function processRecording(
   });
   let outcome: Outcome;
   if (claim.empty) {
-    // Nothing to summarise (Attio: a recording without transcript misses summaries).
+    // Nothing to summarise when a recording has no transcript.
     outcome = { summary: null, concise: null, status: 'completed', error: null, usage: null };
   } else if (!deps.llm.configured) {
     outcome = failed('AI_NOT_CONFIGURED');

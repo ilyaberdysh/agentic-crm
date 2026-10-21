@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { deadlineChipLabel, deadlineInput, draftFromDeadline, dueLabel, zonedInstant } from './deadline';
 import { type DateContext, numericOrderForLocale, parseNaturalDate } from './naturalDate';
 
-// Friday 9 October 2026 (the day the Attio captures were taken), Sunday-start week (en-US).
+// Friday 9 October 2026, the date used by the captured layout; Sunday-start week (en-US).
 const ctx: DateContext = { today: '2026-10-09', weekStart: 0, now: { hour: 10, minute: 0 }, numericOrder: 'mdy' };
 const parse = (text: string, c: DateContext = ctx) => parseNaturalDate(text, c);
 const dateOf = (text: string, c: DateContext = ctx) => parse(text, c)?.date ?? null;
@@ -100,7 +100,7 @@ describe('due labels (E README §2.6)', () => {
   const now = '2026-10-09T09:00:00Z';
   const zone = 'Europe/Moscow';
   const endOf = (date: string) => new Date(Date.parse(`${date}T21:00:00Z`) - 1).toISOString(); // 23:59:59.999 MSK
-  it('reads like Attio', () => {
+  it('uses natural task date labels', () => {
     expect(dueLabel(endOf('2026-10-08'), now, zone)).toEqual({ text: 'Due yesterday', tone: 'overdue' });
     expect(dueLabel(endOf('2026-10-04'), now, zone)).toEqual({ text: 'Due 5 days ago', tone: 'overdue' });
     expect(dueLabel(endOf('2026-10-09'), now, zone)).toEqual({ text: 'Due today', tone: 'soon' });

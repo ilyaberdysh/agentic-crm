@@ -1,4 +1,4 @@
-// Copy of the empty / error / gated chart states (chart-types §5). Plain constants so the pages can reuse them.
+// Copy of the empty / error / gated chart states (chart-types). Plain constants so the pages can reuse them.
 
 export interface ChartMessageCopy {
   title: string;
@@ -91,7 +91,7 @@ export const MESSAGE_INVALID_FILTER: ChartMessageCopy = {
   subtitle: 'The filter on this report is invalid, please update the filter',
 };
 
-/** Reports saved by Attio's legacy engine. */
+/** Reports saved by the legacy engine. */
 export const MESSAGE_LEGACY: ChartMessageCopy = {
   title: 'Not migrated',
   subtitle: 'This chart type has not been implemented in the new version of reporting',

@@ -1,4 +1,4 @@
-// Tasks page `/$ws/tasks` (BACKLOG 3.15; E README §2.6, §2.6b; evidence E/tasks-page.png, tasks-bulk-select-dark.png):
+// Tasks page `/$ws/tasks`:
 // "Sorted by Due date" (Due date · Assignee · Creation date; ascending / descending) | Filter chips (Assignee ▸,
 // Record is / is not, Created by ▸) … View settings (Group by Due date · Assignee · Creation date · Created by; Show
 // completed tasks) · "+ New task". Due-date groups are computed in the viewer's zone and week start with overdue

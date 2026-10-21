@@ -1,5 +1,5 @@
 // Global document styles: a small reset in its own cascade layer (so component styles
-// always win), Attio's 62.5 % root size, base text rendering and the reduced-motion rule.
+// always win), the 62.5 % root size, base text rendering and the reduced-motion rule.
 import { globalLayer, globalStyle, style } from '@vanilla-extract/css';
 import { scales } from '../tokens/scales.gen';
 import { vars } from './vars.css';
@@ -10,7 +10,7 @@ globalStyle('*, *::before, *::after', { '@layer': { [reset]: { boxSizing: 'borde
 globalStyle('html', {
   '@layer': {
     [reset]: {
-      // 1rem = 10px; components set px sizes explicitly (tokens.md §6).
+      // 1rem = 10px; components set px sizes explicitly.
       fontSize: '62.5%',
       WebkitTextSizeAdjust: '100%',
     },
@@ -23,7 +23,7 @@ globalStyle('button, input, textarea, select', {
 globalStyle('h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd', { '@layer': { [reset]: { margin: 0 } } });
 globalStyle('img, svg, video, canvas', { '@layer': { [reset]: { display: 'block', maxWidth: '100%' } } });
 
-// Reduced motion: every CSS transition and keyframe animation is disabled (motion.md §5).
+// Reduced motion: every CSS transition and keyframe animation is disabled.
 globalStyle('*, *::before, *::after', {
   '@media': {
     '(prefers-reduced-motion: reduce)': {

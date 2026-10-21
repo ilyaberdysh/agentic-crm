@@ -1,4 +1,4 @@
-// Shared chrome of the notes and templates index pages (E README §2.1, §2.4; B.19): header tabs "Notes n" /
+// Shared chrome of the notes and templates index pages: header tabs "Notes n" /
 // "Templates n", "Sorted by Creation date" menu, View settings, the favourites strip and the index states.
 import {
   Button,

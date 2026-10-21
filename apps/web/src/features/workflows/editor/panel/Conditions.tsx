@@ -1,4 +1,4 @@
-// Conditions of Filter / If / Switch (README §3.2; evidence G/G-condition-operators.png): "+ Add condition" opens the
+// Conditions of Filter / If / Switch: "+ Add condition" opens the
 // variable picker for the subject; a condition shows the subject chip, the operator menu ("Select condition ⌄" until
 // chosen; operators by subject type via conditionOperatorsFor), the value (static or {x} variable) and ⋮ "Convert to
 // advanced condition" / "Delete condition". Several conditions combine with and / or; advanced conditions are nested

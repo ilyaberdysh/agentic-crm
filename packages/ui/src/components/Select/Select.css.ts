@@ -7,7 +7,7 @@ import { scales } from '../../tokens/scales.gen';
 const c = vars.color;
 const t = `${scales.duration.fast}ms ease-in-out`;
 
-// Select trigger (components.md §3): ghost background, 1 px black-6 % border (default variant),
+// Select trigger: ghost background, 1 px black-6 % border (default variant),
 // hover/expanded black 2 %, focus border accent, error border critical; 80 ms ease-in-out.
 export const trigger = style({
   boxSizing: 'border-box',

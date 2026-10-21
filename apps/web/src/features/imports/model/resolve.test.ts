@@ -55,7 +55,7 @@ const opt = (id: string, title: string): SelectOption => ({
 const ctx = (over: Partial<Parameters<typeof resolveRaw>[2]> = {}) => ({ config: EMPTY_CONFIG, field: null, ...over });
 
 describe('numbers', () => {
-  it('reads "12500,50" by the decimal separator (Attio: Point → 1,250,050; Comma → 12 500,50)', () => {
+  it('reads comma-decimal values according to the selected separator', () => {
     expect(parseNumberWith('12500,50', 'point')).toBe(1250050);
     expect(parseNumberWith('12500,50', 'comma')).toBe(12500.5);
     expect(parseNumberWith('1.200,5', 'comma')).toBe(1200.5);

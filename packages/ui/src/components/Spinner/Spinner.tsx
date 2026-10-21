@@ -4,7 +4,7 @@ import { cx } from '../../utils/cx';
 import * as s from './Spinner.css';
 
 export interface SpinnerProps extends Omit<SVGProps<SVGSVGElement>, 'color' | 'ref'> {
-  /** 10–24 px (components.md §8). Default 16. */
+  /** 10–24 px. Default 16. */
   size?: number;
   /** Named text colour or CSS colour; default `currentColor`. */
   color?: TextColor | (string & {});

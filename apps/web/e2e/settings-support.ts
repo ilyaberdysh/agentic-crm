@@ -1,4 +1,4 @@
-// Slice-6 e2e helpers: members with their own browser context (invite → sign-up → accept), tRPC setup calls and a tiny
+//  e2e helpers: members with their own browser context (invite → sign-up → accept), tRPC setup calls and a tiny
 // PNG for avatar uploads. Members sign up with the invited email through the auth API (the UI sign-up is by invitation
 // only), then accept the invite by its token.
 import { type Browser, type BrowserContext, expect, type Page } from '@playwright/test';

@@ -1,4 +1,4 @@
-// Workspace → Record creation (F settings §4.2; evidence/F/workspace-email-record-creation.png): "Default record
+// Workspace → Record creation (F settings): "Default record
 // creation" radio cards (All contacts / Selective contact creation, recommended / None), the "Automatically create
 // company records" switch, and "Record suppression" (domains and addresses that never create records).
 import {
@@ -137,7 +137,7 @@ export function RecordCreationTab({ isAdmin }: { isAdmin: boolean }) {
       </div>
       <Block
         title="Record suppression"
-        description="Emails or domains listed here will not create people and company records in Attio."
+        description="Emails or domains listed here will not create people and company records in Agentic CRM."
         aside={
           isAdmin ? (
             <Button variant="secondary" size={28} icon="add" onPress={() => setAdding(true)}>

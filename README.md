@@ -33,7 +33,7 @@ CRM note → exact evidence → proposed action → policy → human decision
 
 A seeded customer request becomes an evidence-backed `crm.task.create` proposal. A reviewer sees the source quote and exact change in the record's **Agent** tab, approves or declines it, and receives a persisted execution receipt. Approval rechecks policy, evidence freshness, record access, and proposal version before the task is created.
 
-> **Project status:** early development. The CRM foundation and the first supervised agent loop work today. General agent orchestration, end-user model routing, installable modules, and public release packaging are still in progress.
+> **Project status:** early development. The CRM foundation, first supervised agent loop, and Ask routing through saved cloud or paired local models work today. General agent orchestration, richer model-management UI, installable modules, and public release packaging are still in progress.
 
 ## Quickstart
 
@@ -62,6 +62,16 @@ Click **Approve**. The CRM creates the exact linked task, settles the queue item
 
 The fake model keeps this path credential-free and deterministic. The evidence and proposal are seeded so the demo exercises the trust and execution path, not model quality.
 
+### Self-hosting checks
+
+After configuring `.env` and starting PostgreSQL and your S3-compatible service, run:
+
+```bash
+pnpm doctor
+```
+
+The doctor checks the supported Node.js version, required configuration, PostgreSQL connectivity, migration status and checksums, and S3 endpoint reachability. It is read-only: it does not apply migrations, create buckets, or change configuration. It never prints connection strings or secret values. If it reports unapplied migrations, review the database target, run `pnpm db:migrate`, then check again.
+
 ## What works today
 
 ### Agentic Core
@@ -88,9 +98,10 @@ The destination is one provider contract across API keys, OpenAI-compatible loca
 | --- | --- |
 | Anthropic API | Wired into the application through server-side `ANTHROPIC_API_KEY`. |
 | Deterministic fake | Wired into the application through `AGENTIC_CRM_LLM=fake` for tests and demos. |
-| OpenAI-compatible HTTP | Text, streaming, tools, and structured-output adapter is fixture-tested. Application-level provider selection is not wired yet. |
-| Scoped API-key storage | Encrypted provider connections with masked metadata exist. Credential resolution, routing, verification, and management UI are still pending. |
-| Codex CLI | Bounded synthetic-data experiment with fake-executable tests. It has no live CRM access, app registration, authenticated production run, or proven host isolation. |
+| OpenAI-compatible HTTP | Saved cloud connections can be selected for application inference; endpoints are policy-checked and redirects fail closed. A management UI is still pending. |
+| Scoped API-key storage | Encrypted connections are resolved only for a scoped invocation, with masked metadata outside the adapter boundary. Verification and management UI are still pending. |
+| Local OpenAI-compatible | Requests are dispatched through the standalone enrolled workspace runner rather than letting the hosted API reach arbitrary user URLs. |
+| Codex CLI | The standalone runner connects enrollment, isolated auth profiles, scoped grants, authenticated MCP, and the rootless-container sandbox. Authenticated live generation still requires acceptance on the operator's Linux host. |
 
 The full CLI safety boundary and its limitations are documented in [the execution experiment](packages/domain/src/ai/execution/README.md).
 
@@ -123,6 +134,7 @@ The monorepo is organized around those boundaries:
 | `apps/web` | React CRM and the record-level Agent experience |
 | `apps/api` | Fastify, tRPC, public API, auth, curated agent endpoints |
 | `apps/worker` | Background CRM jobs |
+| `apps/runner` | Outbound paired runner for local models and sandboxed Codex execution |
 | `packages/domain` | CRM services, agentic actions, evidence, queue, model gateway |
 | `packages/contracts` | Shared schemas, policy and module contracts |
 | `packages/db` | PostgreSQL schema, migrations, RLS, and seed |
@@ -147,15 +159,15 @@ Useful project documents:
 - [Contribution guide](CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security policy](SECURITY.md)
+- [Source and asset provenance status](PROVENANCE.md)
 - [License](LICENSE) and [third-party notice](NOTICE)
 
 ## Roadmap
 
 Near-term work is intentionally focused:
 
-- wire OpenAI-compatible and scoped provider connections into application-level selection;
-- turn the Codex CLI experiment into an independently verified, enforceably sandboxed runner before any CRM data reaches it;
-- add authenticated MCP transport around curated capabilities;
+- add verification and management UI for saved provider connections;
+- complete authenticated Codex acceptance on each supported Linux runner host before sensitive CRM data reaches it;
 - run queue claiming and reconciliation in production workers;
 - expand the Agent tab from the latest action into a useful record-level work history;
 - add more evidence sources and high-value CRM capabilities without weakening the policy boundary.
@@ -164,7 +176,7 @@ Ideas that are useful but not ready belong in [`docs/agentic-core/backlog.yaml`]
 
 ## Open-source status
 
-Agentic CRM is licensed under the [Apache License 2.0](LICENSE) and is being prepared as an early public preview, not a production-ready CRM. Publication is still gated on an independent provenance review of the Attio-compatible `/v2` contract artifacts and the current UI token snapshots. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
+Agentic CRM declares the [Apache License 2.0](LICENSE) and is an early preview candidate, not a production-ready CRM. [PROVENANCE.md](PROVENANCE.md) records both the automated technical audit and the maintainer's authorship and source-use disposition. The historical generated API snapshot is being replaced by a product-owned contract; the repository remains private until that work and the final public-ref privacy scan are complete. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
 
 Source-level dependency attribution is summarized in [NOTICE](NOTICE). A complete license audit is still required before publishing binary or container distributions that bundle third-party code.
 

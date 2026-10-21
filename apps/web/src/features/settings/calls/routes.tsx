@@ -1,4 +1,4 @@
-// Settings → Call intelligence (`/$ws/settings/call-intelligence`, slice 10). The legacy `call-recording` path redirects.
+// Settings → Call intelligence (`/$ws/settings/call-intelligence`). The legacy `call-recording` path redirects.
 import { type AnyRoute, createRoute, redirect } from '@tanstack/react-router';
 import { CallIntelligencePage } from './CallIntelligencePage';
 

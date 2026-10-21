@@ -16,7 +16,7 @@ export const
   String = 8,
   Bool = 9,
   Null = 10,
-  AttioReference = 11,
+  RecordReference = 11,
   LLMReference = 12,
   Identifier = 13,
   RParen = 14,

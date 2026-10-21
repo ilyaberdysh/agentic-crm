@@ -1,4 +1,4 @@
-// Nodes of the note schema, restricted to Attio's model (E editor.md §3): paragraph ("Body"), headings 1–3, flat
+// Nodes of the note schema, restricted to the model: paragraph ("Body"), headings 1–3, flat
 // list items (list-item.ts), images, hard breaks and inline mentions. No quote, code block, divider, checklist,
 // table, toggle or callout: their markdown triggers stay literal text.
 
@@ -20,7 +20,7 @@ export const Paragraph = TiptapParagraph.extend({
   },
 });
 
-/** h1–h3 only; `#### ` and deeper stay literal (Attio cannot store h4–h6). No Mod-Alt-n shortcuts (Attio has none). */
+/** Supports h1–h3; `#### ` and deeper headings stay literal because the model has no h4–h6 nodes. */
 export const Heading = TiptapHeading.extend({
   renderHTML({ node, HTMLAttributes }) {
     const level = [1, 2, 3].includes(node.attrs.level) ? node.attrs.level : 1;
@@ -67,7 +67,7 @@ const numberAttr = (name: string) => ({
   },
 });
 
-/** Block-level image (Attio `image-embed`): natural size up to the column width, centred by default. */
+/** Block-level image (the UI `image-embed`): natural size up to the column width, centred by default. */
 export const Image = Node.create({
   name: 'image',
   group: 'block',
@@ -148,14 +148,14 @@ export interface MentionAttributes {
   label: string;
 }
 
-/** Inline mention token (Attio `agentic-crm-actor-reference-node` / `agentic-crm-entity-reference-node`). */
+/** Inline mention token (the UI `agentic-crm-actor-reference-node` / `agentic-crm-entity-reference-node`). */
 export const Mention = Node.create({
   name: 'mention',
   group: 'inline',
   inline: true,
   atom: true,
   selectable: false,
-  /** No marks on mentions (Attio renders them unstyled; Yjs would not keep marks on inline atoms anyway). */
+  /** No marks on mentions (the UI renders them unstyled; Yjs would not keep marks on inline atoms anyway). */
   marks: '',
 
   addAttributes() {
@@ -214,7 +214,7 @@ export interface VariableAttributes {
 }
 
 /**
- * Inline placeholder variable of email bodies and templates (CROSS-DOMAIN B.11; F composer §2.6): an atom that the
+ * Inline placeholder variable of email bodies and templates (CROSS-DOMAIN B.11; F composer): an atom that the
  * block model stores as one `_` character plus a variable annotation. The composer renders it as a chip.
  */
 export const Variable = Node.create({

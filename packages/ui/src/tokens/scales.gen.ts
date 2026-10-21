@@ -1,4 +1,4 @@
-// Committed design-token snapshot. Source provenance must be resolved before public release.
+// Committed design-token snapshot retained under the maintainer disposition in PROVENANCE.md.
 // Theme-independent scales: typography, spacing, radii, z-index, motion, breakpoints, density.
 
 export const scales = {

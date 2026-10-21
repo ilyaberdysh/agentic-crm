@@ -14,7 +14,7 @@ export const storageEntrySchema = z.object({
   parentFolderId: uuidSchema.nullable(),
   rootEntryId: uuidSchema,
   entryType: z.enum(['file', 'folder']),
-  storageProvider: z.literal('attio'),
+  storageProvider: z.literal('agentic-crm'),
   name: z.string(),
   contentType: z.string().nullable(),
   contentSize: z.number().int().nullable(),

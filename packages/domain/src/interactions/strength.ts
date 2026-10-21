@@ -1,4 +1,4 @@
-// Connection strength (decision C.4 #12 in slice7-contracts.md; A README §4.14). Attio's formula is unknown; ours:
+// Connection strength is derived from the interaction history:
 //
 //   score(member, record) = Σ weight × 0.5^(age_days / HALF_LIFE_DAYS) over the member's interactions with the record
 //                           in the last WINDOW_DAYS days (nothing in the future counts)

@@ -1,4 +1,4 @@
-// Block configuration panel (README §2.3, §3.5; block-catalog §7; evidence G/G-trigger-config.png,
+// Block configuration panel:
 // G-panel-create-record.png, G-update-record-config.png): header (tile, title, category, ⋮ Replace / Delete), the
 // description, the block's own alert (red: "This trigger is not connected to any steps"; grey: "This block has nothing
 // to configure"), Configuration fields, Cost (credit pill or "Dynamic"), and Next step with one row per outcome

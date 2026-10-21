@@ -1,4 +1,4 @@
-// Shared workflow pieces (README §2.1–2.5, runs.md §3): tinted icon tiles (workflow and block), status chips (Live /
+// Shared workflow pieces: tinted icon tiles (workflow and block), status chips (Live /
 // Paused / Draft / Archived), credit pills, run status icons and the "Trigger" tag.
 import { text, vars } from '@agentic-crm/ui/styles';
 import { style, styleVariants } from '@vanilla-extract/css';

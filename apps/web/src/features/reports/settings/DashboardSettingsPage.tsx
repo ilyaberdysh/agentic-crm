@@ -1,5 +1,5 @@
 // Settings → Dashboards → one dashboard `/$ws/settings/reports/dashboards/$id/<reports|permissions>` (BACKLOG 9.09; H
-// README §3.11; evidence H/settings-dashboard-reports.png, settings-dashboard-permissions.png): crumb "Dashboards /
+//; evidence H/settings-dashboard-reports.png, settings-dashboard-permissions.png): crumb "Dashboards /
 // <title>", "‹ Back", the title, "Manage reports, permissions and other relevant settings.", tabs Reports | Permissions.
 // Reports lists the dashboard's reports with a delete; Permissions manages the grants (workspace, teams, members).
 import { Button, EmptyState, ErrorState, Icon, Tab, TabList, TabPanel, Tabs } from '@agentic-crm/ui';

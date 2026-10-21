@@ -1,7 +1,7 @@
-// `/welcome/workspace-details` — "Create your workspace" (K legacy-welcome §6.5). The handle follows the kebab-case
+// `/welcome/workspace-details` — "Create your workspace" (K legacy-welcome). The handle follows the kebab-case
 // of the company name until edited; availability is checked 250 ms after typing stops (reserved/taken → "This
 // handle is already in use"). The logo tile mirrors the name; uploads arrive with file storage (D-19). Billing
-// country and the post-creation welcome steps are deferred (BACKLOG §1 defer list).
+// country and the post-creation welcome steps are deferred (defer list).
 import { Avatar, Button, cx, IconButton, Spinner, TextInput } from '@agentic-crm/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { type FormEvent, useEffect, useRef, useState } from 'react';

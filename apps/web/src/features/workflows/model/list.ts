@@ -1,4 +1,4 @@
-// Workflows index model (README §2.1, internal-api §2): date buckets (the default grouping "Last published": Today …
+// Workflows index model (internal-api): date buckets (the default grouping "Last published": Today …
 // Older and "Unpublished"), the other groupings (Creation date, Status, Creator, None), sorts with empty values last,
 // the status label, filter by creator and title search. Pure; `now` and the time zone are injectable for tests.
 import type { Workflow } from '../types';
@@ -54,7 +54,7 @@ export const STATUS_LABELS: Record<DisplayStatus, string> = {
   archived: 'Archived',
 };
 
-/** The "Last published" value only reflects an active version (README §4.1): paused workflows show none. */
+/** The "Last published" value only reflects an active version: paused workflows show none. */
 export function publishedAt(w: Pick<Workflow, 'status' | 'lastPublishedAt' | 'isArchived'>): string | null {
   return w.status === 'live' && !w.isArchived ? w.lastPublishedAt : null;
 }

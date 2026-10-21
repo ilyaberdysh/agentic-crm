@@ -1,4 +1,4 @@
-// The chart tooltip: a card portalled to <body> (so it can overflow the chart box, as Attio's does) that follows the
+// The chart tooltip is portalled to <body> so it can overflow the chart box, and follows the
 // pointer. Contents come from model/tooltip.ts.
 import { cx, useThemeClassName } from '@agentic-crm/ui';
 import { Fragment, type ReactNode, useLayoutEffect, useRef, useState } from 'react';

@@ -1,4 +1,4 @@
-// Viewport fitting for the canvas area left of the side panel (README §2.3): the editor opens at 100 % with the blocks
+// Viewport fitting for the canvas area left of the side panel: the editor opens at 100 % with the blocks
 // centred in the visible area (xyflow's asymmetric fit padding only acts as a minimum, so a small graph would centre
 // under the panel); "Fit to view" and Organize zoom out as needed (never above 100 %).
 import { useReactFlow, useStoreApi } from '@xyflow/react';

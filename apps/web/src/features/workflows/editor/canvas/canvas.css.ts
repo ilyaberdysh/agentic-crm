@@ -1,4 +1,4 @@
-// Canvas (README §2.3 measured styles; evidence G/G-trigger-config.png, G-connect-drag.png, G-run-viewer-false-path.png):
+// Canvas (measured styles; evidence G/G-trigger-config.png, G-connect-drag.png, G-run-viewer-false-path.png):
 // dotted grid (r 0.5, 14 % black), 200 × 70 block cards (radius 14, layered hairline shadow, 14/500 title, 12/500 grey
 // description), the "Trigger" tab behind the card's top-left, outcome handles (10 px circles; True / False labels in
 // monospace), the blue "+" square, edges #B1B1B7 1 px with rounded corners, run status tags, the dashed placeholder.

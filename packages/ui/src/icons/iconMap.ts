@@ -1,6 +1,5 @@
-// Semantic icon names used by our features → Lucide glyphs (icons.md §4: Lucide at stroke 1.5
-// gives Attio's 1 px weight at 16 px). Attio's own SVGs are never copied; names describe the
-// role, not Attio's file names. Add entries here instead of importing Lucide in features.
+// Semantic icon names map features to Lucide glyphs. At stroke 1.5 they give a 1 px weight at 16 px.
+// Names describe each icon's role, not its source file. Add entries here instead of importing Lucide in features.
 import {
   ArrowDown,
   ArrowDownWideNarrow,
@@ -163,7 +162,7 @@ import type { IconGlyph } from './types';
 import { workflowIconMap } from './workflowIcons';
 
 export const iconMap = {
-  // Navigation and shell (layout.md §2–3)
+  // Navigation and shell
   home: House,
   search: Search,
   inbox: Inbox,
@@ -221,7 +220,7 @@ export const iconMap = {
   template: Notebook,
   bot: Bot,
 
-  // Views and collection chrome (layout.md §4)
+  // Views and collection chrome
   table: Table2,
   kanban: Kanban,
   viewSettings: SlidersHorizontal,
@@ -318,7 +317,7 @@ export const iconMap = {
   enter: CornerDownLeft,
   command: Command,
 
-  // Notes, tasks, comments, favorites, floating windows (slice 3: E README §2, B sidebar §6, B.16)
+  // Notes, tasks, comments, favorites and floating windows
   calendar: Calendar,
   calendarDays: CalendarDays,
   mention: AtSign,
@@ -347,24 +346,24 @@ export const iconMap = {
   empty: CircleDashed,
   spinner: LoaderCircle,
 
-  // Record page (slice 3)
+  // Record page
   ...recordIconMap,
 
-  // CSV import / export (slice 4)
+  // CSV import / export
   ...importIconMap,
-  // Kanban board (slice 4)
+  // Kanban board
   ...kanbanIconMap,
-  // Lists (slice 4)
+  // Lists
   ...listIconMap,
-  // Settings administration (slice 6)
+  // Settings administration
   ...adminIconMap,
-  // Call intelligence (slice 10)
+  // Call intelligence
   ...callIconMap,
-  // Ask AI (slice 10)
+  // Ask AI
   ...askIconMap,
-  // Workflows (slice 8)
+  // Workflows
   ...workflowIconMap,
-  // Formula editor and AI attributes (slice 10)
+  // Formula editor and AI attributes
   ...aiIconMap,
 } satisfies Record<string, IconGlyph>;
 

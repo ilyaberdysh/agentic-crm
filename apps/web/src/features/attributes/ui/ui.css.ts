@@ -1,4 +1,4 @@
-// Value rendering metrics (C1 cells.md §1–2, layout.md §4, components.md §4–5, measured on evidence/C1/00-*, 26, 29).
+// Value rendering metrics (C1, measured on, 26, 29).
 import { alpha, insetRing, scales, text, vars } from '@agentic-crm/ui/styles';
 import { style, styleVariants } from '@vanilla-extract/css';
 
@@ -26,7 +26,7 @@ export const cell = style({
 /** Chip cells (select, references, emails, …): padding 7 7 5, 22 px chips, 6 px apart, clipped at the edge. */
 export const cellChips = style({ padding: '7px 7px 5px', gap: 6 });
 
-/** Selected multi-value cell: every value stacked, growing over the following rows (C1 cells.md §1). */
+/** Selected multi-value cell: every value stacked, growing over the following rows. */
 export const cellExpanded = style({
   flexDirection: 'column',
   alignItems: 'flex-start',
@@ -75,7 +75,7 @@ export const truncate = style({ minWidth: 0, overflow: 'hidden', textOverflow: '
 
 export const placeholder = style({ color: c.content.tertiary });
 
-/** Link-like values: emails, domains, phone numbers (C1 cells.md notes: blue, clickable). */
+/** Link-like values: emails, domains and phone numbers are blue and clickable. */
 export const link = style({
   color: c.content.accent,
   textDecoration: 'none',
@@ -120,7 +120,7 @@ export const more = style({
 
 // ---- option tags (select, multi-select) --------------------------------------------------------------------------
 
-/** 22 px Tag: radius 7, padding 0 4 (cells.md), ring + text from the option hue. */
+/** 22 px Tag: radius 7, padding 0 4, ring + text from the option hue. */
 export const tag22 = style({ height: 22, borderRadius: 7, paddingInline: 4, flex: 'none' });
 
 // ---- status ----------------------------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ export const starButton = style({ cursor: 'pointer', outline: 'none' });
 
 // ---- checkbox ----------------------------------------------------------------------------------------------------
 
-/** Checkbox cells centre a 16 px box in the 35 px row (evidence/C1/00: x+41 of a 100 px column, y+9). */
+/** Checkbox cells centre a 16 px box in the 35 px row (x+41 in a 100 px column, y+9). */
 export const checkboxCell = style({ alignItems: 'center', justifyContent: 'center', padding: 0 });
 
 export const checkboxBox = style({
@@ -297,7 +297,7 @@ export const chipListMeasure = style({
 });
 
 /**
- * Cell chips shrink to ~10 characters each before clipping (Chip `minChars`, evidence/C1/32 two emails, 00-2
+ * Cell chips shrink to ~10 characters each before clipping (Chip `minChars`,  two emails, 00-2
  * stakeholders). Doubled class: wins over the chips' own `flex: none`.
  */
 export const shrinkChip = style({

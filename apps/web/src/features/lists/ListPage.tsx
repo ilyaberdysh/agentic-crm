@@ -1,12 +1,12 @@
-// List page (BACKLOG 4.02, 4.09; C2 README §2.2–2.4, §2.7; evidence/C2/list-empty-table.png, list-header-menu.png,
+// List page:
 // list-icon-picker.png, list-no-views.png, list-comments-panel.png). `/$ws/collection/$listId` opens the first view;
 // a list without views shows "Start with a view" (+ "or" Delete list); unknown / forbidden lists say so.
-//   header   emoji button (emoji picker → icon) + name button (inline rename) | facepile (list room), Share,
-//            Comments, Help, ⋮ (List settings, Manage attributes, Duplicate list, Copy list ID, Notifications ›,
-//            Delete list), Ask AI
-//   view bar view switcher, View settings | Import / Export ▾, "+ Add <Parent>"
-//   body     sort/filter bar + the entries table (features/table with the list props) or the board, and the
-//            comments panel (list level "Comments", entry level "‹ All comments" / "Add comment on <record>")
+// header emoji button (emoji picker → icon) + name button (inline rename) | facepile (list room), Share,
+// Comments, Help, ⋮ (List settings, Manage attributes, Duplicate list, Copy list ID, Notifications ›,
+// Delete list), Ask AI
+// view bar view switcher, View settings | Import / Export ▾, "+ Add <Parent>"
+// body sort/filter bar + the entries table (features/table with the list props) or the board, and the
+// comments panel (list level "Comments", entry level "‹ All comments" / "Add comment on <record>")
 
 import type { AttributeDefinition, EntityDefinition, RecordRef } from '@agentic-crm/contracts';
 import {
@@ -331,7 +331,7 @@ function HeaderActions({
   );
 }
 
-/** Duplicate and delete confirmations (C2 README §2.7). */
+/** Duplicate and delete confirmations. */
 export function ListDialogs({
   list,
   dialog,
@@ -849,7 +849,7 @@ function EntrySubject({ listId, entryId }: { listId: string; entryId: string }) 
   return parent ? <RecordName record={parent} /> : null;
 }
 
-/** Import CSV lives at `/collection/<id>/import` (features/imports, C2 import.md §I1). */
+/** Import CSV lives at `/collection/<id>/import` (features/imports). */
 function useImportCsv(list: List): () => void {
   const { href } = useWorkspace();
   const router = useRouter();

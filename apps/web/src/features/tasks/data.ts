@@ -1,4 +1,4 @@
-// Tasks on the client (BACKLOG 3.15; E README §2.6–2.7b, §3.3). List queries live under ['ws', ws, 'task-list',
+// Tasks on the client (BACKLOG 3.15; b). List queries live under ['ws', ws, 'task-list',
 // params], single tasks under ['ws', ws, 'task', id] (realtime: one prefix per resource). Completion is optimistic in
 // every cached list and reverts on error ("Failed to mark task as done"); deadline groups are recomputed on the
 // client from the list's bounds, so a completed row moves to "Completed" at once.
@@ -56,7 +56,7 @@ export function useTask(taskId: string | null) {
   return useQuery({ ...taskQuery(ws, taskId ?? ''), enabled: Boolean(taskId) });
 }
 
-/** Sidebar badge: my incomplete tasks due by the end of today (E README §2.6). */
+/** Sidebar badge: my incomplete tasks due by the end of today. */
 export function useDueTaskCount(timeZone: string) {
   const ws = useWorkspaceRef();
   return useQuery({
@@ -67,7 +67,7 @@ export function useDueTaskCount(timeZone: string) {
 
 // ---- grouping ---------------------------------------------------------------------------------------------------
 
-/** Display groups of the Due date grouping: Attio shows overdue tasks inside "Today" (E README §2.6). */
+/** Overdue tasks appear in the "Today" due-date group. */
 export type DeadlineGroupKey = 'today' | 'this-week' | 'later' | 'no-date' | 'completed';
 
 export const DEADLINE_GROUP_LABEL: Record<DeadlineGroupKey, string> = {
@@ -144,7 +144,7 @@ function settleTask(client: QueryClient, ws: WorkspaceRef, task: Task, seq: stri
   markCovered(key, seq);
 }
 
-/** Checkbox: optimistic everywhere, canonical task on success, revert + toast on error (E README §3.3). */
+/** Checkbox: optimistic everywhere, canonical task on success, revert + toast on error. */
 export async function setTaskCompleted(
   client: QueryClient,
   ws: WorkspaceRef,

@@ -1,4 +1,4 @@
-// E3: a record's Tasks tab (D README §2.9 "Tasks"): 52 px header "Tasks" + "Add task", then the tasks linked to the
+// E3: a record's Tasks tab ("Tasks"): 52 px header "Tasks" + "Add task", then the tasks linked to the
 // record grouped by due date (Today / This week / Upcoming / No due date / Completed) as task rows. Empty: "No tasks" /
 // "Create your first task to get started." + "New task".
 import { Button, Icon, Spinner } from '@agentic-crm/ui';

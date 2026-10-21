@@ -1,4 +1,4 @@
-// Prompts of the calls AI steps (our own wording; Attio's prompts are not public). The system prompts are stable (prompt
+// Prompts of the calls AI steps. The system prompts are stable (prompt
 // caching); everything call-specific is in the user message. Answers are structured outputs (`outputSchema`).
 import type { InsightSectionResult, InsightSectionType } from '@agentic-crm/contracts';
 import type { LlmRequest } from '../ai/llm.ts';

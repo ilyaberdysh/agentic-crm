@@ -1,10 +1,10 @@
-// Client state of one streaming assistant turn (slice10-ask-server "Streaming protocol"): applies the events of the
+// Client state of one streaming assistant turn ("Streaming protocol"): applies the events of the
 // SSE stream (`turn` / `part` / `done`) and the same events arriving as ephemeral room messages in other tabs.
-//   turn  the whole turn: replaces the state when its seq is not older than the last applied turn event;
-//   part  one part's cumulative snapshot: replaces the part at `partIndex` of step `stepId` when its seq is newer than
-//         the last applied one for that part and newer than the turn snapshot it extends (out-of-order and duplicate
-//         events are dropped); a part whose step has not arrived yet waits for the next `turn` event;
-//   done  the stream ended (completed | failed | canceled | awaiting-approval).
+// turn  the whole turn: replaces the state when its seq is not older than the last applied turn event;
+// part  one part's cumulative snapshot: replaces the part at `partIndex` of step `stepId` when its seq is newer than
+// the last applied one for that part and newer than the turn snapshot it extends (out-of-order and duplicate
+// events are dropped); a part whose step has not arrived yet waits for the next `turn` event;
+// done  the stream ended (completed | failed | canceled | awaiting-approval).
 // Pure: the store and the transport live in live.ts and sse.ts.
 import type { AiAssistantPart, AiStreamEvent, AiTurn } from '@agentic-crm/contracts';
 

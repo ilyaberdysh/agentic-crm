@@ -1,4 +1,4 @@
-// The call page (I calls §3; evidence/I/call-page-*.png): header, title row, tab bar (Transcript · Speakers · Meeting, with
+// The call page (I calls): header, title row, tab bar (Transcript · Speakers · Meeting, with
 // Summary first when narrow), the transcript (speaker blocks, timestamps, range dimming, selection popover), the Speakers
 // tab (talk share, 4 px timelines, focus), the Meeting tab, and the Summary / Insights column (40 %, resizable).
 import { alpha, scales, text, transitionColors, vars } from '@agentic-crm/ui/styles';

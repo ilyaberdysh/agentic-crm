@@ -1,4 +1,4 @@
-// Record preview of the helper header (formulas.md §4.6): `[record picker] = <result>`. The first record of the
+// Record preview of the helper header: `[record picker] = <result>`. The first record of the
 // object is pre-selected; the picker ("Find record to preview") is a record search. Results: the value (text as is,
 // otherwise JSON, truncated to 500 characters with a tooltip), "No value", "Can't preview: syntax error",
 // "Can't preview: {code}", "Preview failed"; an 80 px skeleton while loading.

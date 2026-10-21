@@ -7,7 +7,7 @@ import { scales } from '../../tokens/scales.gen';
 const c = vars.color;
 const { duration } = scales;
 
-/** Field wrapper (components.md §3): column, 4 px gap, label row indented 4 px. */
+/** Field wrapper: column, 4 px gap, label row indented 4 px. */
 export const field = style({
   display: 'flex',
   flexDirection: 'column',

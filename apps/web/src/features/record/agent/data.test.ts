@@ -31,7 +31,7 @@ function persisted(status: string) {
                 id: '66666666-6666-4666-8666-666666666666',
                 content: { text: 'Send the rollout timeline', mentions: [] },
                 deadline: null,
-                assigneeMemberIds: [],
+                assigneeMemberIds: [memberId, '99999999-9999-4999-8999-999999999999'],
                 linkedRecords: [scope],
                 isCompleted: false,
               },
@@ -65,6 +65,30 @@ function persisted(status: string) {
               fragment: { start: 0, end: 8, quote: 'Timeline' },
               capturedBy: { type: 'workspace-member', id: memberId },
               capturedAt: '2026-10-19T12:00:00.000Z',
+            },
+          },
+          {
+            id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+            digest: 'd'.repeat(64),
+            snapshot: {
+              contractVersion: 1,
+              workspaceId: '55555555-5555-4555-8555-555555555555',
+              scope,
+              source: {
+                kind: 'crm.note',
+                id: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+                version: '1',
+                contentHash: 'e'.repeat(64),
+                primary: false,
+                audienceMemberIds: [memberId],
+                retentionClass: 'workspace',
+                deletionState: 'live',
+              },
+              band: 'PROBABLE',
+              claim: 'The customer expects a follow-up next week.',
+              fragment: { start: 0, end: 8, quote: 'Next week' },
+              capturedBy: { type: 'workspace-member', id: memberId },
+              capturedAt: '2026-10-18T12:00:00.000Z',
             },
           },
         ],
@@ -103,7 +127,12 @@ describe('persisted Agent tab presentation', () => {
       status: 'proposed',
       task: 'Send the rollout timeline',
       pendingDecision: { id: actionId, canDecide: true },
-      evidence: { band: 'VERIFIED', quote: 'Timeline' },
+      evidence: [
+        { band: 'VERIFIED', quote: 'Timeline' },
+        { band: 'PROBABLE', quote: 'Next week' },
+      ],
+      assigneeMemberIds: [memberId, '99999999-9999-4999-8999-999999999999'],
+      reviewerMemberId: memberId,
     });
     const teammate = presentAgentState(persisted('PROPOSED'), '99999999-9999-4999-8999-999999999999');
     expect(teammate).toMatchObject({ status: 'proposed', pendingDecision: { canDecide: false } });
@@ -145,6 +174,25 @@ describe('persisted Agent tab presentation', () => {
       queue: {
         reason: 'This proposal is closed, while its linked queue row is still queued.',
         nextEvent: 'Queue reconciliation is pending; this row does not authorize a CRM write.',
+      },
+    });
+  });
+
+  it('presents a cancelled queue row as the terminal result of rejection', () => {
+    const data = persisted('REJECTED');
+    data.tasks = [
+      {
+        actionId,
+        status: 'CANCELLED',
+        reason: 'The linked action is rejected; queued work was cancelled.',
+        nextEvent: 'No further queue work is scheduled for this action.',
+      },
+    ] as typeof data.tasks;
+    expect(presentAgentState(data, memberId)).toMatchObject({
+      status: 'stopped',
+      queue: {
+        reason: 'The linked action is rejected; queued work was cancelled.',
+        nextEvent: 'No further queue work is scheduled for this action.',
       },
     });
   });

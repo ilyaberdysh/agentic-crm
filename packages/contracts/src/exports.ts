@@ -4,7 +4,7 @@
 // exports.status (toast: Preparing → Collecting data {progress} → Building CSV file) and then fetches
 // exports.downloadUrl (signed, 5 minutes) for "<Object> - <View>.csv".
 //
-// File layout (ours; Attio's is unknown, U-C2-9): UTF-8 with BOM, RFC 4180 quoting, CRLF. Columns: "Record ID"
+// File layout: UTF-8 with BOM, RFC 4180 quoting, CRLF. Columns: "Record ID"
 // (lists: "Entry ID", then the parent's "Record ID"), the record column (the record's display name), then the view
 // columns with their labels. Values are formatted like the app's cells with ONE locale (X-11): numbers and currency
 // with `locale`, dates as "Mar 1, 2026", timestamps as "Mar 1st 2026, 12:30pm" in `timeZone`; multiple values are

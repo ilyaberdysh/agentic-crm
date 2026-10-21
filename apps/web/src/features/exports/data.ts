@@ -1,4 +1,4 @@
-// View export (C2 export.md §E2–E3; slice4-contracts.md): `exports.create({exportId, viewId, format, locale,
+// View export: `exports.create({exportId, viewId, format, locale,
 // timeZone})` freezes the saved view (filter, sorts, columns — kanban: the grouping attribute first, then the card
 // attributes) and queues the worker job; `exports.status` reports Preparing / Collecting data (progress) / complete /
 // failed; `exports.downloadUrl` hands out a signed URL valid for 5 minutes.
@@ -32,7 +32,7 @@ const jobIn = (e: ServerExport): ExportJob => ({
   fileName: e.fileName,
 });
 
-/** The viewer's locale and time zone format the file (numbers, currency, dates — export.md E2). */
+/** The viewer's locale and time zone format the file (numbers, currency, dates —). */
 function viewerFormat(): { locale: string; timeZone: string } {
   return {
     locale: typeof navigator !== 'undefined' && navigator.language ? navigator.language : 'en-US',
@@ -44,7 +44,7 @@ export function exportsBackend(ws: WorkspaceRef): ExportsBackend {
   const call = inWorkspace(ws);
   return {
     async create({ viewId, format }) {
-      // Client-minted id: a retried create starts one export (I3).
+      // Client-minted id: a retried create starts one export.
       const res = await api.exports.create.mutate({ exportId: newId(), viewId, format, ...viewerFormat() }, call);
       noteAcceptAfter(ws.id, res.seq);
       return { exportId: res.exportId };

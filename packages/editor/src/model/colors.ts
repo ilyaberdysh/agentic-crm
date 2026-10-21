@@ -1,4 +1,4 @@
-// Colour keys of the note model (E editor.md §4): text colours `block_*`, highlights `pastel_*`, in Attio's picker
+// Colour keys of the note model: text colours `block_*`, highlights `pastel_*`, in the picker
 // order, plus the legacy keys that are still valid when rendering. Keys are what the model stores; rendering maps
 // them to theme tokens (text → utilities.content.<hue>, highlight → utilities.surface.<hue>Subtle).
 import { colorTokens } from '@agentic-crm/ui/tokens';
@@ -69,7 +69,7 @@ export function hueOfColorKey(key: string): string {
 }
 
 /**
- * Presence colours (E editor.md §10.3): the member id's character codes XOR-ed together, mod 8, over
+ * Presence colours: the member id's character codes XOR-ed together, mod 8, over
  * [blue, green, orange, pink, purple, red, yellow, cyan], using the bold surface token (observed `#266DF0`).
  */
 export const PRESENCE_HUES = ['blue', 'green', 'orange', 'pink', 'purple', 'red', 'yellow', 'cyan'] as const;

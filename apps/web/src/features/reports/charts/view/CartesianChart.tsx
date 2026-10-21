@@ -104,7 +104,7 @@ export function CartesianChart({ ctx, model, size, width, height, highlight, onD
   const line = model.kind === 'line';
   const baselineY = y(0);
 
-  // Bar slots inside a band: [comparison] + (stacked ? 1 : series).
+  // Bar slots inside a band: [comparison] + (stacked ? 1: series).
   const slots = (comparison ? 1 : 0) + (model.stacked || !model.segmented ? 1 : model.series.length);
   const inner = useMemo(
     () =>

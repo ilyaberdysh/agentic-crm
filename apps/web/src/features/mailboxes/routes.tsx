@@ -1,7 +1,7 @@
-// Routes under `/$workspaceSlug/settings` for email and calendar (F README §1, settings.md):
-//   email-and-calendar-accounts                         personal accounts list
-//   email-and-calendar-accounts/$mailboxId[/$tab]       one mailbox (general · blocklist · signatures; advanced → general)
-//   workspace-email-and-calendar[/$tab]                 workspace email and calendar (email-visibility · record-creation)
+// Routes under `/$workspaceSlug/settings` for email and calendar:
+// email-and-calendar-accounts personal accounts list
+// email-and-calendar-accounts/$mailboxId[/$tab] one mailbox (general · blocklist · signatures; advanced → general)
+// workspace-email-and-calendar[/$tab] workspace email and calendar (email-visibility · record-creation)
 import { type AnyRoute, createRoute, redirect } from '@tanstack/react-router';
 import { AccountsPage } from './AccountsPage';
 import { MAILBOX_TAB_IDS, MailboxPage, type MailboxTabId } from './MailboxPage';

@@ -1,11 +1,11 @@
-// Kanban "View settings" (C2 kanban.md K4; evidence kanban-view-settings.png, kanban-grouped-by.png,
+// Kanban "View settings":
 // kanban-visible-columns.png): a 270 px popover with nested pages replaced in place —
-//   Grouped by <attribute> ›  (status / single-select attributes: the object's, or on lists the parent object's
-//                              through parent_record and the list's own; current one checked; Create new attribute)
-//   Visible columns <n> ›     ("No status" switch, then one switch per stage with its colour dot)
-//   Show attribute labels     (shared, on the view)          Hide empty attributes (this browser)
-//   card rows (⋮⋮ reorder, type icon, label, ⋮ Edit attribute / Change attribute label / Formatting › / Remove card row)
-//   + Add attribute to view › (attribute picker; stays open to add several)
+// Grouped by <attribute> ›  (status / single-select attributes: the object's, or on lists the parent object's
+// through parent_record and the list's own; current one checked; Create new attribute)
+// Visible columns <n> › ("No status" switch, then one switch per stage with its colour dot)
+// Show attribute labels (shared, on the view) Hide empty attributes (this browser)
+// card rows (⋮⋮ reorder, type icon, label, ⋮ Edit attribute / Change attribute label / Formatting › / Remove card row)
+// + Add attribute to view › (attribute picker; stays open to add several)
 import type { AttributeDefinition, Path, ViewColumn } from '@agentic-crm/contracts';
 import {
   Button,
@@ -199,7 +199,7 @@ function SwitchRow({
   );
 }
 
-/** "Hide empty attributes" is per browser (K4): the board's prefs. */
+/** "Hide empty attributes" is per browser: the board's prefs. */
 function HideEmptyRow({ prefs }: { prefs: BoardPrefs }) {
   return (
     <SwitchRow icon="show" label="Hide empty attributes" isSelected={prefs.hideEmpty} onChange={prefs.setHideEmpty} />
@@ -447,7 +447,7 @@ function AddAttributePage({ board, onBack }: { board: Board; onBack(): void }) {
         rootDefinitionId={board.view.entityDefinitionId}
         purpose="column"
         placeholder={object ? `Search ${object.singularNoun.toLowerCase()} attributes...` : 'Search attributes...'}
-        // Multi-add: the picker stays open (K4).
+        // Multi-add: the picker stays open.
         onSelect={(selection) => void board.draft.addColumn({ path: selection.path, field: selection.field })}
       />
     </>

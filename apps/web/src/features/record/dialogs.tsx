@@ -1,4 +1,4 @@
-// Record dialogs (D README §2.2, §3.6, §3.10a): "Edit {Singular}" (every editable attribute as a labelled field,
+// Record dialogs (a): "Edit {Singular}" (every editable attribute as a labelled field,
 // "Finished editing ⌘↵"), "Delete {singular}" confirmation (permanent for users, soft-deleted per X-22; the page
 // then goes back to the object's views) and "Choose list" → Add to list (features/lists).
 import {
@@ -101,7 +101,7 @@ export function DeleteRecordDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
-/** "Choose list" (D §3.6, X-07; `e`): choose a list of this object, then the Add-to-list form (features/lists). */
+/** "Choose list" (D, X-07; `e`): choose a list of this object, then the Add-to-list form (features/lists). */
 export function ChooseListDialog({ onClose }: { onClose: () => void }) {
   const { recordRef } = useRecordPage();
   return <AddRecordToListDialog record={recordRef} onClose={onClose} />;

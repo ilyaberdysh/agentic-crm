@@ -1,4 +1,4 @@
-// Window frames (E README §2.2): the modal (centred 968 × 670, page visible behind, outside click and Esc close —
+// Window frames: the modal (centred 968 × 670, page visible behind, outside click and Esc close —
 // Esc closes an open popover first), the floating panel pinned to the bottom right (no backdrop, the page stays
 // interactive) and the top-bar controls: Minimize · Pin to screen · Close (modal), Minimize · Expand · Close
 // (floating), Close only (templates).

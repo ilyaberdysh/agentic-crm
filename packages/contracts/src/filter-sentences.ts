@@ -24,7 +24,7 @@ export type FilterValueEditor =
   | 'relative-date'; // relativeDatePresets / daysAgo(n) / daysFromNow(n) (valueType dynamic) or an exact date
 
 export interface FilterSentence {
-  /** Stable id (Attio's sentence ids where they exist). */
+  /** Stable sentence id. */
   readonly id: string;
   /** Operator label in the pill and menus. */
   readonly label: string;
@@ -63,7 +63,7 @@ const s = (
   extra: Partial<FilterSentence> = {},
 ): FilterSentence => ({ id, label, mode, operator, editor, ...extra });
 
-// Presence on the attribute itself (Attio: must / must-not with only `active_until empty`).
+// Presence on the attribute itself (`must` / `must-not` with only `active_until empty`).
 const EMPTY = s('empty', 'is empty', 'must-not', null, 'none');
 const NOT_EMPTY = s('not-empty', 'is not empty', 'must', null, 'none');
 // Presence of a sub-field (City is empty, …).
@@ -132,7 +132,7 @@ export const filterFieldsByType: Record<AttributeType, readonly FilterField[]> =
       label: null,
       sentences: [
         ...numberSentences('rating'),
-        // Attio: a rating of 0 is empty (must-not value > 0 / must value >= 1).
+        // A rating of 0 is empty (must-not value > 0 / must value >= 1).
         s('empty', 'is empty', 'must-not', 'gt', 'none', { fixedValue: 0 }),
         s('not-empty', 'is not empty', 'must', 'gte', 'none', { fixedValue: 1 }),
       ],
@@ -302,7 +302,7 @@ export function sentenceToLeaf(args: {
   return { path: args.path, mode: sentence.mode, constraints, ...(sentence.history ? { history: true } : {}) };
 }
 
-/** Field used when a constraint names `value` (Attio) or nothing. */
+/** Field used when a constraint names `value` or nothing. */
 export const primaryFilterField: Record<AttributeType, string> = Object.fromEntries(
   Object.entries(filterFieldsByType).map(([type, fields]) => [type, fields[0]?.field ?? 'value']),
 ) as Record<AttributeType, string>;
@@ -371,7 +371,7 @@ export const daysFromNow = (n: number): string => `P${Math.max(0, Math.trunc(n))
 const DURATION = /^(-)?P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/;
 
 /**
- * A stored relative value → preset or "{n} days ago/from now" (Attio stores '-P0Y0M30DT0H0M0S'). null for other
+ * A stored relative value → preset or "{n} days ago/from now" (stored as '-P0Y0M30DT0H0M0S'). null for other
  * durations.
  */
 export function parseRelativeDate(
