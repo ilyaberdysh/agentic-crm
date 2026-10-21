@@ -14,7 +14,7 @@
     "@agentic-crm/config": "workspace:*",
     "@agentic-crm/db": "workspace:*",
     "@agentic-crm/domain": "workspace:*",
-    "pg-boss": "12.36.0"
+    "pg-boss": "12.38.0"
   },
   "devDependencies": {
     "@types/pg": "8.23.1",

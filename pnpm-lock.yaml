@@ -316,8 +316,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/domain
       pg-boss:
-        specifier: 12.36.0
-        version: 12.36.0(@opentelemetry/api@1.9.1)
+        specifier: 12.38.0
+        version: 12.38.0(@opentelemetry/api@1.9.1)
     devDependencies:
       '@types/pg':
         specifier: 8.23.1
@@ -394,8 +394,8 @@ importers:
         specifier: 0.131.0
         version: 0.131.0(zod@4.6.5)
       pg-boss:
-        specifier: 12.36.0
-        version: 12.36.0(@opentelemetry/api@1.9.1)
+        specifier: 12.38.0
+        version: 12.38.0(@opentelemetry/api@1.9.1)
       uuid:
         specifier: 14.0.2
         version: 14.0.2
@@ -2646,8 +2646,8 @@ packages:
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
 
-  pg-boss@12.36.0:
-    resolution: {integrity: sha512-67Jj4xNuv8mkShTzfmsFtJeVa2ChXyrknjlw/WKZCIMuzRTwyHOUGjl2mf5Snrhmb0xglvFbkfAt5+hLtXukag==}
+  pg-boss@12.38.0:
+    resolution: {integrity: sha512-felA3fyPSJwWk5cb/VwAgnudCAzWEdgBjjf+eukXm8pExlwkhjdBbOMukMyG5s8uZHO6fZZZcaIaTa3oKpfSCg==}
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
@@ -5093,7 +5093,7 @@ snapshots:
 
   pathe@2.0.3: {}
 
-  pg-boss@12.36.0(@opentelemetry/api@1.9.1):
+  pg-boss@12.38.0(@opentelemetry/api@1.9.1):
     dependencies:
       '@opentelemetry/api': 1.9.1
       cron-parser: 5.10.2
