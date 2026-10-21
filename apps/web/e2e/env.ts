@@ -13,7 +13,10 @@ export const WORKSPACE_SLUG = 'mymeet';
 /** Credentials file of a database in e2e/.auth (the default database keeps the historical name). */
 export const credentialsFile = (database: string): string =>
   database === 'agentic_crm_test_web_e2e' ? 'credentials.json' : `credentials-${database}.json`;
-export const E2E_USER = { email: 'e2e@mymeet.ai', name: 'Ada Tester' };
+export const E2E_USER = {
+  email: process.env.E2E_USER_EMAIL ?? 'e2e@mymeet.ai',
+  name: process.env.E2E_USER_NAME ?? 'Ada Tester',
+};
 
 export function databaseUrl(name: string): string {
   const url = new URL(process.env.DATABASE_URL_BASE ?? 'postgres://agentic_crm:agentic_crm@127.0.0.1:5450/agentic_crm');

@@ -1,0 +1,14 @@
+title = "Agentic CRM publication scan (upstream rules plus exact provenance fingerprints)"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Public content fingerprints retained in the maintainer provenance record; not credentials"
+condition = "AND"
+paths = ['''(^|/)PROVENANCE\.md$''']
+regexTarget = "secret"
+regexes = [
+  '''^98e736fd71dc5b21073a247291802ffbe4dfb655255a5b163419fc917f037a27$''',
+  '''^88a3835d0c4919390b34a6cee41d06424dee4a7aa58ac2450aed7ba4ce5335f8$''',
+]

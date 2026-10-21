@@ -12,5 +12,6 @@
 research
 **/e2e/out
 **/e2e/.auth
+**/e2e/.capture
 **/test-results
 **/playwright-report
