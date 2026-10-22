@@ -6,7 +6,7 @@
 
 Evidence-backed actions, explicit policy, human review where risk demands it, and a durable receipt for every important change.
 
-[Quickstart](#quickstart) · [What works today](#what-works-today) · [Bring your own models](#bring-your-own-models) · [Architecture](#architecture) · [Roadmap](#roadmap)
+[Quickstart](#quickstart) · [Self-hosting](docs/self-hosting.md) · [What works today](#what-works-today) · [Bring your own models](#bring-your-own-models) · [Architecture](#architecture) · [Roadmap](#roadmap)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
@@ -17,7 +17,7 @@ Evidence-backed actions, explicit policy, human review where risk demands it, an
 
 </div>
 
-![Agentic CRM reviewing an evidence-backed task proposal](docs/assets/agentic-core-review.jpg)
+![Agentic CRM reviewing evidence, approving the exact action, and saving its receipt](docs/assets/agentic-demo.gif)
 
 Most CRMs add a chat box to a system designed only for humans. Agentic CRM starts from a different contract: people and agents share the same records, capabilities, and audit trail. An agent can propose useful work, but it cannot silently turn uncertain context into customer-facing side effects.
 
@@ -33,11 +33,13 @@ CRM note → exact evidence → proposed action → policy → human decision
 
 A seeded customer request becomes an evidence-backed `crm.task.create` proposal. A reviewer sees the source quote and exact change in the record's **Agent** tab, approves or declines it, and receives a persisted execution receipt. Approval rechecks policy, evidence freshness, record access, and proposal version before the task is created.
 
-> **Project status:** early development. The CRM foundation, first supervised agent loop, and Ask routing through saved cloud or paired local models work today. General agent orchestration, richer model-management UI, installable modules, and public release packaging are still in progress.
+> **Project status:** early development. The CRM foundation, first supervised agent loop, and Ask routing through saved cloud or paired local models work today. Clean-source export and signed-container automation exist, but image distribution remains blocked by the documented security and license gate. General agent orchestration, richer model-management UI, and installable modules are still in progress.
 
 ## Quickstart
 
-Prerequisites: Node.js 24.11 or newer, pnpm 11.11.0, and Docker with Compose.
+This is the source checkout workflow for a local development/demo instance. It runs the app from source and uses Docker Compose only for PostgreSQL and SeaweedFS. For a deployment overview, updates, backups, and recovery, see [Self-hosting](docs/self-hosting.md).
+
+Prerequisites: macOS or Linux, Node.js 24.11 or newer, pnpm 11.11.0 (via Corepack), and Docker with the Compose plugin.
 
 ```bash
 git clone https://github.com/ilyaberdysh/agentic-crm.git
@@ -49,7 +51,7 @@ SEED_USERS='demo@example.com:Demo User' SEED_WORKSPACE_SLUG=demo pnpm seed
 AGENTIC_CRM_LLM=fake pnpm dev
 ```
 
-`pnpm seed` applies migrations, creates fictional CRM data, and prints two things once: a generated password and the exact **Agent demo** URL. Open [http://localhost:5173](http://localhost:5173), sign in as `demo@example.com`, and use that URL to review the seeded Northwind Robotics proposal.
+`pnpm seed` applies migrations, creates fictional CRM data, and prints a generated password for a newly created account plus the exact **Agent demo** URL. Open [http://localhost:5173](http://localhost:5173), sign in as `demo@example.com`, and use that URL to review the seeded Northwind Robotics proposal. Keep the generated password private; the seed command does not reveal it again for an existing account.
 
 Click **Approve**. The CRM creates the exact linked task, settles the queue item, and replaces the decision panel with a receipt.
 
@@ -64,13 +66,13 @@ The fake model keeps this path credential-free and deterministic. The evidence a
 
 ### Self-hosting checks
 
-After configuring `.env` and starting PostgreSQL and your S3-compatible service, run:
+For the local source workflow above, `pnpm db:up` starts the repository's PostgreSQL and SeaweedFS development services. For an existing deployment, configure its environment and make sure PostgreSQL and the configured S3-compatible endpoint are reachable, then run:
 
 ```bash
 pnpm doctor
 ```
 
-The doctor checks the supported Node.js version, required configuration, PostgreSQL connectivity, migration status and checksums, and S3 endpoint reachability. It is read-only: it does not apply migrations, create buckets, or change configuration. It never prints connection strings or secret values. If it reports unapplied migrations, review the database target, run `pnpm db:migrate`, then check again.
+The doctor checks the supported Node.js version, required configuration, PostgreSQL connectivity, migration status and checksums, and S3 endpoint reachability. It is read-only: it does not apply migrations, create buckets, or change configuration. It never prints connection strings or secret values. If it reports unapplied migrations, review the database target, run `pnpm db:migrate`, then check again. It is an operator check, not a production-readiness or security audit.
 
 ## What works today
 
@@ -160,6 +162,8 @@ Useful project documents:
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security policy](SECURITY.md)
 - [Source and asset provenance status](PROVENANCE.md)
+- [Clean public-source procedure](docs/publication.md)
+- [Container signing and verification](docs/container-images.md)
 - [License](LICENSE) and [third-party notice](NOTICE)
 
 ## Roadmap
@@ -176,8 +180,10 @@ Ideas that are useful but not ready belong in [`docs/agentic-core/backlog.yaml`]
 
 ## Open-source status
 
-Agentic CRM declares the [Apache License 2.0](LICENSE) and is an early preview candidate, not a production-ready CRM. [PROVENANCE.md](PROVENANCE.md) records both the automated technical audit and the maintainer's authorship and source-use disposition. The historical generated API snapshot is being replaced by a product-owned contract; the repository remains private until that work and the final public-ref privacy scan are complete. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data.
+Agentic CRM declares the [Apache License 2.0](LICENSE) and is an early preview candidate, not a production-ready CRM. [PROVENANCE.md](PROVENANCE.md) records the maintainer's authorship and source-use disposition. Expect incomplete setup paths, breaking changes, and security work before the project is suitable for sensitive customer data. Self-hosters should review [the deployment and recovery notes](docs/self-hosting.md) before putting any data into an instance.
 
 Source-level dependency attribution is summarized in [NOTICE](NOTICE). A complete license audit is still required before publishing binary or container distributions that bundle third-party code.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before sending changes, follow the [Code of Conduct](CODE_OF_CONDUCT.md), and use [SECURITY.md](SECURITY.md) for vulnerability reports.
+
+For proposed GitHub repository metadata, demo recording instructions, and the social preview source, see [Community launch materials](docs/community-launch.md).

@@ -11,6 +11,11 @@ workspace package.json files and pnpm-lock.yaml. Each dependency remains under
 its own copyright and license terms. This NOTICE is not a substitute for those
 licenses.
 
+The reproducible installed-package license inventory and original available
+notice texts can be generated with scripts/publication/licenses.mjs. See
+docs/dependency-licenses.md and docs/publication.md for the installed-platform
+scope, missing-notice findings, and actual-distribution review requirements.
+
 The UI imports Lucide icons (lucide-react, ISC, including Feather-derived icons
 under MIT) and Inter Variable (@fontsource-variable/inter, SIL Open Font
 License 1.1). Their upstream license and copyright notices must accompany any

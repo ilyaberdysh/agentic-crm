@@ -13,7 +13,7 @@ On 2026-10-20, GitHub maintainer `@ilyaberdysh` recorded the following dispositi
 - Agentic CRM is an independently implemented product. Product observation and lawful reverse engineering were used to understand externally visible behavior; original Attio source code, SVGs, images, fonts, and other proprietary assets were not copied into this repository.
 - The CRM implementation, UI components, custom glyphs, and screenshots were authored for this project. The maintainer has authority to publish those contributions under Apache-2.0.
 - The UI token values are intentionally retained. The maintainer states that the UI was implemented by the project team through a lawful process and authorizes distribution of the resulting implementation. This is a maintainer disposition, not a claim that an automated audit independently proved the origin of every numeric token.
-- The historical generated public-API snapshot is being removed and replaced by a product-owned contract derived from Agentic CRM's implemented routes and schemas. The replacement must pass route-parity, schema, and drift checks before this disposition is marked complete.
+- The historical generated public-API snapshot was removed and replaced by a product-owned contract derived from Agentic CRM's implemented routes and schemas. The replacement passes route-parity, schema, and deterministic drift checks; the remaining publication gate is the clean destination and final public-ref audit.
 - Product identity, example data, and the remaining custom artwork are approved for publication as Agentic CRM. Deployment operators remain responsible for supplying their own privacy, terms, acceptable-use, and security-reporting URLs.
 
 This attestation records the maintainer's factual assertions and publication decision. It is not an external legal opinion.
@@ -42,6 +42,12 @@ env -u GITLEAKS_CONFIG -u GITLEAKS_CONFIG_TOML \
 
 Do not upload the private recovery archive, scanner input, or unredacted scan output to the repository or its CI artifacts.
 
+## Reproducible candidate checks
+
+The publication candidate adds [local audit and exact-snapshot tools](docs/publication.md) and a read-only source-audit workflow. These use checksum-pinned Gitleaks 8.30.1 for current files and complete locally fetched history; the only repository-specific allowances are the two exact public content fingerprints in this provenance record. The workflow uploads no source, findings, caches, or scan reports. It does not fetch every GitHub pull-request ref or audit remote metadata, and a passing secret scan does not remove the historical material described above.
+
+The [installed-platform dependency inventory](docs/dependency-licenses.md) and generator preserve available upstream license/notice texts and identify absent metadata or notices. The immutable-image gate generates a CycloneDX SBOM and vulnerability/license evidence for an exact local image. These are technical evidence, not a distribution clearance; the artifact-specific review below remains required. Snapshot export/verifier tooling prepares a new local tree and verifies a fresh repository has one root commit and no unrelated Git objects. It never recreates or changes the visibility of this repository.
+
 ## Material disposition
 
 | Material | Technical evidence | Maintainer disposition |
@@ -63,4 +69,4 @@ Before changing visibility, all of these must be complete:
 - A reviewed clean snapshot is created in a fresh repository and scanned for credentials, private research, removed generated snapshots, and unwanted history. The current repository remains private because replacing a file at `HEAD` cannot remove it from GitHub's read-only pull-request refs.
 - GitHub metadata, Actions logs/artifacts/caches, screenshots, support routing, and deployment policy links receive a final privacy check.
 
-Binary and container distributions have an additional gate: generate and review the complete license/attribution report for the actual bundled artifact, including transitive dependencies, fonts, images, and CLI/runtime software. That distribution review remains unaudited.
+Binary and container distributions have an additional gate: generate and review the complete license/attribution report for the actual bundled artifact, including transitive dependencies, fonts, images, and CLI/runtime software. Follow [the publication procedure](docs/publication.md) and retain the exact-image evidence. That distribution review remains unaudited; the added inventory and scanning tools do not mark this gate complete.

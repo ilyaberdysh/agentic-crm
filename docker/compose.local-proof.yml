@@ -1,0 +1,16 @@
+# Only the web proxy is reachable from the host, on a loopback port selected by
+# prove-local-install.sh. All data stays in this run's unique Compose project.
+services:
+  web:
+    pull_policy: never
+    ports:
+      - "127.0.0.1:${PROOF_PORT:?Set the local proof port}:80"
+
+  api:
+    pull_policy: never
+
+  collab:
+    pull_policy: never
+
+  worker:
+    pull_policy: never

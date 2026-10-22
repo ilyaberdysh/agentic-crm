@@ -1,0 +1,55 @@
+name: Publication audit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publication-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source:
+    name: Source privacy and dependency evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: 11.11.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Install locked dependencies without build scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Install checksum-pinned secret scanner
+        run: node scripts/publication/install-tools.mjs "$RUNNER_TEMP/publication-tools" gitleaks
+      - name: Test publication safety barriers
+        env:
+          PUBLICATION_GITLEAKS: ${{ runner.temp }}/publication-tools/gitleaks
+        run: node --test scripts/publication/publication.test.mjs
+      - name: Scan the current source tree
+        env:
+          PUBLICATION_GITLEAKS: ${{ runner.temp }}/publication-tools/gitleaks
+        run: node scripts/publication/scan.mjs tree
+      - name: Scan all locally fetched history
+        env:
+          PUBLICATION_GITLEAKS: ${{ runner.temp }}/publication-tools/gitleaks
+        run: node scripts/publication/scan.mjs history
+      - name: Generate dependency license and notice evidence
+        run: node scripts/publication/licenses.mjs "$RUNNER_TEMP/source-licenses"
+      - name: Exercise a committed snapshot export and verify its bytes
+        run: |
+          node scripts/publication/snapshot.mjs export "$RUNNER_TEMP/publication-source" "$RUNNER_TEMP/publication-receipt.json"
+          node scripts/publication/snapshot.mjs verify "$RUNNER_TEMP/publication-source" "$RUNNER_TEMP/publication-receipt.json"
+      # Scanner inputs, findings, receipts, and source exports stay private.
+      # No artifacts, caches, or SARIF reports are uploaded by this workflow.

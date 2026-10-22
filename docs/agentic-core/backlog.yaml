@@ -109,5 +109,15 @@ items:
 
   - id: B018
     title: Complete the final public-ref provenance and privacy scan
-    why_deferred: The 2026-10-20 technical audit and maintainer attestation are recorded in PROVENANCE.md. The UI implementation is retained under the maintainer's lawful reverse-engineering and authorship disposition, and the historical generated API snapshot is being replaced by a product-owned contract. The remaining gate is technical: finish and test the replacement, remove stale product-specific comments, then scan every ref intended for publication and the relevant GitHub metadata.
-    revisit_when: Before changing the personal repository from private to public.
+    why_deferred: The current private repository retains historical pull-request refs and must stay private. The clean-snapshot exporter and one-root verifier are implemented; the remaining work is to create the separately authorized public destination, push only the reviewed snapshot, and audit its actual remote refs and metadata.
+    revisit_when: Immediately before and after the separately authorized creation of the public repository.
+
+  - id: B019
+    title: Clear the container distribution security and license gate
+    why_deferred: The signed-image workflow is fail-closed. The 2026-10-21 Trivy audit of the local Linux/arm64 images reported 79 HIGH/CRITICAL findings and 503 blocked license classifications for app, plus five HIGH findings and 35 blocked license classifications for web. The generated dependency inventory also has twelve packages without standalone notice files, and actual app/web artifact obligations still need maintainer review. Publishing remains disabled rather than weakening the gate or introducing custom base-image forks.
+    revisit_when: After updating affected official bases and dependencies, and before setting CONTAINER_PUBLISH_ENABLED=true or distributing either image.
+
+  - id: B020
+    title: Split the largest frontend bundles
+    why_deferred: The production build succeeds, but Vite reports three minified chunks above 500 kB. This does not block the local launch candidate and changing route/component boundaries is product performance work, not publication plumbing.
+    revisit_when: Before promising fast cold-load performance or after measuring a real-user loading bottleneck.

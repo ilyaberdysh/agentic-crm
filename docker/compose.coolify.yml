@@ -1,12 +1,14 @@
-# Production stack for Coolify. Images are built locally and pushed to GHCR:
-#   docker buildx build --platform linux/amd64 -f docker/Dockerfile --target app -t ghcr.io/ilyaberdysh/agentic-crm-app:<tag> --push .
-#   docker buildx build --platform linux/amd64 -f docker/Dockerfile --target web -t ghcr.io/ilyaberdysh/agentic-crm-web:<tag> --push .
+# Production stack for Coolify. Set APP_IMAGE and WEB_IMAGE to the full verified
+# ghcr.io/<owner>/<repo>-{app,web}@sha256:<digest> references from the same successful
+# Container images workflow run. See docs/container-images.md. There is no latest fallback.
 # Coolify fills SERVICE_* variables (passwords, the web URL). The VM is shared (8 GB): every service has a memory cap.
 # Demo data: `docker exec <api container> sh -c 'cd /app/packages/db && node --import tsx src/seed.ts'` (prints passwords).
 x-app-env: &app-env
   NODE_ENV: production
   DATABASE_URL: postgres://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/crm
   AUTH_SECRET: ${SERVICE_PASSWORD_64_AUTH}
+  # Generate once with `openssl rand -hex 32`; retain in backups with the database.
+  AGENTIC_CRM_ENCRYPTION_KEY: ${AGENTIC_CRM_ENCRYPTION_KEY:?Set a persistent 32-byte encryption key}
   WEB_ORIGIN: ${SERVICE_URL_WEB}
   API_PUBLIC_URL: ${SERVICE_URL_WEB}
   COLLAB_ALLOWED_ORIGINS: ${SERVICE_URL_WEB}
@@ -18,11 +20,17 @@ x-app-env: &app-env
   S3_SECRET_ACCESS_KEY: ${SERVICE_PASSWORD_S3}
   ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
   AGENTIC_CRM_LLM: ${AGENTIC_CRM_LLM:-}
+  # Google is optional; set both client values together. The redirect URI defaults
+  # to SERVICE_URL_WEB + /api/integrations/google/callback through API_PUBLIC_URL.
+  GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+  GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+  GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-}
+  GOOGLE_MAIL_SYNC_DAYS: ${GOOGLE_MAIL_SYNC_DAYS:-}
   LOG_LEVEL: info
 
 services:
   web:
-    image: ghcr.io/ilyaberdysh/agentic-crm-web:${IMAGE_TAG:-latest}
+    image: ${WEB_IMAGE:?Set the verified web image digest reference}
     environment:
       SERVICE_URL_WEB_80: ''
       S3_BUCKET: crm-files
@@ -37,7 +45,7 @@ services:
     restart: unless-stopped
 
   api:
-    image: ghcr.io/ilyaberdysh/agentic-crm-app:${IMAGE_TAG:-latest}
+    image: ${APP_IMAGE:?Set the verified app image digest reference}
     # Migrations run before every start (forward-only, idempotent).
     command: ['sh', '-c', 'cd /app/packages/db && node --import tsx src/migrate.ts up && cd /app/apps/api && exec node --import tsx src/server.ts']
     environment:
@@ -56,7 +64,7 @@ services:
     restart: unless-stopped
 
   collab:
-    image: ghcr.io/ilyaberdysh/agentic-crm-app:${IMAGE_TAG:-latest}
+    image: ${APP_IMAGE:?Set the verified app image digest reference}
     working_dir: /app/apps/collab
     command: ['node', '--import', 'tsx', 'src/index.ts']
     environment:
@@ -68,7 +76,7 @@ services:
     restart: unless-stopped
 
   worker:
-    image: ghcr.io/ilyaberdysh/agentic-crm-app:${IMAGE_TAG:-latest}
+    image: ${APP_IMAGE:?Set the verified app image digest reference}
     working_dir: /app/apps/worker
     command: ['node', '--import', 'tsx', 'src/index.ts']
     environment:

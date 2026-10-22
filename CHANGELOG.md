@@ -18,6 +18,8 @@ Notable changes are collected here before a separately authorized release.
 - A documented source-provenance gate and follow-up backlog for the standalone runner and live Linux isolation certification.
 - A product-owned public API contract with exact runtime-route parity, deterministic OpenAPI 3.1 generation, and drift checks.
 - Canonical Agentic CRM storage and webhook identifiers, with migrations and compatibility aliases for existing integrations.
+- Exact clean-source export and one-root repository verification, checksum-pinned secret and license audits, and a fail-closed signed-container publication workflow.
+- A self-hosting runbook, read-only deployment doctor, reproducible macOS Docker install proof, deterministic demo capture, and GitHub social-preview assets.
 
 ### Changed
 
