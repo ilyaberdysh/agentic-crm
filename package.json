@@ -29,9 +29,9 @@
     "seed": "pnpm --filter @agentic-crm/db seed"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15",
-    "turbo": "2.11.7",
+    "@biomejs/biome": "2.6.3",
+    "turbo": "2.11.10",
     "typescript": "7.0.2",
-    "@types/node": "24.19.1"
+    "@types/node": "26.6.5"
   }
 }
